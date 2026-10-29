@@ -10,7 +10,7 @@
 
 ## Latest Completed Work
 
-- 使用者已提供專用倉庫https://github.com/jacobmaster-97/charity-casino。已核對公開、main可寫、只有初始README。基底提交d5653661b6ca31922da11c364ec804349b7b5d5b；正準備透過GitHub blob/tree/commit/ref上載，保留parent，不強推。Pages需使用者Settings選main /docs，工具沒有管理設定能力。
+- 已上載至使用者指定公開倉庫 https://github.com/jacobmaster-97/charity-casino 的main分支。內容提交5f9b8e08d42ed3cb45e4a68ff09557f4359750da，parent保留d5653661b6ca31922da11c364ec804349b7b5d5b。76檔遠端blob SHA全部與本地一致，main指向亦已回讀確認；無強推。Pages尚未啟用，需使用者至Settings → Pages選main /docs，不能宣稱網站已上線。收據docs/GITHUB_UPLOAD.json。
 - 已新增Pages建置與可上載目錄：docs/index.html、docs/play/、docs/.nojekyll；修正CSS與圖片在專案子路徑的解析。npm run verify與verify:pages通過，共22項。新增.gitignore、GitHub操作文件、prepare-github腳本；原本單檔仍可重新打包。
 
 - 建立無第三方執行依賴的原生HTML／CSS／JS原型：姓名／模式、故事卡、大廳、大小50種多項投注、30秒、骰子結果、保本／透視／重擲、10%商店、暫停遮桌、結算及勝敗。
@@ -41,6 +41,8 @@
 
 ## Verification
 
+- GitHub內容提交5f9b8e08d42ed3cb45e4a68ff09557f4359750da：76檔SHA與main指向已回讀確認，頁面設定has_pages=false；程式、單檔及Pages測試合計22項通過。
+
 - 規則／存檔16項通過，包括216種結果×50投注、圍骰、保本、三種扣券、資金守恆、暫停12秒、完成快照、壞檔及儲存錯誤。
 - 封裝3項通過：無外部依賴、內嵌JS可解析、五張PNG內嵌雜湊等於來源。四張新PNG可解碼及目視骰點1–6。
 - 最終npm run verify已執行通過：六模組語法、16項規則／保存、重建HTML、3項封裝。
@@ -55,6 +57,6 @@
 
 ## Next Safest Task
 
-完成專用倉庫jacobmaster-97/charity-casino上載；核對遠端commit與檔案blob SHA，再記錄收據。初始parent d5653661b6ca31922da11c364ec804349b7b5d5b。檔案清單dist/github-upload-manifest.json，Pages入口docs/index.html；不要改其他倉庫、不要強推。啟用Pages需使用者到Settings → Pages選main /docs；未確認前不宣稱試玩網址已上線。
+上載已完成。向使用者提供倉庫 https://github.com/jacobmaster-97/charity-casino 及直接設定頁 https://github.com/jacobmaster-97/charity-casino/settings/pages ，選Deploy from a branch、main、/docs。工具沒有Pages管理設定能力。預期遊玩網址 https://jacobmaster-97.github.io/charity-casino/ ，啟用與部署完成前不宣稱可用。之後核對網站及瀏覽器主要循環，保留本地存檔匯出／匯入提醒。
 
 交付單檔HTML及原始碼包，清楚標示19項邏輯／封裝測試與瀏覽器未驗證。下載後先試大小主循環，在允許Chromium的環境執行tests/browser_smoke.py，再依回饋修正並擴充下一桌。不要重試同樣受限的socket命令或宣稱已有截圖。技能來源版本42838f2a4df97f77104a4c7a9561a4f6c9160621已保留。

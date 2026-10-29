@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "content_commit": "5f9b8e08d42ed3cb45e4a68ff09557f4359750da",
+  "parent_commit": "d5653661b6ca31922da11c364ec804349b7b5d5b",
+  "tree": "74f022a91c3ea91de426fdfff94488027db86be7",
+  "verified_files": 76,
+  "blob_sha_check": "all_match",
+  "pages_enabled": false,
+  "pages_source_required": {
+    "branch": "main",
+    "path": "/docs"
+  },
+  "pages_settings_url": "https://github.com/jacobmaster-97/charity-casino/settings/pages",
+  "expected_play_url": "https://jacobmaster-97.github.io/charity-casino/",
+  "play_url_verified": false,
+  "local_tests_passed": 22,
+  "browser_smoke": "unverified_environment_restriction"
+}

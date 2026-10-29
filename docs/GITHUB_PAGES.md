@@ -2,7 +2,7 @@
 
 ## 本輪狀態
 
-使用者要求將遊戲上載GitHub以便即時存取。已連接帳號`jacobmaster-97`，使用者已指定專用倉庫 https://github.com/jacobmaster-97/charity-casino 。預設main分支只有初始README，已確認可寫入；本次準備以原初提交為parent上載。
+使用者要求將遊戲上載GitHub以便即時存取。已連接帳號`jacobmaster-97`，使用者已指定專用倉庫 https://github.com/jacobmaster-97/charity-casino 。已上載至main，保留原有初始提交。內容提交：`5f9b8e08d42ed3cb45e4a68ff09557f4359750da`；76檔遠端blob SHA全部吻合，收據見GITHUB_UPLOAD.json。
 
 目前GitHub連接器支援既有倉庫的檔案／Git物件寫入，沒有建立倉庫或啟用Pages的工具。CLI認證檢查不成功，不讀取或索取權杖。目標專用倉庫已確認可存取，不需要重新建立。
 

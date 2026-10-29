@@ -47,7 +47,7 @@ npm run verify
 
 試玩網址（首次需啟用Pages）：https://jacobmaster-97.github.io/charity-casino/ 。
 
-GitHub專用發布檔已備妥。`npm run build:pages`產生docs/index.html及docs/play/；`npm run verify:pages`檢查子路徑及圖片。
+遊戲原始碼與Pages檔案已上載至main；首次仍需啟用Pages。`npm run build:pages`產生docs/index.html及docs/play/；`npm run verify:pages`檢查子路徑及圖片。
 
 上載後到Settings → Pages，選Deploy from a branch、main、/docs。後續更新程式時同步提交生成的docs檔案。完整流程見[GitHub Pages說明](docs/GITHUB_PAGES.md)。
 
