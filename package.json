@@ -1,0 +1,16 @@
+{
+  "name": "charity-casino-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node tests/game.test.mjs",
+    "build": "node scripts/package.mjs",
+    "check": "node --check src/app.mjs && node --check src/game.mjs && node --check src/rules.mjs && node --check src/storage.mjs && node --check src/server.mjs && node --check scripts/package.mjs && node --check scripts/pages.mjs && node --check scripts/prepare-github.mjs",
+    "verify": "npm run check && npm test && npm run build && node tests/package.test.mjs",
+    "build:pages": "node scripts/pages.mjs",
+    "verify:pages": "npm run build:pages && node tests/pages.test.mjs",
+    "prepare:github": "npm run verify:pages && node scripts/prepare-github.mjs"
+  }
+}

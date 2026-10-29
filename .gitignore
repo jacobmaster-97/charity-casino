@@ -1,0 +1,25 @@
+# Local builds and downloadable archives
+dist/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+*.log
+
+# Credentials and local player saves
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+charity-casino-*-round-*.json
+
+# Historical art, packaging and QA screenshots stay in the workspace
+docs/previews/
+.agents/skills/gamestudio/assets/
+public/art/styles/a/
+public/art/styles/c/
+public/art/styles/*/lobby-populated-v3.png
+
+# docs/index.html and docs/play/ are intentionally tracked for GitHub Pages.

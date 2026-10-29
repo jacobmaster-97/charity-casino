@@ -1,0 +1,101 @@
+{
+  "id": "b",
+  "name": "港式賭片卡通",
+  "status": "selected_style",
+  "role": "static_lobby_with_ambient_people",
+  "file": "lobby-populated-v4.png",
+  "width": 1672,
+  "height": 941,
+  "color_mode": "RGB",
+  "alpha": false,
+  "tileable": false,
+  "render_filter": "linear",
+  "source_path": "/workspace/generated_images/exec-c14f5363-c7b3-4ea1-9c17-dc36c7ffc9ac.png",
+  "replaced_candidate_source": "/workspace/generated_images/exec-b3c711e5-7966-4471-ac99-34cee796bdc8.png",
+  "correction": "sic_bo_glass_dome_exactly_three_dice",
+  "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f",
+  "requires_live_ui_overlay": true,
+  "runtime_game_results_baked": false,
+  "verification": {
+    "png_decode": "pass",
+    "source_copy_hash": "pass",
+    "visual_review": "5_tables_each_with_1_dealer_and_2_seated_adult_patrons; seat_and_backrest_alignment_reviewed; dealers_behind_far_table_edges; stairs_and_three_sic_bo_dice_retained",
+    "browser_and_mobile": "not_tested",
+    "contact_and_occlusion": {
+      "method": "static_visual_review",
+      "record": "docs/ART_QA.md",
+      "result": "visible_contacts_improved_no_obvious_unsupported_seats",
+      "limitations": [
+        "dealer_lower_bodies_occluded_by_tables",
+        "some_patrons_feet_hidden_by_dresses",
+        "no_3d_geometry_or_physics_simulation",
+        "no_character_animation_or_device_testing"
+      ]
+    }
+  },
+  "normalized_station_anchors": {
+    "sic_bo": [
+      0.33,
+      0.4
+    ],
+    "baccarat": [
+      0.73,
+      0.4
+    ],
+    "poker": [
+      0.17,
+      0.68
+    ],
+    "blackjack": [
+      0.5,
+      0.71
+    ],
+    "roulette": [
+      0.85,
+      0.69
+    ],
+    "stair_entrance": [
+      0.5,
+      0.2
+    ]
+  },
+  "anchor_verification": "visual_approximation_not_runtime_hit_tested",
+  "revision": 4,
+  "latest_edit": "align_seated_patrons_with_chair_cushions_and_correct_dealer_table_occlusion",
+  "previous_revision": {
+    "file": "lobby-populated-v3.png",
+    "source_path": "/workspace/generated_images/exec-35e0fd97-0712-449f-b775-497e7634240e.png",
+    "sha256": "1b151b12c8cfe0d083c37feb5406031a371837257178f865493dd517f6c6ab8d",
+    "revision": 3,
+    "metadata_backup": "docs/previews/revisions/populated-v3/b/asset.json"
+  },
+  "stair_entrance_role": "static_background_architecture; no new upstairs gameplay authorized",
+  "shop_access": "existing shop feature retained; future separate UI entry placement undecided",
+  "clean_base": {
+    "file": "lobby-background.png",
+    "source_path": "/workspace/generated_images/exec-7d42cf10-e3ba-4a48-94b2-882e247cc1d4.png",
+    "sha256": "d03102f5fee518415c89fb481a4ea1141dabbf1a433975bcf3a3300d720a93fb",
+    "role": "clean_static_environment",
+    "metadata_backup": "docs/previews/revisions/staircase-empty/b/asset.json"
+  },
+  "ambient_population": {
+    "static_artwork": true,
+    "animated": false,
+    "dealers_visually_counted": 5,
+    "patrons_visually_counted": 10,
+    "each_table": {
+      "dealers": 1,
+      "patrons": 2
+    },
+    "appearance_variation": [
+      "age_appearance",
+      "hairstyle",
+      "clothing",
+      "body_build",
+      "skin_tone",
+      "pose"
+    ],
+    "represents_live_game_state": false
+  },
+  "notes": "Populated PNG is a directly usable static atmosphere texture. Clean staircase environment is preserved separately for later actor layers or animation; live cards, bets, opponents and payouts remain runtime-owned."
+}

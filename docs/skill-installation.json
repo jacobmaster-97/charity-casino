@@ -1,0 +1,8 @@
+{
+  "name": "gamestudio",
+  "scope": "project-local",
+  "source": "https://github.com/guangyuspace/codex-gamestudio-skill",
+  "commit": "42838f2a4df97f77104a4c7a9561a4f6c9160621",
+  "installed_path": "/workspace/web-game/.agents/skills/gamestudio",
+  "installed_date": "2026-10-28"
+}

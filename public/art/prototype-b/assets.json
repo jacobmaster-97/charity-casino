@@ -1,0 +1,81 @@
+{
+  "style": "b",
+  "revision": 1,
+  "assets": [
+    {
+      "id": "table",
+      "file": "table.png",
+      "source_path": "/workspace/generated_images/exec-da37ca7e-d6c4-4427-b6fa-ffe9dce6f1f9.png",
+      "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0",
+      "width": 1672,
+      "height": 941,
+      "color_mode": "RGB",
+      "grid": null,
+      "role": "static_texture",
+      "source": "image_gen generated original asset",
+      "render_filter": "linear"
+    },
+    {
+      "id": "dice",
+      "file": "dice.png",
+      "source_path": "/workspace/generated_images/exec-c871ae43-cd43-4ed7-a4f4-1656f0e82a09.png",
+      "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b",
+      "width": 1024,
+      "height": 1536,
+      "color_mode": "RGBA",
+      "grid": [
+        2,
+        3
+      ],
+      "role": "runtime_prop",
+      "source": "image_gen generated original asset",
+      "render_filter": "linear"
+    },
+    {
+      "id": "props",
+      "file": "props.png",
+      "source_path": "/workspace/generated_images/exec-38a7a5dd-fafa-4e94-8f4f-65af7c683885.png",
+      "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf",
+      "width": 1254,
+      "height": 1254,
+      "color_mode": "RGBA",
+      "grid": [
+        2,
+        2
+      ],
+      "role": "runtime_prop",
+      "source": "image_gen generated original asset",
+      "render_filter": "linear"
+    },
+    {
+      "id": "dome",
+      "file": "dome.png",
+      "source_path": "/workspace/generated_images/exec-03afad61-ce5f-404e-8936-458a45fea687.png",
+      "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca",
+      "width": 1254,
+      "height": 1254,
+      "color_mode": "RGBA",
+      "grid": null,
+      "role": "runtime_prop",
+      "source": "image_gen generated original asset",
+      "render_filter": "linear"
+    }
+  ],
+  "notes": [
+    "dice atlas row-major faces 1–6 visually counted",
+    "props atlas: protection, lens, reroll, chips",
+    "glass and dice separate runtime layers",
+    "Original files copied without resizing or retouching; source images retained",
+    "Generated output provenance recorded; no third-party stock art imported; legal clearance not independently reviewed"
+  ],
+  "sampling": {
+    "dice": "2 columns by 3 rows; row-major 1–6",
+    "props": "2x2; top-left protect, top-right peek, bottom-left reroll, bottom-right chips; first-column CSS background-size 190% 200% to avoid voucher edge clipping"
+  },
+  "verification": {
+    "png_decode": "pass",
+    "source_hash": "pass",
+    "visual_raw_assets": "six_pip_counts_and_four_props_reviewed",
+    "browser_atlas_sampling": "not_tested"
+  }
+}
