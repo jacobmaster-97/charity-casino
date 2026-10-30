@@ -45,5 +45,56 @@
     "felt.png",
     "dice.png",
     "chip.png"
-  ]
+  ],
+  "five_color_chips": {
+    "source": "/workspace/generated_images/exec-f6a16946-98a7-431b-9aa5-4d44a8ad82ae.png",
+    "file": "chips-five.png",
+    "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0",
+    "size": [
+      2172,
+      724
+    ],
+    "colors": [
+      "象牙白",
+      "酒紅",
+      "寶藍",
+      "翠綠",
+      "紫"
+    ],
+    "cells": "five horizontal atlas regions, cropped in runtime SVG; original PNG unchanged",
+    "superseded_source": "/workspace/generated_images/exec-01969640-e7e1-4e5c-a5ee-5c316192ea51.png",
+    "runtime_regions": [
+      [
+        20.0,
+        155,
+        394.4,
+        394
+      ],
+      [
+        454.4,
+        155,
+        394.4,
+        394
+      ],
+      [
+        888.8,
+        155,
+        394.4,
+        394
+      ],
+      [
+        1323.1999999999998,
+        155,
+        394.4,
+        394
+      ],
+      [
+        1757.6,
+        155,
+        394.4,
+        394
+      ]
+    ],
+    "qa": "Five separated chips, transparent margins; explicit SVG clip paths; original PNG unchanged"
+  }
 }

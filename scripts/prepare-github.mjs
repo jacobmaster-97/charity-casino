@@ -14,7 +14,7 @@ async function gather(directory){
 }
 for(const dir of ['src','scripts','tests','.agents/skills/gamestudio','public/art/prototype-b','public/art/sicbo-board-b','docs/play'])await gather(dir);
 files.push('docs/index.html','docs/.nojekyll','public/art/styles/b/lobby-populated-v4.png','public/art/styles/b/lobby-background.png','public/art/styles/b/asset.json');
-for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||['skill-installation.json','GITHUB_UPLOAD.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
+for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||entry.name.endsWith('_RELEASE.json')||['skill-installation.json','GITHUB_UPLOAD.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
 const manifest=[];
 for(const relative of [...new Set(files)].sort()){
   const source=path.join(root,relative),output=path.join(destination,relative),bytes=await readFile(source);

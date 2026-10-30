@@ -27,3 +27,5 @@ npm run verify及npm run verify:pages：36項（22規則／存檔、5盤面／�
 ## 發布與回復
 
 同步main及既有根目錄Pages，保留/docs備用布局，不更改發布網域或玩家資料。若實測有阻塞問題，可建立回復提交還原至0.1.2提交f6c1762ef06d8dfee7d6a1572ff8aee32c64bb58的runtime／入口及docs/play，無須清除存檔。生成素材資料夾保留不會影響舊程式。
+
+發布結果：main 67578f2f70a84f5993edcc22068ae797e3b22af5；Pages run40992506875 completed/success；96發布檔SHA核對一致。發布後本地收據見SIC_BO_BOARD_RELEASE.json。

@@ -10,7 +10,7 @@ for(const file of ['rules','game','storage','board','app']){
   const source=await readFile(path.join(root,`src/${file}.mjs`),'utf8');
   js+=source.replace(/^import .*;\s*$/gm,'').replace(/^export /gm,'')+'\n';
 }
-const references=['/art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(name=>`/art/prototype-b/${name}.png`),...['felt','dice','chip'].map(name=>`/art/sicbo-board-b/${name}.png`)];
+const references=['/art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(name=>`/art/prototype-b/${name}.png`),...['felt','dice','chip','chips-five'].map(name=>`/art/sicbo-board-b/${name}.png`)];
 const assetMap={};let bootstrap='';
 for(const [index,ref] of references.entries()){
   const bytes=await readFile(path.join(root,'public',ref));

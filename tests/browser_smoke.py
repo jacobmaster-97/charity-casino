@@ -22,6 +22,8 @@ def act(page, name, **attrs):
     selector = f'[data-action="{name}"]'
     for key, value in attrs.items():
         selector += f'[data-{key}="{value}"]'
+    if name == 'remove' and not page.locator('details.bet-details').evaluate('(n)=>n.open'):
+        page.locator('details.bet-details summary').click()
     page.locator(selector).click()
 
 def overflow(page):
@@ -135,7 +137,12 @@ def main():
             page.locator('[data-action=bet][data-bet=big]').scroll_into_view_if_needed()
             page.locator('[data-action=bet][data-bet=big]').tap()
             expect(page.locator('.bet-list')).to_contain_text('大')
+            assert page.locator('.board-scroll').evaluate('(n)=>n.scrollWidth<=n.clientWidth+1')
+            assert page.locator('aside.bet-panel').count() == 0
+            assert page.locator('.chip-picker [data-color]').count() == 5
+            act(page, 'board-zoom')
             assert page.locator('.board-scroll').evaluate('(n)=>n.scrollWidth>n.clientWidth')
+            act(page, 'board-zoom')
             page.screenshot(path=str(OUT / f'prototype-table-{width}.png'), full_page=True)
             act(page,'rules')
             expect(page.get_by_role('dialog')).to_be_visible()

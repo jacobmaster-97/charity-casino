@@ -1,5 +1,9 @@
 # DEBUG_HANDOFF
 
+## 最新問題：平板盤面截斷與投注區佔寬
+
+使用者上載Safari實況，顯示只見右半盤。根因是舊table-layout保留右側320px欄，同時SVG固定最小1560px寬。0.1.4移除側欄、把控制整合到底部、預設盤面min-width:0及全寬；放大時才啟用大盤。40項規則／模板／元件／封裝／Pages檢查通過，尚無實際Safari回測；詳見docs/SIC_BO_LAYOUT_014.md。此問題不歸因於PNG解碼，也不清除玩家資料。舊環境IPC限制繼續適用。
+
 ## 目前修正：手機／平板圖片載入失敗
 
 GitHub Pages已啟用，build 40895801619的job123524463752證實從根目錄source:.發布。app／CSS卻請求../art，實際根目錄圖片在public/art。這是先前只測docs布局的覆蓋缺口。新增回歸測試先失敗，改../public/art與docs/play/public/art後通過，共24測試。入口加?v=0.1.1，根目錄加.nojekyll；舊圖片路徑保留相容快取。詳見docs/ASSET_PATH_FIX.md。

@@ -16,7 +16,7 @@ test('Pages entry references shipped runtime, without development server',async(
   assert.ok((await stat(path.join(site,'.nojekyll'))).isFile());
 });
 test('all runtime PNGs match original assets byte for byte',async()=>{
-  const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip'].map(id=>`art/sicbo-board-b/${id}.png`)];
+  const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip','chips-five'].map(id=>`art/sicbo-board-b/${id}.png`)];
   for(const file of images)assert.deepEqual(await readFile(path.join(site,'play/public',file)),await readFile(path.join(root,'public',file)));
 });
 test('CSS and runtime assets resolve inside both root and project Pages URLs',async()=>{
@@ -53,8 +53,8 @@ test('repository-root Pages resolves actual app and CSS images to existing PNGs'
 test('root and docs entry points version app and CSS without breaking relative paths',async()=>{
   for(const entry of ['index.html','docs/index.html']){
     const html=await readFile(path.join(root,entry),'utf8');
-    assert.match(html,/src\/styles\.css\?v=0\.1\.3/);
-    assert.match(html,/src\/app\.mjs\?v=0\.1\.3/);
+    assert.match(html,/src\/styles\.css\?v=0\.1\.4/);
+    assert.match(html,/src\/app\.mjs\?v=0\.1\.4/);
   }
 });
 test('all entry-module dependencies share the release version to avoid stale export caches',async()=>{

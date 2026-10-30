@@ -1,4 +1,4 @@
-# 賭王慈善大賽 · 原型0.1.3
+# 賭王慈善大賽 · 原型0.1.4
 
 B港式賭片卡通的大廳＋大小原型。其他四桌標示開發中，正式首版五款全開的規劃保持。
 
@@ -27,7 +27,7 @@ npm run verify
 ## 功能
 
 - 姓名、競速／自由模式、故事卡、B大廳及五桌入口。
-- 翠綠枱布完整大小盤面、籌碼飛入與同格堆疊、50種投注、同局多注、隨資金調整大額籌碼、自訂／全押、30秒下注、三骰、已確認賠率。
+- 上下排列的完整翠綠大小盤面、底部投注控制、五色籌碼飛入與混色堆疊、50種投注、同局多注、隨資金調整大額籌碼、自訂／全押、30秒下注、三骰、已確認賠率。
 - 商店10%定價、保本／透視／重擲，每局一件、沒有免費配給。
 - 暫停遮桌、兩種計時停表、背景／失焦暫停，按繼續才恢復。
 - 完成局自動保存，自由模式另有手動保存；匯出／匯入完成存檔、模式槽分開。
@@ -37,7 +37,7 @@ npm run verify
 
 ## 驗證狀態
 
-規則／存檔22項、盤面／動畫元件5項、封裝3項、Pages6項通過。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
+規則／存檔22項、盤面／動畫及模板9項、封裝3項、Pages6項通過。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
 
 盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

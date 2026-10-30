@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {BETS} from '../src/rules.mjs';
+import {readFile} from 'node:fs/promises';
+import {BETS,money,getChipDenominations,chipLabel,ITEMS} from '../src/rules.mjs';
 import {Game} from '../src/game.mjs';
-import {BOARD_CELLS,boardMarkup,boardAmounts,ChipFlights} from '../src/board.mjs';
+import {BOARD_CELLS,boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from '../src/board.mjs';
 const art=p=>p;
 test('approved board exposes exactly 50 uniquely operable bets and retains rule rates',()=>{
  const markup=boardMarkup(art,true);assert.equal((markup.match(/data-action="bet"/g)||[]).length,50);
@@ -36,4 +37,33 @@ test('mounted flight uses 420ms arc + 180ms landing; finishing only changes pres
  globalThis.DOMPoint=class{constructor(x,y){this.x=x;this.y=y;}matrixTransform(){return this;}};
  globalThis.document={querySelector:()=>({getScreenCTM:()=>({a:1})}),body:{append(){appended++;}},createElement:()=>({style:{},setAttribute(){},remove(){removed++;},animate(frames,options){assert.equal(options.duration,600);assert.equal(frames[20].offset,.7);animation={cancel(){},pause(){},play(){}};return animation;}})};
  try{const effects=new ChipFlights({art,onChange(){updates++;}});effects.queue('small',500,{x:600,y:900});effects.mount();assert.equal(appended,1);effects.mount();assert.equal(appended,1);animation.onfinish();assert.deepEqual(effects.pending,{});assert.equal(removed,1);assert.equal(updates,1);}finally{globalThis.document=priorDocument;globalThis.DOMPoint=priorPoint;}
+});
+
+test('five chip slots have distinct atlas regions and stable colors across wealth tiers',()=>{
+ assert.equal(new Set(CHIP_COLORS).size,5);
+ const regions=CHIP_COLORS.map((_,i)=>chipFace(i,'100',art).match(/viewBox="([^"]+)"/)[1]);assert.equal(new Set(regions).size,5);
+ for(const bank of [10000,100000000,2500000000])getChipDenominations(bank).forEach((value,i)=>assert.equal(chipColorIndex(value,bank),i));
+ const chip=chipFace(1,'100',art);assert.ok(chip.includes('chips-five.png'));assert.ok(chip.includes('<clipPath'));assert.ok(chip.includes('clip-path="url(#chip-crop-'));
+});
+test('fitted board preserves every betting region without the old fixed-width viewport',()=>{
+ const markup=boardMarkup(art,true);assert.ok(markup.includes('viewBox="110 245 1380 555"'));
+ for(const c of BOARD_CELLS){assert.ok(c.x>=110&&c.y>=245);assert.ok(c.x+c.w<=1490&&c.y+c.h<=800);}
+});
+test('real table template contains the entire lower console and all former sidebar functions',async()=>{
+ const source=await readFile(new URL('../src/app.mjs',import.meta.url),'utf8');
+ const definition=source.slice(source.indexOf('function die('),source.indexOf('\nfunction shop()'));
+ const deps={game:new Game({roll:()=>2}),button:(a,t,c='',e='')=>`<button data-action="${a}" class="${c}" ${e}>${t}</button>`,esc:s=>String(s),icon:()=>'',art,boardMarkup,chipFace,CHIP_COLORS,BETS,BET_MAP:Object.fromEntries(BETS.map(b=>[b.id,b])),ITEMS,money,getChipDenominations,chipLabel,boardZoom:false,preciseBet:'small',chip:500,allIn:false,peekIndex:0,storageWarning:''};
+ deps.game.start('版面');deps.game.enterTable();
+ const render=new Function(...Object.keys(deps),definition+';return table();');
+ const html=render(...Object.values(deps));assert.ok(!html.includes('<aside'));assert.ok(!html.includes('table-layout'));
+ assert.ok(html.indexOf('dice-stage')<html.indexOf('table-console'));assert.ok(html.indexOf('board-scroll')<html.indexOf('console-dock'));
+ for(const action of ['chip','all-in','roll','clear','use','board-zoom'])assert.ok(html.includes(`data-action="${action}"`),action);
+ for(const cls of ['custom-bet','bet-details','bet-list','inventory','peek-picker','precise-bet'])assert.ok(html.includes(cls),cls);
+ assert.equal((html.match(/data-action="chip"/g)||[]).length,5);
+ deps.game.addBet('small',500);const placed=render(...Object.values(deps));assert.ok(placed.includes('data-action="remove"'));
+ deps.game.lock();deps.game.tick(900);const settled=render(...Object.values(deps));assert.ok(settled.includes('data-action="next"'));assert.ok(!settled.includes('data-action="roll"'));assert.ok(settled.includes('aria-disabled="true"'));
+});
+test('mixed-denomination stacks retain each original chip color',()=>{
+ const markup=boardAmounts({small:600},{},art,{small:2},{small:500},10000,{small:[100,500]});
+ assert.ok(markup.includes('viewBox="20 155 394.4 394"'));assert.ok(markup.includes('viewBox="454.4 155 394.4 394"'));assert.ok(markup.includes('已押 $6'));
 });
