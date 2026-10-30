@@ -11,8 +11,8 @@
 ## 已備妥的發布結構
 
 - `docs/index.html`：GitHub Pages入口。
-- `docs/play/src/`：五個runtime檔，沒有開發伺服器。
-- `docs/play/public/art/`：五張實際PNG。
+- `docs/play/src/`：六個runtime檔，沒有開發伺服器。
+- `docs/play/public/art/`：八張實際PNG。
 - `docs/.nojekyll`：直接提供靜態檔。
 
 使用`npm run build:pages`更新上述發布檔，`npm run verify:pages`驗證。支援帳號首頁或`https://帳號.github.io/倉庫名稱/`子路徑；CSS採相對網址，程式依module網址解析圖片。
@@ -29,7 +29,7 @@
 
 ## 啟用網頁存取
 
-上載完成後，到目標倉庫：Settings → Pages → Build and deployment → Source選Deploy from a branch → Branch選main → Folder選/docs → Save。
+上載完成後，到目標倉庫：Settings → Pages → Build and deployment → Source選Deploy from a branch → Branch選main → Folder選/（亦可選/docs） → Save。
 
 這是帳號／倉庫設定步驟，當前工具不能代按（目前使用者已啟用）。發布完成後，以GitHub Pages顯示的實際網址為準；尚未上載或啟用前不宣稱網址可用。
 

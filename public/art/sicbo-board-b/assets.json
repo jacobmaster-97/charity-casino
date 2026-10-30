@@ -1,0 +1,49 @@
+{
+  "source": "User-approved sicbo-board-v2, 2026-10-30",
+  "original_metadata": {
+    "status": "approved_and_integrated",
+    "animation_approved": true,
+    "production_integrated": true,
+    "assets": [
+      {
+        "id": "felt",
+        "file": "assets/felt.png",
+        "source": "/workspace/generated_images/exec-81a0aced-30d5-4778-bbd8-523b5f8bfd26.png",
+        "size": [
+          1672,
+          941
+        ],
+        "mode": "RGB",
+        "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9"
+      },
+      {
+        "id": "printed-dice",
+        "file": "assets/dice.png",
+        "source": "/workspace/generated_images/exec-952c2081-c0b0-414c-82dd-408ea0e2a39e.png",
+        "size": [
+          1024,
+          1536
+        ],
+        "mode": "RGBA",
+        "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d"
+      },
+      {
+        "id": "physical-chip",
+        "file": "assets/chip.png",
+        "source": "/workspace/generated_images/exec-3e227563-5b37-4815-9afc-01873a3e0311.png",
+        "size": [
+          1254,
+          1254
+        ],
+        "mode": "RGBA",
+        "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0"
+      }
+    ],
+    "note": "PNG originals copied unchanged. Dice-crops are runtime sampling coordinates, not raster edits."
+  },
+  "runtime_files": [
+    "felt.png",
+    "dice.png",
+    "chip.png"
+  ]
+}

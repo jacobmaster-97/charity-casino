@@ -4,10 +4,10 @@ const root=path.resolve(import.meta.dirname,'..');
 const destination=path.join(root,'docs');
 const runtime=path.join(destination,'play');
 await mkdir(path.join(runtime,'src'),{recursive:true});
-for(const file of ['app.mjs','game.mjs','rules.mjs','storage.mjs','styles.css']){
+for(const file of ['app.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','styles.css']){
   await copyFile(path.join(root,'src',file),path.join(runtime,'src',file));
 }
-const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`)];
+const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip'].map(id=>`art/sicbo-board-b/${id}.png`)];
 for(const file of images){
   const output=path.join(runtime,'public',file);
   await mkdir(path.dirname(output),{recursive:true});
@@ -18,4 +18,4 @@ const html=(await readFile(path.join(root,'index.html'),'utf8'))
   .replace('src="./src/app.mjs','src="./play/src/app.mjs');
 await writeFile(path.join(destination,'index.html'),html);
 await writeFile(path.join(destination,'.nojekyll'),'');
-console.log('GitHub Pages ready: docs/index.html + docs/play/ (five PNGs, five runtime files).');
+console.log('GitHub Pages ready: docs/index.html + docs/play/ (eight PNGs, six runtime files).');
