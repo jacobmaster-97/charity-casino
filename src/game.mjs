@@ -1,5 +1,5 @@
-import {BACCARAT_ENABLED,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.1.6';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.1.6';
+import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.1.7';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.1.7';
 export class Game {
   constructor({roll=randomDie,onComplete=()=>{},randomIndex=randomBelow}={}) { this.roll=roll;this.onComplete=onComplete;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.randomIndex=randomIndex; }
   start(name,mode='race') {
@@ -93,12 +93,12 @@ export class Game {
   lockBaccarat(){
     if(!this.canBet)return false;
     if(!this.stake){this.baccaratShoe.cursor+=4;this.newBaccaratRound();return 'skipped';}
-    this.profile.bank-=this.stake;this.baccaratShoe.cursor+=4;this.round.phase='dealing';this.round.remaining=400;return true;
+    this.profile.bank-=this.stake;this.baccaratShoe.cursor+=4;this.round.phase='dealing';this.round.remaining=BACCARAT_DEAL_MS;return true;
   }
   revealBaccaratCard(){
     if(this.paused||this.round?.phase!=='dealing')return false;
     this.round.revealed++;
-    if(this.round.revealed<4){this.round.remaining=400;return true;}
+    if(this.round.revealed<4){this.round.remaining=BACCARAT_DEAL_MS;return true;}
     if(this.round.used==='swap'){this.round.phase='swapping';this.round.remaining=10000;return true;}
     return this.prepareBaccaratDraw();
   }
@@ -110,26 +110,51 @@ export class Game {
   prepareBaccaratDraw(){
     this.round.final=completeBaccaratHand(this.round.initial,()=>this.baccaratShoe.cards[this.baccaratShoe.cursor++]);
     this.round.cards={player:[...this.round.final.player],banker:[...this.round.final.banker]};
-    if(this.round.final.supplements.length){this.round.phase='drawing';this.round.remaining=400;}else{this.round.readyToSettle=true;this.settle();}return true;
+    if(this.round.final.supplements.length)this.startBaccaratDraw();else{this.round.readyToSettle=true;this.settle();}return true;
+  }
+  startBaccaratDraw(){
+    const r=this.round,side=r.final.supplements[r.drawShown].side;
+    r.remaining=BACCARAT_DEAL_MS;
+    if(r.bets['bac-'+side]||side==='banker'&&r.bets['bac-lucky-six']){r.squeeze={index:r.drawShown,side,progress:0};r.phase='delivering';}else r.phase='drawing';
   }
   revealBaccaratDraw(){
     if(this.paused||this.round?.phase!=='drawing')return false;
+    return this.commitBaccaratDraw();
+  }
+  updateBaccaratSqueeze(progress){
+    if(this.paused||this.round?.phase!=='squeezing'||!Number.isFinite(progress))return false;
+    this.round.squeeze.progress=Math.max(this.round.squeeze.progress,Math.min(1,Math.max(0,progress)));return true;
+  }
+  finishBaccaratSqueeze(){
+    if(this.paused||this.round?.phase!=='squeezing')return false;
+    this.round.squeeze.progress=1;this.round.phase='unfolding';this.round.remaining=BACCARAT_UNFOLD_MS;return true;
+  }
+  advanceBaccaratSqueeze(){
+    if(this.paused)return false;
+    if(this.round?.phase==='delivering'){this.round.phase='squeezing';this.round.remaining=0;return true;}
+    if(this.round?.phase==='unfolding'){this.round.phase='returning';this.round.remaining=BACCARAT_RETURN_MS;return true;}
+    if(this.round?.phase==='returning')return this.commitBaccaratDraw();
+    return false;
+  }
+  commitBaccaratDraw(){
+    if(this.paused||!['drawing','returning'].includes(this.round?.phase))return false;
     this.round.drawShown++;
-    if(this.round.drawShown<this.round.final.supplements.length)this.round.remaining=400;else{this.round.readyToSettle=true;this.settle();}return true;
+    this.round.squeeze=null;
+    if(this.round.drawShown<this.round.final.supplements.length)this.startBaccaratDraw();else{this.round.readyToSettle=true;this.settle();}return true;
   }
   tick(ms){
     if(!this.profile||this.paused||!['lobby','table'].includes(this.screen)||this.profile.status!=='active')return false;
     if(!Number.isFinite(ms)||ms<=0)return false;
     let left=ms,changed=false;
     while(left>0){
-      const timed=this.screen==='table'&&['betting','revealing','reroll','dealing','swapping','drawing'].includes(this.round?.phase);
+      const timed=this.screen==='table'&&['betting','revealing','reroll','dealing','swapping','drawing','delivering','unfolding','returning'].includes(this.round?.phase);
       const step=timed?Math.min(left,this.round.remaining):left;
       this.profile.elapsedMs+=step;left-=step;
       if(!timed)break;
       this.round.remaining-=step;
-      if(this.round.remaining<=0){
+      if(this.round.remaining<1e-7){
         const phase=this.round.phase;
-        if(phase==='betting')this.lock();else if(phase==='revealing')this.reveal();else if(phase==='dealing')this.revealBaccaratCard();else if(phase==='swapping')this.chooseBaccaratSwap();else if(phase==='drawing')this.revealBaccaratDraw();else this.chooseReroll();
+        if(phase==='betting')this.lock();else if(phase==='revealing')this.reveal();else if(phase==='dealing')this.revealBaccaratCard();else if(phase==='swapping')this.chooseBaccaratSwap();else if(phase==='drawing')this.revealBaccaratDraw();else if(['delivering','unfolding','returning'].includes(phase))this.advanceBaccaratSqueeze();else this.chooseReroll();
         changed=true;
         if(this.profile.status!=='active')break;
       }

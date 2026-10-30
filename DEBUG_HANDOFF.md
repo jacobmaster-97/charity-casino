@@ -1,8 +1,13 @@
 # DEBUG_HANDOFF
 
+## 0.1.7動畫驗證
+
+慢速發牌與咪牌已獲使用者「實裝動畫」批准。87項邏輯／控制器DOM替身／模板／封裝／Pages檢查通過；12項新測試含暫停剩餘時間、進度保留、多指／取消、直接揭牌、牌序／旁注／單次結算。固定手牌測試因新互動更新成明確揭牌決策，4,000局資金模擬仍通過。正式SVG用Inkscape檢查手指／牌角錨點，非瀏覽器截圖。Chromium IPC限制不變，Safari／實機觸控／旋轉未驗證；不重試相同失敗路線。發布結果見CODEX_HANDOFF及完成後的BACCARAT_ANIMATION_RELEASE.json。
+
+
 ## 0.1.6旁注驗證狀態
 
-莊對／閒對／幸運六已接入，75項規則／保存／模板／封裝／Pages檢查通過，新增12項旁注包含2,000局混合資金守恆。尚無新的瀏覽器啟動證據，不重試下方已知IPC失敗路線；六區盤面Safari／手機／平板的觸控及縮放仍UNVERIFIED。咪牌／減速預覽不在本次正式變更內，400ms節奏保持。發布結果見CODEX_HANDOFF及完成後產生的docs/BACCARAT_SIDEBETS_RELEASE.json。
+莊對／閒對／幸運六已接入，75項規則／保存／模板／封裝／Pages檢查通過，新增12項旁注包含2,000局混合資金守恆。尚無新的瀏覽器啟動證據，不重試下方已知IPC失敗路線；六區盤面Safari／手機／平板的觸控及縮放仍UNVERIFIED。咪牌／減速預覽不在本次正式變更內，400ms節奏保持。已部署main 996ba1e615cb97d50dd23130789da88271d6d738，Pages run41024861099 completed/success；114檔SHA吻合。詳CODEX_HANDOFF及docs/BACCARAT_SIDEBETS_RELEASE.json。
 
 
 ## 0.1.5百家樂驗證狀態

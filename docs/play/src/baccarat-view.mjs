@@ -1,6 +1,7 @@
-import {BACCARAT_BETS,BACCARAT_BET_MAP,baccaratPoints,cardRank} from './baccarat.mjs?v=0.1.6';
-import {money,getChipDenominations,chipLabel,ITEMS} from './rules.mjs?v=0.1.6';
-import {baccaratBoardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.1.6';
+import {squeezePanel} from './baccarat-squeeze.mjs?v=0.1.7';
+import {BACCARAT_DEAL_MS,BACCARAT_BETS,BACCARAT_BET_MAP,baccaratPoints,cardRank} from './baccarat.mjs?v=0.1.7';
+import {money,getChipDenominations,chipLabel,ITEMS} from './rules.mjs?v=0.1.7';
+import {baccaratBoardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.1.7';
 const baccaratEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let cardClipSerial=0;
 export function baccaratCard(id,hidden,art,{action='',index=0,fresh=false,delay=0,paused=false}={}){
@@ -11,7 +12,7 @@ export function baccaratCard(id,hidden,art,{action='',index=0,fresh=false,delay=
 }
 export function baccaratTableView({game,art,button,icon,chip,allIn,storageWarning,peekSide}){
  const r=game.round,p=game.profile,betting=r.phase==='betting',settled=r.phase==='settled',swapping=r.phase==='swapping';
- const phaseText={betting:'請下注',dealing:'正在發牌',swapping:'選擇換牌',drawing:'依規則補牌',settled:'本局完成'}[r.phase];
+ const phaseText={betting:'請下注',dealing:'正在發牌',swapping:'選擇換牌',drawing:'依規則補牌',delivering:'送上補牌',squeezing:'親自咪牌',unfolding:'攤開牌面',returning:'補牌歸位',settled:'本局完成'}[r.phase];
  const wagers=Object.entries(r.bets).map(([id,amount])=>({...BACCARAT_BET_MAP[id],amount}));
  const target=BACCARAT_BETS.find(b=>r.bets[b.id]),leaveDisabled=!settled&&(!betting||game.stake>0||r.used);
  const hand=(side,label)=>{
@@ -19,10 +20,10 @@ export function baccaratTableView({game,art,button,icon,chip,allIn,storageWarnin
    return `<div class="baccarat-hand ${settled&&r.final.winner===side?'winning-hand':''}"><h2>${label} <strong>${shown===cards.length?baccaratPoints(cards)+' 點':'待揭曉'}</strong></h2><div class="baccarat-cards">${cards.map((id,i)=>{
      const initialIndex=i*2+(side==='banker'?1:0),hidden=i<2?!(settled||r.revealed>initialIndex):!(settled||r.final?.supplements.slice(0,r.drawShown).some(c=>c.side===side));
      const fresh=r.phase==='dealing'&&r.revealed===initialIndex+1||r.phase==='drawing'&&i===2&&r.final?.supplements[r.drawShown-1]?.side===side;
-     return baccaratCard(id,hidden,art,{action:swapping&&i<2?'swap-card':'',index:initialIndex,fresh,delay:400-r.remaining,paused:game.paused});
+     return baccaratCard(id,hidden,art,{action:swapping&&i<2?'swap-card':'',index:initialIndex,fresh,delay:Math.max(0,BACCARAT_DEAL_MS-r.remaining),paused:game.paused});
    }).join('')}</div></div>`;
  };
- return `<section class="table-screen baccarat-screen"><div class="table-nav">${button('leave','← 返回大廳','quiet',leaveDisabled?'disabled':'')}<div><span class="eyebrow">BACCARAT</span><h1>百家樂</h1></div>${button('rules','玩法與賠率','quiet')}</div>
+ return `<div class="baccarat-table-content" ${r.squeeze?'inert':''}><section class="table-screen baccarat-screen"><div class="table-nav">${button('leave','← 返回大廳','quiet',leaveDisabled?'disabled':'')}<div><span class="eyebrow">BACCARAT</span><h1>百家樂</h1></div>${button('rules','玩法與賠率','quiet')}</div>
  <section class="baccarat-stage"><div class="stage-topline"><span>${phaseText}</span><strong id="countdown" class="countdown">${r.remaining?Math.ceil(r.remaining/1000)+' 秒':''}</strong></div><div class="baccarat-hands">${hand('player','閒')}${hand('banker','莊')}</div><p class="baccarat-caption">${swapping?'點選首四張中的一張替換，或保留原牌。':settled?`${r.final.winner==='tie'?'和局':r.final.winner==='player'?'閒勝':'莊勝'}${r.final.natural?' · 天牌':''}`:'八副連續牌靴 · 按標準規則自動補牌'}</p></section>
  ${r.peek?`<div class="insight">${icon('peek')}已透視${r.peek.side==='banker'?'莊':'閒'}第 ${r.peek.index+1} 張：<strong>${r.peek.value} 點</strong><span>牌序保持，仍可在原時限內改押。</span></div>`:''}
  ${swapping?`<div class="result-box"><h2>換牌券已啟用</h2><p>可換上方一張牌；超時保留原牌，不退券。換後重新判定天牌及補牌。</p>${button('keep-cards','保留原牌','outlined')}</div>`:''}
@@ -32,5 +33,5 @@ export function baccaratTableView({game,art,button,icon,chip,allIn,storageWarnin
  ${betting?`<div class="console-controls"><div class="chip-area"><span class="control-label">選擇籌碼</span><div class="chip-picker">${getChipDenominations(r.bankAtStart).map((c,i)=>button('chip',`${chipFace(i,chipLabel(c),art)}<span>${money(c)}</span>`,!allIn&&chip===c?'selected':'',`data-chip="${c}" data-color="${CHIP_COLORS[i]}" aria-pressed="${!allIn&&chip===c}" aria-label="選擇 ${money(c)} 籌碼" title="${CHIP_COLORS[i]} · ${money(c)}" ${c>game.available?'disabled':''}`)).join('')}</div></div><div class="amount-area"><div class="custom-bet"><label for="custom-amount">自訂每次金額</label><input id="custom-amount" type="number" inputmode="decimal" min="0.01" step="0.01" value="${(allIn?game.available:chip)/100}" aria-label="每次下注金額，美元">${button('all-in','全押',allIn?'outlined selected':'outlined',`aria-pressed="${allIn}"`)}</div></div><div class="action-area">${button('roll','鎖注發牌 ↗','primary roll-button',game.stake?'':'disabled')}${button('clear','清除投注','outlined',game.stake?'':'disabled')}</div></div>`:''}
  <div class="console-tools"><details class="bet-details"><summary>投注明細／移除 <span>${wagers.length} 項</span></summary><div class="bet-list">${wagers.length?wagers.map(w=>`<div><span>${w.label} · 淨賠 ${w.rateLabel||w.rate+':1'}</span><strong>${money(w.amount)}</strong>${betting?button('remove','×','remove',`data-bet="${w.id}" aria-label="移除${w.label}投注"`):''}</div>`).join(''):'<div class="empty-bets">尚未下注</div>'}</div></details>
  ${betting?`<details class="inventory"><summary>本局道具 <span>${r.used?'已用 1／1':'每局限用 1 件'}</span></summary><div class="peek-picker"><label for="peek-side">透視目標</label><select id="peek-side"><option value="player" ${peekSide==='player'?'selected':''}>閒方</option><option value="banker" ${peekSide==='banker'?'selected':''}>莊方</option></select></div>${['protect','peek','swap'].map(id=>`<div class="item-row">${icon(id)}<span>${ITEMS[id].name}<small>持有 ${p.inventory[id]||0} 件</small></span>${button('use','使用','outlined',`data-item="${id}" ${r.used||!(p.inventory[id]>0)||id==='peek'&&!game.stake?'disabled':''}`)}</div>`).join('')}<p class="field-note">換牌券須鎖注前啟用；僅持有不會自動使用。</p></details>`:''}
- <details class="shoe-details"><summary>牌靴資訊 <span>連續八副牌</span></summary><p>第 ${game.baccaratShoe.cycle} 靴 · 餘 ${416-game.baccaratShoe.cursor} 張<br>和局退回莊／閒本金；莊贏扣贏款 5% 佣金。</p>${r.discard.length?`<p>本局棄牌：${r.discard.length} 張，已移出本局牌序。</p>`:''}</details></div></div></div></section>`;
+ <details class="shoe-details"><summary>牌靴資訊 <span>連續八副牌</span></summary><p>第 ${game.baccaratShoe.cycle} 靴 · 餘 ${416-game.baccaratShoe.cursor} 張<br>和局退回莊／閒本金；莊贏扣贏款 5% 佣金。</p>${r.discard.length?`<p>本局棄牌：${r.discard.length} 張，已移出本局牌序。</p>`:''}</details></div></div></div></section></div>${squeezePanel(r)}`;
 }

@@ -1,9 +1,10 @@
-import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.1.6';
-import {baccaratTableView} from './baccarat-view.mjs?v=0.1.6';
-import {Game} from './game.mjs?v=0.1.6';
-import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.1.6';
-import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.1.6';
-import {Saves,validateSave} from './storage.mjs?v=0.1.6';
+import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.1.7';
+import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.1.7';
+import {baccaratTableView} from './baccarat-view.mjs?v=0.1.7';
+import {Game} from './game.mjs?v=0.1.7';
+import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.1.7';
+import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.1.7';
+import {Saves,validateSave} from './storage.mjs?v=0.1.7';
 
 const app=document.querySelector('#app'),toastNode=document.querySelector('#toast');
 let storage;try{storage=window.localStorage;}catch{storage=null;}
@@ -16,6 +17,7 @@ const icon=id=>`<span class="prop prop-${id}" aria-hidden="true"></span>`;
 const button=(action,text,cls='',extra='')=>`<button type="button" data-action="${action}" class="${cls}" ${extra}>${text}</button>`;
 let boardRound=null,boardCounts={},boardLast={},boardChips={},boardZoom=false,preciseBet='small';
 const flights=new ChipFlights({art,onChange:paintBoard,reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
+const squeeze=new BaccaratSqueezeController({root:app,game,art,advance,onChange:render,reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
 function paintBoard(){const landed={};for(const [id,values] of Object.entries(boardChips)){const pendingCount=flights.flights.filter(f=>f.id===id).length;landed[id]=values.slice(0,Math.max(0,values.length-pendingCount)).slice(-3);}const node=document.querySelector('.board-amounts');if(!node||!game.round)return;node.innerHTML=boardAmounts(game.round.bets,flights.pending,art,boardCounts,boardLast,game.round.bankAtStart,landed);for(const cell of document.querySelectorAll('.printed-cell'))cell.classList.toggle('has-bet',Boolean(game.round.bets[cell.dataset.bet]));}
 const formatMode=m=>m==='race'?'競速模式':'自由模式';
 function notify(text){toastNode.textContent=text;toastNode.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastNode.classList.remove('visible'),4200);}
@@ -63,7 +65,7 @@ function table(){
 function shop(){const cost=Math.max(1,Math.round(game.profile.bank/10));return `<section class="shop-page"><div class="section-heading"><div><p class="eyebrow">A LITTLE HELP FROM LUCK</p><h1>道具商店</h1><p>每件為購買前資金的 10%。每局最多使用一件。</p></div>${button('close-shop','← 返回大廳','outlined')}</div><div class="shop-notice"><span class="gold">Ⅱ 計時已暫停</span><span>本次價格 ${money(cost)} · 買下一件時重新計價</span></div><div class="shop-grid">${Object.entries(ITEMS).map(([id,item])=>`<article class="shop-card">${icon(id)}<span class="eyebrow">${id==='protect'?'PROTECT':id==='peek'?'INSIGHT':id==='swap'?'SWAP A CARD':'SECOND CHANCE'}</span><h2>${item.name}</h2><p>${item.description}</p><div class="shop-card-bottom"><span>已持有 ${game.profile.inventory[id]} 件</span>${button('buy',`${money(cost)} 購買`,'primary',`data-item="${id}"`)}</div></article>`).join('')}</div><p class="save-note">購買紀錄將於下一局完成時保存。保本券與透視鏡供大小／百家樂共用；重擲券只用於大小，換牌券只用於百家樂。</p></section>`;}
 function modal(){if(!overlay)return '';const isPause=overlay==='pause',isRules=overlay==='rules';let content;
   if(isPause)content=`<span class="eyebrow">TAKE YOUR TIME</span><h2>牌桌已遮住，稍歇一會。</h2><p>通關計時與行動倒數已停止。<br>按「繼續」恢復原本的牌局與剩餘秒數。</p>${button('resume','繼續','primary')}`;
-  else if(isRules&&game.activeTable==='baccarat')content=`<span class="eyebrow">BACCARAT · 計時已暫停</span><h2>百家樂玩法與賠率</h2><p>八副連續牌靴，主注最多選莊、閒、和其中一項。同主注區加碼，點另一主注區把原主注改押；旁注可獨立複選或單押。</p><ul class="rules-list"><li>閒淨賠1:1；莊0.95:1（扣贏款5%佣金）；和8:1。中獎另退本金；和局莊／閒退本金。</li><li>A為1、2–9按牌面、10／J／Q／K為0，合計取個位。天牌8／9先結算，否則依標準規則補牌。</li><li>下注30秒；每次至少$1，總資金不足$1可全押。超時未下注跳過不扣錢，已用道具不退。</li><li>莊對／閒對按首兩張同牌階，淨賠11:1，花色及該方勝負不影響；J＋Q不算對子。幸運六須莊以6點勝，兩牌12:1、三牌20:1；和或輸不派。所有投注鎖注後均不可加碼。</li><li>換牌後以最後起手牌判對子。每局最多一件：保本按主注與旁注合計淨虧損退50%；透視須已下注，可選莊／閒看其中一張的點數，不延長倒數。</li><li>換牌券必須鎖注前啟用。首四張後有10秒換一張或保留；換後重新按天牌及標準補牌，超時不退券。</li><li>完成局才保存，包含牌靴進度。關閉後回最後完成局，未完成局作廢。</li></ul>${button('close-overlay','回到牌桌','primary')}`;
+  else if(isRules&&game.activeTable==='baccarat')content=`<span class="eyebrow">BACCARAT · 計時已暫停</span><h2>百家樂玩法與賠率</h2><p>八副連續牌靴，主注最多選莊、閒、和其中一項。同主注區加碼，點另一主注區把原主注改押；旁注可獨立複選或單押。</p><ul class="rules-list"><li>閒淨賠1:1；莊0.95:1（扣贏款5%佣金）；和8:1。中獎另退本金；和局莊／閒退本金。</li><li>A為1、2–9按牌面、10／J／Q／K為0，合計取個位。天牌8／9先結算，否則依標準規則補牌。</li><li>下注30秒；每次至少$1，總資金不足$1可全押。超時未下注跳過不扣錢，已用道具不退。</li><li>莊對／閒對按首兩張同牌階，淨賠11:1，花色及該方勝負不影響；J＋Q不算對子。幸運六須莊以6點勝，兩牌12:1、三牌20:1；和或輸不派。所有投注鎖注後均不可加碼。</li><li>換牌後以最後起手牌判對子。每局最多一件：保本按主注與旁注合計淨虧損退50%；透視須已下注，可選莊／閒看其中一張的點數，不延長倒數。</li><li>換牌券必須鎖注前啟用。首四張後有10秒換一張或保留；換後重新按天牌及標準補牌，超時不退券。</li><li>發牌速度已減慢30%；所押莊／閒需補牌時可拖動牌角咪牌，幸運六關聯莊方。可直接揭牌，等待及動作照計通關時間，暫停時一起停止。</li><li>完成局才保存，包含牌靴進度。關閉後回最後完成局，未完成局作廢。</li></ul>${button('close-overlay','回到牌桌','primary')}`;
   else if(isRules)content=`<span class="eyebrow">SIC BO · 計時已暫停</span><h2>大小玩法與賠率</h2><p>三顆六面骰。小為 4–10，大為 11–17；圍骰令大小皆輸。命中會另退本金。</p><ul class="rules-list"><li>大小：1:1；單點：出現 1／2／3 顆賠 1／2／3:1。</li><li>兩骰組合 5:1；指定對子 10:1；指定圍骰 150:1；任意圍骰 24:1。</li><li>總點數 4／17：50:1；5／16：18:1；6／15：14:1；7／14：12:1；8／13：8:1；9–12：6:1。</li><li>圍骰不影響其他合資格投注。下注限時 30 秒，可提早開骰；未下注超時跳過，不扣籌碼，已用道具不退。</li><li>一般每次最低 $1。總資金低於 $1 時，可用「全押」押全部餘額。</li><li>道具每局一件。保本計所有投注合計淨虧損；透視不重抽結果；持重擲券且未用其他道具時，開骰後重擲／接受／超時都扣券。</li></ul>${button('close-overlay','回到牌桌','primary')}`;
   else if(overlay==='finish')content=`<span class="eyebrow">${game.profile.status==='won'?'CHALLENGE COMPLETE':'END OF THE NIGHT'}</span><h2>${game.profile.status==='won'?'今夜，你是賭王。':'這次挑戰，到此落幕。'}</h2><p>${esc(game.profile.name)} · ${formatMode(game.profile.mode)}<br>最終資金 ${money(game.profile.bank)}<br>通關用時 ${duration(game.profile.elapsedMs)} · 完成 ${game.profile.rounds} 局</p>${button('home','返回主頁','primary')}${game.checkpoint?button('export','匯出上次完成存檔','text-button'):''}`;
   else content=`<span class="eyebrow">CHECKPOINT · 計時已暫停</span><h2>完成一局，再留下紀錄。</h2><p>只保存已完成局的狀態；未完成牌局不會寫入存檔。關閉後回到最後完成局。</p><div class="save-actions">${button('export','匯出上次完成存檔','primary',game.checkpoint?'':'disabled')}${button('load-auto','讀取上次自動存檔','outlined')}${game.profile.mode==='free'?button('load-manual','讀取手動存檔','outlined'):''}${button('import','匯入完成局存檔','outlined')}${button('close-overlay','繼續遊戲','quiet')}</div>${storageWarning?`<p class="warning">${esc(storageWarning)}</p>`:''}`;
@@ -74,6 +76,7 @@ function render(){const oldScroll=document.querySelector('.board-scroll')?.scrol
   const boardScroll=document.querySelector('.board-scroll');if(boardScroll){boardScroll.scrollLeft=oldScroll;boardScroll.scrollTop=boardTop;}for(const c of detailsOpen){const d=document.querySelector('.'+c);if(d)d.open=true;}const inventory=document.querySelector('.inventory');if(inventory)inventory.open=inventoryOpen;paintBoard();flights.mount();flights.pause(game.paused);document.querySelectorAll('.flying-chip').forEach(n=>n.hidden=Boolean(overlay));
   if(overlay){const d=document.querySelector('.modal');if(!oldModal)d.querySelector('button:not(:disabled)')?.focus();else d.focus();}
   else if(action){const options=[...app.querySelectorAll('[data-action]')];options.find(b=>b.tagName===active.tagName&&b.dataset.action===action&&(!bet||b.dataset.bet===bet)&&(!selectedChip||b.dataset.chip===selectedChip))?.focus({preventScroll:true});}
+  squeeze.mount();
 }
 function openOverlay(type){advance();game.paused=true;overlay=type;render();}
 function closeOverlay(){overlay=null;game.paused=false;last=performance.now();render();}
@@ -140,6 +143,7 @@ app.addEventListener('click',event=>{
       else notify(game.activeTable==='baccarat'?`已透視${peekSide==='banker'?'莊':'閒'}第 ${game.round.peek.index+1} 張：${game.round.peek.value} 點。`:`透視：第 ${peekIndex+1} 顆為${game.round.peek.range}。`);
     }
   }
+  if(a==='squeeze-reveal')game.finishBaccaratSqueeze();
   if(a==='swap-card')game.chooseBaccaratSwap(Number(target.dataset.index));
   if(a==='keep-cards')game.chooseBaccaratSwap();
   if(a==='reroll')game.chooseReroll(Number(target.dataset.index));
@@ -151,6 +155,7 @@ window.addEventListener('scroll',()=>flights.cancel(),true);
 document.addEventListener('keydown',event=>{
   if(!overlay&&['Enter',' '].includes(event.key)&&event.target.matches('.printed-cell')){event.preventDefault();event.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));return;}
   if(overlay){if(event.key==='Tab'){const nodes=[...document.querySelectorAll('.modal button:not(:disabled),.modal input,.modal select')];const first=nodes[0],end=nodes.at(-1);if(event.shiftKey&&(document.activeElement===first||document.activeElement.classList.contains('modal'))){end?.focus();event.preventDefault();}else if(!event.shiftKey&&document.activeElement===end){first?.focus();event.preventDefault();}}return;}
+  const panel=document.querySelector('.squeeze-panel');if(panel&&event.key==='Tab'){const nodes=[...panel.querySelectorAll('button:not(:disabled),[tabindex="0"]')],first=nodes[0],end=nodes.at(-1);if(event.shiftKey&&document.activeElement===first){end?.focus();event.preventDefault();}else if(!event.shiftKey&&document.activeElement===end){first?.focus();event.preventDefault();}return;}
   if(event.key==='Escape'&&game.screen!=='home'){event.preventDefault();openOverlay('pause');}
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&game.profile&&game.screen!=='home'&&!overlay)openOverlay('pause');});
@@ -159,3 +164,6 @@ window.addEventListener('pagehide',()=>{advance();game.paused=true;});
 window.addEventListener('pageshow',event=>{if(event.persisted&&game.profile&&game.screen!=='home'&&!overlay)openOverlay('pause');});
 setInterval(()=>{if(advance()){flights.cancel();render();}const elapsed=document.querySelector('#elapsed'),countdown=document.querySelector('#countdown');if(elapsed)elapsed.textContent=duration(game.profile.elapsedMs);if(countdown)countdown.textContent=game.round.remaining?Math.ceil(game.round.remaining/1000)+' 秒':'';},100);
 render();
+
+function animateBaccarat(){if(game.round?.squeeze&&!game.paused){if(advance())render();squeeze.paint();}requestAnimationFrame(animateBaccarat);}
+requestAnimationFrame(animateBaccarat);

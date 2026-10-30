@@ -120,8 +120,14 @@ def main():
         act(page, 'table')
         expect(page.locator('#custom-amount')).to_have_value('5')
         assert errors == [], errors
-        # Baccarat uses the same profile and bottom controls, but only one target.
+        # Fixed legal shoe through the normal completed-save import; no runtime debug API.
         act(page, 'leave')
+        act(page, 'saves')
+        squeeze_save = json.loads(json.dumps(snapshot))
+        squeeze_save['profile']['bank'] = 10000
+        initial = [0, 1, 2, 3, 5, 6]
+        squeeze_save['baccaratShoe'] = {'cards': initial + [n for n in range(416) if n not in initial], 'cursor': 0, 'cycle': 1}
+        page.locator('#import-file').set_input_files({'name':'squeeze.json','mimeType':'application/json','buffer':json.dumps(squeeze_save).encode()})
         page.locator('[data-action=table][data-table=baccarat]').click()
         expect(page.locator('.baccarat-screen')).to_be_visible()
         expect(page.locator('.baccarat-board .printed-cell')).to_have_count(6)
@@ -134,6 +140,22 @@ def main():
         expect(page.get_by_role('dialog')).to_be_visible()
         act(page, 'resume')
         act(page, 'roll')
+        scene = page.locator('#squeeze-scene')
+        expect(page.locator('[data-action=squeeze-reveal]')).to_be_enabled(timeout=6000)
+        bounds = scene.bounding_box()
+        x, y = bounds['x'] + bounds['width'] * .65, bounds['y'] + bounds['height'] * .7
+        page.mouse.move(x, y)
+        page.mouse.down()
+        page.mouse.move(x - 8, y - 8, steps=5)
+        page.mouse.up()
+        progress = scene.get_attribute('aria-valuenow')
+        assert int(progress) > 0
+        page.locator('.squeeze-panel [data-action=pause]').click()
+        page.wait_for_timeout(1100)
+        act(page, 'resume')
+        assert scene.get_attribute('aria-valuenow') == progress
+        scene.press('ArrowLeft')
+        act(page, 'squeeze-reveal')
         expect(page.locator('.baccarat-screen [data-action=next]')).to_be_visible(timeout=5000)
         page.screenshot(path=str(OUT / 'prototype-baccarat-result.png'), full_page=True)
         act(page, 'leave')

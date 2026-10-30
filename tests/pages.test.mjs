@@ -10,13 +10,13 @@ test('Pages entry references shipped runtime, without development server',async(
   assert.ok(html.includes('./play/src/app.mjs'));
   assert.ok(html.includes('./play/src/styles.css'));
   assert.ok(!html.includes('127.0.0.1'));
-  for(const file of ['app.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','baccarat.mjs','baccarat-view.mjs','styles.css']){
+  for(const file of ['app.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
     assert.deepEqual(await readFile(path.join(site,'play/src',file)),await readFile(path.join(root,'src',file)));
   }
   assert.ok((await stat(path.join(site,'.nojekyll'))).isFile());
 });
 test('all runtime PNGs match original assets byte for byte',async()=>{
-  const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip','chips-five'].map(id=>`art/sicbo-board-b/${id}.png`),'art/baccarat-b/cards.png'];
+  const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip','chips-five'].map(id=>`art/sicbo-board-b/${id}.png`),'art/baccarat-b/cards.png','art/baccarat-b/hand.png'];
   for(const file of images)assert.deepEqual(await readFile(path.join(site,'play/public',file)),await readFile(path.join(root,'public',file)));
 });
 test('CSS and runtime assets resolve inside both root and project Pages URLs',async()=>{
@@ -53,14 +53,14 @@ test('repository-root Pages resolves actual app and CSS images to existing PNGs'
 test('root and docs entry points version app and CSS without breaking relative paths',async()=>{
   for(const entry of ['index.html','docs/index.html']){
     const html=await readFile(path.join(root,entry),'utf8');
-    assert.match(html,/src\/styles\.css\?v=0\.1\.6/);
-    assert.match(html,/src\/app\.mjs\?v=0\.1\.6/);
+    assert.match(html,/src\/styles\.css\?v=0\.1\.7/);
+    assert.match(html,/src\/app\.mjs\?v=0\.1\.7/);
   }
 });
 test('all entry-module dependencies share the release version to avoid stale export caches',async()=>{
   const version=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
   for(const base of [root,path.join(site,'play')]){
-    for(const file of ['app.mjs','game.mjs','storage.mjs','board.mjs','baccarat-view.mjs']){
+    for(const file of ['app.mjs','game.mjs','storage.mjs','board.mjs','baccarat-squeeze.mjs','baccarat-view.mjs']){
       const source=await readFile(path.join(base,'src',file),'utf8');
       const imports=[...source.matchAll(/from '(\.\/[^']+)'/g)].map(m=>m[1]);
       assert.ok(imports.length>0);

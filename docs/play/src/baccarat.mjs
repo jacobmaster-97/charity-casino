@@ -1,5 +1,8 @@
 // Cards are unique IDs 0..415 (eight decks); a round never reshuffles revealed information.
 export const BACCARAT_ENABLED=true;
+export const BACCARAT_DEAL_MS=400/.7;
+export const BACCARAT_UNFOLD_MS=700;
+export const BACCARAT_RETURN_MS=700;
 export const BACCARAT_BETS=[{id:'bac-player',label:'閒',group:'百家樂',rate:1},{id:'bac-tie',label:'和',group:'百家樂',rate:8},{id:'bac-banker',label:'莊',group:'百家樂',rate:.95}];
 export const BACCARAT_SIDEBETS=[{id:'bac-player-pair',label:'閒對',group:'百家樂旁注',rate:11,rateLabel:'11:1',detail:'閒方首兩張同牌階',sideBet:true},{id:'bac-lucky-six',label:'幸運六',group:'百家樂旁注',rate:'12 / 20',rateLabel:'12:1 / 20:1',detail:'莊6點勝：兩張12、三張20',sideBet:true},{id:'bac-banker-pair',label:'莊對',group:'百家樂旁注',rate:11,rateLabel:'11:1',detail:'莊方首兩張同牌階',sideBet:true}];
 export const BACCARAT_ALL_BETS=[...BACCARAT_BETS,...BACCARAT_SIDEBETS];

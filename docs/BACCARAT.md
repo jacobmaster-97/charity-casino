@@ -90,4 +90,4 @@
 
 ## 旁注更新的範圍說明
 
-本文件歷史「單項」限制指莊／閒／和主注；0.1.6已實作旁注複選。換牌後用最後保留的首兩張判對子，保本按整局合計淨虧損計一次。咪牌及發牌減速仍待確認，未接入正式遊戲。詳見[BACCARAT_SIDEBETS.md](BACCARAT_SIDEBETS.md)。
+本文件歷史「單項」限制指莊／閒／和主注；0.1.6已實作旁注複選。換牌後用最後保留的首兩張判對子，保本按整局合計淨虧損計一次。使用者已批准實裝咪牌及發牌減速，0.1.7已接入，詳[BACCARAT_ANIMATION.md](BACCARAT_ANIMATION.md)。詳見[BACCARAT_SIDEBETS.md](BACCARAT_SIDEBETS.md)。

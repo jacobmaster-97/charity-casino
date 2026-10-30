@@ -1,0 +1,15 @@
+{
+  "file": "hand.png",
+  "source": "image_gen; approved docs/previews/baccarat-squeeze-v1/assets/hand.png",
+  "source_generation": "exec-b9d9c8a5-1f75-4bec-81a9-64b3dc4e62ef",
+  "user_approval": "2026-10-30: 實裝動畫",
+  "sha256": "e658775f6de71933c17890c57aae194ab9c98efc04d9e49d087c6d0883a94d21",
+  "size": [
+    1312,
+    1199
+  ],
+  "alpha": true,
+  "pixel_edits": false,
+  "anchor": "preview hand image translate(-65,-48) at curled corner; 300×300 SVG image",
+  "usage": "original generated right hand; approved squeeze animation only"
+}
