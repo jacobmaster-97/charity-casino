@@ -1,5 +1,5 @@
-import {BACCARAT_ENABLED,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratBet,cardValue} from './baccarat.mjs?v=0.1.5';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.1.5';
+import {BACCARAT_ENABLED,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.1.6';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.1.6';
 export class Game {
   constructor({roll=randomDie,onComplete=()=>{},randomIndex=randomBelow}={}) { this.roll=roll;this.onComplete=onComplete;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.randomIndex=randomIndex; }
   start(name,mode='race') {
@@ -53,7 +53,7 @@ export class Game {
     const baccarat=this.activeTable==='baccarat';
     if(baccarat?!this.round?.readyToSettle:!['revealing','reroll'].includes(this.round?.phase))return false;
     if(this.round.phase==='settled')return false;
-    const result=baccarat?settleBaccaratBet(this.round.bets,this.round.final,this.round.used==='protect'):settleBets(this.round.bets,this.round.dice,this.round.used==='protect');
+    const result=baccarat?settleBaccaratRound(this.round.bets,this.round.final,this.round.used==='protect'):settleBets(this.round.bets,this.round.dice,this.round.used==='protect');
     this.profile.bank+=result.returned+result.refund;this.profile.rounds++;
     this.profile.status=this.profile.bank>=GOAL?'won':this.profile.bank===0?'lost':'active';
     this.round.phase='settled';this.round.remaining=0;this.round.result=result;
@@ -78,7 +78,8 @@ export class Game {
   }
   addBaccaratBet(id,amount){
     if(!this.canBet||!BACCARAT_BET_MAP[id])return false;
-    if(this.stake&&!this.round.bets[id]){this.round.bets={[id]:this.stake};return 'moved';}
+    const main=BACCARAT_BETS.find(b=>this.round.bets[b.id]);
+    if(BACCARAT_BETS.some(b=>b.id===id)&&main&&main.id!==id){const original=this.round.bets[main.id];delete this.round.bets[main.id];this.round.bets[id]=original;return 'moved';}
     if(!Number.isSafeInteger(amount)||amount<=0||amount>this.available||amount<100&&!(this.profile.bank<100&&this.stake===0&&amount===this.profile.bank))return false;
     this.round.bets[id]=(this.round.bets[id]||0)+amount;return true;
   }

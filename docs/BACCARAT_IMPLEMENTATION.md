@@ -54,3 +54,5 @@ UI Priority：P1實際手機牌面大小及換牌選擇需實測；P2展開區�
 ## 發布與停用
 
 版本0.1.5；入口、依賴模組、root與/docs發布檔同步。若百家樂阻塞，可將src/baccarat.mjs的BACCARAT_ENABLED設false、更新版本重新打包，只關閉百家樂入口，保留大小及新保存器，不丟棄已購換牌券或牌靴欄位。不要直接用舊保存器覆寫新存檔，也不要清除網站資料。
+
+發布結果：main e0ab04dcb6664ac057cf061cfddc3228d995e615，Pages run41010844093 completed/success，111發布檔SHA全部吻合。本地發布後收據見BACCARAT_RELEASE.json。

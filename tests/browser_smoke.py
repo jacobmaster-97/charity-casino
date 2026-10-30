@@ -124,7 +124,7 @@ def main():
         act(page, 'leave')
         page.locator('[data-action=table][data-table=baccarat]').click()
         expect(page.locator('.baccarat-screen')).to_be_visible()
-        expect(page.locator('.baccarat-board .printed-cell')).to_have_count(3)
+        expect(page.locator('.baccarat-board .printed-cell')).to_have_count(6)
         act(page, 'bet', bet='bac-player')
         stake_before_move = page.locator('.console-summary strong').first.inner_text()
         act(page, 'bet', bet='bac-banker')

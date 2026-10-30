@@ -39,3 +39,5 @@
 @media(max-width:760px){.baccarat-stage{padding:12px}.baccarat-hands{gap:10px}.baccarat-hand{padding:6px 3px}.baccarat-hand h2{font-size:21px}.baccarat-hand h2 strong{font-size:15px}.baccarat-cards{gap:4px;min-height:65px}.playing-card{border-radius:3px}.card-corner{font-size:10px}.card-corner small{font-size:9px;margin-top:1px}.card-suit{font-size:18px}.baccarat-caption{font-size:13px}.baccarat-screen .console-tools{grid-template-columns:1fr}.baccarat-screen .board-toolbar{font-size:14px}.baccarat-stage .stage-topline{font-size:16px}.baccarat-board{min-width:0}}
 .playing-card[data-action]{min-width:44px;min-height:62px;width:clamp(44px,7vw,72px)}
 .flying-chip .chip-face{max-width:none;overflow:visible}
+.baccarat-side-note{font-size:14px;color:#d9ceb4;line-height:1.7;padding:4px 12px;margin:0}.baccarat-screen .bet-list strong{margin-left:auto}
+@media(max-width:760px){.baccarat-side-note{font-size:14px;padding:8px 4px}.baccarat-screen .board-toolbar{font-size:14px}}

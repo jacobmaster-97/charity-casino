@@ -53,8 +53,8 @@ test('repository-root Pages resolves actual app and CSS images to existing PNGs'
 test('root and docs entry points version app and CSS without breaking relative paths',async()=>{
   for(const entry of ['index.html','docs/index.html']){
     const html=await readFile(path.join(root,entry),'utf8');
-    assert.match(html,/src\/styles\.css\?v=0\.1\.5/);
-    assert.match(html,/src\/app\.mjs\?v=0\.1\.5/);
+    assert.match(html,/src\/styles\.css\?v=0\.1\.6/);
+    assert.match(html,/src\/app\.mjs\?v=0\.1\.6/);
   }
 });
 test('all entry-module dependencies share the release version to avoid stale export caches',async()=>{
