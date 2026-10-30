@@ -16,11 +16,11 @@ for(const [index,ref] of references.entries()){
   const bytes=await readFile(path.join(root,'public',ref));
   const data=`data:image/png;base64,${bytes.toString('base64')}`;
   assetMap[ref]=data;
-  css=css.replaceAll(`url('..${ref}')`,`var(--bundled-art-${index})`);
+  css=css.replaceAll(`url('../public${ref}')`,`var(--bundled-art-${index})`);
   bootstrap+=`document.documentElement.style.setProperty('--bundled-art-${index}', 'url("'+globalThis.__CASINO_ART[${JSON.stringify(ref)}]+'")');\n`;
 }
 bootstrap=`globalThis.__CASINO_ART=${JSON.stringify(assetMap)};\n`+bootstrap;
-html=html.replace('<link rel="stylesheet" href="./src/styles.css">',()=>`<style>${css}</style>`).replace('<script type="module" src="./src/app.mjs"></script>',()=>`<script type="module">${bootstrap}${js.replaceAll('</script','<\\/script')}</script>`);
+html=html.replace(/<link rel="stylesheet" href="\.\/src\/styles\.css(?:\?[^"\s]*)?">/,()=>`<style>${css}</style>`).replace(/<script type="module" src="\.\/src\/app\.mjs(?:\?[^"\s]*)?"><\/script>/,()=>`<script type="module">${bootstrap}${js.replaceAll('</script','<\\/script')}</script>`);
 if(/(?:src|href)="\.\/src\//.test(html)||/url\(['"]?\/art\//.test(html))throw new Error('Unbundled reference');
 await writeFile(path.join(output,'charity-casino-prototype.html'),html);
 console.log(`Standalone HTML: ${path.join(output,'charity-casino-prototype.html')} (${Buffer.byteLength(html)} bytes)`);

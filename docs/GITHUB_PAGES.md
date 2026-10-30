@@ -2,6 +2,8 @@
 
 ## 本輪狀態
 
+目前已啟用Pages，建置40895801619確認實際從main根目錄發布。0.1.1已同時支援根目錄及/docs兩種布局，圖像路徑修正見ASSET_PATH_FIX.md。
+
 使用者要求將遊戲上載GitHub以便即時存取。已連接帳號`jacobmaster-97`，使用者已指定專用倉庫 https://github.com/jacobmaster-97/charity-casino 。已上載至main，保留原有初始提交。內容提交：`5f9b8e08d42ed3cb45e4a68ff09557f4359750da`；76檔遠端blob SHA全部吻合，收據見GITHUB_UPLOAD.json。
 
 目前GitHub連接器支援既有倉庫的檔案／Git物件寫入，沒有建立倉庫或啟用Pages的工具。CLI認證檢查不成功，不讀取或索取權杖。目標專用倉庫已確認可存取，不需要重新建立。
@@ -10,7 +12,7 @@
 
 - `docs/index.html`：GitHub Pages入口。
 - `docs/play/src/`：五個runtime檔，沒有開發伺服器。
-- `docs/play/art/`：五張實際PNG。
+- `docs/play/public/art/`：五張實際PNG。
 - `docs/.nojekyll`：直接提供靜態檔。
 
 使用`npm run build:pages`更新上述發布檔，`npm run verify:pages`驗證。支援帳號首頁或`https://帳號.github.io/倉庫名稱/`子路徑；CSS採相對網址，程式依module網址解析圖片。
@@ -29,7 +31,7 @@
 
 上載完成後，到目標倉庫：Settings → Pages → Build and deployment → Source選Deploy from a branch → Branch選main → Folder選/docs → Save。
 
-這是帳號／倉庫設定步驟，當前工具不能代按。發布完成後，以GitHub Pages顯示的實際網址為準；尚未上載或啟用前不宣稱網址可用。
+這是帳號／倉庫設定步驟，當前工具不能代按（目前使用者已啟用）。發布完成後，以GitHub Pages顯示的實際網址為準；尚未上載或啟用前不宣稱網址可用。
 
 後續每次修改來源，先執行`npm run verify`與`npm run verify:pages`，再將來源與更新後docs發布檔一起提交至main，Pages會依設定重新發布。GitHub部署需要處理時間，不承諾零延遲。
 

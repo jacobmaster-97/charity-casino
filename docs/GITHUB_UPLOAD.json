@@ -15,5 +15,12 @@
   "expected_play_url": "https://jacobmaster-97.github.io/charity-casino/",
   "play_url_verified": false,
   "local_tests_passed": 22,
-  "browser_smoke": "unverified_environment_restriction"
+  "browser_smoke": "unverified_environment_restriction",
+  "observed_pages_enabled": true,
+  "observed_pages_source": {
+    "branch": "main",
+    "path": "/"
+  },
+  "asset_path_fix_version": "0.1.1",
+  "asset_path_fix_tests_passed": 24
 }

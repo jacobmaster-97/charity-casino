@@ -10,7 +10,10 @@
 
 ## Latest Completed Work
 
-- 已上載至使用者指定公開倉庫 https://github.com/jacobmaster-97/charity-casino 的main分支。內容提交5f9b8e08d42ed3cb45e4a68ff09557f4359750da，parent保留d5653661b6ca31922da11c364ec804349b7b5d5b。76檔遠端blob SHA全部與本地一致，main指向亦已回讀確認；無強推。Pages尚未啟用，需使用者至Settings → Pages選main /docs，不能宣稱網站已上線。收據docs/GITHUB_UPLOAD.json。
+- 最新問題：使用者手機／平板Safari大廳破圖。已由Pages build40895801619的job123524463752確認現況source:.（根目錄），而app／CSS原圖網址是../art，實際在public/art。已修正為../public/art，docs同步為docs/play/public/art，根目錄.nojekyll與入口?v=0.1.1。新增實際解析回歸先失敗後通過，共24測試。尚待同步本次修正與Pages重新部署。
+
+
+- 已上載至使用者指定公開倉庫 https://github.com/jacobmaster-97/charity-casino 的main分支。內容提交5f9b8e08d42ed3cb45e4a68ff09557f4359750da，parent保留d5653661b6ca31922da11c364ec804349b7b5d5b。76檔遠端blob SHA全部與本地一致，main指向亦已回讀確認；無強推。Pages已由使用者啟用，實際從main根目錄發布，原部署成功；目前修正圖片路徑。收據docs/GITHUB_UPLOAD.json。
 - 已新增Pages建置與可上載目錄：docs/index.html、docs/play/、docs/.nojekyll；修正CSS與圖片在專案子路徑的解析。npm run verify與verify:pages通過，共22項。新增.gitignore、GitHub操作文件、prepare-github腳本；原本單檔仍可重新打包。
 
 - 建立無第三方執行依賴的原生HTML／CSS／JS原型：姓名／模式、故事卡、大廳、大小50種多項投注、30秒、骰子結果、保本／透視／重擲、10%商店、暫停遮桌、結算及勝敗。
@@ -57,6 +60,4 @@
 
 ## Next Safest Task
 
-上載已完成。向使用者提供倉庫 https://github.com/jacobmaster-97/charity-casino 及直接設定頁 https://github.com/jacobmaster-97/charity-casino/settings/pages ，選Deploy from a branch、main、/docs。工具沒有Pages管理設定能力。預期遊玩網址 https://jacobmaster-97.github.io/charity-casino/ ，啟用與部署完成前不宣稱可用。之後核對網站及瀏覽器主要循環，保留本地存檔匯出／匯入提醒。
-
-交付單檔HTML及原始碼包，清楚標示19項邏輯／封裝測試與瀏覽器未驗證。下載後先試大小主循環，在允許Chromium的環境執行tests/browser_smoke.py，再依回饋修正並擴充下一桌。不要重試同樣受限的socket命令或宣稱已有截圖。技能來源版本42838f2a4df97f77104a4c7a9561a4f6c9160621已保留。
+將0.1.1路徑修正以原main b4489503cc3bcbbef1feaa06490b75de44c890f0為parent同步至jacobmaster-97/charity-casino，保留既有檔案及舊圖位置，不強推。核對新commit／tree，再等Pages部署成功。向使用者提供 https://jacobmaster-97.github.io/charity-casino/?v=0.1.1 重開測試。存檔key／schema不改，不要求清空Safari資料；iOS實機結果仍待確認。

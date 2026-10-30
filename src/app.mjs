@@ -8,7 +8,7 @@ const saves=new Saves(storage||{getItem(){throw new Error('無法使用瀏覽器
 let storageWarning='',mode='race',name='',story=false,group='大小',chip=500,allIn=false,peekIndex=0,overlay=null,toastTimer,last=performance.now();
 const game=new Game({onComplete:save=>{try{saves.write(save);storageWarning='';}catch{storageWarning='自動保存失敗，請匯出完成局存檔。';}}});
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const art=path=>globalThis.__CASINO_ART?.[path]||new URL('..'+path,import.meta.url).href;
+const art=path=>globalThis.__CASINO_ART?.[path]||new URL('../public'+path,import.meta.url).href;
 const icon=id=>`<span class="prop prop-${id}" aria-hidden="true"></span>`;
 const button=(action,text,cls='',extra='')=>`<button type="button" data-action="${action}" class="${cls}" ${extra}>${text}</button>`;
 const formatMode=m=>m==='race'?'競速模式':'自由模式';

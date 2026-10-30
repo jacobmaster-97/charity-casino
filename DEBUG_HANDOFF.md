@@ -1,5 +1,13 @@
 # DEBUG_HANDOFF
 
+## 目前修正：手機／平板圖片載入失敗
+
+GitHub Pages已啟用，build 40895801619的job123524463752證實從根目錄source:.發布。app／CSS卻請求../art，實際根目錄圖片在public/art。這是先前只測docs布局的覆蓋缺口。新增回歸測試先失敗，改../public/art與docs/play/public/art後通過，共24測試。入口加?v=0.1.1，根目錄加.nojekyll；舊圖片路徑保留相容快取。詳見docs/ASSET_PATH_FIX.md。
+
+下一步：將來源與生成docs同步GitHub，等待新Pages部署成功，再提供帶版本網址。不要以清除存檔修圖，不要將這次路徑問題誤寫為Safari不支援PNG。實機／瀏覽器仍未驗證。
+
+## 既有環境限制（保留）
+
 ## 錯誤現象
 
 原型的環境驗證受限：本地HTTP伺服器與Chromium都無法在預設執行沙箱啟動。

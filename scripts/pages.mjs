@@ -9,13 +9,13 @@ for(const file of ['app.mjs','game.mjs','rules.mjs','storage.mjs','styles.css'])
 }
 const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`)];
 for(const file of images){
-  const output=path.join(runtime,file);
+  const output=path.join(runtime,'public',file);
   await mkdir(path.dirname(output),{recursive:true});
   await copyFile(path.join(root,'public',file),output);
 }
 const html=(await readFile(path.join(root,'index.html'),'utf8'))
-  .replace('href="./src/styles.css"','href="./play/src/styles.css"')
-  .replace('src="./src/app.mjs"','src="./play/src/app.mjs"');
+  .replace('href="./src/styles.css','href="./play/src/styles.css')
+  .replace('src="./src/app.mjs','src="./play/src/app.mjs');
 await writeFile(path.join(destination,'index.html'),html);
 await writeFile(path.join(destination,'.nojekyll'),'');
 console.log('GitHub Pages ready: docs/index.html + docs/play/ (five PNGs, five runtime files).');

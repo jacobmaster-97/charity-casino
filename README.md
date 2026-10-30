@@ -1,4 +1,4 @@
-# 賭王慈善大賽 · 原型0.1
+# 賭王慈善大賽 · 原型0.1.1
 
 B港式賭片卡通的大廳＋大小原型。其他四桌標示開發中，正式首版五款全開的規劃保持。
 
@@ -45,9 +45,9 @@ npm run verify
 
 專案倉庫：https://github.com/jacobmaster-97/charity-casino 。
 
-試玩網址（首次需啟用Pages）：https://jacobmaster-97.github.io/charity-casino/ 。
+試玩網址（已啟用Pages）：https://jacobmaster-97.github.io/charity-casino/ 。
 
-遊戲原始碼與Pages檔案已上載至main；首次仍需啟用Pages。`npm run build:pages`產生docs/index.html及docs/play/；`npm run verify:pages`檢查子路徑及圖片。
+遊戲原始碼與Pages檔案已上載至main；0.1.1支援從根目錄或/docs發布，修正手機／平板圖片路徑。`npm run build:pages`產生docs/index.html及docs/play/；`npm run verify:pages`檢查子路徑及圖片。
 
 上載後到Settings → Pages，選Deploy from a branch、main、/docs。後續更新程式時同步提交生成的docs檔案。完整流程見[GitHub Pages說明](docs/GITHUB_PAGES.md)。
 

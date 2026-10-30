@@ -12,7 +12,7 @@ test('standalone package has no external script, stylesheet, import or network i
   assert.ok(!/<link[^>]+rel="stylesheet"/.test(html));
   const script=html.match(/<script type="module">([\s\S]*)<\/script>/)[1];
   assert.ok(!/^import /m.test(script));assert.ok(!/^export /m.test(script));
-  assert.ok(!/url\(['"]?\/?art\//.test(html));
+  assert.ok(!/url\(['"]?(?:\.\.\/)?(?:public\/)?art\//.test(html));
   assert.ok(html.includes('globalThis.__CASINO_ART'));
 });
 test('embedded executable module parses after bundling',async()=>{

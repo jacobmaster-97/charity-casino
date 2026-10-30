@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 const root=path.resolve(import.meta.dirname,'..');
 const destination=path.join(root,'dist/github-upload');
 await rm(destination,{recursive:true,force:true});
-const files=['.gitignore','index.html','package.json','README.md','AGENTS.md','CODEX_HANDOFF.md','DEBUG_HANDOFF.md'];
+const files=['.gitignore','.nojekyll','index.html','package.json','README.md','AGENTS.md','CODEX_HANDOFF.md','DEBUG_HANDOFF.md'];
 async function gather(directory){
   for(const entry of await readdir(path.join(root,directory),{withFileTypes:true})){
     const relative=path.join(directory,entry.name);
