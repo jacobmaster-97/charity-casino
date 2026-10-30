@@ -19,6 +19,8 @@ def start(page, player='試玩者'):
     page.locator('[data-action=enter]').click()
 
 def act(page, name, **attrs):
+    if name == 'table' and 'table' not in attrs:
+        attrs['table'] = 'sicbo'
     selector = f'[data-action="{name}"]'
     for key, value in attrs.items():
         selector += f'[data-{key}="{value}"]'
@@ -193,6 +195,40 @@ def main():
         assert len(bac_snapshot['baccaratShoe']['cards']) == 416
         assert bac_snapshot['baccaratShoe']['cursor'] >= 4
         act(page, 'close-overlay')
+        # Blackjack: deterministic split + double through the normal saved-shoe import.
+        act(page, 'saves')
+        bj_save = json.loads(json.dumps(bac_snapshot))
+        bj_save['profile']['bank'] = 10000
+        bj_first = [7, 9, 20, 6, 2, 3, 61]
+        bj_save['blackjackShoe'] = {'cards': bj_first + [n for n in range(312) if n not in bj_first], 'cursor': 0, 'cycle': 1}
+        page.locator('#import-file').set_input_files({'name':'blackjack.json','mimeType':'application/json','buffer':json.dumps(bj_save).encode()})
+        page.locator('[data-action=table][data-table=blackjack]').click()
+        expect(page.locator('.blackjack-felt')).to_be_visible()
+        overflow(page)
+        act(page, 'bet', bet='bj-main')
+        act(page, 'roll')
+        expect(page.locator('[data-bj-action=split]')).to_be_enabled(timeout=6000)
+        page.locator('[data-bj-action=split]').click()
+        act(page, 'pause')
+        elapsed = page.locator('#elapsed').text_content()
+        page.wait_for_timeout(1100)
+        assert page.locator('#elapsed').text_content() == elapsed
+        act(page, 'resume')
+        expect(page.locator('[data-bj-action=double]')).to_be_enabled(timeout=5000)
+        page.locator('[data-bj-action=double]').click()
+        expect(page.locator('.bj-active header')).to_contain_text('第 2 手', timeout=5000)
+        page.locator('[data-bj-action=stand]').click()
+        expect(page.locator('.blackjack-screen [data-action=next]')).to_be_visible(timeout=5000)
+        expect(page.locator('#bank-value')).to_have_text('$105')
+        page.screenshot(path=str(OUT / 'prototype-blackjack-result.png'), full_page=True)
+        act(page, 'leave')
+        act(page, 'saves')
+        with page.expect_download() as bj_download:
+            act(page, 'export')
+        bj_snapshot = json.loads(Path(bj_download.value.path()).read_text())
+        assert len(bj_snapshot['blackjackShoe']['cards']) == 312
+        assert bj_snapshot['blackjackShoe']['cursor'] == 7
+        assert bj_snapshot['profile']['rounds'] == bj_save['profile']['rounds'] + 1
         context.close()
         for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(844,390),(768,1024),(1024,768)]:
             mobile = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
@@ -228,6 +264,14 @@ def main():
             baccarat_composition(page)
             page.locator('[data-action=bet][data-bet=bac-player]').tap()
             page.screenshot(path=str(OUT / f'prototype-baccarat-{width}.png'), full_page=True)
+            act(page, 'clear')
+            act(page, 'leave')
+            page.locator('[data-action=table][data-table=blackjack]').tap()
+            expect(page.locator('.blackjack-felt')).to_be_visible()
+            overflow(page)
+            page.locator('[data-action=bet][data-bet=bj-main]').tap()
+            expect(page.locator('.bj-chip-target')).to_contain_text('5')
+            page.screenshot(path=str(OUT / f'prototype-blackjack-{width}.png'), full_page=True)
             mobile.close()
         assert errors == [], errors
         browser.close()

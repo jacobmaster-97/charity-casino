@@ -114,10 +114,10 @@ test('2,000 real shuffled-shoe hands preserve balances, item limits and checkpoi
  assert.equal(game.profile.rounds,2000);assert.ok(game.baccaratShoe.cycle>20);
 });
 
-test('lobby routes two playable tables and keeps the other three unavailable',async()=>{
+test('lobby routes three playable tables and keeps the other two unavailable',async()=>{
  const source=await readFile(new URL('../src/app.mjs',import.meta.url),'utf8'),definition=source.slice(source.indexOf('const stations='),source.indexOf('\nfunction die('));const game=new Game();game.start('入口');
  const button=(a,t,c='',e='')=>`<button data-action="${a}" ${e}>${t}</button>`;
- const render=new Function('game','button','icon','art','money','esc','GOAL','BACCARAT_ENABLED',definition+';return lobby();');
- const html=render(game,button,()=>'',p=>p,n=>String(n),s=>s,GOAL,true);assert.equal((html.match(/data-action="table"/g)||[]).length,2);assert.equal((html.match(/data-action="coming"/g)||[]).length,3);assert.ok(html.includes('data-table="baccarat"'));
- assert.equal((render(game,button,()=>'',p=>p,n=>String(n),s=>s,GOAL,false).match(/data-action="table"/g)||[]).length,1);assert.equal(game.enterTable('roulette'),false);
+ const render=new Function('game','button','icon','art','money','esc','GOAL','BACCARAT_ENABLED','BLACKJACK_ENABLED',definition+';return lobby();');
+ const html=render(game,button,()=>'',p=>p,n=>String(n),s=>s,GOAL,true,true);assert.equal((html.match(/data-action="table"/g)||[]).length,3);assert.equal((html.match(/data-action="coming"/g)||[]).length,2);assert.ok(html.includes('data-table="baccarat"'));
+ assert.equal((render(game,button,()=>'',p=>p,n=>String(n),s=>s,GOAL,false,false).match(/data-action="table"/g)||[]).length,1);assert.equal(game.enterTable('roulette'),false);
 });

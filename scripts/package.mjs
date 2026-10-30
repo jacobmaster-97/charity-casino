@@ -6,7 +6,7 @@ await mkdir(output,{recursive:true});
 let html=await readFile(path.join(root,'index.html'),'utf8');
 let css=await readFile(path.join(root,'src/styles.css'),'utf8');
 let js='';
-for(const file of ['rules','baccarat','game','storage','board','table-layout','baccarat-squeeze','baccarat-view','app']){
+for(const file of ['rules','baccarat','blackjack','blackjack-game','game','storage','board','table-layout','baccarat-squeeze','baccarat-view','blackjack-view','app']){
   const source=await readFile(path.join(root,`src/${file}.mjs`),'utf8');
   js+=source.replace(/^import .*;\s*$/gm,'').replace(/^export /gm,'')+'\n';
 }
