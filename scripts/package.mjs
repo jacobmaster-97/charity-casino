@@ -6,11 +6,11 @@ await mkdir(output,{recursive:true});
 let html=await readFile(path.join(root,'index.html'),'utf8');
 let css=await readFile(path.join(root,'src/styles.css'),'utf8');
 let js='';
-for(const file of ['rules','baccarat','game','storage','board','baccarat-squeeze','baccarat-view','app']){
+for(const file of ['rules','baccarat','game','storage','board','table-layout','baccarat-squeeze','baccarat-view','app']){
   const source=await readFile(path.join(root,`src/${file}.mjs`),'utf8');
   js+=source.replace(/^import .*;\s*$/gm,'').replace(/^export /gm,'')+'\n';
 }
-const references=['/art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(name=>`/art/prototype-b/${name}.png`),...['felt','dice','chip','chips-five'].map(name=>`/art/sicbo-board-b/${name}.png`),'/art/baccarat-b/cards.png','/art/baccarat-b/hand.png'];
+const references=['/art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(name=>`/art/prototype-b/${name}.png`),...['felt','dice','chip','chips-five'].map(name=>`/art/sicbo-board-b/${name}.png`),'/art/baccarat-b/cards.png'];
 const assetMap={};let bootstrap='';
 for(const [index,ref] of references.entries()){
   const bytes=await readFile(path.join(root,'public',ref));

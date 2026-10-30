@@ -22,14 +22,25 @@ def act(page, name, **attrs):
     selector = f'[data-action="{name}"]'
     for key, value in attrs.items():
         selector += f'[data-{key}="{value}"]'
+    if name in ['leave', 'next', 'roll', 'pause'] and page.locator('.table-tool-dialog[open]').count():
+        page.locator('[data-action=close-table-tool]').click()
     if name == 'remove' and not page.locator('details.bet-details').evaluate('(n)=>n.open'):
         page.locator('details.bet-details summary').click()
     page.locator(selector).click()
 
 def overflow(page):
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
+    if page.locator('.table-shell').count() and not page.locator('.board-scroll.is-zoomed').count():
+        assert page.evaluate('document.documentElement.scrollHeight <= window.innerHeight + 1')
+        for selector in ['.table-nav', '.console-dock', '.action-area', '.chip-picker', '.console-tools']:
+            node = page.locator(selector)
+            if node.count():
+                box = node.bounding_box()
+                assert box and box['y'] >= 0 and box['y'] + box['height'] <= page.viewport_size['height'] + 1, (selector, box)
+
 
 def main():
+    OUT.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path=os.getenv('CASINO_BROWSER', '/usr/bin/chromium'), headless=True,
             args=['--no-sandbox', '--disable-dev-shm-usage', '--disable-crashpad-for-testing'])
@@ -167,7 +178,7 @@ def main():
         assert bac_snapshot['baccaratShoe']['cursor'] >= 4
         act(page, 'close-overlay')
         context.close()
-        for width, height in [(720,1280),(1080,2400),(390,844),(320,568)]:
+        for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(844,390),(768,1024),(1024,768)]:
             mobile = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
             page = mobile.new_page()
             page.on('pageerror', lambda error: errors.append(str(error)))
@@ -175,7 +186,7 @@ def main():
             start(page, '手機測試')
             overflow(page)
             page.screenshot(path=str(OUT / f'prototype-lobby-{width}.png'), full_page=True)
-            page.locator('[data-action=table]').tap()
+            page.locator('[data-action=table][data-table=sicbo]').tap()
             expect(page.locator('.printed-cell')).to_have_count(50)
             page.locator('[data-action=bet][data-bet=small]').tap()
             expect(page.locator('.board-amounts')).to_contain_text('5')

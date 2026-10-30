@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {createHash} from 'node:crypto';
 import {Game} from '../src/game.mjs';
 import {BACCARAT_DEAL_MS as D,BACCARAT_UNFOLD_MS as U,BACCARAT_RETURN_MS as R} from '../src/baccarat.mjs';
 import {BaccaratSqueezeController,squeezeScene,squeezePanel} from '../src/baccarat-squeeze.mjs';
@@ -38,8 +37,8 @@ test('swap selection occurs first; replacing into a natural removes squeeze enti
 test('wagers and incomplete saves remain locked throughout all squeeze stages',()=>{
  const g=setup();ready(g);const bets=structuredClone(g.round.bets);for(const advance of [()=>{},()=>g.finishBaccaratSqueeze(),()=>g.tick(U)]){advance();assert.equal(g.addBet('bac-player',100),false);assert.equal(g.clearBets(),false);assert.equal(g.leaveTable(),false);assert.equal(g.settle(),false);assert.equal(g.checkpoint,null);assert.deepEqual(g.round.bets,bets);}
 });
-test('squeeze is contextual, has real card/hand assets, hides underlying table, and reveals no future total',()=>{
- const g=setup();ready(g);const art=p=>p,options={game:g,art,button:(a,t)=>`<button data-action="${a}">${t}</button>`,icon:()=>'',chip:500};const html=baccaratTableView(options);assert.ok(html.includes('baccarat-table-content" inert'));assert.ok(html.includes('role="slider"'));assert.ok(html.includes('data-action="squeeze-reveal"'));assert.ok(!html.includes('winning-hand'));assert.ok(!squeezeScene(g.round,art).includes('font-size="82"'));g.updateBaccaratSqueeze(.5);assert.ok(squeezeScene(g.round,art).includes('hand.png'));assert.ok(squeezeScene(g.round,art).includes('live-peel-flap'));assert.ok(squeezePanel(g.round).includes('aria-valuenow="50"'));assert.ok(!squeezeScene(g.round,art,true).includes('hand.png'));
+test('squeeze is contextual, uses the real card texture, hides underlying table, and reveals no future total',()=>{
+ const g=setup();ready(g);const art=p=>p,options={game:g,art,button:(a,t)=>`<button data-action="${a}">${t}</button>`,icon:()=>'',chip:500};const html=baccaratTableView(options);assert.ok(html.includes('baccarat-table-content" inert'));assert.ok(html.includes('role="slider"'));assert.ok(html.includes('data-action="squeeze-reveal"'));assert.ok(!html.includes('winning-hand'));assert.ok(!squeezeScene(g.round,art).includes('font-size="82"'));g.updateBaccaratSqueeze(.5);assert.ok(!squeezeScene(g.round,art).includes('hand.png'));assert.ok(squeezeScene(g.round,art).includes('live-peel-flap'));assert.ok(squeezePanel(g.round).includes('aria-valuenow="50"'));assert.ok(!squeezeScene(g.round,art,true).includes('hand.png'));
 });
 function controllerFixture(game){
  const events={},attributes={},layer={innerHTML:''},svg={addEventListener:(k,fn)=>events[k]=fn,querySelector:()=>layer,focus(){},setPointerCapture(id){this.captured=id;},getScreenCTM:()=>({a:.5}),setAttribute:(k,v)=>attributes[k]=v};let changed=0;
@@ -52,6 +51,6 @@ test('actual pointer controller keeps partial progress across release/cancel and
 test('controller drag completion, keyboard and direct reveal converge on the same single decision',()=>{
  for(const mode of ['drag','keyboard','direct']){const g=setup();ready(g);const f=controllerFixture(g);if(mode==='drag'){f.events.pointerdown(f.event());f.events.pointermove(f.event({clientX:0,clientY:0}));}else if(mode==='keyboard'){f.events.keydown(f.event({key:'ArrowLeft'}));assert.ok(g.round.squeeze.progress>0);f.events.keydown(f.event({key:'Enter'}));}else f.c.finish();assert.equal(g.round.phase,'unfolding');assert.equal(f.changed(),1);f.c.finish();assert.equal(f.changed(),1);}
 });
-test('runtime hand is the exact approved preview PNG; app mounts controller and animation clock',async()=>{
- const runtime=await readFile(new URL('../public/art/baccarat-b/hand.png',import.meta.url));assert.equal(createHash('sha256').update(runtime).digest('hex'),'e658775f6de71933c17890c57aae194ab9c98efc04d9e49d087c6d0883a94d21');const app=await readFile(new URL('../src/app.mjs',import.meta.url),'utf8');assert.ok(app.includes('squeeze.mount()'));assert.ok(app.includes('squeeze.paint()'));assert.ok(app.includes("if(a==='squeeze-reveal')game.finishBaccaratSqueeze()"));assert.ok(app.includes('requestAnimationFrame(animateBaccarat)'));
+test('squeeze no longer uses a hand texture; app still mounts card gestures and animation clock',async()=>{
+ const source=await readFile(new URL('../src/baccarat-squeeze.mjs',import.meta.url),'utf8');assert.ok(!source.includes('hand.png'));const app=await readFile(new URL('../src/app.mjs',import.meta.url),'utf8');assert.ok(app.includes('squeeze.mount()'));assert.ok(app.includes('squeeze.paint()'));assert.ok(app.includes("if(a==='squeeze-reveal')game.finishBaccaratSqueeze()"));assert.ok(app.includes('requestAnimationFrame(animateBaccarat)'));
 });

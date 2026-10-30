@@ -11,5 +11,6 @@
   "alpha": true,
   "pixel_edits": false,
   "anchor": "preview hand image translate(-65,-48) at curled corner; 300×300 SVG image",
-  "usage": "original generated right hand; approved squeeze animation only"
+  "usage": "original generated right hand; approved squeeze animation only",
+  "runtime_status": "removed in 0.1.8 by user instruction; original remains only in archived preview"
 }

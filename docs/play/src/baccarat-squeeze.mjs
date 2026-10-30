@@ -1,4 +1,4 @@
-import {BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,cardRank} from './baccarat.mjs?v=0.1.7';
+import {BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,cardRank} from './baccarat.mjs?v=0.1.8';
 const squeezeClamp=v=>Math.max(0,Math.min(1,v));
 const squeezeEase=v=>1-Math.pow(1-squeezeClamp(v),3);
 const squeezeEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -18,10 +18,9 @@ export function squeezeScene(round,art,reduced=false){
  const p=s.progress,unfold=round.phase==='unfolding'?squeezeClamp(1-round.remaining/BACCARAT_UNFOLD_MS):round.phase==='returning'?1:0,returning=round.phase==='returning'?squeezeClamp(1-round.remaining/BACCARAT_RETURN_MS):0;
  const delivery=round.phase==='delivering'&&!reduced?1-squeezeEase(1-round.remaining/BACCARAT_DEAL_MS):0;
  const id=round.final.supplements[s.index].card,u=reduced?0:squeezeEase(returning),x=230+(s.side==='player'?-155:155)*u+200*delivery,y=240-160*u-190*delivery,w=230-140*u-145*delivery,scale=unfold&&!reduced?Math.max(.025,Math.abs(Math.cos(Math.PI*unfold))):1,angle=reduced?0:-5*Math.sin(Math.PI*unfold)-8*delivery;
- const face=unfold>=.5||reduced&&round.phase!=='squeezing',d=4+148*p;
+ const face=unfold>=.5||reduced&&round.phase!=='squeezing';
  const card=squeezeSymbols(id,art,p>0)+`<g transform="translate(${x} ${y}) rotate(${angle}) scale(${scale} 1) translate(${-w/2} ${-w*.7}) scale(${w/200})">${face?'<use href="#live-card-face" width="200" height="280"/>':squeezePeel(p)}</g>`;
- const hand=['delivering','returning'].includes(round.phase)||reduced?'':`<g opacity="${1-squeezeEase(unfold)}" pointer-events="none" transform="translate(${x-w/2+(200-d)*w/200} ${y-w*.7+(280-d)*w/200}) translate(-65 -48)"><image href="${squeezeEscape(art('/art/baccarat-b/hand.png'))}" width="300" height="300"/></g>`;
- return card+hand;
+ return card;
 }
 export function squeezePanel(round){
  if(!round.squeeze||!['delivering','squeezing','unfolding','returning'].includes(round.phase))return '';

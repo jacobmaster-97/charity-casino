@@ -1,4 +1,4 @@
-# 賭王慈善大賽 · 原型0.1.7
+# 賭王慈善大賽 · 原型0.1.8
 
 B港式賭片卡通的大廳＋大小／百家樂原型。其他三桌標示開發中，正式首版五款全開的規劃保持。
 
@@ -26,6 +26,8 @@ npm run verify
 
 ## 功能
 
+- 0.1.8：牌桌依可用視窗高度配置，完整盤面及底部主要控制；明細／道具等以彈出面板顯示，咪牌手圖已移除。布局與裝置限制見docs/VIEWPORT_LAYOUT.md。
+
 - 姓名、競速／自由模式、故事卡、B大廳及五桌入口。
 - 上下排列的完整翠綠大小盤面、底部投注控制、五色籌碼飛入與混色堆疊、50種投注、同局多注、隨資金調整大額籌碼、自訂／全押、30秒下注、三骰、已確認賠率。
 - 百家樂八副連續牌靴、莊閒和單項投注、標準補牌、佣金及和局退注；換牌後重判天牌與補牌。
@@ -39,7 +41,7 @@ npm run verify
 
 ## 驗證狀態
 
-共87項通過：規則／存檔22項、盤面／動畫及模板9項、百家樂23項、新旁注12項、咪牌12項、封裝3項、Pages6項。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
+共94項通過：規則／存檔22項、盤面／動畫及模板9項、百家樂23項、新旁注12項、咪牌12項、面板／視窗7項、封裝3項、Pages6項。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

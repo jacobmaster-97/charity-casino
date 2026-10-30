@@ -1,12 +1,16 @@
-import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.1.7';
-import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.1.7';
-import {baccaratTableView} from './baccarat-view.mjs?v=0.1.7';
-import {Game} from './game.mjs?v=0.1.7';
-import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.1.7';
-import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.1.7';
-import {Saves,validateSave} from './storage.mjs?v=0.1.7';
+import {TablePanels,updateGameViewport} from './table-layout.mjs?v=0.1.8';
+import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.1.8';
+import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.1.8';
+import {baccaratTableView} from './baccarat-view.mjs?v=0.1.8';
+import {Game} from './game.mjs?v=0.1.8';
+import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.1.8';
+import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.1.8';
+import {Saves,validateSave} from './storage.mjs?v=0.1.8';
 
 const app=document.querySelector('#app'),toastNode=document.querySelector('#toast');
+const tablePanels=new TablePanels(app);updateGameViewport();
+window.addEventListener('resize',()=>updateGameViewport());
+window.visualViewport?.addEventListener('resize',()=>updateGameViewport());
 let storage;try{storage=window.localStorage;}catch{storage=null;}
 const saves=new Saves(storage||{getItem(){throw new Error('無法使用瀏覽器儲存空間');},setItem(){throw new Error('無法使用瀏覽器儲存空間');}});
 let storageWarning='',mode='race',name='',story=false,group='大小',chip=500,allIn=false,peekIndex=0,peekSide='player',overlay=null,toastTimer,last=performance.now();
@@ -44,17 +48,17 @@ function table(){
     ${r.phase==='reroll'?`<div class="result-box"><h2>改運，還是接受？</h2><p>點選上方一顆骰子重擲一次，或保留目前結果。兩種選擇及超時均消耗一張重擲券。</p>${button('accept','接受原結果','outlined')}</div>`:''}
     ${result?`<div class="result-box ${result.net>=0?'win':'loss'}"><span class="eyebrow">ROUND ${p.rounds} · 已完成</span><h2>${result.net>0?'贏得':result.net===0?'本局損益':'本局虧損'} <strong>${result.net>=0?'+':'−'}${money(Math.abs(result.net))}</strong></h2><p>下注 ${money(result.stake)} · 退回及派彩 ${money(result.returned)}${result.refund?` · 保本退回 ${money(result.refund)}`:''}</p><p class="save-note">${storageWarning?esc(storageWarning):'已自動保存本局結算；重新開啟可從此處繼續。'}</p><div class="result-actions">${p.status==='active'?button('next','再玩一局','primary'):button('finish','查看挑戰結果','primary')}${button('leave','返回大廳','outlined')}${p.mode==='free'?button('manual-save','手動保存','quiet'):''}</div></div>`:''}
     <div class="table-console">
-      <div class="board-toolbar"><span id="board-help"><span class="board-wide-hint">選籌碼，再點枱面下注</span><span class="board-mobile-hint">完整總覽 · 細格可放大／精準選格</span></span>${button('board-zoom',boardZoom?'顯示完整盤面':'放大盤面','quiet',`aria-pressed="${boardZoom}"`)}</div>
+      <div class="board-toolbar"><span id="board-help"><span class="board-wide-hint">選籌碼，再點枱面下注</span><span class="board-mobile-hint">完整總覽 · 細格可放大／精準選格</span></span></div>
       <div class="board-scroll ${boardZoom?'is-zoomed':''}" tabindex="0" role="region" aria-label="大小完整投注盤面" aria-describedby="board-help">${boardMarkup(art,betting)}</div>
       <div class="console-dock">
         <div class="console-summary"><div><span>本局投注</span><strong>${money(game.stake)}</strong></div><div><span>尚可投注</span><strong>${money(game.available)}</strong></div><span class="selected-amount">每次 ${money(allIn?game.available:chip)}</span></div>
         ${betting?`<div class="console-controls">
           <div class="chip-area"><span class="control-label">選擇籌碼</span><div class="chip-picker">${denominations.map((c,i)=>button('chip',`${chipFace(i,chipLabel(c),art)}<span>${money(c)}</span>`,!allIn&&chip===c?'selected':'',`data-chip="${c}" data-color="${CHIP_COLORS[i]}" aria-pressed="${!allIn&&chip===c}" aria-label="選擇 ${money(c)} 籌碼" title="${CHIP_COLORS[i]} · ${money(c)}" ${c>game.available?'disabled':''}`)).join('')}</div></div>
           <div class="amount-area"><div class="custom-bet"><label for="custom-amount">自訂每次金額</label><input id="custom-amount" type="number" inputmode="decimal" min="0.01" step="0.01" value="${(allIn?game.available:chip)/100}" aria-label="每次下注金額，美元">${button('all-in','全押',allIn?'outlined selected':'outlined',`aria-pressed="${allIn}"`)}</div></div>
-          <div class="action-area">${button('roll','鎖注開骰 ↗','primary roll-button',game.stake?'':'disabled')}${button('clear','清除全部投注','outlined',game.stake?'':'disabled')}</div>
+          <div class="action-area">${button('roll','開骰 ↗','primary roll-button',game.stake?'':'disabled')}${button('clear','清除投注','outlined',game.stake?'':'disabled')}</div>
         </div>`:''}
-        <div class="console-tools">
-          <details class="bet-details"><summary>投注明細／移除單項 <span>${Object.keys(r.bets).length} 項</span></summary><div class="bet-list">${Object.entries(r.bets).length?Object.entries(r.bets).map(([id,amount])=>`<div><span>${esc(BET_MAP[id].group)} · ${esc(BET_MAP[id].label)}</span><strong>${money(amount)}</strong>${betting?button('remove','×','remove',`data-bet="${id}" aria-label="移除${esc(BET_MAP[id].label)}投注"`):''}</div>`).join(''):'<div class="empty-bets">尚未下注</div>'}</div></details>
+        <div class="console-tools">${button('board-zoom',boardZoom?'完整盤面':'放大盤面','quiet zoom-toggle',`aria-pressed="${boardZoom}"`)}
+          <details class="bet-details"><summary>投注明細 <span>${Object.keys(r.bets).length} 項</span></summary><div class="bet-list">${Object.entries(r.bets).length?Object.entries(r.bets).map(([id,amount])=>`<div><span>${esc(BET_MAP[id].group)} · ${esc(BET_MAP[id].label)}</span><strong>${money(amount)}</strong>${betting?button('remove','×','remove',`data-bet="${id}" aria-label="移除${esc(BET_MAP[id].label)}投注"`):''}</div>`).join(''):'<div class="empty-bets">尚未下注</div>'}</div></details>
           ${betting?`<details class="inventory"><summary>本局道具 <span>${r.used?'已用 1／1':'每局限用 1 件'}</span></summary><p class="field-note">重擲券持有即在開骰後提供選擇。</p><div class="peek-picker"><label for="peek-index">透視目標</label><select id="peek-index">${[0,1,2].map(i=>`<option value="${i}" ${peekIndex===i?'selected':''}>第 ${i+1} 顆骰子</option>`).join('')}</select></div>${['protect','peek','reroll'].map(id=>`<div class="item-row">${icon(id)}<span>${ITEMS[id].name}<small>持有 ${p.inventory[id]} 件</small></span>${id==='reroll'?'<small>揭曉後選擇</small>':button('use','使用','outlined',`data-item="${id}" ${r.used||!p.inventory[id]?'disabled':''}`)}</div>`).join('')}</details>`:''}
           <details class="precise-bet"><summary>精準選格 <span>小螢幕適用</span></summary><label for="bet-target">選擇投注位置</label><select id="bet-target" ${betting?'':'disabled'}>${BETS.map(b=>`<option value="${b.id}" ${preciseBet===b.id?'selected':''}>${esc(b.group+' · '+b.label)}</option>`).join('')}</select>${button('bet',`下注所選位置`,'outlined',`data-bet="${preciseBet}" ${betting?'':'disabled'}`)}</details>
         </div>
@@ -71,11 +75,12 @@ function modal(){if(!overlay)return '';const isPause=overlay==='pause',isRules=o
   else content=`<span class="eyebrow">CHECKPOINT · 計時已暫停</span><h2>完成一局，再留下紀錄。</h2><p>只保存已完成局的狀態；未完成牌局不會寫入存檔。關閉後回到最後完成局。</p><div class="save-actions">${button('export','匯出上次完成存檔','primary',game.checkpoint?'':'disabled')}${button('load-auto','讀取上次自動存檔','outlined')}${game.profile.mode==='free'?button('load-manual','讀取手動存檔','outlined'):''}${button('import','匯入完成局存檔','outlined')}${button('close-overlay','繼續遊戲','quiet')}</div>${storageWarning?`<p class="warning">${esc(storageWarning)}</p>`:''}`;
   return `<div class="modal-backdrop ${isPause?'pause-cover':''}"><section class="modal" role="dialog" aria-modal="true" aria-label="${isPause?'遊戲已暫停':isRules?'玩法與賠率':overlay==='finish'?'挑戰結果':'存檔與讀檔'}" tabindex="-1">${content}</section></div>`;
 }
-function render(){const oldScroll=document.querySelector('.board-scroll')?.scrollLeft||0;const inventoryOpen=Boolean(document.querySelector('.inventory')?.open);const detailsOpen=['bet-details','precise-bet','shoe-details'].filter(c=>document.querySelector('.'+c)?.open);const boardTop=document.querySelector('.board-scroll')?.scrollTop||0;if(game.screen!=='table'||boardRound!==game.round){flights.cancel();boardRound=game.round;boardCounts={};boardLast={};boardChips={};}const active=document.activeElement,action=active?.dataset?.action,bet=active?.dataset?.bet,selectedChip=active?.dataset?.chip,oldModal=Boolean(document.querySelector('.modal'));const ended=game.screen!=='home'&&game.profile&&game.profile.status!=='active';if(ended&&!overlay)overlay='finish';
-  app.innerHTML=`<div class="${overlay?'under-overlay':''}" ${overlay?'inert':''}>${game.screen==='home'?(story?storyCard():home()):`<div class="game-shell">${hud()}${game.screen==='lobby'?lobby():game.screen==='shop'?shop():game.activeTable==='baccarat'?baccaratTableView({game,art,button,icon,chip,allIn,storageWarning,peekSide}):table()}${storageWarning?`<p class="storage-warning">${esc(storageWarning)}</p>`:''}</div>`}</div>${modal()}<input id="import-file" type="file" accept="application/json,.json" hidden>`;
+function render(){tablePanels.beforeRender();const oldScroll=document.querySelector('.board-scroll')?.scrollLeft||0;const inventoryOpen=Boolean(document.querySelector('.inventory')?.open);const detailsOpen=['bet-details','precise-bet','shoe-details'].filter(c=>document.querySelector('.'+c)?.open);const boardTop=document.querySelector('.board-scroll')?.scrollTop||0;if(game.screen!=='table'||boardRound!==game.round){flights.cancel();boardRound=game.round;boardCounts={};boardLast={};boardChips={};}const active=document.activeElement,action=active?.dataset?.action,bet=active?.dataset?.bet,selectedChip=active?.dataset?.chip,oldModal=Boolean(document.querySelector('.modal'));const ended=game.screen!=='home'&&game.profile&&game.profile.status!=='active';if(ended&&!overlay)overlay='finish';
+  app.innerHTML=`<div class="${overlay?'under-overlay':''}" ${overlay?'inert':''}>${game.screen==='home'?(story?storyCard():home()):`<div class="game-shell ${game.screen==='table'?'table-shell':''}">${hud()}${game.screen==='lobby'?lobby():game.screen==='shop'?shop():game.activeTable==='baccarat'?baccaratTableView({game,art,button,icon,chip,allIn,storageWarning,peekSide}):table()}${storageWarning?`<p class="storage-warning">${esc(storageWarning)}</p>`:''}</div>`}</div>${modal()}<input id="import-file" type="file" accept="application/json,.json" hidden>`;
   const boardScroll=document.querySelector('.board-scroll');if(boardScroll){boardScroll.scrollLeft=oldScroll;boardScroll.scrollTop=boardTop;}for(const c of detailsOpen){const d=document.querySelector('.'+c);if(d)d.open=true;}const inventory=document.querySelector('.inventory');if(inventory)inventory.open=inventoryOpen;paintBoard();flights.mount();flights.pause(game.paused);document.querySelectorAll('.flying-chip').forEach(n=>n.hidden=Boolean(overlay));
   if(overlay){const d=document.querySelector('.modal');if(!oldModal)d.querySelector('button:not(:disabled)')?.focus();else d.focus();}
   else if(action){const options=[...app.querySelectorAll('[data-action]')];options.find(b=>b.tagName===active.tagName&&b.dataset.action===action&&(!bet||b.dataset.bet===bet)&&(!selectedChip||b.dataset.chip===selectedChip))?.focus({preventScroll:true});}
+  tablePanels.mount(Boolean(overlay)||Boolean(game.round?.squeeze)||game.screen!=='table');
   squeeze.mount();
 }
 function openOverlay(type){advance();game.paused=true;overlay=type;render();}
@@ -95,6 +100,7 @@ app.addEventListener('change',async event=>{
 app.addEventListener('click',event=>{
   const target=event.target.closest('[data-action]');if(!target||target.disabled||target.getAttribute('aria-disabled')==='true')return;event.preventDefault();advance();const a=target.dataset.action;
   if(game.paused&&!target.closest('.modal'))return;
+  if(a==='close-table-tool'){tablePanels.close();return;}
   if(a==='mode'){mode=target.dataset.mode;render();return;}
   if(a==='enter'){game.start(name,mode);chip=500;allIn=false;story=false;last=performance.now();render();return;}
   if(a==='continue'){const save=readSave();if(save)showRestored(save);return;}
@@ -153,6 +159,8 @@ app.addEventListener('click',event=>{
 window.addEventListener('resize',()=>flights.cancel());
 window.addEventListener('scroll',()=>flights.cancel(),true);
 document.addEventListener('keydown',event=>{
+  if(event.defaultPrevented)return;
+  if(tablePanels.dialog&&event.key==='Escape'){event.preventDefault();tablePanels.close();return;}
   if(!overlay&&['Enter',' '].includes(event.key)&&event.target.matches('.printed-cell')){event.preventDefault();event.target.dispatchEvent(new MouseEvent('click',{bubbles:true}));return;}
   if(overlay){if(event.key==='Tab'){const nodes=[...document.querySelectorAll('.modal button:not(:disabled),.modal input,.modal select')];const first=nodes[0],end=nodes.at(-1);if(event.shiftKey&&(document.activeElement===first||document.activeElement.classList.contains('modal'))){end?.focus();event.preventDefault();}else if(!event.shiftKey&&document.activeElement===end){first?.focus();event.preventDefault();}}return;}
   const panel=document.querySelector('.squeeze-panel');if(panel&&event.key==='Tab'){const nodes=[...panel.querySelectorAll('button:not(:disabled),[tabindex="0"]')],first=nodes[0],end=nodes.at(-1);if(event.shiftKey&&document.activeElement===first){end?.focus();event.preventDefault();}else if(!event.shiftKey&&document.activeElement===end){first?.focus();event.preventDefault();}return;}

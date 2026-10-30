@@ -1,5 +1,5 @@
-import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.1.7';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.1.7';
+import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.1.8';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.1.8';
 export class Game {
   constructor({roll=randomDie,onComplete=()=>{},randomIndex=randomBelow}={}) { this.roll=roll;this.onComplete=onComplete;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.randomIndex=randomIndex; }
   start(name,mode='race') {

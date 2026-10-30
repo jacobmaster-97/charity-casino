@@ -1,5 +1,5 @@
-import {validateBaccaratShoe} from './baccarat.mjs?v=0.1.7';
-import {GOAL,ITEM_IDS} from './rules.mjs?v=0.1.7';
+import {validateBaccaratShoe} from './baccarat.mjs?v=0.1.8';
+import {GOAL,ITEM_IDS} from './rules.mjs?v=0.1.8';
 const PREFIX='charity-casino-prototype-v1';
 export function validateSave(input){
   if(!input||input.schema!==1||input.game!=='charity-casino')throw new Error('不支援的存檔格式');
