@@ -1,4 +1,4 @@
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.1.2';
 export class Game {
   constructor({roll=randomDie,onComplete=()=>{}}={}) { this.roll=roll;this.onComplete=onComplete;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null; }
   start(name,mode='race') {
@@ -13,7 +13,7 @@ export class Game {
   enterTable(){if(this.paused||this.screen!=='lobby'||this.profile.status!=='active')return false;this.screen='table';return this.newRound();}
   newRound(){
     if(this.paused||this.profile?.status!=='active'||(this.round&&this.round.phase!=='settled'))return false;
-    this.round={phase:'betting',dice:[this.roll(),this.roll(),this.roll()],bets:{},remaining:30000,used:null,peek:null,result:null};return true;
+    this.round={phase:'betting',bankAtStart:this.profile.bank,dice:[this.roll(),this.roll(),this.roll()],bets:{},remaining:30000,used:null,peek:null,result:null};return true;
   }
   addBet(id,amount){
     if(!this.canBet||!BET_MAP[id]||!Number.isSafeInteger(amount)||amount<=0||amount>this.available)return false;

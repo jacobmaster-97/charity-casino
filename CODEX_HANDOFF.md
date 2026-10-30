@@ -6,11 +6,14 @@
 
 ## Current Phase
 
-原型候選0.1。使用者已授權按建議同步製作原型與貼圖，先完成B大廳＋大小切片。其他四款保留開發中入口；正式版五款全開範圍維持。程式與PNG已交付，但瀏覽器受環境限制未能啟動，不能宣稱runtime或裝置驗收通過。
+原型0.1.2線上更新。使用者已實玩大小，仍缺自動瀏覽器／手機驗證。使用者已授權按建議同步製作原型與貼圖，先完成B大廳＋大小切片。其他四款保留開發中入口；正式版五款全開範圍維持。程式與PNG已交付，但瀏覽器受環境限制未能啟動，不能宣稱runtime或裝置驗收通過。
 
 ## Latest Completed Work
 
-- 最新問題：使用者手機／平板Safari大廳破圖。已由Pages build40895801619的job123524463752確認現況source:.（根目錄），而app／CSS原圖網址是../art，實際在public/art。已修正為../public/art，docs同步為docs/play/public/art，根目錄.nojekyll與入口?v=0.1.1。新增實際解析回歸先失敗後通過，共24測試。尚待同步本次修正與Pages重新部署。
+- 最新要求：資金增長時提供更大碼值籌碼。0.1.2已改為每局按bankAtStart選五種面額，最高一千萬元；局內不跳動、原選值不自動加碼、自訂與全押保留，窄畫面換行。新增六項規則測試及一項依賴模組快取測試；瀏覽器路徑已補但未執行。最終31項測試已通過，準備同步GitHub及Pages部署。詳見docs/CHIP_DENOMINATIONS.md。
+
+
+- 最新問題：使用者手機／平板Safari大廳破圖。已由Pages build40895801619的job123524463752確認現況source:.（根目錄），而app／CSS原圖網址是../art，實際在public/art。已修正為../public/art，docs同步為docs/play/public/art，根目錄.nojekyll與入口?v=0.1.1。新增實際解析回歸先失敗後通過，共24測試。已同步main提交dc91dfc61e9aa89699551d178f89dcd2b37645e5，84檔遠端SHA已核對，Pages run40979205888已completed/success，修正版已部署。
 
 
 - 已上載至使用者指定公開倉庫 https://github.com/jacobmaster-97/charity-casino 的main分支。內容提交5f9b8e08d42ed3cb45e4a68ff09557f4359750da，parent保留d5653661b6ca31922da11c364ec804349b7b5d5b。76檔遠端blob SHA全部與本地一致，main指向亦已回讀確認；無強推。Pages已由使用者啟用，實際從main根目錄發布，原部署成功；目前修正圖片路徑。收據docs/GITHUB_UPLOAD.json。
@@ -60,4 +63,4 @@
 
 ## Next Safest Task
 
-將0.1.1路徑修正以原main b4489503cc3bcbbef1feaa06490b75de44c890f0為parent同步至jacobmaster-97/charity-casino，保留既有檔案及舊圖位置，不強推。核對新commit／tree，再等Pages部署成功。向使用者提供 https://jacobmaster-97.github.io/charity-casino/?v=0.1.1 重開測試。存檔key／schema不改，不要求清空Safari資料；iOS實機結果仍待確認。
+完成0.1.2檢查並同步jacobmaster-97/charity-casino，基底main預期dc91dfc61e9aa89699551d178f89dcd2b37645e5，需回讀核對，不強推。保留0.1.1圖片路徑與存檔key/schema；待Pages部署成功再提供?v=0.1.2網址。下一步按手機實玩回饋核對籌碼閱讀、點擊與選值保持。既有環境限制不重試。

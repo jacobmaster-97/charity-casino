@@ -1,4 +1,4 @@
-import {GOAL,ITEM_IDS} from './rules.mjs';
+import {GOAL,ITEM_IDS} from './rules.mjs?v=0.1.2';
 const PREFIX='charity-casino-prototype-v1';
 export function validateSave(input){
   if(!input||input.schema!==1||input.game!=='charity-casino')throw new Error('不支援的存檔格式');

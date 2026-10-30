@@ -53,7 +53,21 @@ test('repository-root Pages resolves actual app and CSS images to existing PNGs'
 test('root and docs entry points version app and CSS without breaking relative paths',async()=>{
   for(const entry of ['index.html','docs/index.html']){
     const html=await readFile(path.join(root,entry),'utf8');
-    assert.match(html,/src\/styles\.css\?v=0\.1\.1/);
-    assert.match(html,/src\/app\.mjs\?v=0\.1\.1/);
+    assert.match(html,/src\/styles\.css\?v=0\.1\.2/);
+    assert.match(html,/src\/app\.mjs\?v=0\.1\.2/);
+  }
+});
+test('all entry-module dependencies share the release version to avoid stale export caches',async()=>{
+  const version=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
+  for(const base of [root,path.join(site,'play')]){
+    for(const file of ['app.mjs','game.mjs','storage.mjs']){
+      const source=await readFile(path.join(base,'src',file),'utf8');
+      const imports=[...source.matchAll(/from '(\.\/[^']+)'/g)].map(m=>m[1]);
+      assert.ok(imports.length>0);
+      for(const dependency of imports){
+        assert.ok(dependency.endsWith(`?v=${version}`),`${file} has an unversioned dependency`);
+        assert.ok((await stat(path.join(base,'src',dependency.split('?')[0]))).isFile());
+      }
+    }
   }
 });

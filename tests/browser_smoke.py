@@ -93,6 +93,30 @@ def main():
         page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,get:()=>false});document.dispatchEvent(new Event('visibilitychange'))")
         expect(page.get_by_role('dialog')).to_be_visible()  # Only Continue resumes.
         act(page, 'resume')
+        # Restore a rich completed checkpoint through the normal import flow.
+        # This path verifies the live chip controls without a gameplay debug API.
+        act(page, 'saves')
+        rich = json.loads(json.dumps(snapshot))
+        rich['profile']['bank'] = 100000000  # $1,000,000
+        page.locator('#import-file').set_input_files({'name':'rich.json','mimeType':'application/json','buffer':json.dumps(rich).encode()})
+        act(page, 'table')
+        large = page.locator('[data-action=chip][data-chip="10000000"]')
+        expect(large).to_be_visible()
+        expect(large).to_have_attribute('aria-label', '選擇 $100,000 籌碼')
+        large.click()
+        expect(page.locator('[data-action=chip][data-chip="10000000"]')).to_be_focused()
+        expect(page.locator('#custom-amount')).to_have_value('100000')
+        values = page.locator('.chip-picker button').evaluate_all('(nodes)=>nodes.map(n=>n.dataset.chip)')
+        act(page, 'bet', bet='small')
+        expect(page.locator('.bet-list')).to_contain_text('$100,000')
+        assert page.locator('.chip-picker button').evaluate_all('(nodes)=>nodes.map(n=>n.dataset.chip)') == values
+        act(page, 'remove', bet='small')
+        expect(page.locator('#custom-amount')).to_have_value('100000')
+        act(page, 'leave')
+        act(page, 'home')
+        start(page, '新挑戰')
+        act(page, 'table')
+        expect(page.locator('#custom-amount')).to_have_value('5')
         assert errors == [], errors
         context.close()
         for width, height in [(720,1280),(1080,2400),(390,844),(320,568)]:

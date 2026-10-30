@@ -1,4 +1,16 @@
 export const GOAL = 2_500_000_000; // cents; $25,000,000
+const CHIP_DENOMINATIONS = [1,5,10,25,100,500,1000,5000,10000,50000,100000,500000,1000000,5000000,10000000].map(dollars=>dollars*100);
+export function getChipDenominations(bankCents) {
+  if(!Number.isSafeInteger(bankCents)||bankCents<0)throw new Error('無效資金');
+  const affordable=CHIP_DENOMINATIONS.filter(amount=>amount<=bankCents);
+  return affordable.length>=5 ? affordable.slice(-5) : CHIP_DENOMINATIONS.slice(0,5);
+}
+export function chipLabel(cents) {
+  if(cents>=1_000_000_000)return `$${cents/1_000_000_000}千萬`;
+  if(cents>=1_000_000)return `$${cents/1_000_000}萬`;
+  if(cents>=100_000)return `$${cents/100_000}千`;
+  return money(cents);
+}
 export const ITEM_IDS = ['protect', 'peek', 'reroll'];
 export const ITEMS = {
   protect: { name: '保本券', icon: 'protect', description: '開骰前使用。本局全部投注淨虧損，退回虧損的 50%。' },

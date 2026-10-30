@@ -6,4 +6,9 @@
 @media(max-width:360px){.home h1{font-size:55px}.home-content{padding-top:20px}.hud .brand{font-size:14px;gap:9px}.bet-label{font-size:22px}.die-face{width:72px;height:72px}.die-wrap{padding:3px}.section-heading h1{font-size:20px}.home-footer{font-size:10px}.home-content .intro{font-size:15px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 .prop-protect,.prop-reroll{background-size:190% 200%}
+.chip-picker{display:grid;grid-template-columns:repeat(5,minmax(48px,1fr));gap:5px}
+.chip-picker button{min-width:0;width:100%;min-height:72px;font-size:14px}
+.chip-picker button>span:last-child{white-space:nowrap}
+@media(min-width:761px) and (max-width:1050px){.chip-picker{grid-template-columns:repeat(3,minmax(48px,1fr))}}
+@media(max-width:380px){.chip-picker{grid-template-columns:repeat(3,minmax(48px,1fr))}}
 @media(max-width:760px){.odds,.stage-caption>span,.save-note,.bet-amount{font-size:14px}.hud-stat>span{font-size:14px}}

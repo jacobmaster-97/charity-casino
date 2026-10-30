@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {BETS,netRate,settleBets,GOAL} from '../src/rules.mjs';
+import {BETS,netRate,settleBets,GOAL,getChipDenominations,chipLabel} from '../src/rules.mjs';
 import {Game} from '../src/game.mjs';
 import {Saves,validateSave} from '../src/storage.mjs';
 
@@ -109,4 +109,51 @@ test('storage failure is surfaced and preserves in-memory checkpoint',()=>{
   const {game}=setup();game.addBet('small',100);finish(game);
   const saves=new Saves({getItem:()=>null,setItem:()=>{throw new Error('quota');}});
   assert.throws(()=>saves.write(game.checkpoint));assert.ok(game.checkpoint);
+});
+test('chip choices retain the opening $100 denominations and scale up with wealth',()=>{
+  const dollars=amount=>getChipDenominations(amount*100).map(c=>c/100);
+  assert.deepEqual(dollars(100),[1,5,10,25,100]);
+  assert.deepEqual(dollars(1000),[10,25,100,500,1000]);
+  assert.deepEqual(dollars(10000),[100,500,1000,5000,10000]);
+  assert.deepEqual(dollars(1000000),[10000,50000,100000,500000,1000000]);
+  assert.deepEqual(dollars(20000000),[100000,500000,1000000,5000000,10000000]);
+});
+test('every active bankroll tier has five ordered chips and a useful affordable large amount',()=>{
+  for(let bank=10000;bank<GOAL;bank=Math.ceil(bank*1.23)){
+    const choices=getChipDenominations(bank);
+    assert.equal(choices.length,5);assert.equal(new Set(choices).size,5);
+    assert.ok(choices.every((c,i)=>Number.isSafeInteger(c)&&c>0&&c<=bank&&(!i||c>choices[i-1])));
+    assert.ok(choices.at(-1)>=bank/5);
+  }
+  assert.deepEqual(getChipDenominations(37),[100,500,1000,2500,10000]);
+  assert.throws(()=>getChipDenominations(NaN));assert.throws(()=>getChipDenominations(-1));
+});
+test('chip shelf stays stable during a round and updates from the next round bankroll',()=>{
+  const {game}=setup();game.profile.bank=100000;game.round=null;game.newRound();
+  const before=getChipDenominations(game.round.bankAtStart);
+  game.addBet('small',50000);assert.deepEqual(getChipDenominations(game.round.bankAtStart),before);
+  finish(game);assert.equal(game.profile.bank,150000);
+  assert.deepEqual(getChipDenominations(game.round.bankAtStart),before);
+  game.newRound();assert.equal(game.round.bankAtStart,150000);
+  game.addBet('big',100000);finish(game);assert.equal(game.profile.bank,50000);
+  game.newRound();assert.equal(game.round.bankAtStart,50000);
+  assert.deepEqual(getChipDenominations(game.round.bankAtStart),[500,1000,2500,10000,50000]);
+});
+test('one large-chip click places and settles $100,000 without stacking or overspending',()=>{
+  const {game}=setup();game.profile.bank=100000000;game.round=null;game.newRound();
+  const large=10000000;assert.ok(getChipDenominations(game.round.bankAtStart).includes(large));
+  assert.equal(game.addBet('small',large),true);assert.equal(game.stake,large);
+  assert.equal(game.available,90000000);
+  assert.equal(game.addBet('big',100000000),false);
+  finish(game);assert.equal(game.profile.bank,110000000);
+});
+test('large chip labels stay compact while exact money remains available for input and accessibility',()=>{
+  for(const [cents,label] of [[100,'$1'],[10000,'$100'],[100000,'$1千'],[500000,'$5千'],[1000000,'$1萬'],[5000000,'$5萬'],[100000000,'$100萬'],[500000000,'$500萬'],[1000000000,'$1千萬']])assert.equal(chipLabel(cents),label);
+  for(const bank of [10000,1000000,100000000,GOAL-1])assert.ok(getChipDenominations(bank).every(c=>[...chipLabel(c)].length<=5));
+});
+test('custom bets and below-$1 all-in remain valid alongside chip suggestions',()=>{
+  const {game}=setup();assert.equal(game.addBet('small',1234),true);assert.equal(game.stake,1234);
+  game.clearBets();game.profile.bank=17;
+  assert.equal(game.addBet('small',getChipDenominations(17)[0]),false);
+  assert.equal(game.addBet('small',17),true);finish(game);assert.equal(game.profile.bank,34);
 });
