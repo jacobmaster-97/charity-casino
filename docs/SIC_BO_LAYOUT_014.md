@@ -40,3 +40,5 @@ UI Score：Readable／UX／Accessibility／Commercial／Retention／Google Play 
 ## 發布／回復
 
 版本0.1.4，入口與依賴模組同版本；九張PNG同步root及/docs布局，保存schema仍1。若出現阻塞問題，可回復0.1.3提交67578f2f70a84f5993edcc22068ae797e3b22af5的入口、runtime及docs/play；不要刪除玩家存檔。
+
+發布結果：main 01032dd50d06400add76f4d3e7bc79df28dd0566；Pages run40995199951 completed/success；101發布檔SHA全部吻合。本地收據見SIC_BO_LAYOUT_014_RELEASE.json（發布後記錄）。

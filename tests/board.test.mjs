@@ -33,10 +33,10 @@ test('flight pause/resume freezes presentation and reduced motion bypasses effec
  const reduced=new ChipFlights({art,onChange(){},reduced:()=>true});reduced.queue('big',100);assert.deepEqual(reduced.pending,{});
 });
 test('mounted flight uses 420ms arc + 180ms landing; finishing only changes presentation',()=>{
- const priorDocument=globalThis.document,priorPoint=globalThis.DOMPoint;let appended=0,removed=0,updates=0,animation;
+ const priorDocument=globalThis.document,priorPoint=globalThis.DOMPoint;let appended=0,removed=0,updates=0,animation,lastStyle;
  globalThis.DOMPoint=class{constructor(x,y){this.x=x;this.y=y;}matrixTransform(){return this;}};
- globalThis.document={querySelector:()=>({getScreenCTM:()=>({a:1})}),body:{append(){appended++;}},createElement:()=>({style:{},setAttribute(){},remove(){removed++;},animate(frames,options){assert.equal(options.duration,600);assert.equal(frames[20].offset,.7);animation={cancel(){},pause(){},play(){}};return animation;}})};
- try{const effects=new ChipFlights({art,onChange(){updates++;}});effects.queue('small',500,{x:600,y:900});effects.mount();assert.equal(appended,1);effects.mount();assert.equal(appended,1);animation.onfinish();assert.deepEqual(effects.pending,{});assert.equal(removed,1);assert.equal(updates,1);}finally{globalThis.document=priorDocument;globalThis.DOMPoint=priorPoint;}
+ globalThis.document={querySelector:()=>({getScreenCTM:()=>({a:1})}),body:{append(){appended++;}},createElement:()=>({style:(lastStyle={}),setAttribute(){},remove(){removed++;},animate(frames,options){assert.equal(options.duration,600);assert.equal(frames[20].offset,.7);animation={cancel(){},pause(){},play(){}};return animation;}})};
+ try{const effects=new ChipFlights({art,onChange(){updates++;}});effects.queue('small',500,{x:600,y:900});effects.mount();assert.equal(appended,1);effects.mount();assert.equal(appended,1);animation.onfinish();assert.deepEqual(effects.pending,{});assert.equal(removed,1);assert.equal(updates,1);effects.queue('bac-player',100,{x:500,y:800});effects.mount();assert.equal(lastStyle.width,'140px');animation.onfinish();}finally{globalThis.document=priorDocument;globalThis.DOMPoint=priorPoint;}
 });
 
 test('five chip slots have distinct atlas regions and stable colors across wealth tiers',()=>{

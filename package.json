@@ -1,13 +1,13 @@
 {
   "name": "charity-casino-prototype",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node src/server.mjs",
-    "test": "node tests/game.test.mjs && node tests/board.test.mjs",
+    "test": "node tests/game.test.mjs && node tests/board.test.mjs && node tests/baccarat.test.mjs",
     "build": "node scripts/package.mjs",
-    "check": "node --check src/app.mjs && node --check src/game.mjs && node --check src/rules.mjs && node --check src/storage.mjs && node --check src/server.mjs && node --check scripts/package.mjs && node --check scripts/pages.mjs && node --check scripts/prepare-github.mjs && node --check src/board.mjs",
+    "check": "node --check src/app.mjs && node --check src/game.mjs && node --check src/rules.mjs && node --check src/storage.mjs && node --check src/server.mjs && node --check scripts/package.mjs && node --check scripts/pages.mjs && node --check scripts/prepare-github.mjs && node --check src/board.mjs && node --check src/baccarat.mjs && node --check src/baccarat-view.mjs",
     "verify": "npm run check && npm test && npm run build && node tests/package.test.mjs",
     "build:pages": "node scripts/pages.mjs",
     "verify:pages": "npm run build:pages && node tests/pages.test.mjs",

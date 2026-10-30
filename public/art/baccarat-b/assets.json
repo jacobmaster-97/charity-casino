@@ -1,0 +1,24 @@
+{
+  "file": "cards.png",
+  "source": "/workspace/generated_images/exec-781dd0ff-585d-4c72-aa94-0b13dfd0fd72.png",
+  "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd",
+  "size": [
+    1499,
+    1049
+  ],
+  "regions": {
+    "front": [
+      80,
+      50,
+      650,
+      922
+    ],
+    "back": [
+      775,
+      50,
+      655,
+      922
+    ]
+  },
+  "note": "image_gen original PNG copied unchanged; runtime explicit clip paths; ranks and suits are UI text"
+}

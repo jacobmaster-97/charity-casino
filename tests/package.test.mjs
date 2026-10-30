@@ -23,9 +23,9 @@ test('embedded executable module parses after bundling',async()=>{
     assert.equal(check.status,0,check.stderr);
   }finally{await rm(temp,{recursive:true,force:true});}
 });
-test('all nine embedded PNGs exactly match original runtime textures',async()=>{
+test('all ten embedded PNGs exactly match original runtime textures',async()=>{
   const map=JSON.parse(html.match(/globalThis\.__CASINO_ART=(\{[^\n]+\});/)[1]);
-  assert.equal(Object.keys(map).length,9);
+  assert.equal(Object.keys(map).length,10);
   for(const [ref,data] of Object.entries(map)){
     assert.ok(data.startsWith('data:image/png;base64,'));
     const embedded=Buffer.from(data.split(',')[1],'base64');

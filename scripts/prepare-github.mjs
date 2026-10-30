@@ -12,7 +12,7 @@ async function gather(directory){
     if(entry.isDirectory())await gather(relative);else if(entry.isFile())files.push(relative);
   }
 }
-for(const dir of ['src','scripts','tests','.agents/skills/gamestudio','public/art/prototype-b','public/art/sicbo-board-b','docs/play'])await gather(dir);
+for(const dir of ['src','scripts','tests','.agents/skills/gamestudio','public/art/prototype-b','public/art/sicbo-board-b','public/art/baccarat-b','docs/play'])await gather(dir);
 files.push('docs/index.html','docs/.nojekyll','public/art/styles/b/lobby-populated-v4.png','public/art/styles/b/lobby-background.png','public/art/styles/b/asset.json');
 for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||entry.name.endsWith('_RELEASE.json')||['skill-installation.json','GITHUB_UPLOAD.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
 const manifest=[];

@@ -120,6 +120,30 @@ def main():
         act(page, 'table')
         expect(page.locator('#custom-amount')).to_have_value('5')
         assert errors == [], errors
+        # Baccarat uses the same profile and bottom controls, but only one target.
+        act(page, 'leave')
+        page.locator('[data-action=table][data-table=baccarat]').click()
+        expect(page.locator('.baccarat-screen')).to_be_visible()
+        expect(page.locator('.baccarat-board .printed-cell')).to_have_count(3)
+        act(page, 'bet', bet='bac-player')
+        stake_before_move = page.locator('.console-summary strong').first.inner_text()
+        act(page, 'bet', bet='bac-banker')
+        assert page.locator('.console-summary strong').first.inner_text() == stake_before_move
+        expect(page.locator('.console-summary')).to_contain_text('莊')
+        act(page, 'pause')
+        expect(page.get_by_role('dialog')).to_be_visible()
+        act(page, 'resume')
+        act(page, 'roll')
+        expect(page.locator('.baccarat-screen [data-action=next]')).to_be_visible(timeout=5000)
+        page.screenshot(path=str(OUT / 'prototype-baccarat-result.png'), full_page=True)
+        act(page, 'leave')
+        act(page, 'saves')
+        with page.expect_download() as bac_download:
+            act(page, 'export')
+        bac_snapshot = json.loads(Path(bac_download.value.path()).read_text())
+        assert len(bac_snapshot['baccaratShoe']['cards']) == 416
+        assert bac_snapshot['baccaratShoe']['cursor'] >= 4
+        act(page, 'close-overlay')
         context.close()
         for width, height in [(720,1280),(1080,2400),(390,844),(320,568)]:
             mobile = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
@@ -147,6 +171,13 @@ def main():
             act(page,'rules')
             expect(page.get_by_role('dialog')).to_be_visible()
             act(page,'close-overlay')
+            act(page, 'clear')
+            act(page, 'leave')
+            page.locator('[data-action=table][data-table=baccarat]').tap()
+            overflow(page)
+            expect(page.locator('.baccarat-screen')).to_be_visible()
+            page.locator('[data-action=bet][data-bet=bac-player]').tap()
+            page.screenshot(path=str(OUT / f'prototype-baccarat-{width}.png'), full_page=True)
             mobile.close()
         assert errors == [], errors
         browser.close()
