@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {BETS,money,getChipDenominations,chipLabel,ITEMS} from '../src/rules.mjs';
 import {Game} from '../src/game.mjs';
-import {BOARD_CELLS,boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from '../src/board.mjs';
+import {BOARD_CELLS,boardMarkup,boardAmounts,BACCARAT_CELLS,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from '../src/board.mjs';
 const art=p=>p;
 test('approved board exposes exactly 50 uniquely operable bets and retains rule rates',()=>{
  const markup=boardMarkup(art,true);assert.equal((markup.match(/data-action="bet"/g)||[]).length,50);
@@ -36,7 +36,7 @@ test('mounted flight uses 420ms arc + 180ms landing; finishing only changes pres
  const priorDocument=globalThis.document,priorPoint=globalThis.DOMPoint;let appended=0,removed=0,updates=0,animation,lastStyle;
  globalThis.DOMPoint=class{constructor(x,y){this.x=x;this.y=y;}matrixTransform(){return this;}};
  globalThis.document={querySelector:()=>({getScreenCTM:()=>({a:1})}),body:{append(){appended++;}},createElement:()=>({style:(lastStyle={}),setAttribute(){},remove(){removed++;},animate(frames,options){assert.equal(options.duration,600);assert.equal(frames[20].offset,.7);animation={cancel(){},pause(){},play(){}};return animation;}})};
- try{const effects=new ChipFlights({art,onChange(){updates++;}});effects.queue('small',500,{x:600,y:900});effects.mount();assert.equal(appended,1);effects.mount();assert.equal(appended,1);animation.onfinish();assert.deepEqual(effects.pending,{});assert.equal(removed,1);assert.equal(updates,1);effects.queue('bac-player',100,{x:500,y:800});effects.mount();assert.equal(lastStyle.width,'110px');animation.onfinish();}finally{globalThis.document=priorDocument;globalThis.DOMPoint=priorPoint;}
+ try{const effects=new ChipFlights({art,onChange(){updates++;}});effects.queue('small',500,{x:600,y:900});effects.mount();assert.equal(appended,1);effects.mount();assert.equal(appended,1);animation.onfinish();assert.deepEqual(effects.pending,{});assert.equal(removed,1);assert.equal(updates,1);effects.queue('bac-player',100,{x:500,y:800});effects.mount();assert.equal(lastStyle.width,BACCARAT_CELLS[0].chipSize+'px');animation.onfinish();}finally{globalThis.document=priorDocument;globalThis.DOMPoint=priorPoint;}
 });
 
 test('five chip slots have distinct atlas regions and stable colors across wealth tiers',()=>{

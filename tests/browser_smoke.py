@@ -39,6 +39,21 @@ def overflow(page):
                 assert box and box['y'] >= 0 and box['y'] + box['height'] <= page.viewport_size['height'] + 1, (selector, box)
 
 
+def baccarat_composition(page):
+    # Requires real browser geometry; not run in the restricted IPC environment.
+    page.wait_for_function("""() => {
+      const board=document.querySelector('.baccarat-board'), region=document.querySelector('.baccarat-screen .board-scroll');
+      if(!board || !region || !region.clientWidth || !region.clientHeight)return false;
+      return Math.abs(Number(board.dataset.boardHeight)-1200*region.clientHeight/region.clientWidth)<.01;
+    }""")
+    geometry = page.locator('.baccarat-felt').evaluate("""felt => {
+      const stage=felt.querySelector('.baccarat-stage').getBoundingClientRect(), lower=felt.querySelector('.baccarat-lower').getBoundingClientRect();
+      return {stage:stage.height, lower:lower.height, upperBottom:stage.bottom, lowerTop:lower.top};
+    }""")
+    assert abs(geometry['stage'] / geometry['lower'] - 35 / 65) < .02
+    assert geometry['upperBottom'] <= geometry['lowerTop'] + 1
+    overflow(page)
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     with sync_playwright() as p:
@@ -141,6 +156,7 @@ def main():
         page.locator('#import-file').set_input_files({'name':'squeeze.json','mimeType':'application/json','buffer':json.dumps(squeeze_save).encode()})
         page.locator('[data-action=table][data-table=baccarat]').click()
         expect(page.locator('.baccarat-screen')).to_be_visible()
+        baccarat_composition(page)
         expect(page.locator('.baccarat-board .printed-cell')).to_have_count(6)
         act(page, 'bet', bet='bac-player')
         stake_before_move = page.locator('.console-summary strong').first.inner_text()
@@ -209,6 +225,7 @@ def main():
             page.locator('[data-action=table][data-table=baccarat]').tap()
             overflow(page)
             expect(page.locator('.baccarat-screen')).to_be_visible()
+            baccarat_composition(page)
             page.locator('[data-action=bet][data-bet=bac-player]').tap()
             page.screenshot(path=str(OUT / f'prototype-baccarat-{width}.png'), full_page=True)
             mobile.close()

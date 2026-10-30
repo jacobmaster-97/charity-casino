@@ -1,16 +1,16 @@
-import {TablePanels,updateGameViewport} from './table-layout.mjs?v=0.1.8';
-import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.1.8';
-import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.1.8';
-import {baccaratTableView} from './baccarat-view.mjs?v=0.1.8';
-import {Game} from './game.mjs?v=0.1.8';
-import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.1.8';
-import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.1.8';
-import {Saves,validateSave} from './storage.mjs?v=0.1.8';
+import {TablePanels,updateGameViewport,fitBaccaratSurface} from './table-layout.mjs?v=0.1.9';
+import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.1.9';
+import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.1.9';
+import {baccaratTableView} from './baccarat-view.mjs?v=0.1.9';
+import {Game} from './game.mjs?v=0.1.9';
+import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.1.9';
+import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.1.9';
+import {Saves,validateSave} from './storage.mjs?v=0.1.9';
 
 const app=document.querySelector('#app'),toastNode=document.querySelector('#toast');
 const tablePanels=new TablePanels(app);updateGameViewport();
-window.addEventListener('resize',()=>updateGameViewport());
-window.visualViewport?.addEventListener('resize',()=>updateGameViewport());
+window.addEventListener('resize',relayoutTables);
+window.visualViewport?.addEventListener('resize',relayoutTables);
 let storage;try{storage=window.localStorage;}catch{storage=null;}
 const saves=new Saves(storage||{getItem(){throw new Error('無法使用瀏覽器儲存空間');},setItem(){throw new Error('無法使用瀏覽器儲存空間');}});
 let storageWarning='',mode='race',name='',story=false,group='大小',chip=500,allIn=false,peekIndex=0,peekSide='player',overlay=null,toastTimer,last=performance.now();
@@ -22,7 +22,8 @@ const button=(action,text,cls='',extra='')=>`<button type="button" data-action="
 let boardRound=null,boardCounts={},boardLast={},boardChips={},boardZoom=false,preciseBet='small';
 const flights=new ChipFlights({art,onChange:paintBoard,reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
 const squeeze=new BaccaratSqueezeController({root:app,game,art,advance,onChange:render,reduced:()=>matchMedia('(prefers-reduced-motion: reduce)').matches});
-function paintBoard(){const landed={};for(const [id,values] of Object.entries(boardChips)){const pendingCount=flights.flights.filter(f=>f.id===id).length;landed[id]=values.slice(0,Math.max(0,values.length-pendingCount)).slice(-3);}const node=document.querySelector('.board-amounts');if(!node||!game.round)return;node.innerHTML=boardAmounts(game.round.bets,flights.pending,art,boardCounts,boardLast,game.round.bankAtStart,landed);for(const cell of document.querySelectorAll('.printed-cell'))cell.classList.toggle('has-bet',Boolean(game.round.bets[cell.dataset.bet]));}
+function relayoutTables(){updateGameViewport();requestAnimationFrame(()=>{flights.cancel();fitBaccaratSurface(app);paintBoard();});}
+function paintBoard(){const landed={};for(const [id,values] of Object.entries(boardChips)){const pendingCount=flights.flights.filter(f=>f.id===id).length;landed[id]=values.slice(0,Math.max(0,values.length-pendingCount)).slice(-3);}const node=document.querySelector('.board-amounts');if(!node||!game.round)return;node.innerHTML=boardAmounts(game.round.bets,flights.pending,art,boardCounts,boardLast,game.round.bankAtStart,landed,Number(document.querySelector('.baccarat-board')?.dataset.boardHeight)||610);for(const cell of document.querySelectorAll('.printed-cell'))cell.classList.toggle('has-bet',Boolean(game.round.bets[cell.dataset.bet]));}
 const formatMode=m=>m==='race'?'競速模式':'自由模式';
 function notify(text){toastNode.textContent=text;toastNode.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastNode.classList.remove('visible'),4200);}
 function readSave(which=mode,slot='auto'){try{return saves.read(which,slot);}catch{storageWarning='存檔無法讀取，原檔已保留；可嘗試匯入備份。';return null;}}
@@ -37,7 +38,7 @@ function table(){
   const r=game.round,p=game.profile,betting=r.phase==='betting',visible=['reroll','settled'].includes(r.phase),result=r.result;
   const phaseText={betting:'請下注',revealing:'開骰中',reroll:'選擇重擲',settled:'本局完成'}[r.phase];
   const denominations=getChipDenominations(r.bankAtStart);
-  return `<section class="table-screen">
+  return `<section class="table-screen sicbo-screen presentation-separated">
     <div class="table-nav">${button('leave','← 返回大廳','quiet',(!betting&&r.phase!=='settled'||game.stake>0&&r.phase!=='settled'||r.used&&r.phase!=='settled')?'disabled':'')}<div><span class="eyebrow">SIC BO</span><h1>大小</h1></div>${button('rules','玩法與賠率','quiet')}</div>
     <div class="dice-stage ${r.phase==='revealing'?'shaking':''}">
       <div class="stage-topline"><span class="stage-status">${phaseText}</span><span id="countdown" class="countdown">${r.remaining?Math.ceil(r.remaining/1000)+' 秒':''}</span></div>
@@ -77,6 +78,7 @@ function modal(){if(!overlay)return '';const isPause=overlay==='pause',isRules=o
 }
 function render(){tablePanels.beforeRender();const oldScroll=document.querySelector('.board-scroll')?.scrollLeft||0;const inventoryOpen=Boolean(document.querySelector('.inventory')?.open);const detailsOpen=['bet-details','precise-bet','shoe-details'].filter(c=>document.querySelector('.'+c)?.open);const boardTop=document.querySelector('.board-scroll')?.scrollTop||0;if(game.screen!=='table'||boardRound!==game.round){flights.cancel();boardRound=game.round;boardCounts={};boardLast={};boardChips={};}const active=document.activeElement,action=active?.dataset?.action,bet=active?.dataset?.bet,selectedChip=active?.dataset?.chip,oldModal=Boolean(document.querySelector('.modal'));const ended=game.screen!=='home'&&game.profile&&game.profile.status!=='active';if(ended&&!overlay)overlay='finish';
   app.innerHTML=`<div class="${overlay?'under-overlay':''}" ${overlay?'inert':''}>${game.screen==='home'?(story?storyCard():home()):`<div class="game-shell ${game.screen==='table'?'table-shell':''}">${hud()}${game.screen==='lobby'?lobby():game.screen==='shop'?shop():game.activeTable==='baccarat'?baccaratTableView({game,art,button,icon,chip,allIn,storageWarning,peekSide}):table()}${storageWarning?`<p class="storage-warning">${esc(storageWarning)}</p>`:''}</div>`}</div>${modal()}<input id="import-file" type="file" accept="application/json,.json" hidden>`;
+  fitBaccaratSurface(app);
   const boardScroll=document.querySelector('.board-scroll');if(boardScroll){boardScroll.scrollLeft=oldScroll;boardScroll.scrollTop=boardTop;}for(const c of detailsOpen){const d=document.querySelector('.'+c);if(d)d.open=true;}const inventory=document.querySelector('.inventory');if(inventory)inventory.open=inventoryOpen;paintBoard();flights.mount();flights.pause(game.paused);document.querySelectorAll('.flying-chip').forEach(n=>n.hidden=Boolean(overlay));
   if(overlay){const d=document.querySelector('.modal');if(!oldModal)d.querySelector('button:not(:disabled)')?.focus();else d.focus();}
   else if(action){const options=[...app.querySelectorAll('[data-action]')];options.find(b=>b.tagName===active.tagName&&b.dataset.action===action&&(!bet||b.dataset.bet===bet)&&(!selectedChip||b.dataset.chip===selectedChip))?.focus({preventScroll:true});}

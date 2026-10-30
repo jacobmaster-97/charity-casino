@@ -1,0 +1,24 @@
+{
+  "version": "0.1.8",
+  "repository": "jacobmaster-97/charity-casino",
+  "commit": "fe35072cd5d7b4aa239ca8119569d58c796188b5",
+  "parent": "358a4a4f4704a1c4557759829b740081d12ee558",
+  "tree": "bfc9994abbf09906dc971db9dc7e209390a307b7",
+  "changed_files": 36,
+  "deleted_files": [
+    "public/art/baccarat-b/hand.png",
+    "docs/play/public/art/baccarat-b/hand.png"
+  ],
+  "verified_files": 126,
+  "tests_passed": 94,
+  "pages_run_id": 41075125277,
+  "pages_status": "completed",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.1.8",
+  "browser_device_validation": "UNVERIFIED",
+  "layout_validation": "bounded CSS, real templates, native dialog lifecycle DOM doubles; not browser evidence",
+  "save_schema": 1,
+  "squeeze_hand": "removed from runtime, package and both Pages PNG locations; original preview archived only",
+  "runtime_png_count": 10,
+  "post_release_bookkeeping": "This receipt and final handoff updates remain local after commit; no second deployment solely for bookkeeping.",
+  "pages_conclusion": "success"
+}

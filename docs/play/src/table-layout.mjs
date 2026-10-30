@@ -1,3 +1,4 @@
+import {baccaratBoardMarkup} from './board.mjs?v=0.1.9';
 // Move existing secondary controls into a native dialog; gameplay keeps its clock.
 export class TablePanels{
  constructor(root){this.root=root;this.selection='';this.dialog=null;this.detail=null;this.marker=null;}
@@ -35,4 +36,20 @@ export class TablePanels{
 export function updateGameViewport(viewport=globalThis.visualViewport,fallback=globalThis.innerHeight,style=document.documentElement.style){
  const height=viewport?.height||fallback;
  if(Number.isFinite(height)&&height>0)style.setProperty('--game-viewport-height',height+'px');
+}
+export function baccaratCardSize(width,height){
+ const stacked=width<600&&height>=180,compact=!stacked&&height<130&&width>=560;
+ const byHeight=stacked?(height-48)/2*5/7:(height-(compact?18:54))*5/7;
+ const byWidth=stacked?(width-90)/3:(width-(compact?250:96))/6;
+ return {stacked,compact,width:Math.max(24,Math.min(stacked?76:96,byHeight,byWidth))};
+}
+export function fitBaccaratSurface(root){
+ const stage=root.querySelector('.baccarat-stage'),board=root.querySelector('.baccarat-screen .board-scroll');
+ if(!stage||!board||stage.clientWidth<=0||stage.clientHeight<=0||board.clientWidth<=0||board.clientHeight<=0)return false;
+ const card=baccaratCardSize(stage.clientWidth,stage.clientHeight);
+ stage.dataset.stacked=String(card.stacked);stage.dataset.compact=String(card.compact);stage.style.setProperty('--baccarat-card-width',card.width+'px');
+ const height=Number((1200*board.clientHeight/board.clientWidth).toFixed(3)),svg=board.querySelector('.baccarat-board');
+ if(!svg||height<=0)return false;
+ if(Number(svg.dataset.boardHeight)!==height)board.innerHTML=baccaratBoardMarkup(svg.dataset.enabled==='true',height);
+ return true;
 }
