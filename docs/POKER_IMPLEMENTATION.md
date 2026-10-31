@@ -61,3 +61,10 @@ UI Score：Readable／UX／Accessibility／Commercial／Retention／Google Play 
 ## 發布與回復
 
 0.3.0，GitHub main與Pages。結果記POKER_RELEASE.json，本地發布後記帳不另觸發部署。停用時以POKER_ENABLED=false、更新快取版本及封裝，只關入口，保留新保存器／pokerTable、兩副既有牌靴及玩家庫存；勿清網站資料或直接回退舊保存器而丟棄AI桌面。前版0.2.0 main 42a68405f28c0ab3298094a7d74e7197fb6ef8fb供比對。
+
+
+## 0.3.1：只變更勝出對手框色
+
+依使用者最新指示，僅結算後將真正彩池得主的電腦對手框變金色（pk-winning），維持原有文字及主要操作布局。資料來自Game已結算result.pots.winners；排除uncalled退回、玩家座位，所有平分／邊池得主一起標示，下一手自然清除。未攤牌勝出同樣標框、底牌繼續隱藏。輔助閱讀label交代姓名及得主，無新增可見文字／結果欄或手圖。
+
+新增2項語義驗證，涵蓋結算前無標記、真實AI贏牌／棄牌勝出、同牌力平分／邊池／未跟注退回、玩家排除及下一手清除，完整視圖及渲染不改遊戲狀態。共172項通過，原牌局資金模擬保持；Safari／觸控與不同視窗的實際金框視覺仍UNVERIFIED。沿用既有UI審核，不新增常駐資訊；P1待實機確認框色可辨識度。版本0.3.1，回復可只刪pk-winning樣式／標記，保持保存器與牌局邏輯。

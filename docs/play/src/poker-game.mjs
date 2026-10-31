@@ -1,4 +1,4 @@
-import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.3.0';
+import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.3.1';
 // Methods run on the existing Game; it remains the only wallet, timer and checkpoint owner.
 export const pokerMethods={
  newPokerRound(){

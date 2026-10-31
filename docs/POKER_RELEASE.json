@@ -1,0 +1,30 @@
+{
+  "version": "0.3.0",
+  "repository": "jacobmaster-97/charity-casino",
+  "commit": "82dc70e53971f78263329812ed8215c2f6a45b8d",
+  "parent": "42a68405f28c0ab3298094a7d74e7197fb6ef8fb",
+  "tree": "f6070c335bbe0dd23193a127dd5556a10504f6a3",
+  "changed_files": 48,
+  "verified_files": 147,
+  "tests_passed": 170,
+  "new_poker_tests": 34,
+  "simulation_rounds": {
+    "poker": 2000,
+    "blackjack": 2000,
+    "baccarat": 4000
+  },
+  "pages_run_id": 41153240944,
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.3.0",
+  "poker": "six-seat no-limit cash table with five limited-information AI opponents; full/short raises and reopening, main/side pots, ties and odd cents, uncalled returns, three shared coupons, 30-second decisions, normal/fast, staged collection/payout animations, end-of-hand AI-stack/button checkpoint",
+  "runtime_pngs": 10,
+  "published_png_copies_unchanged": 26,
+  "runtime_files": 16,
+  "hand_texture": "absent in runtime and both Pages paths",
+  "save_schema": 1,
+  "optional_save_field": "pokerTable; preserves both prior shoes and inventory; older saves remain valid",
+  "browser_device_validation": "UNVERIFIED; no Chromium, Safari or touch execution; Python smoke script only syntax-checked",
+  "rollback": "POKER_ENABLED=false, version bump and repackage; retain pokerTable validation, both shoes and player saves",
+  "post_release_bookkeeping": "Receipt and final handoff updates stay local after commit; no second deployment solely for bookkeeping."
+}

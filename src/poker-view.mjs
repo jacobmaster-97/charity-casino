@@ -1,16 +1,17 @@
-import {POKER_NAMES,POKER_STYLES,pokerOptions,pokerBest,pokerPotLayers} from './poker.mjs?v=0.3.0';
-import {baccaratCard} from './baccarat-view.mjs?v=0.3.0';
-import {chipFace,chipColorIndex} from './board.mjs?v=0.3.0';
-import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.3.0';
+import {POKER_NAMES,POKER_STYLES,pokerOptions,pokerBest,pokerPotLayers} from './poker.mjs?v=0.3.1';
+import {baccaratCard} from './baccarat-view.mjs?v=0.3.1';
+import {chipFace,chipColorIndex} from './board.mjs?v=0.3.1';
+import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.3.1';
 const pokerEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const pokerSeatName=(r,i)=>i===0?'你':POKER_NAMES[(r.players[i].id-1)%POKER_NAMES.length];
 const pokerCardText=id=>['A','2','3','4','5','6','7','8','9','10','J','Q','K'][id%13]+['♠','♥','♣','♦'][Math.floor(id/13)];
 export function pokerTableView({game,art,button,icon,ui={},storageWarning=''}){
  const r=game.round,o=pokerOptions(game),ready=r.phase==='poker-ready',settled=r.phase==='settled',turn=r.phase==='poker-player',speed=game.pokerTable.speed,picking=turn&&ui.selection?.turn===r.turnId?ui.selection.kind:'',to=ui.raiseTo??Math.min(o.minTo,o.maxTo),token=`data-poker-turn="${r.turnId}"`,pot=r.players.reduce((n,p)=>n+p.total,0),collected=r.players.reduce((n,p)=>n+p.total-p.street,0);
+ const winningSeats=new Set(settled?r.result.pots.filter(pool=>!pool.uncalled).flatMap(pool=>pool.winners).filter(seat=>seat>0):[]);
  const target=(id,amount,cls='')=>`<span class="pk-chip-target ${cls}" data-chip-target="${id}" data-amount="${amount}" aria-hidden="true"></span>`;
  const card=(id,hidden,side,index,seat=0,action='')=>{const html=baccaratCard(id,hidden,art,{action,index,fresh:r.lastDeal?.side===side&&r.lastDeal.index===index&&(side!=='opponent'||r.lastDeal.seat===seat),delay:Math.max(0,game.pokerDuration()-r.remaining),paused:game.paused});return action?html.replace(' data-index=',` ${token} data-index=`):html;};
  const badges=i=>`${r.button===i?'<b class="pk-position">D</b>':''}${r.smallSeat===i?'<b class="pk-position">SB</b>':''}${r.bigSeat===i?'<b class="pk-position">BB</b>':''}`;
- const opponent=(p,i)=>`<article class="pk-opponent ${r.actor===i?'pk-active':''} ${p.folded?'pk-folded':''}" data-seat="${i}"><header><span class="pk-avatar pk-avatar-${p.style}" aria-hidden="true">${pokerSeatName(r,i).slice(-1)}</span><strong>${pokerSeatName(r,i)}</strong>${badges(i)}</header><div class="pk-stack"><span>餘 ${money(p.stack)}</span>${target('poker-stack-'+i,p.stack,'pk-small-chip')}</div><div class="pk-opponent-cards">${p.cards.map((id,j)=>card(id,!(r.showdown&&!p.folded||r.peek?.seat===i&&r.peek.index===j),'opponent',j,i)).join('')}</div><div class="pk-seat-bet">${target('poker-bet-'+i,p.street,'pk-small-chip')}<span>${p.street?money(p.street):p.folded?'已棄牌':p.cards.length&&p.stack===0?'全押':p.lastAction||'準備'}</span></div></article>`;
+ const opponent=(p,i)=>`<article class="pk-opponent ${r.actor===i?'pk-active':''} ${p.folded?'pk-folded':''} ${winningSeats.has(i)?'pk-winning':''}" data-seat="${i}" ${winningSeats.has(i)?`data-winner-seat="${i}" aria-label="${pokerSeatName(r,i)}，本手彩池得主"`:''}><header><span class="pk-avatar pk-avatar-${p.style}" aria-hidden="true">${pokerSeatName(r,i).slice(-1)}</span><strong>${pokerSeatName(r,i)}</strong>${badges(i)}</header><div class="pk-stack"><span>餘 ${money(p.stack)}</span>${target('poker-stack-'+i,p.stack,'pk-small-chip')}</div><div class="pk-opponent-cards">${p.cards.map((id,j)=>card(id,!(r.showdown&&!p.folded||r.peek?.seat===i&&r.peek.index===j),'opponent',j,i)).join('')}</div><div class="pk-seat-bet">${target('poker-bet-'+i,p.street,'pk-small-chip')}<span>${p.street?money(p.street):p.folded?'已棄牌':p.cards.length&&p.stack===0?'全押':p.lastAction||'準備'}</span></div></article>`;
  const summary=ready?'六人無限注 · 入座全部資金':turn?`輪到你 · ${['翻牌前','翻牌','轉牌','河牌'][r.streetIndex]}`:r.phase==='poker-ai'?`${pokerSeatName(r,r.actor)} 正在思考`:r.phase==='poker-collect'?'正在收注':r.phase==='poker-dealing'?'正在發牌':r.phase==='poker-showdown'?(r.showdown?'攤牌比牌':'其他玩家已棄牌'):settled?'本手完成':'';
  const player=r.players[0],playerRank=r.board.length>=3&&player.cards.length===2?pokerBest([...player.cards,...r.board]).name:'',payout=r.result?.payouts[0]||0;
  const pots=r.result?.pots||pokerPotLayers(r.players);

@@ -1,15 +1,15 @@
-import {POKER_ENABLED} from './poker.mjs?v=0.3.0';
-import {pokerTableView,paintPokerChips,queuePokerMotions,fitPokerSurface} from './poker-view.mjs?v=0.3.0';
-import {BLACKJACK_ENABLED,blackjackOptions} from './blackjack.mjs?v=0.3.0';
-import {blackjackTableView,paintBlackjackChips,fitBlackjackSurface} from './blackjack-view.mjs?v=0.3.0';
-import {TablePanels,updateGameViewport,fitBaccaratSurface} from './table-layout.mjs?v=0.3.0';
-import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.3.0';
-import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.3.0';
-import {baccaratTableView} from './baccarat-view.mjs?v=0.3.0';
-import {Game} from './game.mjs?v=0.3.0';
-import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.3.0';
-import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.3.0';
-import {Saves,validateSave} from './storage.mjs?v=0.3.0';
+import {POKER_ENABLED} from './poker.mjs?v=0.3.1';
+import {pokerTableView,paintPokerChips,queuePokerMotions,fitPokerSurface} from './poker-view.mjs?v=0.3.1';
+import {BLACKJACK_ENABLED,blackjackOptions} from './blackjack.mjs?v=0.3.1';
+import {blackjackTableView,paintBlackjackChips,fitBlackjackSurface} from './blackjack-view.mjs?v=0.3.1';
+import {TablePanels,updateGameViewport,fitBaccaratSurface} from './table-layout.mjs?v=0.3.1';
+import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.3.1';
+import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.3.1';
+import {baccaratTableView} from './baccarat-view.mjs?v=0.3.1';
+import {Game} from './game.mjs?v=0.3.1';
+import {BETS,BET_MAP,GOAL,ITEMS,money,duration,getChipDenominations,chipLabel} from './rules.mjs?v=0.3.1';
+import {boardMarkup,boardAmounts,ChipFlights,CHIP_COLORS,chipFace,chipColorIndex} from './board.mjs?v=0.3.1';
+import {Saves,validateSave} from './storage.mjs?v=0.3.1';
 
 const app=document.querySelector('#app'),toastNode=document.querySelector('#toast');
 const tablePanels=new TablePanels(app);updateGameViewport();

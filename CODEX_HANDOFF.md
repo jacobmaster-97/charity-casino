@@ -4,7 +4,13 @@
 
 《賭王慈善大賽》：$100起步、手上資金$25,000,000勝利、歸零失敗，計有效遊玩時間；B港式賭片美術，電腦／手機／平板。大小、百家樂、21點及德州撲克四桌可玩，輪盤仍開發中，正式五桌範圍保持。
 
-使用者於21點完成後要求「下一步開發」，本輪依既有確認規劃接入六人無限注德州撲克0.3.0，170項檢查通過，正在同步GitHub與Pages。新部署完成前正式前版為0.2.0 main 42a68405f28c0ab3298094a7d74e7197fb6ef8fb、Pages run41093009444 completed/success。發布完成後記本地docs/POKER_RELEASE.json與本檔，不為記帳另部署。
+最新指示「只需將勝出對手的框框變色就可以」，取代追加勝出姓名／牌型可見文字。0.3.1僅結算後將電腦真正主池／邊池得主框變金色，平分或多個得主全部標示，未跟注退款及玩家不標；原文字、玩家框、暗牌、流程、資金／保存保持，下一手清除。172項檢查通過（新增2個完整視圖語義測試），正在同步GitHub／Pages。新部署完成前正式前版0.3.0 main 82dc70e53971f78263329812ed8215c2f6a45b8d，Pages run41153240944 completed/success。發布後本地記docs/POKER_WINNER_FRAME_RELEASE.json，不為記帳另觸發部署。
+
+## 0.3.1本輪完成
+
+- src/poker-view.mjs從已結算result.pots收集實際得主，排除uncalled及seat0，套pk-winning和輔助閱讀label；src/styles.css只改金框／內框色，無新增可見文字或面板。
+- tests/poker.test.mjs36項，新增2項覆蓋一般AI勝、未攤牌勝、平分／邊池不同得主、退款不標勝、結算前與下一手無標記、暗牌保持及render不改狀態。全套172通過，10張PNG不改，原8,000局模擬保持。root／docs／單檔快取版本0.3.1。
+- Safari／手機實機金框、觸控及短屏仍UNVERIFIED，不重試既有HTTP／Chromium失敗路線。最安全下一步是實機完成一手、核對勝出對手金框與下一手清除。
 
 ## 0.3.0本輪完成
 
@@ -33,7 +39,7 @@
 
 ## 重要檔案與發布
 
-- docs/GAME_BRIEF.md、TEXAS_HOLDEM.md、POKER_IMPLEMENTATION.md及其餘桌詳規。新增src/poker.mjs、poker-game.mjs、poker-view.mjs、tests/poker.test.mjs（34項），既有Game／storage／app／board及發布腳本最小接線。
+- docs/GAME_BRIEF.md、TEXAS_HOLDEM.md、POKER_IMPLEMENTATION.md及其餘桌詳規。新增src/poker.mjs、poker-game.mjs、poker-view.mjs、tests/poker.test.mjs（36項），既有Game／storage／app／board及發布腳本最小接線。
 - scripts/package/pages/prepare產生單檔、Pages及上載清單，排除docs/previews。GitHub：https://github.com/jacobmaster-97/charity-casino ，main根目錄Pages。
 - 新桌停用首選POKER_ENABLED=false、版本更新與重封裝；保留pokerTable保存器及兩副舊牌靴，勿清玩家資料或重帶手圖。0.2.0 42a68405f28c0ab3298094a7d74e7197fb6ef8fb供比對，勿直接回退舊保存器而丟AI桌面。收據docs/*_RELEASE.json。
 
