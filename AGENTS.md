@@ -4,7 +4,7 @@
 - 預設使用 `.agents/skills/gamestudio/SKILL.md`；不需要等待全域技能選單重新載入。
 - 開始工作先讀 `CODEX_HANDOFF.md` 與 `docs/GAME_BRIEF.md`；存在 `DEBUG_HANDOFF.md` 時一併讀取。
 - 使用繁體中文溝通，先確定玩家體驗、最小可玩驗證與驗收方式，再做對應實作。
-- 已確認的遊戲方向及待決策項目以 `docs/GAME_BRIEF.md` 為準，不將助理提議或題號不明的答案寫成已確認需求。使用者已授權按建議同步製作原型與貼圖；目前五桌已整合；0.2.0新增使用者指定的一體賭枱21點，保留百家樂一體、大小分區、整屏、無手圖、動畫及保存，發布結果見CODEX_HANDOFF.md。使用者已明確指示「實裝動畫」，咪牌及減速動畫已獲批准接入。0.3.0按使用者「下一步開發」接入已確認六人無限注德州撲克，盲注／AI／速度為可調校工程預設，詳docs/POKER_IMPLEMENTATION.md。0.4.0接入輪盤，0.4.1左下注60%／右轉輪40%，0.5.0加入使用者指定五種聲效及靜音，詳docs/ROULETTE_IMPLEMENTATION.md、SOUND_EFFECTS.md；各款沿用docs/TABLE_PRESENTATION.md及已確認0.1.4介面基準。
+- 已確認的遊戲方向及待決策項目以 `docs/GAME_BRIEF.md` 為準，不將助理提議或題號不明的答案寫成已確認需求。使用者已授權按建議同步製作原型與貼圖；目前五桌已整合；0.2.0新增使用者指定的一體賭枱21點，保留百家樂一體、大小分區、整屏、無手圖、動畫及保存，發布結果見CODEX_HANDOFF.md。使用者已明確指示「實裝動畫」，咪牌及減速動畫已獲批准接入。0.3.0按使用者「下一步開發」接入已確認六人無限注德州撲克，盲注／AI／速度為可調校工程預設，詳docs/POKER_IMPLEMENTATION.md。0.4.0接入輪盤，0.4.1左下注60%／右轉輪40%，0.5.0加入使用者指定五種聲效及靜音，0.5.1依iPad Safari無聲回報修正觸控解鎖及加入啟動試聽，詳docs/ROULETTE_IMPLEMENTATION.md、SOUND_EFFECTS.md；各款沿用docs/TABLE_PRESENTATION.md及已確認0.1.4介面基準。
 - `src/` 放程式，`public/` 放靜態素材，`docs/` 放設計及驗證紀錄。
 - 素材與音效需記錄來源與授權；不預先加入後端、付費服務或帳號系統。
 - 每個重要階段更新 `CODEX_HANDOFF.md`；重複除錯失敗時依技能建立 `DEBUG_HANDOFF.md`。

@@ -4,7 +4,14 @@
 
 《賭王慈善大賽》：$100起步、手上資金$25,000,000勝利、歸零失敗，計有效遊玩時間；B港式賭片美術，電腦／手機／平板。大小、百家樂、21點、德州撲克及輪盤五桌原型均已接入。
 
-最新使用者要求加入發牌、籌碼投注、骰盅轉動／開盅及輪盤轉動聲效。本輪0.5.0已接入五種原創程序聲效，主頁／暫停選單可靜音並獨立記住偏好，背景／暫停停聲、未完成長聲按剩餘進度繼續。217項檢查通過，正在同步GitHub／Pages。新部署完成前正式前版0.4.1 main 05a985461ccaec446a9beec9657992f485eeb480，Pages run41162556964 completed/success。發布後記本地SOUND_EFFECTS_RELEASE.json，不為記帳另部署。
+使用者在iPad Safari實測0.5.0完全無聲，iPadOS版本未提供。本輪0.5.1修正確定程式缺口：首個resume若pending，後續手勢會被舊pending擋住；替身重現先失敗（resume只有1次，預期2），修正後通過。加入touchend、手勢內單樣本靜音primer／resume先於PCM、可用時playback session，主頁／暫停選單新增「啟動並試聽」，保留遊戲及偏好資料。223項檢查通過，正在同步GitHub／Pages；修正版實際iPad輸出仍需確認，不能當已證實唯一根因。新部署完成前正式前版0.5.0 main 6ad8a33c27222314a2eefcbed22f7fc08886fba5，Pages run41164989369 completed/success。發布後本地記IPAD_AUDIO_RELEASE.json，不為記帳另部署。
+
+## 0.5.1本輪完成
+
+- sound.mjs每次未running的有效手勢重試native resume，舊Promise不得清新pending；靜音primer不永久循環，先native啟動再PCM合成。AudioSession playback功能偵測及try/catch，不支援也能走原Web Audio。
+- app加touchend捕捉及選單「啟動並試聽」，可在home／pause明確開啟並試播一個籌碼聲；不恢復Game倒數。背景／blur／pagehide與靜音取消播放及尚未完成的試聽；回牌局清掉試聽，普通短聲不補播。
+- 223項通過（聲效24，新增6項及調整pending併發測試），含原10,000局模擬與封裝／Pages；20個runtime、10張PNG不改，無手圖，資料格式及玩法不變。browser_smoke.py補試聽入口，只Python語法通過。
+- 未使用Safari／iPad實機，工具清單無瀏覽器能力，遵守舊HTTP／Chromium IPC停用紀錄。下一個最安全任務為使用者開0.5.1，在前景按「啟動並試聽」，確認是否有籌碼聲，再玩一局。若仍無聲，蒐集iPadOS版本與實際試聽／系統音量／路由結果再定新假設，不盲目增加音量或重置資料。
 
 ## 0.5.0本輪完成
 
@@ -50,7 +57,7 @@
 
 ## 重要檔案與發布
 
-- 聲效：src/sound.mjs、tests/sound.test.mjs（18項）、docs/SOUND_EFFECTS.md；Game發cue、app啟動／sync、ChipFlights落枱通知。首選SOUND_ENABLED=false停聲，保持遊戲資料及偏好。
+- 聲效：src/sound.mjs、tests/sound.test.mjs（24項）、docs/SOUND_EFFECTS.md；Game發cue、app啟動／sync、ChipFlights落枱通知。首選SOUND_ENABLED=false停聲，保持遊戲資料及偏好。
 
 - docs/GAME_BRIEF.md、ROULETTE.md、ROULETTE_IMPLEMENTATION.md、TABLE_PRESENTATION.md及各桌詳規。新增src/roulette.mjs、roulette-game.mjs、roulette-view.mjs、tests/roulette.test.mjs（27項）；app／Game／board／rules及發布腳本最小接線，storage格式不改。
 - scripts/package/pages/prepare產生單檔、Pages及上載清單，排除docs/previews。GitHub：https://github.com/jacobmaster-97/charity-casino ，main根目錄Pages。

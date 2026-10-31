@@ -1,4 +1,4 @@
-import {randomBelow} from './baccarat.mjs?v=0.5.0';
+import {randomBelow} from './baccarat.mjs?v=0.5.1';
 export const POKER_ENABLED=true;
 export const POKER_NAMES=['阿豪','嘉欣','龍哥','小曼','阿傑','秀姐','阿森','樂怡','志強','美玲'];
 export const POKER_STYLES=['穩健','進取','鬆手','善變','謹慎'];

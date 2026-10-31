@@ -1,10 +1,20 @@
 # DEBUG_HANDOFF
 
+## 0.5.1：使用者iPad Safari完全無聲
+
+現象：使用者實機回報沒有任何聲效，後確認Safari，iPadOS未提供。0.5.0沒有實機證據，不能將當時217項替身／PCM通過當Safari通過。
+
+確定程式缺口／最小重現：首次AudioContext.resume永不settle，第二次有效手勢才允許running；0.5.0 unlock遇pending直接return，導致實際native resume仍1次，預期2。已先新增回歸測試失敗（/tmp/ipad-sound-red.log），改為未running即重試、舊操作完成不得清新pending後通過。此證實程式路徑，不證實為該iPad唯一根因。
+
+本輪一次相容性切片：touchend capture、手勢內單樣本靜音source.start／native resume先於PCM；可用時navigator.audioSession.type=playback，拒絕／缺失非致命。主頁／暫停「啟動並試聽」明確啟用並播籌碼聲，選單sync不立即切掉手動試聽；進入牌局、靜音、hidden／blur／pagehide停止並取消pending試聽。Game、結果、存檔、原音量與PCM不改，沒有偷偷加大音量或清偏好。
+
+驗證：聲效24／全套223通過，新增6項與pending併發更新，原10,000局守恆保持，20個runtime及10張PNG不改；browser_smoke.py只有Python語法通過。工具清單沒有Safari／browser能力，未重試舊IPC／HTTP失敗路線。修正版iPad硬體輸出、iPadOS差異、音量／路由／靜音開關仍UNVERIFIED，待使用者按0.5.1試聽確認。若同一路徑再次修後仍無聲，不再反覆改resume或放大音量；先取得iPadOS及試聽輸出／路由證據再定新假設。發布結果記IPAD_AUDIO_RELEASE.json，本地發布後記帳不另部署。
+
 ## 0.5.0：五種聲效與音訊生命週期
 
 使用者要求發牌、籌碼投注、骰盅轉動／開盅及輪盤轉動。原創程序PCM搭配單個懶AudioContext，Game僅發防例外cue、音訊只讀phase／remaining；首次操作解鎖、靜音獨立key、暫停／背景停聲、長聲offset及中斷恢復已接線。快速下注後即開局原會取消飛行而漏籌碼聲，現以landAll在手動／自動鎖注時落定一次，清除與重排仍取消靜音；自然／late callbacks不雙播。context非running時停止並斷開節點，避免中斷後殘留聲音。
 
-217項通過（新增18項PCM／AudioContext替身／Game及ChipFlights事件），含設定隔離、上限／合併、readonly同步、失敗降級與callback不改checkpoint；原10,000局守恆保持。20個runtime、10張PNG不改，無新外部錄音依賴。browser_smoke.py補靜音／重載／暫停內控制，僅Python語法通過，未執行或實機聽聲，不重試既有HTTP／Chromium IPC路線。Safari／iOS首次互動、裝置靜音／音量／路由、背景與中斷、音質混合及合成效能仍UNVERIFIED。發布結果記SOUND_EFFECTS_RELEASE.json，發布後本地記帳不另部署；下一個可否證驗證是實機逐桌聽聲並測轉動暫停／切背景／繼續。
+217項通過（新增18項PCM／AudioContext替身／Game及ChipFlights事件），含設定隔離、上限／合併、readonly同步、失敗降級與callback不改checkpoint；原10,000局守恆保持。20個runtime、10張PNG不改，無新外部錄音依賴。browser_smoke.py補靜音／重載／暫停內控制，僅Python語法通過，未執行或實機聽聲，不重試既有HTTP／Chromium IPC路線。Safari／iOS首次互動、裝置靜音／音量／路由、背景與中斷、音質混合及合成效能仍UNVERIFIED。已發布main 6ad8a33c27222314a2eefcbed22f7fc08886fba5，Pages run41164989369 completed/success；163檔SHA一致、26份PNG副本不改及手圖不存在已核對。結果記SOUND_EFFECTS_RELEASE.json，發布後本地交接不另部署；下一個可否證驗證是實機逐桌聽聲並測轉動暫停／切背景／繼續。
 
 ## 0.4.1：輪盤左右6:4
 

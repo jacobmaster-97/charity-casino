@@ -6,10 +6,10 @@ import {baccaratInitial} from '../src/baccarat.mjs';
 import {BLACKJACK_DEAL_MS} from '../src/blackjack.mjs';
 import {ChipFlights} from '../src/board.mjs';
 class FakeContext{
- constructor(){this.sampleRate=8000;this.currentTime=10;this.state='suspended';this.destination={};this.sources=[];this.resumes=0;this.listener=null;}
+ constructor(){this.sampleRate=8000;this.currentTime=10;this.state='suspended';this.destination={};this.sources=[];this.primers=[];this.resumes=0;this.listener=null;}
  createGain(){const gain={value:1,cancelScheduledValues(){},setValueAtTime(v){this.value=v;},linearRampToValueAtTime(v){this.value=v;}};return {gain,connect(){},disconnect(){}};}
  createBuffer(channels,length,rate){const pcm=new Float32Array(length);return {duration:length/rate,getChannelData:()=>pcm};}
- createBufferSource(){const source={connect(){},disconnect(){this.disconnected=true;},start(when,offset){this.started={when,offset};},stop(when){this.stopped=when;}};this.sources.push(source);return source;}
+ createBufferSource(){const source={connect(){},disconnect(){this.disconnected=true;},start:(when,offset)=>{source.started={when,offset};if(source.buffer.duration<=1/this.sampleRate){this.sources.splice(this.sources.indexOf(source),1);this.primers.push(source);}},stop(when){this.stopped=when;}};this.sources.push(source);return source;}
  resume(){this.resumes++;if(this.rejectOnce){this.rejectOnce=false;return Promise.reject(new Error('blocked'));}this.state='running';return Promise.resolve();}
  addEventListener(name,fn){this.listener=fn;}
 }
@@ -45,8 +45,27 @@ test('background pause, shop, lobby and home stop sounds without replaying stale
 test('interrupted AudioContext stops voices and a later running context resumes only current animation',async()=>{
  const {sound:s,c,game:g}=await player();c.state='interrupted';c.listener();assert.equal(s.voices.size,0);assert.ok(c.sources[0].disconnected);assert.equal(s.play('card'),false);g.round.remaining=1200;c.state='running';c.listener();assert.ok(Math.abs(c.sources.at(-1).started.offset-3.6)<1e-8);assert.equal(s.voices.size,1);
 });
-test('failed gesture resume is recoverable and concurrent unlock requests share one pending operation',async()=>{
- const c=new FakeContext();c.rejectOnce=true;const s=new CasinoSound({createContext:()=>c});s.sync(visualGame());const a=s.unlock(),b=s.unlock();assert.equal(a,b);assert.equal(await a,false);assert.equal(c.resumes,1);assert.equal(s.play('chip'),false);assert.equal(await s.unlock(),true);assert.equal(c.resumes,2);assert.equal(c.sources.length,1);
+test('a rejected older resume cannot clear a newer pending gesture attempt',async()=>{
+ const c=new FakeContext();let finish;c.resume=function(){this.resumes++;if(this.resumes===1)return Promise.reject(new Error('blocked'));return new Promise(resolve=>{finish=()=>{this.state='running';resolve();};});};const s=new CasinoSound({createContext:()=>c});s.sync(visualGame());const a=s.unlock(),b=s.unlock();assert.notEqual(a,b);assert.equal(await a,false);assert.equal(s.pending,b);assert.equal(c.resumes,2);finish();assert.equal(await b,true);assert.equal(s.pending,null);assert.equal(s.voices.size,1);
+});
+test('Safari can retry resume on touchend even when the first gesture promise never settles',async()=>{
+ const c=new FakeContext();c.resume=function(){this.resumes++;if(this.resumes===1)return new Promise(()=>{});this.state='running';return Promise.resolve();};const s=new CasinoSound({createContext:()=>c});s.sync(visualGame());void s.unlock();void s.unlock();assert.equal(c.resumes,2,'a later trusted gesture must call native resume again');await Promise.resolve();await Promise.resolve();assert.equal(s.context.state,'running');assert.equal(s.voices.size,1);
+});
+test('Safari primer and native resume run inside the gesture before longer PCM preparation',async()=>{
+ const c=new FakeContext(),order=[],buffer=c.createBuffer.bind(c),resume=c.resume.bind(c);c.createBuffer=(channels,length,rate)=>{order.push(length===1?'primer':'pcm');return buffer(channels,length,rate);};c.resume=()=>{order.push('resume');return resume();};const s=new CasinoSound({createContext:()=>c});s.sync(visualGame());await s.unlock();assert.ok(order.indexOf('primer')<order.indexOf('resume'));assert.ok(order.indexOf('resume')<order.indexOf('pcm'));assert.equal(c.primers.length,1);assert.equal(c.primers[0].buffer.getChannelData(0)[0],0);assert.equal(c.sources.length,1);
+});
+test('feature-detected playback session is requested and unsupported or denied sessions remain non-fatal',async()=>{
+ const session={type:'auto'},c=new FakeContext(),s=new CasinoSound({createContext:()=>c,getAudioSession:()=>session});s.sync(visualGame('baccarat','dealing'));assert.equal(await s.unlock(),true);assert.equal(session.type,'playback');assert.equal(s.play('chip'),true);
+ const denied={set type(value){throw new Error('denied');}},d=new FakeContext(),fallback=new CasinoSound({createContext:()=>d,getAudioSession:()=>denied});fallback.sync(visualGame('baccarat','dealing'));assert.equal(await fallback.unlock(),true);assert.equal(fallback.play('card'),true);
+});
+test('explicit menu test plays a single audible cue while paused, survives menu sync and never changes gameplay',async()=>{
+ for(const screen of ['home','table']){const g=visualGame('roulette','rou-spinning',2300);g.screen=screen;g.paused=screen==='table';const before=JSON.stringify(g),{sound:s,c}=await player(g);assert.equal(s.play('chip'),false);assert.equal(await s.test(()=>true),true);assert.equal(s.voices.size,1);assert.equal([...s.voices][0].preview,true);for(let i=0;i<10;i++)s.sync(g);assert.equal(s.voices.size,1);assert.equal(c.sources.length,1);assert.equal(JSON.stringify(g),before);c.sources[0].onended();assert.equal(s.voices.size,0);}
+});
+test('pending menu test is canceled by background, mute or leaving its scope before audio starts',async()=>{
+ for(const cancel of ['background','mute','scope']){const c=new FakeContext();let finish,allowed=true;c.resume=function(){this.resumes++;return new Promise(resolve=>{finish=()=>{this.state='running';resolve();};});};const s=new CasinoSound({createContext:()=>c}),g=visualGame();g.screen='home';s.sync(g);const attempt=s.test(()=>allowed);if(cancel==='background')s.stopAll();else if(cancel==='mute')s.setMuted(true);else allowed=false;finish();assert.equal(await attempt,false);assert.equal(s.voices.size,0);assert.equal(c.sources.length,0);}
+});
+test('entering live gameplay ends menu preview and periodic sync does not replay it',async()=>{
+ const g=visualGame('baccarat','dealing',500);g.screen='home';const {sound:s,c}=await player(g);await s.test();const preview=c.sources[0];g.screen='table';s.sync(g);assert.ok(preview.stopped!==undefined);assert.equal(s.voices.size,0);for(let i=0;i<5;i++)s.sync(g);assert.equal(c.sources.length,1);
 });
 test('unavailable audio, blocked settings or source failure cannot break gameplay',async()=>{
  for(const factory of [()=>null,()=>{throw new Error('unsupported');}]){const s=new CasinoSound({storage:{getItem(){throw new Error('blocked');},setItem(){throw new Error('blocked');}},createContext:factory});assert.equal(await s.unlock(),false);assert.equal(s.play('chip'),false);assert.doesNotThrow(()=>s.setMuted(true));}

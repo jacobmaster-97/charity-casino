@@ -41,3 +41,16 @@ Safari／iOS首次互動解鎖、裝置靜音鍵／系統音量／音訊路由�
 ## 發布與停用
 
 0.5.0，結果記SOUND_EFFECTS_RELEASE.json；發布後本地記帳不另部署。停用可將SOUND_ENABLED=false並更新快取版本／封裝，或在主頁／暫停選單靜音；保持原保存器、玩家資料及設定key，不清網站資料。前版0.4.1 main 05a985461ccaec446a9beec9657992f485eeb480供比對。輪盤仍左下注60%／右轉輪40%，德州仍只標勝出對手金框，不加可見牌型文字。
+
+
+## 0.5.1：iPad Safari無聲修正
+
+使用者確認iPad Safari，0.5.0實際沒有任何聲音，iPadOS版本未提供。已確認程式缺口：unlock在this.pending存在時直接返回，若第一個resume一直pending，touchend／click也無法再次呼叫native resume。最小重現用第一次永不settle、第二次手勢才running的AudioContext替身；舊碼實際resume次數1、預期2，回歸先失敗，修正後通過。這是確定程式路徑，尚不能證明為使用者裝置唯一根因。
+
+修正：每次有效互動只要尚非running都再呼叫resume，舊Promise完成不能清掉新一次pending；新增touchend capture；在手勢內先啟動單樣本靜音buffer及native resume，才生成較長PCM，避免等待／準備音訊後才嘗試解鎖。靜音buffer每次替換舊source，不永久循環，也無聲音檔／網絡下載。若navigator.audioSession可用，於手勢內嘗試type=playback，拒絕或不支援時不影響其餘路徑；不宣稱所有iPadOS都支援，也不替代系統音量或實際輸出確認。
+
+主頁及暫停選單新增44px「啟動並試聽」：明確開啟偏好並重試解鎖，成功啟動後播放一段籌碼聲，即使選單令牌局暫停也可手動試聽，不恢復遊戲倒數。平時暫停／切背景仍停聲。試聽音源只在同一前景選單保留，重複sync不切斷；開始牌局、靜音、blur／hidden／pagehide會停止，尚未啟動的舊試聽亦取消。正常牌局短聲仍不排隊補播，轉動仍依remaining恢復。牌桌HUD不新增常駐資訊，偏好key及玩家存檔保持。
+
+新增6項（聲效現24、全套223）：首個pending不擋新手勢、native primer／resume先於PCM、playback session可用／拒絕、選單試聽不改Game／不被sync中斷、待播放試聽在背景／靜音／離開範圍取消、進入牌局清除試聽；另改舊併發測試為較舊失敗不能清新pending，沿原18項其他證據。browser_smoke.py補試聽入口／啟用偏好及暫停入口，只有Python語法檢查，未執行瀏覽器。沒有可用Safari／瀏覽器連接器，遵守舊IPC停用路線，不重複啟動失敗的本地Chromium。
+
+0.5.1代碼、封裝及Pages為PASS；iPad Safari實際播放、iPadOS版本差異、音訊路由／音量與靜音開關仍UNVERIFIED，待使用者開新版按「啟動並試聽」確認。P0為實際聽聲／gesture解鎖，P1為試聽按鈕可達性，其他UI Score維持未評分。回退可保留0.5.0聲音但還原解鎖／選單改動，不清任何存檔或偏好；完整前版main 6ad8a33c27222314a2eefcbed22f7fc08886fba5供比對，結果記IPAD_AUDIO_RELEASE.json。
