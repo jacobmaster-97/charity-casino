@@ -1,10 +1,16 @@
 # DEBUG_HANDOFF
 
+## 0.5.0：五種聲效與音訊生命週期
+
+使用者要求發牌、籌碼投注、骰盅轉動／開盅及輪盤轉動。原創程序PCM搭配單個懶AudioContext，Game僅發防例外cue、音訊只讀phase／remaining；首次操作解鎖、靜音獨立key、暫停／背景停聲、長聲offset及中斷恢復已接線。快速下注後即開局原會取消飛行而漏籌碼聲，現以landAll在手動／自動鎖注時落定一次，清除與重排仍取消靜音；自然／late callbacks不雙播。context非running時停止並斷開節點，避免中斷後殘留聲音。
+
+217項通過（新增18項PCM／AudioContext替身／Game及ChipFlights事件），含設定隔離、上限／合併、readonly同步、失敗降級與callback不改checkpoint；原10,000局守恆保持。20個runtime、10張PNG不改，無新外部錄音依賴。browser_smoke.py補靜音／重載／暫停內控制，僅Python語法通過，未執行或實機聽聲，不重試既有HTTP／Chromium IPC路線。Safari／iOS首次互動、裝置靜音／音量／路由、背景與中斷、音質混合及合成效能仍UNVERIFIED。發布結果記SOUND_EFFECTS_RELEASE.json，發布後本地記帳不另部署；下一個可否證驗證是實機逐桌聽聲並測轉動暫停／切背景／繼續。
+
 ## 0.4.1：輪盤左右6:4
 
 使用者指定左投注60%／右轉輪40%，取代0.4.0上下版。原模板直接把轉輪及投注設為table-screen的縱向flex子項，無法形成左右欄；現以roulette-layout Grid 3fr／2fr包住，具名放左下注及控制／右輪盤與原結果。窄版控制分行、主要44px不縮，手機仍左右；原容器測量及DOM籌碼位置繼續適用。沒有重算結果、賠率、道具、計時或保存，PNG不變。
 
-現有199項回歸通過，未為可逆布局新增鏡像測試；browser_smoke.py新增實際DOM矩形6:4／順序／同高檢查，桌面及七視口呼叫，只有Python語法通過，沒有執行瀏覽器。Safari／觸控／右輪大小／小手機左欄可讀性與控制可達性仍UNVERIFIED；不重試既有HTTP／Chromium IPC。發布結果記ROULETTE_LAYOUT_RELEASE.json，本地發布後記帳不另部署。下一個可否證驗證為實機核對6:4與精準下注／放大、轉動暫停及重轉選擇。
+現有199項回歸通過，未為可逆布局新增鏡像測試；browser_smoke.py新增實際DOM矩形6:4／順序／同高檢查，桌面及七視口呼叫，只有Python語法通過，沒有執行瀏覽器。Safari／觸控／右輪大小／小手機左欄可讀性與控制可達性仍UNVERIFIED；不重試既有HTTP／Chromium IPC。已發布main 05a985461ccaec446a9beec9657992f485eeb480，Pages run41162556964 completed/success；158檔SHA一致、26份PNG副本不改與手圖不存在均已核對。結果記ROULETTE_LAYOUT_RELEASE.json，本地發布後交接不另部署。下一個可否證驗證為實機核對6:4與精準下注／放大、轉動暫停及重轉選擇。
 
 ## 0.4.0：第五桌輪盤
 

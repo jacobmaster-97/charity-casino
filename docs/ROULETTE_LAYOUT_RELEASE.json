@@ -1,0 +1,23 @@
+{
+  "version": "0.4.1",
+  "repository": "jacobmaster-97/charity-casino",
+  "commit": "05a985461ccaec446a9beec9657992f485eeb480",
+  "parent": "4cea5cb4706a4652e5d5726eb3f0bbb6e79dc265",
+  "tree": "a9814be855e509614b6d5f922a7cebde1dc457c5",
+  "changed_files": 47,
+  "verified_files": 158,
+  "tests_passed": 199,
+  "pages_run_id": 41162556964,
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.4.1",
+  "layout": "Two columns: left betting table and lower controls 60%, right wheel/result 40% after subtracting gap. Keep horizontal on phones; wrap controls and preserve precision selection/zoom.",
+  "runtime_pngs": 10,
+  "png_copies_unchanged": 26,
+  "runtime_files": 19,
+  "save_schema": 1,
+  "game_logic": "Unchanged; runtime cache versions updated",
+  "browser_device_validation": "UNVERIFIED; browser script has actual bounding-box ratio checks but was only syntax-checked",
+  "rollback": "Restore roulette layout wrapper/styles with version bump and repackage; retain player saves, latest validators and game rules.",
+  "post_release_bookkeeping": "Receipt and final handoff updates remain local; no second deployment solely for bookkeeping."
+}

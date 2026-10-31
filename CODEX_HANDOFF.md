@@ -4,7 +4,16 @@
 
 《賭王慈善大賽》：$100起步、手上資金$25,000,000勝利、歸零失敗，計有效遊玩時間；B港式賭片美術，電腦／手機／平板。大小、百家樂、21點、德州撲克及輪盤五桌原型均已接入。
 
-最新指示「輪盤和投注盤面分成左右兩邊，左邊投注盤面，右邊輪盤轉面，比例6:4」。0.4.1已接入左下注60%（含左下控制）／右轉輪40%，手機也保持左右；較窄時控制分行，維持精準面板與放大。輪盤Game、幾何、動畫角度、道具、資金及保存不改。199項回歸檢查通過，正在同步GitHub及Pages。新部署完成前正式前版0.4.0 main 4cea5cb4706a4652e5d5726eb3f0bbb6e79dc265、Pages run41161476045 completed/success。發布後本地記ROULETTE_LAYOUT_RELEASE.json，不為記帳另部署。
+最新使用者要求加入發牌、籌碼投注、骰盅轉動／開盅及輪盤轉動聲效。本輪0.5.0已接入五種原創程序聲效，主頁／暫停選單可靜音並獨立記住偏好，背景／暫停停聲、未完成長聲按剩餘進度繼續。217項檢查通過，正在同步GitHub／Pages。新部署完成前正式前版0.4.1 main 05a985461ccaec446a9beec9657992f485eeb480，Pages run41162556964 completed/success。發布後記本地SOUND_EFFECTS_RELEASE.json，不為記帳另部署。
+
+## 0.5.0本輪完成
+
+- src/sound.mjs：原創紙聲0.16s、籌碼0.23s、骰盅0.9s、開盅0.32s、輪盤4.8s，無錄音／下載／第三方依賴。獨立固定種子、柔化包絡、PCM peak0.34、master0.55、最多四音源及35ms重複合併，不消耗Game亂數。
+- AudioContext懶建立，pointerdown／click／keydown嘗試解鎖，支援webkit前綴；被拒絕／無API安靜降級。主頁／暫停菜單44px靜音、獨立sound-muted-v1設定，不改存檔槽；牌桌HUD保持。
+- Game可選onCue／防例外cue只通知真實發牌／揭盅，Blackjack／Poker配合出牌；ChipFlights onLand自然落枱一次，減少動態即響、提早鎖注landAll落定響一次、清除／重排取消不響。聲音不更改資金、道具、結果或checkpoint。
+- CasinoSound.sync只讀Game.phase／remaining。暫停、背景、pagehide、離桌／商店清理聲音；短聲不補播，長聲從原offset繼續。render不重播，系統interrupted先斷開再以當下狀態恢復，手動mute歸零master。
+- 217項通過：原199＋18聲效PCM／AudioContext替身／真實事件測試，含懶啟動、偏好隔離、loop offset、voice上限、背景與中斷、失敗降級、callback安全、三桌發牌／開盅及chip生命週期。原10,000局資金模擬保持；20個runtime、10張PNG不改、無手圖、單檔及雙Pages同步。
+- browser_smoke.py補主頁靜音／重載、暫停內控制，Python語法通過但未執行；Safari／iOS解鎖、靜音鍵、路由、實際音質／音量／效能仍UNVERIFIED，不重試舊IPC路線。詳docs/SOUND_EFFECTS.md。
 
 ## 0.4.1本輪完成
 
@@ -40,6 +49,8 @@
 - 德州勝出框只改電腦真正主／邊池得主為金色，平分全部標、退款不標、下一手清；不得重新加回使用者取消的可見得主／牌型文字或額外結束modal資訊。
 
 ## 重要檔案與發布
+
+- 聲效：src/sound.mjs、tests/sound.test.mjs（18項）、docs/SOUND_EFFECTS.md；Game發cue、app啟動／sync、ChipFlights落枱通知。首選SOUND_ENABLED=false停聲，保持遊戲資料及偏好。
 
 - docs/GAME_BRIEF.md、ROULETTE.md、ROULETTE_IMPLEMENTATION.md、TABLE_PRESENTATION.md及各桌詳規。新增src/roulette.mjs、roulette-game.mjs、roulette-view.mjs、tests/roulette.test.mjs（27項）；app／Game／board／rules及發布腳本最小接線，storage格式不改。
 - scripts/package/pages/prepare產生單檔、Pages及上載清單，排除docs/previews。GitHub：https://github.com/jacobmaster-97/charity-casino ，main根目錄Pages。

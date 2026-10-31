@@ -1,13 +1,14 @@
-import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.4.1';
-import {rouletteMethods} from './roulette-game.mjs?v=0.4.1';
-import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.4.1';
-import {pokerMethods} from './poker-game.mjs?v=0.4.1';
-import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.4.1';
-import {blackjackMethods} from './blackjack-game.mjs?v=0.4.1';
-import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.4.1';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.4.1';
+import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.5.0';
+import {rouletteMethods} from './roulette-game.mjs?v=0.5.0';
+import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.5.0';
+import {pokerMethods} from './poker-game.mjs?v=0.5.0';
+import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.5.0';
+import {blackjackMethods} from './blackjack-game.mjs?v=0.5.0';
+import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.5.0';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.5.0';
 export class Game {
-  constructor({roll=randomDie,onComplete=()=>{},randomIndex=randomBelow}={}) { this.roll=roll;this.onComplete=onComplete;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.blackjackShoe=null;this.pokerTable=null;this.randomIndex=randomIndex; }
+  constructor({roll=randomDie,onComplete=()=>{},onCue=()=>{},randomIndex=randomBelow}={}) { this.roll=roll;this.onComplete=onComplete;this.onCue=onCue;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.blackjackShoe=null;this.pokerTable=null;this.randomIndex=randomIndex; }
+  cue(name){try{this.onCue(name);}catch{}}
   start(name,mode='race') {
     if(!name.trim()||[...name.trim()].length>16||!['race','free'].includes(mode))throw new Error('請輸入 1–16 字姓名');
     this.profile={name:name.trim(),mode,bank:10000,elapsedMs:0,inventory:{protect:0,peek:0,reroll:0,swap:0},rounds:0,status:'active'};
@@ -58,6 +59,7 @@ export class Game {
   }
   reveal(){
     if(this.round.phase!=='revealing')return false;
+    this.cue('dice-open');
     if(!this.round.used&&this.profile.inventory.reroll>0){this.round.phase='reroll';this.round.remaining=10000;}else this.settle();
     return true;
   }
@@ -116,7 +118,7 @@ export class Game {
   }
   revealBaccaratCard(){
     if(this.paused||this.round?.phase!=='dealing')return false;
-    this.round.revealed++;
+    this.round.revealed++;this.cue('card');
     if(this.round.revealed<4){this.round.remaining=BACCARAT_DEAL_MS;return true;}
     if(this.round.used==='swap'){this.round.phase='swapping';this.round.remaining=10000;return true;}
     return this.prepareBaccaratDraw();
@@ -132,6 +134,7 @@ export class Game {
     if(this.round.final.supplements.length)this.startBaccaratDraw();else{this.round.readyToSettle=true;this.settle();}return true;
   }
   startBaccaratDraw(){
+    this.cue('card');
     const r=this.round,side=r.final.supplements[r.drawShown].side;
     r.remaining=BACCARAT_DEAL_MS;
     if(r.bets['bac-'+side]||side==='banker'&&r.bets['bac-lucky-six']){r.squeeze={index:r.drawShown,side,progress:0};r.phase='delivering';}else r.phase='drawing';

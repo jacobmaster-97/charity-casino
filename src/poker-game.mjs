@@ -1,4 +1,4 @@
-import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.4.1';
+import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.5.0';
 // Methods run on the existing Game; it remains the only wallet, timer and checkpoint owner.
 export const pokerMethods={
  newPokerRound(){
@@ -22,7 +22,7 @@ export const pokerMethods={
  drawPoker(){const r=this.round;if(r.cursor>=52)throw new Error('德州牌堆耗盡');return r.deck[r.cursor++];},
  advancePokerDeal(){
    const r=this.round;if(this.paused||r?.phase!=='poker-dealing')return false;
-   if(r.queue.length){const e=r.queue.shift();if(e.type==='burn')r.burn.push(this.drawPoker());else if(e.type==='board'){r.board.push(this.drawPoker());r.lastDeal={side:'board',index:r.board.length-1};}else if(e.type==='swap'){const index=r.cursor+this.randomIndex(52-r.cursor);[r.deck[r.cursor],r.deck[index]]=[r.deck[index],r.deck[r.cursor]];r.discard.push(r.players[0].cards[e.index]);r.players[0].cards[e.index]=this.drawPoker();r.lastDeal={side:'player',index:e.index};}else{const p=r.players[e.seat];p.cards.push(this.drawPoker());r.lastDeal={side:e.seat===0?'player':'opponent',seat:e.seat,index:p.cards.length-1};}r.remaining=this.pokerDuration();return true;}
+   if(r.queue.length){const e=r.queue.shift();if(e.type==='burn')r.burn.push(this.drawPoker());else if(e.type==='board'){r.board.push(this.drawPoker());r.lastDeal={side:'board',index:r.board.length-1};}else if(e.type==='swap'){const index=r.cursor+this.randomIndex(52-r.cursor);[r.deck[r.cursor],r.deck[index]]=[r.deck[index],r.deck[r.cursor]];r.discard.push(r.players[0].cards[e.index]);r.players[0].cards[e.index]=this.drawPoker();r.lastDeal={side:'player',index:e.index};}else{const p=r.players[e.seat];p.cards.push(this.drawPoker());r.lastDeal={side:e.seat===0?'player':'opponent',seat:e.seat,index:p.cards.length-1};}if(e.type!=='burn')this.cue('card');r.remaining=this.pokerDuration();return true;}
    r.lastDeal=null;if(r.afterDeal==='swap'){const remaining=r.preserveActionMs;r.preserveActionMs=null;this.enterPokerTurn(0,remaining);if(remaining<=0)this.pokerTimeout();}
    else this.continuePoker(r.afterDeal==='preflop'?r.bigSeat:r.button);return true;
  },

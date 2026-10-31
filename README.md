@@ -1,4 +1,4 @@
-# 賭王慈善大賽 · 原型0.4.1
+# 賭王慈善大賽 · 原型0.5.0
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -25,6 +25,8 @@ npm run verify
 執行語法、規則／存檔、單檔打包與封裝校驗。npm run build可重新產生HTML。
 
 ## 功能
+
+- 0.5.0：原創合成發牌／籌碼落枱／骰盅轉動與開盅／輪盤聲效。主頁及暫停選單可靜音，獨立記住偏好；背景及暫停停聲，長聲按原進度恢復，離線可用。詳docs/SOUND_EFFECTS.md。
 
 - 0.4.1：輪盤改為左投注60%／右轉輪40%，操作留在左下；各螢幕維持左右比例，窄版按鈕分行，保留放大及精準下注。
 
@@ -53,7 +55,7 @@ npm run verify
 
 ## 驗證狀態
 
-共199項通過：規則／存檔22項、盤面／動畫及模板9項、百家樂23項、新旁注12項、咪牌12項、面板／視窗7項、版式8項、21點34項、德州撲克36項、輪盤27項、封裝3項、Pages6項。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
+共217項通過：規則／存檔22項、盤面／動畫及模板9項、百家樂23項、新旁注12項、咪牌12項、面板／視窗7項、版式8項、21點34項、德州撲克36項、輪盤27項、聲效18項、封裝3項、Pages6項。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

@@ -1,4 +1,4 @@
-import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.4.1';
+import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.5.0';
 const blackjackHand=(id,bet,cards=[],fromSplit=false,splitA=false)=>({id,bet,cards,fromSplit,splitA,swapped:false,actions:0,doubled:false,status:'playing'});
 // These methods run on Game: one owner for funds, timers, items and checkpoints.
 export const blackjackMethods={
@@ -20,7 +20,7 @@ export const blackjackMethods={
    const r=this.round;if(this.paused||!['bj-dealing','bj-animating'].includes(r?.phase))return false;
    if(r.animationQueue.length){const event=r.animationQueue.shift();if(event.kind==='reveal'){r.dealerShown=true;r.lastDeal={side:'dealer',index:1};}
      else{const cards=event.side==='dealer'?r.dealer:r.hands.find(h=>h.id===event.handId).cards,card=this.drawBlackjackCard();let index=cards.length;if(event.replace!==undefined){index=event.replace;r.discard.push(cards[index]);cards[index]=card;}else cards.push(card);r.lastDeal={side:event.side,handId:event.handId,index};}
-     r.remaining=BLACKJACK_DEAL_MS;return true;
+     this.cue('card');r.remaining=BLACKJACK_DEAL_MS;return true;
    }
    const after=r.afterAnimation,preserve=r.preserveActionMs;r.lastDeal=null;r.preserveActionMs=null;
    if(after==='initial'){if(blackjackCardValue(r.dealer[0])===1){r.phase='bj-insurance';r.remaining=20000;}else this.checkBlackjackOpening();}
