@@ -5,7 +5,7 @@ const destination=path.join(root,'docs');
 const runtime=path.join(destination,'play');
 await mkdir(path.join(runtime,'src'),{recursive:true});
 await rm(path.join(runtime,'public/art/baccarat-b/hand.png'),{force:true});
-for(const file of ['app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
+for(const file of ['sicbo-view.mjs','app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
   await copyFile(path.join(root,'src',file),path.join(runtime,'src',file));
 }
 const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip','chips-five'].map(id=>`art/sicbo-board-b/${id}.png`),'art/baccarat-b/cards.png'];
@@ -19,4 +19,4 @@ const html=(await readFile(path.join(root,'index.html'),'utf8'))
   .replace('src="./src/app.mjs','src="./play/src/app.mjs');
 await writeFile(path.join(destination,'index.html'),html);
 await writeFile(path.join(destination,'.nojekyll'),'');
-console.log('GitHub Pages ready: docs/index.html + docs/play/ (ten PNGs, twenty runtime files).');
+console.log('GitHub Pages ready: docs/index.html + docs/play/ (ten PNGs, twenty-one runtime files).');

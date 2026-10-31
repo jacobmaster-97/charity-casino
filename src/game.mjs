@@ -1,11 +1,11 @@
-import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.5.1';
-import {rouletteMethods} from './roulette-game.mjs?v=0.5.1';
-import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.5.1';
-import {pokerMethods} from './poker-game.mjs?v=0.5.1';
-import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.5.1';
-import {blackjackMethods} from './blackjack-game.mjs?v=0.5.1';
-import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.5.1';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.5.1';
+import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.6.0';
+import {rouletteMethods} from './roulette-game.mjs?v=0.6.0';
+import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.6.0';
+import {pokerMethods} from './poker-game.mjs?v=0.6.0';
+import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.6.0';
+import {blackjackMethods} from './blackjack-game.mjs?v=0.6.0';
+import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.6.0';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.6.0';
 export class Game {
   constructor({roll=randomDie,onComplete=()=>{},onCue=()=>{},randomIndex=randomBelow}={}) { this.roll=roll;this.onComplete=onComplete;this.onCue=onCue;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.blackjackShoe=null;this.pokerTable=null;this.randomIndex=randomIndex; }
   cue(name){try{this.onCue(name);}catch{}}

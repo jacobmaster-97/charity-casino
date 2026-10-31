@@ -26,9 +26,14 @@ def act(page, name, **attrs):
         selector += f'[data-{key}="{value}"]'
     if name in ['leave', 'next', 'roll', 'pause'] and page.locator('.table-tool-dialog[open]').count():
         page.locator('[data-action=close-table-tool]').click()
+    if name in ['board-zoom', 'rules', 'remove'] and page.locator('.mobile-table [data-action=table-tools]:visible').count() and not page.locator('.table-tool-dialog[open]').count():
+        page.locator('.mobile-table [data-action=table-tools]:visible').click()
     if name == 'remove' and not page.locator('details.bet-details').evaluate('(n)=>n.open'):
         page.locator('details.bet-details summary').click()
-    page.locator(selector).click()
+    candidate = page.locator(selector + ':visible')
+    if not candidate.count() and page.locator('.mobile-table [data-action=table-tools]:visible').count():
+        page.locator('.mobile-table [data-action=table-tools]:visible').click()
+    page.locator(selector + ':visible').first.click()
 
 def overflow(page):
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
@@ -36,12 +41,17 @@ def overflow(page):
         assert page.evaluate('document.documentElement.scrollHeight <= window.innerHeight + 1')
         for selector in ['.table-nav', '.console-dock', '.action-area', '.chip-picker', '.console-tools']:
             node = page.locator(selector)
-            if node.count():
+            if node.count() and node.is_visible():
                 box = node.bounding_box()
                 assert box and box['y'] >= 0 and box['y'] + box['height'] <= page.viewport_size['height'] + 1, (selector, box)
 
 
 def roulette_composition(page):
+    if page.locator('.mobile-table').count():
+        expect(page.locator('.rou-stage')).to_have_count(0)
+        boxes = page.evaluate("""() => { const a=document.querySelector('.roulette-layout').getBoundingClientRect(), b=document.querySelector('.roulette-console').getBoundingClientRect(); return [a.width,b.width]; }""")
+        assert abs(boxes[0] - boxes[1]) < 1, boxes
+        return
     boxes = page.evaluate("""() => {
       const rect = s => { const r=document.querySelector(s).getBoundingClientRect(); return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom}; };
       return {layout:rect('.roulette-layout'),bets:rect('.roulette-console'),wheel:rect('.rou-stage')};
@@ -64,7 +74,9 @@ def baccarat_composition(page):
       const stage=felt.querySelector('.baccarat-stage').getBoundingClientRect(), lower=felt.querySelector('.baccarat-lower').getBoundingClientRect();
       return {stage:stage.height, lower:lower.height, upperBottom:stage.bottom, lowerTop:lower.top};
     }""")
-    assert abs(geometry['stage'] / geometry['lower'] - 35 / 65) < .02
+    assert geometry['stage'] > 50 and geometry['lower'] > geometry['stage']
+    if not page.locator('.mobile-table').count():
+        assert abs(geometry['stage'] / geometry['lower'] - 35 / 65) < .02
     assert geometry['upperBottom'] <= geometry['lowerTop'] + 1
     overflow(page)
 
@@ -311,7 +323,7 @@ def main():
         assert roulette_snapshot['blackjackShoe'] == poker_snapshot['blackjackShoe']
         assert roulette_snapshot['baccaratShoe'] == poker_snapshot['baccaratShoe']
         context.close()
-        for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(844,390),(768,1024),(1024,768)]:
+        for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(568,320),(667,375),(740,360),(844,390),(915,412),(768,1024),(1024,768)]:
             mobile = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
             page = mobile.new_page()
             page.on('pageerror', lambda error: errors.append(str(error)))
@@ -338,6 +350,16 @@ def main():
             expect(page.get_by_role('dialog')).to_be_visible()
             act(page,'close-overlay')
             act(page, 'clear')
+            if page.locator('.mobile-table').count():
+                act(page, 'bet', bet='small')
+                act(page, 'roll')
+                expect(page.locator('.mobile-reveal-dialog')).to_be_visible()
+                act(page, 'pause')
+                clock=page.locator('#elapsed').inner_text()
+                page.wait_for_timeout(500)
+                assert page.locator('#elapsed').inner_text()==clock
+                act(page, 'resume')
+                expect(page.locator('.mobile-reveal-dialog')).to_have_count(0,timeout=5000)
             act(page, 'leave')
             page.locator('[data-action=table][data-table=baccarat]').tap()
             overflow(page)
@@ -359,17 +381,29 @@ def main():
             expect(page.locator('.rou-cell')).to_have_count(50)
             overflow(page)
             roulette_composition(page)
-            page.locator('.roulette-screen .precise-bet summary').tap()
+            if page.locator('.mobile-table').count():
+                act(page, 'table-tools')
+            page.locator('.precise-bet summary:visible').tap()
             page.locator('#roulette-target').select_option('rou-number-00')
             page.locator('.table-tool-dialog [data-action=bet]').tap()
             act(page, 'close-table-tool')
-            expect(page.locator('.roulette-screen .console-summary')).to_contain_text('$5')
+            expect(page.locator('.rou-cell[data-bet=rou-number-00]')).to_have_attribute('aria-label', re.compile('已下注'))
             overflow(page)
             page.screenshot(path=str(OUT / f'prototype-roulette-{width}.png'), full_page=True)
             act(page, 'board-zoom')
             assert page.locator('.rou-board-wrap').evaluate('(n)=>n.scrollWidth>n.clientWidth')
             act(page, 'board-zoom')
             act(page, 'clear')
+            if page.locator('.mobile-table').count():
+                act(page, 'bet', bet='rou-red')
+                act(page, 'roll')
+                expect(page.locator('.mobile-reveal-dialog')).to_be_visible()
+                act(page, 'pause')
+                clock=page.locator('#elapsed').inner_text()
+                page.wait_for_timeout(500)
+                assert page.locator('#elapsed').inner_text()==clock
+                act(page, 'resume')
+                expect(page.locator('.mobile-reveal-dialog')).to_have_count(0,timeout=8000)
             act(page, 'leave')
             page.locator('[data-action=table][data-table=poker]').tap()
             expect(page.locator('.poker-felt')).to_be_visible()

@@ -1,7 +1,7 @@
-import {validatePokerTable} from './poker.mjs?v=0.5.1';
-import {validateBlackjackShoe} from './blackjack.mjs?v=0.5.1';
-import {validateBaccaratShoe} from './baccarat.mjs?v=0.5.1';
-import {GOAL,ITEM_IDS} from './rules.mjs?v=0.5.1';
+import {validatePokerTable} from './poker.mjs?v=0.6.0';
+import {validateBlackjackShoe} from './blackjack.mjs?v=0.6.0';
+import {validateBaccaratShoe} from './baccarat.mjs?v=0.6.0';
+import {GOAL,ITEM_IDS} from './rules.mjs?v=0.6.0';
 const PREFIX='charity-casino-prototype-v1';
 export function validateSave(input){
   if(!input||input.schema!==1||input.game!=='charity-casino')throw new Error('不支援的存檔格式');

@@ -1,5 +1,28 @@
 # DEBUG_HANDOFF
 
+## 0.6.0：手機三桌實裝與驗證邊界（2026-11-01）
+
+根因／對策：常駐大小骰盅及輪盤右欄壓縮手機投注空間，已依使用者新指示只在鎖注後用真Game狀態開窗。只讀MobileRoundReveal保留1400ms終局展示、暫停及旋轉生命週期；重擲／重轉10秒仍交由Game，空注不假開獎。較窄控制列分行、不靠縮字，百家樂32:68並改善第三張與換牌容器尺寸。native更多dialog需先還原整個工具列才另開明細，已補三項生命週期檢查。
+
+封裝曾捕捉新大小視圖escape與app名稱重複，專有命名後完整重跑；沒有改玩法修這個打包問題。另確認暫停遮罩z10高於動態小窗z9，原生工具在動畫／暫停前關閉。11項手機流程檢查含空注、10秒重擲／重轉、唯讀／唯一保存、恢復進度、旋轉及破產Game停止計分後仍可結束展示，不依賴額外Game計時器。
+
+既有HTTP／Chromium IPC路徑繼續停用，沒有實機或瀏覽器能力，故未宣稱Safari／觸控／實際排版通過。browser_smoke.py只語法檢查。小格需放大／精準，極短高度、安全區、鍵盤及多狀態仍UNVERIFIED，音訊硬體輸出仍沿0.5.1待使用者回報。發布前待完整檢查／根與docs同步及GitHub Pages新head驗證；詳MOBILE_TABLES_060.md。
+
+
+## 最新：GIF僅離線輸出（2026-10-31）
+
+本輪只將大小v2預覽輸出8秒GIF，32張離線SVG獨立畫面以Inkscape及ffmpeg轉成69幀；全部解碼、尺寸／循環及52正式檔SHA一致通過。無正式玩法修復、無瀏覽器或裝置驗證、無部署；既有IPC／HTTP停用限制保持。示意固定2／3／4與+$50不可誤認為Game或真實派彩測試。
+
+## 最新：大小骰盅彈窗仍僅預覽（2026-10-31）
+
+使用者要求擴大盤面，v2撤掉常駐骰盅與五列密排，直接沿用正式原50格SVG，鎖注後才在小窗搖骰。只新增docs/previews/sicbo-mobile-modal-v2/及交接文件；52正式檔SHA一致，3圖／11主控／JS語法及50格通過，沒有正式修復或部署。瀏覽器／動畫／Safari尚未驗證；維持既有HTTP／Chromium停用限制。待實裝時必須覆蓋空注、計時暫停／背景、重擲券10秒選擇、展示與唯一派彩保存契約。
+
+## 最新：手機橫向預覽的驗證邊界（2026-10-31）
+
+使用者先要求調適，後改為先預覽，因此未修改任何正式程式／PNG、未發布。獨立docs/previews/mobile-landscape-v1/靜態合成以Inkscape輸出；只有5張圖解碼、65個控制矩形及52份正式檔SHA檢查。骰面首次靜態輸出因巢狀SVG沒有明確clip而顯示整張atlas，已在預覽生成器補專屬clipPath並重新輸出／查看，正式渲染器不改。這是預覽問題，不是遊戲根因或新實機修復。
+
+既有HTTP／Chromium IPC停用限制與Safari音訊UNVERIFIED保持；沒有重試。本輪不能宣稱手機橫向已修好：小格觸控、其他可視尺寸、工具列、安全區、旋轉、多手及結算狀態仍需正式實裝後驗證，等使用者先確認設計。
+
 ## 0.5.1：使用者iPad Safari完全無聲
 
 現象：使用者實機回報沒有任何聲效，後確認Safari，iPadOS未提供。0.5.0沒有實機證據，不能將當時217項替身／PCM通過當Safari通過。
@@ -8,7 +31,7 @@
 
 本輪一次相容性切片：touchend capture、手勢內單樣本靜音source.start／native resume先於PCM；可用時navigator.audioSession.type=playback，拒絕／缺失非致命。主頁／暫停「啟動並試聽」明確啟用並播籌碼聲，選單sync不立即切掉手動試聽；進入牌局、靜音、hidden／blur／pagehide停止並取消pending試聽。Game、結果、存檔、原音量與PCM不改，沒有偷偷加大音量或清偏好。
 
-驗證：聲效24／全套223通過，新增6項與pending併發更新，原10,000局守恆保持，20個runtime及10張PNG不改；browser_smoke.py只有Python語法通過。工具清單沒有Safari／browser能力，未重試舊IPC／HTTP失敗路線。修正版iPad硬體輸出、iPadOS差異、音量／路由／靜音開關仍UNVERIFIED，待使用者按0.5.1試聽確認。若同一路徑再次修後仍無聲，不再反覆改resume或放大音量；先取得iPadOS及試聽輸出／路由證據再定新假設。發布結果記IPAD_AUDIO_RELEASE.json，本地發布後記帳不另部署。
+驗證：聲效24／全套223通過，新增6項與pending併發更新，原10,000局守恆保持，20個runtime及10張PNG不改；browser_smoke.py只有Python語法通過。工具清單沒有Safari／browser能力，未重試舊IPC／HTTP失敗路線。修正版iPad硬體輸出、iPadOS差異、音量／路由／靜音開關仍UNVERIFIED，待使用者按0.5.1試聽確認。若同一路徑再次修後仍無聲，不再反覆改resume或放大音量；先取得iPadOS及試聽輸出／路由證據再定新假設。已發布main 90b2f88f55ac09f3efa79e306f365b2bdb86adad，Pages run41166135901 completed/success；164檔SHA一致、26份PNG副本不改及手圖不存在已核對。結果記IPAD_AUDIO_RELEASE.json，發布後本地交接不另部署；實機試聽仍待使用者確認。
 
 ## 0.5.0：五種聲效與音訊生命週期
 

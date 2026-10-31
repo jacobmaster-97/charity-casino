@@ -1,10 +1,31 @@
 # CODEX_HANDOFF
 
+## 最新：0.6.0手機三桌已實作，等待發布驗證（2026-11-01）
+
+使用者已直接授權實裝大小／百家樂手機版，並改手機輪盤為鎖注後轉輪小窗。完成：大小移出sicbo-view.mjs而保持正式50格；手機大小／輪盤下注時無常駐動畫區，鎖注／有注到期依原Game進度開窗，重擲／重轉10秒仍在窗內。結果只讀停留1400ms或按回盤面，保留原唯一派彩／保存。百家樂手機一體32:68，卡牌按容器量尺寸、換牌／咪牌與旁注保持。合併頂列，更多原生dialog搬原控制，窄版分行且主按鍵44px；一般桌面／平板保留原大小上下／輪盤6:4，21點／德州不套新樣式。
+
+驗證目標237項（原223＋11手機流程＋3更多dialog），含原10,000局模擬、聲效24與封裝／Pages；23MB單檔與根／docs 21runtime同步，10張PNG不改、無手圖。browser_smoke.py補四小橫向尺寸及真小窗／暫停／更多路徑，僅Python語法檢查；未用瀏覽器或Safari，不重試舊HTTP／IPC。小格、極短高度、鍵盤、安全區、實機觸控／旋轉及聲效仍UNVERIFIED。詳docs/MOBILE_TABLES_060.md。回退首選MOBILE_TABLES_ENABLED=false＋更新快取封裝，勿清保存。發布前版main90b2f88f55ac09f3efa79e306f365b2bdb86adad，準備從該版以guarded ref發布；待核對新main及Pages成功後更新此節。
+
+
+## 最新：大小搖骰GIF預覽（2026-10-31）
+
+使用者要求GIF，已新增docs/previews/sicbo-mobile-modal-v2/sicbo-lock-shake-reveal.gif、render-gif.mjs、gif-timeline.json及gif-validation.json。1266×585、69幀、8秒循環、約3.13MB；盤面→鎖注→小窗搖骰→揭盅2／3／4→收窗→盤面小區金框及示意+$50。此為正式素材的離線SVG動畫分鏡，不是瀏覽器遊戲實錄，GIF無聲；實機／動畫時序／錢包／保存未接線。全部幀解碼及52份正式檔SHA不變通過，關鍵幀已查看；正式0.5.1未改／未部署，待使用者確認後才實裝。
+
+## 最新：大小橫向改為鎖注後骰盅彈窗預覽（2026-10-31）
+
+使用者否決大小v1過密五列，要求下注後小窗搖骰。本輪只更新獨立docs/previews/sicbo-mobile-modal-v2/，原50格正式boardMarkup直接重用，取消常駐骰盅及工具列，改44px單操作列＋更多。投注容器760×273、比v1面積約增107%；另有368×256搖骰／揭盅窗及自帶素材的離線HTML動效展示。尚未實裝／部署，正式0.5.1保持，其他四桌預覽不改。52份正式檔SHA不變、3張SVG／PNG、50投注格、11主控幾何及預覽JS語法通過；HTML動畫／Safari／實機未驗證。下一步待使用者確認v2，才接鎖注（含倒數）、空注跳過、暫停／重擲10秒及回盤面派彩；不可因自動關窗跳過重擲，展示不得重抽或另存。詳預覽README及validation.json。
+
+## 最新：手機橫向布局僅預覽（2026-10-31）
+
+使用者要求五桌手機橫向比例調適，隨後指示「先讓我預覽」。本輪僅製作docs/previews/mobile-landscape-v1/獨立SVG／PNG／切換HTML與生成器，沒有修改或發布正式遊戲，正式版維持0.5.1。844×390可視範圍（不含瀏覽器工具列），主按鍵44px；百家樂與21點一體、大小分區、德州五對手同列、輪盤左462右308即6:4。沿用正式PNG及卡牌／籌碼／輪盤渲染器。大小五列50格為待確認緊湊重排提案，不能當已批准盤面。
+
+52份src／public／index／package SHA一致，5張SVG/XML與PNG解碼通過，65個主控矩形44px及安全區幾何通過，人工查看五張輸出；不是瀏覽器／Safari／手機通過。密集投注格不足44px，須配放大／精準；其他尺寸、長金額、咪牌／結算／多手狀態及實機觸控仍UNVERIFIED。詳該目錄README與validation.json。下一步等待使用者確認比例與大小緊湊盤面，才修改正式CSS／模板及實機檢查，暫不部署。
+
 ## 目標與目前狀態
 
 《賭王慈善大賽》：$100起步、手上資金$25,000,000勝利、歸零失敗，計有效遊玩時間；B港式賭片美術，電腦／手機／平板。大小、百家樂、21點、德州撲克及輪盤五桌原型均已接入。
 
-使用者在iPad Safari實測0.5.0完全無聲，iPadOS版本未提供。本輪0.5.1修正確定程式缺口：首個resume若pending，後續手勢會被舊pending擋住；替身重現先失敗（resume只有1次，預期2），修正後通過。加入touchend、手勢內單樣本靜音primer／resume先於PCM、可用時playback session，主頁／暫停選單新增「啟動並試聽」，保留遊戲及偏好資料。223項檢查通過，正在同步GitHub／Pages；修正版實際iPad輸出仍需確認，不能當已證實唯一根因。新部署完成前正式前版0.5.0 main 6ad8a33c27222314a2eefcbed22f7fc08886fba5，Pages run41164989369 completed/success。發布後本地記IPAD_AUDIO_RELEASE.json，不為記帳另部署。
+使用者在iPad Safari實測0.5.0完全無聲，iPadOS版本未提供。本輪0.5.1修正確定程式缺口：首個resume若pending，後續手勢會被舊pending擋住；替身重現先失敗（resume只有1次，預期2），修正後通過。加入touchend、手勢內單樣本靜音primer／resume先於PCM、可用時playback session，主頁／暫停選單新增「啟動並試聽」，保留遊戲及偏好資料。0.5.1已發布：main 90b2f88f55ac09f3efa79e306f365b2bdb86adad，tree 46c4dc587ee8ef379a8b0bbbdf709949ac1344e1，Pages run41166135901 completed/success。223項檢查通過，164個發布檔SHA全部一致，49檔變更，26份PNG副本不改、手圖不存在。遊玩 https://jacobmaster-97.github.io/charity-casino/?v=0.5.1 。修正版實際iPad輸出仍需確認，不能當已證實唯一根因；收據docs/IPAD_AUDIO_RELEASE.json與發布後本地交接不另部署。前版0.5.0 main 6ad8a33c27222314a2eefcbed22f7fc08886fba5供比對。
 
 ## 0.5.1本輪完成
 

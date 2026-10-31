@@ -1,13 +1,13 @@
 {
   "name": "charity-casino-prototype",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node src/server.mjs",
-    "test": "node tests/game.test.mjs && node tests/board.test.mjs && node tests/baccarat.test.mjs && node tests/baccarat-sidebets.test.mjs && node tests/baccarat-squeeze.test.mjs && node tests/table-layout.test.mjs && node tests/table-presentation.test.mjs && node tests/blackjack.test.mjs && node tests/poker.test.mjs && node tests/roulette.test.mjs && node tests/sound.test.mjs",
+    "test": "node tests/game.test.mjs && node tests/board.test.mjs && node tests/baccarat.test.mjs && node tests/baccarat-sidebets.test.mjs && node tests/baccarat-squeeze.test.mjs && node tests/table-layout.test.mjs && node tests/mobile-tables.test.mjs && node tests/table-presentation.test.mjs && node tests/blackjack.test.mjs && node tests/poker.test.mjs && node tests/roulette.test.mjs && node tests/sound.test.mjs",
     "build": "node scripts/package.mjs",
-    "check": "node --check src/app.mjs && node --check src/game.mjs && node --check src/rules.mjs && node --check src/storage.mjs && node --check src/server.mjs && node --check scripts/package.mjs && node --check scripts/pages.mjs && node --check scripts/prepare-github.mjs && node --check src/board.mjs && node --check src/baccarat.mjs && node --check src/baccarat-view.mjs && node --check src/baccarat-squeeze.mjs && node --check src/table-layout.mjs && node --check src/blackjack.mjs && node --check src/blackjack-game.mjs && node --check src/blackjack-view.mjs && node --check src/poker.mjs && node --check src/poker-game.mjs && node --check src/poker-view.mjs && node --check src/roulette.mjs && node --check src/roulette-game.mjs && node --check src/roulette-view.mjs && node --check src/sound.mjs",
+    "check": "node --check src/sicbo-view.mjs && node --check src/app.mjs && node --check src/game.mjs && node --check src/rules.mjs && node --check src/storage.mjs && node --check src/server.mjs && node --check scripts/package.mjs && node --check scripts/pages.mjs && node --check scripts/prepare-github.mjs && node --check src/board.mjs && node --check src/baccarat.mjs && node --check src/baccarat-view.mjs && node --check src/baccarat-squeeze.mjs && node --check src/table-layout.mjs && node --check src/blackjack.mjs && node --check src/blackjack-game.mjs && node --check src/blackjack-view.mjs && node --check src/poker.mjs && node --check src/poker-game.mjs && node --check src/poker-view.mjs && node --check src/roulette.mjs && node --check src/roulette-game.mjs && node --check src/roulette-view.mjs && node --check src/sound.mjs",
     "verify": "npm run check && npm test && npm run build && node tests/package.test.mjs",
     "build:pages": "node scripts/pages.mjs",
     "verify:pages": "npm run build:pages && node tests/pages.test.mjs",

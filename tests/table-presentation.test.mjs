@@ -39,7 +39,7 @@ test('actual Baccarat view places show and lower areas under one felt; contexts 
  inspect(baccaratTableView(options));game.round.peek={side:'player',index:0,value:1};inspect(baccaratTableView(options));
 });
 test('Sic Bo keeps the separate-stage structure and all fifty approved betting regions',async()=>{
- const app=await readFile(new URL('../src/app.mjs',import.meta.url),'utf8'),table=app.slice(app.indexOf('function table()'),app.indexOf('function shop()'));assert.ok(table.includes('sicbo-screen presentation-separated'));assert.ok(!table.includes('baccarat-felt'));assert.equal((boardMarkup(p=>p,true).match(/data-action="bet"/g)||[]).length,50);
+ const table=await readFile(new URL('../src/sicbo-view.mjs',import.meta.url),'utf8');assert.ok(table.includes('sicbo-screen presentation-separated'));assert.ok(!table.includes('baccarat-felt'));assert.equal((boardMarkup(p=>p,true).match(/data-action="bet"/g)||[]).length,50);
 });
 test('responsive board changes do not touch locked wagers, shoe progress or coupons',()=>{
  const game=new Game();game.start('保持原局');game.enterTable('baccarat');game.addBet('bac-banker',500);game.addBet('bac-lucky-six',100);game.lock();const before=structuredClone({profile:game.profile,round:game.round,shoe:game.baccaratShoe});const f=surfaceFixture();f.svg.dataset.enabled='false';for(const height of [100,200,300]){f.board.clientHeight=height;fitBaccaratSurface(f.root);boardAmounts(game.round.bets,{},p=>p,{},{},game.round.bankAtStart,{},1200*height/f.board.clientWidth);}assert.deepEqual({profile:game.profile,round:game.round,shoe:game.baccaratShoe},before);

@@ -1,3 +1,4 @@
+import {sicboTableView} from '../src/sicbo-view.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
@@ -50,11 +51,9 @@ test('fitted board preserves every betting region without the old fixed-width vi
  for(const c of BOARD_CELLS){assert.ok(c.x>=110&&c.y>=245);assert.ok(c.x+c.w<=1490&&c.y+c.h<=800);}
 });
 test('real table template contains the entire lower console and all former sidebar functions',async()=>{
- const source=await readFile(new URL('../src/app.mjs',import.meta.url),'utf8');
- const definition=source.slice(source.indexOf('function die('),source.indexOf('\nfunction shop()'));
  const deps={game:new Game({roll:()=>2}),button:(a,t,c='',e='')=>`<button data-action="${a}" class="${c}" ${e}>${t}</button>`,esc:s=>String(s),icon:()=>'',art,boardMarkup,chipFace,CHIP_COLORS,BETS,BET_MAP:Object.fromEntries(BETS.map(b=>[b.id,b])),ITEMS,money,getChipDenominations,chipLabel,boardZoom:false,preciseBet:'small',chip:500,allIn:false,peekIndex:0,storageWarning:''};
  deps.game.start('版面');deps.game.enterTable();
- const render=new Function(...Object.keys(deps),definition+';return table();');
+ const render=()=>sicboTableView(deps);
  const html=render(...Object.values(deps));assert.ok(!html.includes('<aside'));assert.ok(!html.includes('table-layout'));
  assert.ok(html.indexOf('dice-stage')<html.indexOf('table-console'));assert.ok(html.indexOf('board-scroll')<html.indexOf('console-dock'));
  for(const action of ['chip','all-in','roll','clear','use','board-zoom'])assert.ok(html.includes(`data-action="${action}"`),action);
