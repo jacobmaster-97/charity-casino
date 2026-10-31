@@ -1,6 +1,6 @@
-# 賭王慈善大賽 · 原型0.3.1
+# 賭王慈善大賽 · 原型0.4.0
 
-B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克原型。輪盤仍開發中，正式首版五款全開的規劃保持。
+B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
 ## 直接試玩
 
@@ -26,6 +26,8 @@ npm run verify
 
 ## 功能
 
+- 0.4.0開放美式雙零輪盤：38格、50種獨立格投注、單號35:1／十二數組及直列2:1／外圍1:1、五色籌碼、真實輪序與小球減速、30秒、透視排除五號、鎖注前啟用重轉券及10秒選擇、暫停／完成局保存。手機可放大或精準下注。詳docs/ROULETTE_IMPLEMENTATION.md。
+
 - 0.3.1：德州完成手後，真正贏得主池／邊池的電腦對手框變金色。多人平分／不同邊池得主一起標示，未跟注退款不算勝出；文字與牌局流程保持。
 
 - 0.3.0開放德州撲克：六人無限注、五名各有風格的AI、大小盲／行動順序、完整加注與短碼全押權、主池／邊池／平分零頭、30秒、正常／快速、三款道具、收注／派彩動畫、對手籌碼完成局保存。詳docs/POKER_IMPLEMENTATION.md。
@@ -49,7 +51,7 @@ npm run verify
 
 ## 驗證狀態
 
-共172項通過：規則／存檔22項、盤面／動畫及模板9項、百家樂23項、新旁注12項、咪牌12項、面板／視窗7項、版式8項、21點34項、德州撲克36項、封裝3項、Pages6項。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
+共199項通過：規則／存檔22項、盤面／動畫及模板9項、百家樂23項、新旁注12項、咪牌12項、面板／視窗7項、版式8項、21點34項、德州撲克36項、輪盤27項、封裝3項、Pages6項。沙箱拒絕HTTP與Chromium所需socket，瀏覽器尚未成功啟動；視覺、觸控及裝置實測未完成，不當作正式發布版。限制見DEBUG_HANDOFF.md，允許Chromium的環境可執行tests/browser_smoke.py。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

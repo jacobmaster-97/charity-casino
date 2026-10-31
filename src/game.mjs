@@ -1,9 +1,11 @@
-import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.3.1';
-import {pokerMethods} from './poker-game.mjs?v=0.3.1';
-import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.3.1';
-import {blackjackMethods} from './blackjack-game.mjs?v=0.3.1';
-import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.3.1';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.3.1';
+import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.4.0';
+import {rouletteMethods} from './roulette-game.mjs?v=0.4.0';
+import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.4.0';
+import {pokerMethods} from './poker-game.mjs?v=0.4.0';
+import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.4.0';
+import {blackjackMethods} from './blackjack-game.mjs?v=0.4.0';
+import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.4.0';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.4.0';
 export class Game {
   constructor({roll=randomDie,onComplete=()=>{},randomIndex=randomBelow}={}) { this.roll=roll;this.onComplete=onComplete;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.blackjackShoe=null;this.pokerTable=null;this.randomIndex=randomIndex; }
   start(name,mode='race') {
@@ -15,15 +17,17 @@ export class Game {
   get stake(){return this.round?Object.values(this.round.bets).reduce((a,b)=>a+b,0):0;}
   get available(){return this.profile.bank-(this.round?.phase==='betting'?this.stake:0);}
   get canBet(){return this.screen==='table'&&this.round?.phase==='betting'&&!this.paused;}
-  enterTable(kind='sicbo'){if(this.paused||this.screen!=='lobby'||this.profile.status!=='active'||!['sicbo','baccarat','blackjack','poker'].includes(kind)||kind==='baccarat'&&!BACCARAT_ENABLED||kind==='blackjack'&&!BLACKJACK_ENABLED||kind==='poker'&&!POKER_ENABLED)return false;this.activeTable=kind;this.screen='table';return this.newRound();}
+  enterTable(kind='sicbo'){if(this.paused||this.screen!=='lobby'||this.profile.status!=='active'||!['sicbo','baccarat','blackjack','poker','roulette'].includes(kind)||kind==='baccarat'&&!BACCARAT_ENABLED||kind==='blackjack'&&!BLACKJACK_ENABLED||kind==='poker'&&!POKER_ENABLED||kind==='roulette'&&!ROULETTE_ENABLED)return false;this.activeTable=kind;this.screen='table';return this.newRound();}
   newRound(){
     if(this.paused||this.profile?.status!=='active'||(this.round&&this.round.phase!=='settled'))return false;
+    if(this.activeTable==='roulette')return this.newRouletteRound();
     if(this.activeTable==='poker')return this.newPokerRound();
     if(this.activeTable==='baccarat')return this.newBaccaratRound();
     if(this.activeTable==='blackjack')return this.newBlackjackRound();
     this.round={kind:'sicbo',phase:'betting',bankAtStart:this.profile.bank,dice:[this.roll(),this.roll(),this.roll()],bets:{},remaining:30000,used:null,peek:null,result:null};return true;
   }
   addBet(id,amount){
+    if(this.activeTable==='roulette')return this.addRouletteBet(id,amount);
     if(this.activeTable==='poker')return false;
     if(this.activeTable==='baccarat')return this.addBaccaratBet(id,amount);
     if(this.activeTable==='blackjack')return this.addBlackjackBet(id,amount);
@@ -34,6 +38,7 @@ export class Game {
   clearBets(){if(!this.canBet)return false;this.round.bets={};return true;}
   undoBet(id){if(!this.canBet||!this.round.bets[id])return false;delete this.round.bets[id];return true;}
   useItem(id,index=0,expectedHandId=null){
+    if(this.activeTable==='roulette')return this.useRouletteItem(id);
     if(this.activeTable==='poker')return this.usePokerItem(id,index,expectedHandId);
     if(this.activeTable==='baccarat')return this.useBaccaratItem(id,index);
     if(this.activeTable==='blackjack')return this.useBlackjackItem(id,index,expectedHandId);
@@ -43,6 +48,7 @@ export class Game {
     return true;
   }
   lock(){
+    if(this.activeTable==='roulette')return this.lockRoulette();
     if(this.activeTable==='poker')return this.startPoker();
     if(this.activeTable==='baccarat')return this.lockBaccarat();
     if(this.activeTable==='blackjack')return this.lockBlackjack();
@@ -62,10 +68,10 @@ export class Game {
     this.settle();return true;
   }
   settle(){
-    const poker=this.activeTable==='poker',baccarat=this.activeTable==='baccarat',blackjack=this.activeTable==='blackjack';
-    if((poker||baccarat||blackjack)?!this.round?.readyToSettle:!['revealing','reroll'].includes(this.round?.phase))return false;
+    const roulette=this.activeTable==='roulette',poker=this.activeTable==='poker',baccarat=this.activeTable==='baccarat',blackjack=this.activeTable==='blackjack';
+    if((roulette||poker||baccarat||blackjack)?!this.round?.readyToSettle:!['revealing','reroll'].includes(this.round?.phase))return false;
     if(this.round.phase==='settled')return false;
-    const result=poker?settlePokerRound(this.round):blackjack?settleBlackjackRound(this.round):baccarat?settleBaccaratRound(this.round.bets,this.round.final,this.round.used==='protect'):settleBets(this.round.bets,this.round.dice,this.round.used==='protect');
+    const result=roulette?settleRouletteRound(this.round.bets,this.round.outcome,this.round.used==='protect'):poker?settlePokerRound(this.round):blackjack?settleBlackjackRound(this.round):baccarat?settleBaccaratRound(this.round.bets,this.round.final,this.round.used==='protect'):settleBets(this.round.bets,this.round.dice,this.round.used==='protect');
     this.profile.bank+=result.returned+result.refund;if(poker)this.finalizePokerStacks(result);this.profile.rounds++;
     this.profile.status=this.profile.bank>=GOAL?'won':this.profile.bank===0?'lost':'active';
     this.round.phase='settled';this.round.remaining=0;this.round.result=result;
@@ -160,7 +166,7 @@ export class Game {
     if(!Number.isFinite(ms)||ms<=0)return false;
     let left=ms,changed=false;
     while(left>0){
-      const timed=this.screen==='table'&&['betting','revealing','reroll','dealing','swapping','drawing','delivering','unfolding','returning','bj-dealing','bj-animating','bj-insurance','bj-player','poker-player','poker-ai','poker-dealing','poker-collect','poker-showdown'].includes(this.round?.phase);
+      const timed=this.screen==='table'&&['betting','revealing','reroll','dealing','swapping','drawing','delivering','unfolding','returning','bj-dealing','bj-animating','bj-insurance','bj-player','poker-player','poker-ai','poker-dealing','poker-collect','poker-showdown','rou-spinning','rou-reroll'].includes(this.round?.phase);
       const step=timed?Math.min(left,this.round.remaining):left;
       if(['blackjack','poker'].includes(this.activeTable)&&this.round?.preserveActionMs!==null&&this.round?.preserveActionMs!==undefined)this.round.preserveActionMs=Math.max(0,this.round.preserveActionMs-step);
       this.profile.elapsedMs+=step;left-=step;
@@ -168,7 +174,7 @@ export class Game {
       this.round.remaining-=step;
       if(this.round.remaining<1e-7){
         const phase=this.round.phase;
-        if(phase==='poker-player')this.pokerTimeout();else if(phase==='poker-ai')this.actPokerAI();else if(phase==='poker-dealing')this.advancePokerDeal();else if(phase==='poker-collect')this.advancePokerCollect();else if(phase==='poker-showdown')this.completePoker();else if(phase==='bj-player')this.blackjackAction('stand');else if(phase==='bj-insurance')this.chooseBlackjackInsurance();else if(phase==='bj-dealing'||phase==='bj-animating')this.advanceBlackjackAnimation();else if(phase==='betting')this.lock();else if(phase==='revealing')this.reveal();else if(phase==='dealing')this.revealBaccaratCard();else if(phase==='swapping')this.chooseBaccaratSwap();else if(phase==='drawing')this.revealBaccaratDraw();else if(['delivering','unfolding','returning'].includes(phase))this.advanceBaccaratSqueeze();else this.chooseReroll();
+        if(phase==='rou-spinning')this.finishRouletteSpin();else if(phase==='rou-reroll')this.chooseRouletteReroll();else if(phase==='poker-player')this.pokerTimeout();else if(phase==='poker-ai')this.actPokerAI();else if(phase==='poker-dealing')this.advancePokerDeal();else if(phase==='poker-collect')this.advancePokerCollect();else if(phase==='poker-showdown')this.completePoker();else if(phase==='bj-player')this.blackjackAction('stand');else if(phase==='bj-insurance')this.chooseBlackjackInsurance();else if(phase==='bj-dealing'||phase==='bj-animating')this.advanceBlackjackAnimation();else if(phase==='betting')this.lock();else if(phase==='revealing')this.reveal();else if(phase==='dealing')this.revealBaccaratCard();else if(phase==='swapping')this.chooseBaccaratSwap();else if(phase==='drawing')this.revealBaccaratDraw();else if(['delivering','unfolding','returning'].includes(phase))this.advanceBaccaratSqueeze();else this.chooseReroll();
         changed=true;
         if(this.profile.status!=='active')break;
       }
@@ -180,3 +186,5 @@ export class Game {
 Object.assign(Game.prototype,blackjackMethods);
 
 Object.assign(Game.prototype,pokerMethods);
+
+Object.assign(Game.prototype,rouletteMethods);

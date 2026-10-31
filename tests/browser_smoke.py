@@ -260,6 +260,29 @@ def main():
         assert poker_snapshot['pokerTable']['speed'] == 'fast'
         assert poker_snapshot['blackjackShoe'] == bj_snapshot['blackjackShoe']
         assert poker_snapshot['profile']['rounds'] == bj_snapshot['profile']['rounds'] + 1
+        act(page, 'close-overlay')
+        page.locator('[data-action=table][data-table=roulette]').click()
+        expect(page.locator('.roulette-board')).to_be_visible()
+        expect(page.locator('.rou-cell')).to_have_count(50)
+        overflow(page)
+        act(page, 'bet', bet='rou-number-0')
+        act(page, 'roll')
+        act(page, 'pause')
+        roulette_clock = page.locator('#elapsed').text_content()
+        page.wait_for_timeout(1100)
+        assert page.locator('#elapsed').text_content() == roulette_clock
+        act(page, 'resume')
+        expect(page.locator('.roulette-screen [data-action=next]')).to_be_visible(timeout=7000)
+        page.screenshot(path=str(OUT / 'prototype-roulette-result.png'), full_page=True)
+        act(page, 'leave')
+        act(page, 'saves')
+        with page.expect_download() as roulette_download:
+            act(page, 'export')
+        roulette_snapshot = json.loads(Path(roulette_download.value.path()).read_text())
+        assert roulette_snapshot['profile']['rounds'] == poker_snapshot['profile']['rounds'] + 1
+        assert roulette_snapshot['pokerTable'] == poker_snapshot['pokerTable']
+        assert roulette_snapshot['blackjackShoe'] == poker_snapshot['blackjackShoe']
+        assert roulette_snapshot['baccaratShoe'] == poker_snapshot['baccaratShoe']
         context.close()
         for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(844,390),(768,1024),(1024,768)]:
             mobile = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
@@ -303,6 +326,21 @@ def main():
             page.locator('[data-action=bet][data-bet=bj-main]').tap()
             expect(page.locator('.bj-chip-target')).to_contain_text('5')
             page.screenshot(path=str(OUT / f'prototype-blackjack-{width}.png'), full_page=True)
+            act(page, 'clear')
+            act(page, 'leave')
+            page.locator('[data-action=table][data-table=roulette]').tap()
+            expect(page.locator('.rou-cell')).to_have_count(50)
+            overflow(page)
+            page.locator('.roulette-screen .precise-bet summary').tap()
+            page.locator('#roulette-target').select_option('rou-number-00')
+            page.locator('.table-tool-dialog [data-action=bet]').tap()
+            act(page, 'close-table-tool')
+            expect(page.locator('.roulette-screen .console-summary')).to_contain_text('$5')
+            overflow(page)
+            page.screenshot(path=str(OUT / f'prototype-roulette-{width}.png'), full_page=True)
+            act(page, 'board-zoom')
+            assert page.locator('.rou-board-wrap').evaluate('(n)=>n.scrollWidth>n.clientWidth')
+            act(page, 'board-zoom')
             act(page, 'clear')
             act(page, 'leave')
             page.locator('[data-action=table][data-table=poker]').tap()

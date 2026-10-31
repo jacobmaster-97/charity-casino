@@ -1,4 +1,4 @@
-import {BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,cardRank} from './baccarat.mjs?v=0.3.1';
+import {BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,cardRank} from './baccarat.mjs?v=0.4.0';
 const squeezeClamp=v=>Math.max(0,Math.min(1,v));
 const squeezeEase=v=>1-Math.pow(1-squeezeClamp(v),3);
 const squeezeEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
