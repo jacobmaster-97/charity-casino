@@ -229,6 +229,37 @@ def main():
         assert len(bj_snapshot['blackjackShoe']['cards']) == 312
         assert bj_snapshot['blackjackShoe']['cursor'] == 7
         assert bj_snapshot['profile']['rounds'] == bj_save['profile']['rounds'] + 1
+        act(page, 'close-overlay')
+        page.locator('[data-action=table][data-table=poker]').click()
+        expect(page.locator('.poker-felt')).to_be_visible()
+        overflow(page)
+        page.locator('.shoe-details summary').click()
+        act(page, 'pk-speed', speed='fast')
+        act(page, 'close-table-tool')
+        act(page, 'pk-start')
+        for _ in range(180):
+            if page.locator('.pk-result').count():
+                break
+            if page.locator('[data-poker-action=fold]').count():
+                overflow(page)
+                page.screenshot(path=str(OUT / 'prototype-poker-turn.png'), full_page=True)
+                act(page, 'pause')
+                clock = page.locator('#elapsed').text_content()
+                page.wait_for_timeout(1100)
+                assert page.locator('#elapsed').text_content() == clock
+                act(page, 'resume')
+                page.locator('[data-poker-action=fold]').click()
+            page.wait_for_timeout(300)
+        expect(page.locator('.pk-result')).to_be_visible()
+        act(page, 'leave')
+        act(page, 'saves')
+        with page.expect_download() as poker_download:
+            act(page, 'export')
+        poker_snapshot = json.loads(Path(poker_download.value.path()).read_text())
+        assert len(poker_snapshot['pokerTable']['seats']) == 5
+        assert poker_snapshot['pokerTable']['speed'] == 'fast'
+        assert poker_snapshot['blackjackShoe'] == bj_snapshot['blackjackShoe']
+        assert poker_snapshot['profile']['rounds'] == bj_snapshot['profile']['rounds'] + 1
         context.close()
         for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(844,390),(768,1024),(1024,768)]:
             mobile = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
@@ -272,6 +303,21 @@ def main():
             page.locator('[data-action=bet][data-bet=bj-main]').tap()
             expect(page.locator('.bj-chip-target')).to_contain_text('5')
             page.screenshot(path=str(OUT / f'prototype-blackjack-{width}.png'), full_page=True)
+            act(page, 'clear')
+            act(page, 'leave')
+            page.locator('[data-action=table][data-table=poker]').tap()
+            expect(page.locator('.poker-felt')).to_be_visible()
+            overflow(page)
+            page.screenshot(path=str(OUT / f'prototype-poker-{width}.png'), full_page=True)
+            act(page, 'pk-start')
+            for _ in range(80):
+                if page.locator('[data-poker-action=fold]').count():
+                    overflow(page)
+                    page.screenshot(path=str(OUT / f'prototype-poker-turn-{width}.png'), full_page=True)
+                    break
+                if page.locator('.pk-result').count():
+                    break
+                page.wait_for_timeout(300)
             mobile.close()
         assert errors == [], errors
         browser.close()

@@ -13,9 +13,9 @@ export function chipLabel(cents) {
 }
 export const ITEM_IDS = ['protect', 'peek', 'reroll', 'swap'];
 export const ITEMS = {
-  protect: { name: '保本券', icon: 'protect', description: '大小／百家樂／21點通用。鎖注前使用，本局淨虧損退回 50%。' },
-  peek: { name: '透視鏡', icon: 'peek', description: '大小看一骰高低；百家樂看莊或閒一張點數；21點確認莊家非Blackjack後可看暗牌。' },
-  swap: { name: '換牌券', icon: 'swap', description: '百家樂鎖注前啟用；21點行動前選自己一張更換，分牌全局限一件。' },
+  protect: { name: '保本券', icon: 'protect', description: '四桌共用。大小／百家樂／21點鎖注前，德州首次行動前使用；淨虧損退50%。' },
+  peek: { name: '透視鏡', icon: 'peek', description: '大小看一骰高低；百家樂看莊或閒一張點數；21點查莊非Blackjack後看暗牌；德州行動時看一名對手一張隨機底牌。' },
+  swap: { name: '換牌券', icon: 'swap', description: '百家樂鎖注前啟用；21點行動前選自己一張更換，分牌全局限一件；德州翻牌前首次行動前可換一張底牌。' },
   reroll: { name: '重擲券', icon: 'reroll', description: '持券且本局未用其他道具，開骰後有 10 秒選擇。重擲、接受或超時均扣券。' },
 };
 const make = (id, label, group, rate, values = []) => ({ id, label, group, rate, values });

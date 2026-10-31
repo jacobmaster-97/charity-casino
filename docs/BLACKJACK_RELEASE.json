@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "repository": "jacobmaster-97/charity-casino",
+  "commit": "42a68405f28c0ab3298094a7d74e7197fb6ef8fb",
+  "parent": "d51e6fab1983ded3fc3c21fc1708a1a8494863df",
+  "tree": "0f757254add42662f8f11ce48af5f911da76f8c7",
+  "changed_files": 42,
+  "verified_files": 138,
+  "tests_passed": 136,
+  "new_blackjack_tests": 34,
+  "simulation_rounds": {
+    "blackjack": 2000,
+    "baccarat": 4000
+  },
+  "pages_run_id": 41093009444,
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.2.0",
+  "blackjack": "playable unified table; six-deck S17, 3:2 natural, hit/stand/double/split up to four/DAS/late surrender/insurance, three shared coupons, 20-second choices, one end-of-round checkpoint",
+  "runtime_pngs": 10,
+  "published_png_copies_unchanged": 26,
+  "runtime_files": 13,
+  "hand_texture": "absent in runtime and both Pages paths",
+  "save_schema": 1,
+  "optional_save_field": "blackjackShoe, preserves baccaratShoe and older saves",
+  "browser_device_validation": "UNVERIFIED; no browser execution or real-device screenshots",
+  "rollback": "BLACKJACK_ENABLED=false with version bump/repackage; retain updated storage validator and blackjackShoe; do not clear player saves",
+  "post_release_bookkeeping": "Receipt and final handoff updates stay local after commit; no second deployment solely for bookkeeping."
+}
