@@ -41,6 +41,18 @@ def overflow(page):
                 assert box and box['y'] >= 0 and box['y'] + box['height'] <= page.viewport_size['height'] + 1, (selector, box)
 
 
+def roulette_composition(page):
+    boxes = page.evaluate("""() => {
+      const rect = s => { const r=document.querySelector(s).getBoundingClientRect(); return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom}; };
+      return {layout:rect('.roulette-layout'),bets:rect('.roulette-console'),wheel:rect('.rou-stage')};
+    }""")
+    bets, wheel, layout = boxes['bets'], boxes['wheel'], boxes['layout']
+    assert bets['right'] <= wheel['x'] + 1, boxes
+    assert abs(bets['y'] - wheel['y']) < 1, boxes
+    assert abs(bets['height'] - wheel['height']) < 1, boxes
+    assert abs(bets['width'] / (bets['width'] + wheel['width']) - 0.6) < 0.01, boxes
+    assert bets['x'] >= layout['x'] - 1 and wheel['right'] <= layout['right'] + 1, boxes
+
 def baccarat_composition(page):
     # Requires real browser geometry; not run in the restricted IPC environment.
     page.wait_for_function("""() => {
@@ -263,6 +275,7 @@ def main():
         act(page, 'close-overlay')
         page.locator('[data-action=table][data-table=roulette]').click()
         expect(page.locator('.roulette-board')).to_be_visible()
+        roulette_composition(page)
         expect(page.locator('.rou-cell')).to_have_count(50)
         overflow(page)
         act(page, 'bet', bet='rou-number-0')
@@ -331,6 +344,7 @@ def main():
             page.locator('[data-action=table][data-table=roulette]').tap()
             expect(page.locator('.rou-cell')).to_have_count(50)
             overflow(page)
+            roulette_composition(page)
             page.locator('.roulette-screen .precise-bet summary').tap()
             page.locator('#roulette-target').select_option('rou-number-00')
             page.locator('.table-tool-dialog [data-action=bet]').tap()

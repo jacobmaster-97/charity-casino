@@ -57,3 +57,12 @@ UI Score：Readable／UX／Accessibility／Commercial／Retention／Google Play 
 ## 發布與停用
 
 0.4.0同步GitHub main與Pages，收據ROULETTE_RELEASE.json，發布後本地記帳不再部署。若輪盤阻塞，可將ROULETTE_ENABLED=false、更新快取與重封裝，只停入口；保留最新保存器／兩副牌靴／pokerTable與庫存，不清玩家資料或重帶手圖。前版0.3.1 main a0658db6f791524371ec26afd5be73244ddcfb9d供比對。
+
+
+## 0.4.1：左投注／右轉輪6:4
+
+使用者明確要求左右分隔，左投注60%、右轉輪40%，取代前述輪盤上下版。新增roulette-layout包住原下注與轉輪區，CSS Grid用minmax(0,3fr)／minmax(0,2fr)，導覽不計入兩欄，扣除間距後精確6:4；左含操作與原生面板入口，右轉輪在可用空間等比例呈現，下方放原結果／倒數／透視資訊。各螢幕維持左右；1100px以下控制分行、480px以下五色籌碼排3列兩行／功能鍵2列，44px主要操作不縮小，精準選單及放大保留。
+
+rouletteCells／fitRouletteSurface／ChipFlights仍依實際左欄容器定位，重排不重抽結果或改投注。純Game／存檔／抽獎／賠率不改；19個runtime及10張PNG保持，版本0.4.1。現有199項回歸／封裝／Pages通過；不為可逆版面新增鏡像單元測試。browser_smoke.py追加真正getBoundingClientRect的左／右順序、同行同高及0.6寬度比例檢查，桌面與七視口入口均呼叫，但只有Python語法檢查，未執行瀏覽器。遵守既有IPC限制，不重試相同受限路線。
+
+P0仍待實機看小屏主要操作可達性；P1檢查6:4及右輪大小、左格閱讀；P2觸控／原生精準面板；P3框線；P4動畫。沿上節UI Score全部UNVERIFIED，不因程式通過而補裝置分數。回復可只還原roulette-layout模板／樣式，保留現有保存器與玩家資料；結果記ROULETTE_LAYOUT_RELEASE.json。

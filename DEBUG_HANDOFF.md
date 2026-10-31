@@ -1,10 +1,16 @@
 # DEBUG_HANDOFF
 
+## 0.4.1：輪盤左右6:4
+
+使用者指定左投注60%／右轉輪40%，取代0.4.0上下版。原模板直接把轉輪及投注設為table-screen的縱向flex子項，無法形成左右欄；現以roulette-layout Grid 3fr／2fr包住，具名放左下注及控制／右輪盤與原結果。窄版控制分行、主要44px不縮，手機仍左右；原容器測量及DOM籌碼位置繼續適用。沒有重算結果、賠率、道具、計時或保存，PNG不變。
+
+現有199項回歸通過，未為可逆布局新增鏡像測試；browser_smoke.py新增實際DOM矩形6:4／順序／同高檢查，桌面及七視口呼叫，只有Python語法通過，沒有執行瀏覽器。Safari／觸控／右輪大小／小手機左欄可讀性與控制可達性仍UNVERIFIED；不重試既有HTTP／Chromium IPC。發布結果記ROULETTE_LAYOUT_RELEASE.json，本地發布後記帳不另部署。下一個可否證驗證為實機核對6:4與精準下注／放大、轉動暫停及重轉選擇。
+
 ## 0.4.0：第五桌輪盤
 
 依已確認美式雙零／50獨立投注接入第五桌，199項通過，新增27項含全50×38派彩、零號、三道具、預扣重轉／接受／超時／完整38重抽同號／只轉一次、保本後判勝敗、舊round拒絕及2,000局守恆，連同原三桌模擬共10,000局。rouletteCells對兩版印刷／籌碼位置共用資料，ChipFlights用實際DOM；相對末角逐號比對美式輪序，確保數學上球號一致。暫停剩餘時間及CSS負delay／play-state模板有檢查，沒有瀏覽器視覺證據。
 
-19個runtime、10張PNG不改、無手圖；原創輪盤／盤面SVG直接用於遊戲，不是截圖或臨時示意。browser_smoke.py補桌面下注／轉動暫停／結果／匯出及七視口精準下注／放大，僅Python語法通過，不重試舊HTTP／Chromium IPC路線。手機小格以原生精準面板及主動放大補足，實際可讀性、SVG transform、Safari、觸控／旋轉、安全區／效能仍UNVERIFIED；不能把199項當裝置通過。發布後結果記ROULETTE_RELEASE.json，本地記帳不另部署。下一個可否證檢查為實機完整下注→轉動暫停→重轉決策→結算→跨桌存檔。
+19個runtime、10張PNG不改、無手圖；原創輪盤／盤面SVG直接用於遊戲，不是截圖或臨時示意。browser_smoke.py補桌面下注／轉動暫停／結果／匯出及七視口精準下注／放大，僅Python語法通過，不重試舊HTTP／Chromium IPC路線。手機小格以原生精準面板及主動放大補足，實際可讀性、SVG transform、Safari、觸控／旋轉、安全區／效能仍UNVERIFIED；不能把199項當裝置通過。已發布main 4cea5cb4706a4652e5d5726eb3f0bbb6e79dc265，Pages run41161476045 completed/success，157檔SHA一致、26份PNG副本不改及手圖不存在已核對。結果記ROULETTE_RELEASE.json，本地發布後記帳不另部署。下一個可否證檢查為實機完整下注→轉動暫停→重轉決策→結算→跨桌存檔。
 
 ## 0.3.1：勝出對手框色
 

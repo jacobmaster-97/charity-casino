@@ -1,0 +1,32 @@
+{
+  "version": "0.4.0",
+  "repository": "jacobmaster-97/charity-casino",
+  "commit": "4cea5cb4706a4652e5d5726eb3f0bbb6e79dc265",
+  "parent": "a0658db6f791524371ec26afd5be73244ddcfb9d",
+  "tree": "1deec73b1e70ac2b95a7b11a8440fc2131f4412a",
+  "changed_files": 54,
+  "verified_files": 157,
+  "tests_passed": 199,
+  "new_roulette_tests": 27,
+  "simulation_rounds": {
+    "roulette": 2000,
+    "poker": 2000,
+    "blackjack": 2000,
+    "baccarat": 4000
+  },
+  "pages_run_id": 41161476045,
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.4.0",
+  "roulette": "American 38 pockets with distinct 0/00, 50 independent bets, 35:1 / 2:1 / 1:1, 30-second betting, five-color chips and mixed flights, original runtime SVG wheel/ball, 4.8-second spin, five-pocket exclusions, preactivated single reroll and 10-second decision, shared wallet/pause/final checkpoint",
+  "all_five_tables": "playable prototypes",
+  "runtime_pngs": 10,
+  "png_copies_unchanged": 26,
+  "runtime_files": 19,
+  "save_schema": 1,
+  "save_compatibility": "No new required fields; preserve pokerTable, both shoes and all existing item IDs. Reroll stock is shared by Sic Bo and roulette with different activation rules.",
+  "browser_device_validation": "UNVERIFIED; browser script syntax-checked only, no Safari/touch/browser execution",
+  "hand_texture": "absent in runtime and both Pages paths",
+  "rollback": "ROULETTE_ENABLED=false, version bump and repackage; keep existing save validators, both shoes, pokerTable and inventory.",
+  "post_release_bookkeeping": "Receipt and final handoff updates remain local after publication; no second deployment for bookkeeping."
+}

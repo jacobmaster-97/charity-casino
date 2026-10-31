@@ -1,4 +1,4 @@
-import {cardRank,randomBelow} from './baccarat.mjs?v=0.4.0';
+import {cardRank,randomBelow} from './baccarat.mjs?v=0.4.1';
 export const BLACKJACK_ENABLED=true;
 export const BLACKJACK_DEAL_MS=400/.7;
 export const BLACKJACK_CUT=104; // Enough cards for four hands, dealer and one replacement.

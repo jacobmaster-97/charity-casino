@@ -4,7 +4,13 @@
 
 《賭王慈善大賽》：$100起步、手上資金$25,000,000勝利、歸零失敗，計有效遊玩時間；B港式賭片美術，電腦／手機／平板。大小、百家樂、21點、德州撲克及輪盤五桌原型均已接入。
 
-最新使用者要求「下一步開發」，本輪依已確認ROULETTE.md接入第五桌美式雙零輪盤0.4.0，199項檢查通過，正在同步GitHub及Pages。新部署完成前正式前版為0.3.1 main a0658db6f791524371ec26afd5be73244ddcfb9d，Pages run41154601353 completed/success。發布後記本地ROULETTE_RELEASE.json與本檔，不為記帳另觸發部署。
+最新指示「輪盤和投注盤面分成左右兩邊，左邊投注盤面，右邊輪盤轉面，比例6:4」。0.4.1已接入左下注60%（含左下控制）／右轉輪40%，手機也保持左右；較窄時控制分行，維持精準面板與放大。輪盤Game、幾何、動畫角度、道具、資金及保存不改。199項回歸檢查通過，正在同步GitHub及Pages。新部署完成前正式前版0.4.0 main 4cea5cb4706a4652e5d5726eb3f0bbb6e79dc265、Pages run41161476045 completed/success。發布後本地記ROULETTE_LAYOUT_RELEASE.json，不為記帳另部署。
+
+## 0.4.1本輪完成
+
+- src/roulette-view.mjs只加roulette-layout容器；styles.css具名3fr／2fr、左下注與控制／右轉輪及原資訊，導覽在兩欄外。窄版控制分行，主要動作44px，沒有自動改回上下，其他桌不套此比例。
+- 使用原fitRouletteSurface量左欄、同50格座標與ChipFlights落點；轉輪等比例填右欄，暫停仍用原remaining／負delay。Game／storage及PNG不改（runtime只更新快取版本）。
+- 199項規則／保存／模板／DOM替身／幾何／封裝／Pages回歸通過，原10,000局模擬保持。browser_smoke.py加實際左／右、同高及60%寬度檢查，Python語法通過但未執行，Safari／手機／比例實機仍UNVERIFIED，不重試舊IPC路線。下一步實機看左右比例、窄版按鈕及右輪大小。
 
 ## 0.4.0本輪完成
 
