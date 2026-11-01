@@ -1,5 +1,5 @@
-import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.6.2';
-import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.6.2';
+import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.6.3';
+import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.6.3';
 const sicboEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function die(value,index,selectable=false){const pos=`${(value-1)%2*100}% ${Math.floor((value-1)/2)*50}%`;return `<${selectable?'button':'div'} ${selectable?`type="button" data-action="reroll" data-index="${index}"`:''} class="die-wrap" aria-label="第 ${index+1} 顆骰子：${value} 點${selectable?'，點選重擲':''}"><span class="die-face" style="background-position:${pos}" aria-hidden="true"></span><span>${selectable?'重擲此骰':`${value} 點`}</span></${selectable?'button':'div'}>`;}
 export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,peekIndex,boardZoom,preciseBet,mobile=false,popup=false,popupElapsed=0}){

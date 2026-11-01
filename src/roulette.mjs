@@ -1,4 +1,4 @@
-import {randomBelow} from './baccarat.mjs?v=0.6.2';
+import {randomBelow} from './baccarat.mjs?v=0.6.3';
 export const ROULETTE_ENABLED=true;
 export const ROULETTE_SPIN_MS=4800;
 export const ROULETTE_POCKETS=['0','00',...Array.from({length:36},(_,i)=>String(i+1))];

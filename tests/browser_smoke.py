@@ -35,6 +35,18 @@ def act(page, name, **attrs):
         page.locator('.mobile-table [data-action=table-tools]:visible').click()
     page.locator(selector + ':visible').first.click()
 
+def assert_wager_colors_distinct(page):
+    # Compare actual resolved colors without requiring a specific chosen hue.
+    data=page.evaluate("""() => {
+      const plate=[...document.querySelectorAll('.printed-cell text:not(.rou-cell-amount)')].map(n=>getComputedStyle(n).fill);
+      const wagers=[...document.querySelectorAll('.rou-cell-amount,.board-amounts [data-amount-bet]>text:last-of-type')].filter(n=>n.textContent.trim()).map(n=>getComputedStyle(n).fill);
+      const chips=[...document.querySelectorAll('.chip-face>b')].map(n=>({color:getComputedStyle(n).color,background:getComputedStyle(n).backgroundColor}));
+      return {plate,wagers,chips};
+    }""")
+    assert data['wagers'],data
+    assert all(color not in data['plate'] for color in data['wagers']),data
+    assert all(chip['color'] not in data['plate'] and chip['background']!='rgba(0, 0, 0, 0)' for chip in data['chips']),data
+
 def printed_text_positions(page):
     # Actual rendered positions, not template x/y attributes: catches CSS transforms.
     return page.locator('.printed-cell text:not(.rou-cell-amount)').evaluate_all("""nodes => nodes.map(n=>{const r=n.getBoundingClientRect();return {text:n.textContent,x:r.x,y:r.y,width:r.width,height:r.height};})""")
@@ -366,11 +378,13 @@ def main():
             fixed_sicbo=printed_text_positions(page)
             page.locator('[data-action=bet][data-bet=small]').tap()
             assert_printed_text_fixed(page,fixed_sicbo)
+            assert_wager_colors_distinct(page)
             expect(page.locator('.board-amounts')).to_contain_text('5')
             overflow(page)
             page.locator('[data-action=bet][data-bet=big]').scroll_into_view_if_needed()
             page.locator('[data-action=bet][data-bet=big]').tap()
             assert_printed_text_fixed(page,fixed_sicbo)
+            assert_wager_colors_distinct(page)
             expect(page.locator('.bet-list')).to_contain_text('大')
             assert page.locator('.board-scroll').evaluate('(n)=>n.scrollWidth<=n.clientWidth+1')
             assert page.locator('aside.bet-panel').count() == 0
@@ -424,6 +438,7 @@ def main():
             act(page, 'close-table-tool')
             expect(page.locator('.rou-cell[data-bet=rou-number-00]')).to_have_attribute('aria-label', re.compile('已下注'))
             assert_printed_text_fixed(page,fixed_roulette)
+            assert_wager_colors_distinct(page)
             overflow(page)
             page.screenshot(path=str(OUT / f'prototype-roulette-{width}.png'), full_page=True)
             act(page, 'board-zoom')

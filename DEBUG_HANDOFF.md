@@ -1,10 +1,15 @@
 # DEBUG_HANDOFF
 
+## 0.6.3：下注金額與盤面印刷同色（2026-11-01）
+
+來源確認大小／百家樂合計額原用暖金#f7ddb0、輪盤額#ffe3a1，與原印刷金色接近；面額原只有深綠字貼PNG。改用冷色：共用面額深藍／冰白底／青藍框，合計額亮青藍／深藍牌或描邊。沒有改資金、結果、位移、貼圖或五色外圈；純色數學對比12.37與12.64。browser_smoke.py新增getComputedStyle對比，只有語法檢查，未跑Safari／瀏覽器；237項及封裝／Pages通過，待核對GitHub發布，既有IPC／HTTP限制保持。實機小籌碼底牌／長金額仍待驗證；詳WAGER_COLORS_063.md。
+
+
 ## 0.6.2：投注後盤面文字移位（2026-11-01）
 
 輪盤截圖顯示15號文字左移；來源確定has-bet套translateX(-22%格寬)且150ms過渡。移除CSS位移、過渡及模板未再使用變數；大小原本是固定SVG／獨立籌碼層，補文字transform:none限制而不改骰面圖樣。沒有重算投注、改籌碼座標或碰資金／保存；百家樂讓位維持原樣。
 
-browser_smoke.py補真getBoundingClientRect對比，在大小多注及輪盤精準下注後等飛行完成，檢查印刷文字內容、座標及尺寸；只Python語法通過，未跑瀏覽器／Safari，不重試舊IPC／HTTP。原237項及封裝／Pages已通過，待核對GitHub發布。實機固定效果與遮擋程度仍UNVERIFIED；詳FIXED_BET_LABELS_062.md。
+browser_smoke.py補真getBoundingClientRect對比，在大小多注及輪盤精準下注後等飛行完成，檢查印刷文字內容、座標及尺寸；只Python語法通過，未跑瀏覽器／Safari，不重試舊IPC／HTTP。原237項及封裝／Pages已通過；已發布main 1870fb4bc2e7d2be2f0395ac41bb537ec296dbde，Pages run41313768889 completed/success。173檔SHA一致、46檔變更及26份PNG副本不改，手圖不存在已核對。發布後本地FIXED_BET_LABELS_RELEASE.json與交接不另部署。實機固定效果與遮擋程度仍UNVERIFIED；詳FIXED_BET_LABELS_062.md。
 
 
 ## 0.6.1：手機尺寸調整驗證邊界（2026-11-01）

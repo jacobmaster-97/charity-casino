@@ -281,3 +281,7 @@
 
 /* 0.6.2: printed Sic Bo and roulette labels stay fixed beneath chip overlays. */
 .sicbo-screen .printed-cell>text{transform:none;transition:none}
+
+/* 0.6.3: cool wager labels stay distinct from warm gold board printing. */
+.chip-face>b{color:#07324d;background:#eefbff;border:1px solid #31b6dd;border-radius:999px;padding:.08em .2em;line-height:1.05;box-shadow:0 1px 2px #00131f66}
+.rou-cell-amount{fill:#7ceaff;stroke:#071c30;stroke-width:4px;stroke-linejoin:round;paint-order:stroke fill;font-weight:800}

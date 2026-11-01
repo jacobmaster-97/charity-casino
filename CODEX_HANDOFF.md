@@ -1,8 +1,13 @@
 # CODEX_HANDOFF
 
-## 最新：0.6.2投注文字固定，待發布（2026-11-01）
+## 最新：0.6.3籌碼文字與盤面分色，待發布（2026-11-01）
 
-使用者要求大小／輪盤格名、數字與賠率不因籌碼而移位。已移除輪盤has-bet的translateX及模板--rou-text-shift，文字transform／transition設none；大小原無同類移位，補同樣固定文字限制，不影響骰面原幾何。籌碼飛行／堆疊／金額／投注高亮保持，百家樂不套用。頂欄及小窗沿0.6.1。快取更新0.6.2，規則／保存／聲效／PNG不改。237項既有檢查（含封裝及Pages）通過，待核對GitHub發布，browser_smoke.py新增真文字矩形前後比對但只語法通過；未實機或瀏覽器驗證，停用IPC／HTTP路徑保持。詳docs/FIXED_BET_LABELS_062.md。前版main7609a9725dccc5569ba38e65d3d11b5c4c2e7b03，完成發布後更新收據。
+使用者要求完全區分籌碼與盤面字色。盤面暖金保持；共用chipFace面額用深藍字／冰白底／青藍框，SVG大小及百家樂合計額改亮青藍字／深藍牌／青藍框，輪盤合計額用亮青藍＋深藍描邊。五色外圈、面額資料、籌碼落點／飛行／混色堆疊及0.6.2盤面固定不改。CSS與SVG顯示層，無新PNG或遊戲資料變更，快取0.6.3。純色對比12.37:1／12.64:1；原237項（含封裝／Pages）通過，待核對GitHub發布。browser_smoke.py新增實際色值區別但只語法驗證；Safari／實機小字仍UNVERIFIED，不重試IPC／HTTP。詳docs/WAGER_COLORS_063.md。前版main1870fb4bc2e7d2be2f0395ac41bb537ec296dbde，發布後更新收據。
+
+
+## 最新：0.6.2投注文字固定已發布（2026-11-01）
+
+使用者要求大小／輪盤格名、數字與賠率不因籌碼而移位。已移除輪盤has-bet的translateX及模板--rou-text-shift，文字transform／transition設none；大小原無同類移位，補同樣固定文字限制，不影響骰面原幾何。籌碼飛行／堆疊／金額／投注高亮保持，百家樂不套用。頂欄及小窗沿0.6.1。快取更新0.6.2，規則／保存／聲效／PNG不改。237項既有檢查（含封裝及Pages）通過，browser_smoke.py新增真文字矩形前後比對但只語法通過；未實機或瀏覽器驗證，停用IPC／HTTP路徑保持。詳docs/FIXED_BET_LABELS_062.md。前版main7609a9725dccc5569ba38e65d3d11b5c4c2e7b03；已發布main 1870fb4bc2e7d2be2f0395ac41bb537ec296dbde，tree 6ac4aef39fa3cd1cd7b26e256c3e86c5a416c1bc，Pages run41313768889 completed/success。173檔SHA一致、46檔變更、26份PNG副本不改及手圖不存在已核對。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.6.2 。發布後本地FIXED_BET_LABELS_RELEASE.json及交接只作收據，不另部署。
 
 
 ## 最新：0.6.1手機頂欄／彈窗尺寸已發布（2026-11-01）

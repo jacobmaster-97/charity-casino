@@ -1,0 +1,20 @@
+{
+  "version": "0.6.2",
+  "status": "published_pages_success",
+  "repository": "jacobmaster-97/charity-casino",
+  "commit": "1870fb4bc2e7d2be2f0395ac41bb537ec296dbde",
+  "tree": "6ac4aef39fa3cd1cd7b26e256c3e86c5a416c1bc",
+  "parent": "7609a9725dccc5569ba38e65d3d11b5c4c2e7b03",
+  "pages_run": 41313768889,
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.6.2",
+  "checks": 237,
+  "verified_files": 173,
+  "changed_files": 46,
+  "unchanged_png_copies": 26,
+  "change": "Fixed Sic Bo and roulette printed label positions; retained chip overlays and animations",
+  "browser_smoke": "Python syntax only; rendered geometry checks not executed",
+  "real_mobile_safari": "UNVERIFIED",
+  "post_release_record_only": true
+}
