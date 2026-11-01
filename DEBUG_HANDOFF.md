@@ -1,8 +1,15 @@
 # DEBUG_HANDOFF
 
+## 0.6.2：投注後盤面文字移位（2026-11-01）
+
+輪盤截圖顯示15號文字左移；來源確定has-bet套translateX(-22%格寬)且150ms過渡。移除CSS位移、過渡及模板未再使用變數；大小原本是固定SVG／獨立籌碼層，補文字transform:none限制而不改骰面圖樣。沒有重算投注、改籌碼座標或碰資金／保存；百家樂讓位維持原樣。
+
+browser_smoke.py補真getBoundingClientRect對比，在大小多注及輪盤精準下注後等飛行完成，檢查印刷文字內容、座標及尺寸；只Python語法通過，未跑瀏覽器／Safari，不重試舊IPC／HTTP。原237項及封裝／Pages已通過，待核對GitHub發布。實機固定效果與遮擋程度仍UNVERIFIED；詳FIXED_BET_LABELS_062.md。
+
+
 ## 0.6.1：手機尺寸調整驗證邊界（2026-11-01）
 
-依新使用者指示，頂欄實際flex/min/max高度及按鍵由44→35.2px，高選擇器避免舊pause-button最低高度擋住；文字14–16px。小窗transform1.2，先用反比約束未縮放寬／最高，遮罩跟新頂欄高度。這是顯示層調整，不修／更改Game、聲效、重擲／重轉或保存。browser_smoke.py補真實矩形比例及邊界，但目前只Python語法檢查；既有HTTP／Chromium IPC限制持續，不重試，Safari實際排版與觸控仍UNVERIFIED。原237項及封裝／Pages已通過，待發布head核對；發布後另更新本地收據。詳MOBILE_TABLES_061.md。
+依新使用者指示，頂欄實際flex/min/max高度及按鍵由44→35.2px，高選擇器避免舊pause-button最低高度擋住；文字14–16px。小窗transform1.2，先用反比約束未縮放寬／最高，遮罩跟新頂欄高度。這是顯示層調整，不修／更改Game、聲效、重擲／重轉或保存。browser_smoke.py補真實矩形比例及邊界，但目前只Python語法檢查；既有HTTP／Chromium IPC限制持續，不重試，Safari實際排版與觸控仍UNVERIFIED。原237項及封裝／Pages已通過；已發布main 7609a9725dccc5569ba38e65d3d11b5c4c2e7b03，Pages run41312983501 completed/success，171檔SHA一致、46檔變更及26份PNG副本不改、手圖不存在已核對。MOBILE_SIZING_RELEASE.json與發布後本地交接不另部署。詳MOBILE_TABLES_061.md。
 
 
 ## 0.6.0：手機三桌實裝與驗證邊界（2026-11-01）

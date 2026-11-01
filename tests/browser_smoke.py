@@ -35,6 +35,19 @@ def act(page, name, **attrs):
         page.locator('.mobile-table [data-action=table-tools]:visible').click()
     page.locator(selector + ':visible').first.click()
 
+def printed_text_positions(page):
+    # Actual rendered positions, not template x/y attributes: catches CSS transforms.
+    return page.locator('.printed-cell text:not(.rou-cell-amount)').evaluate_all("""nodes => nodes.map(n=>{const r=n.getBoundingClientRect();return {text:n.textContent,x:r.x,y:r.y,width:r.width,height:r.height};})""")
+
+def assert_printed_text_fixed(page, before):
+    expect(page.locator('.flying-chip')).to_have_count(0,timeout=3000)
+    after=printed_text_positions(page)
+    assert len(before)==len(after)
+    for first,last in zip(before,after):
+        assert first['text']==last['text']
+        for key in ['x','y','width','height']:
+            assert abs(first[key]-last[key])<.25,(first,last)
+
 def mobile_size_composition(page):
     # Real transformed DOM geometry; only executed on an enabled browser host.
     if not page.locator('.mobile-table').count():
@@ -350,11 +363,14 @@ def main():
             page.screenshot(path=str(OUT / f'prototype-lobby-{width}.png'), full_page=True)
             page.locator('[data-action=table][data-table=sicbo]').tap()
             expect(page.locator('.printed-cell')).to_have_count(50)
+            fixed_sicbo=printed_text_positions(page)
             page.locator('[data-action=bet][data-bet=small]').tap()
+            assert_printed_text_fixed(page,fixed_sicbo)
             expect(page.locator('.board-amounts')).to_contain_text('5')
             overflow(page)
             page.locator('[data-action=bet][data-bet=big]').scroll_into_view_if_needed()
             page.locator('[data-action=bet][data-bet=big]').tap()
+            assert_printed_text_fixed(page,fixed_sicbo)
             expect(page.locator('.bet-list')).to_contain_text('大')
             assert page.locator('.board-scroll').evaluate('(n)=>n.scrollWidth<=n.clientWidth+1')
             assert page.locator('aside.bet-panel').count() == 0
@@ -399,6 +415,7 @@ def main():
             expect(page.locator('.rou-cell')).to_have_count(50)
             overflow(page)
             roulette_composition(page)
+            fixed_roulette=printed_text_positions(page)
             if page.locator('.mobile-table').count():
                 act(page, 'table-tools')
             page.locator('.precise-bet summary:visible').tap()
@@ -406,6 +423,7 @@ def main():
             page.locator('.table-tool-dialog [data-action=bet]').tap()
             act(page, 'close-table-tool')
             expect(page.locator('.rou-cell[data-bet=rou-number-00]')).to_have_attribute('aria-label', re.compile('已下注'))
+            assert_printed_text_fixed(page,fixed_roulette)
             overflow(page)
             page.screenshot(path=str(OUT / f'prototype-roulette-{width}.png'), full_page=True)
             act(page, 'board-zoom')
