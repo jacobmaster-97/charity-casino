@@ -1,4 +1,4 @@
-import {ROULETTE_SPIN_MS,ROULETTE_BET_MAP,drawRoulette,rouletteExclusions,rouletteSpin} from './roulette.mjs?v=0.6.0';
+import {ROULETTE_SPIN_MS,ROULETTE_BET_MAP,drawRoulette,rouletteExclusions,rouletteSpin} from './roulette.mjs?v=0.6.1';
 // These methods run on Game, sharing its only wallet, inventory, clock and checkpoints.
 export const rouletteMethods={
  newRouletteRound(){const previous=this.round?.kind==='roulette'?this.round.spin||this.round.rest:null;this.rouletteRoundSerial=(this.rouletteRoundSerial||0)+1;this.round={kind:'roulette',id:this.rouletteRoundSerial,phase:'betting',bankAtStart:this.profile.bank,bets:{},remaining:30000,used:null,peek:null,result:null,outcome:drawRoulette(this.randomIndex),visibleOutcome:null,spin:null,rest:previous,rerolls:0,readyToSettle:false};return true;},

@@ -35,7 +35,24 @@ def act(page, name, **attrs):
         page.locator('.mobile-table [data-action=table-tools]:visible').click()
     page.locator(selector + ':visible').first.click()
 
+def mobile_size_composition(page):
+    # Real transformed DOM geometry; only executed on an enabled browser host.
+    if not page.locator('.mobile-table').count():
+        return
+    hud = page.locator('.mobile-hud').bounding_box()
+    assert hud and abs(hud['height'] - 35.2) < .2, hud
+    for node in page.locator('.mobile-hud button').all():
+        assert abs(node.bounding_box()['height'] - 35.2) < .2
+    popup = page.locator('.mobile-reveal-dialog')
+    if popup.count() and popup.is_visible():
+        sizes = popup.evaluate("""n => {const b=n.getBoundingClientRect(), a=n.closest('.mobile-reveal-layer').getBoundingClientRect();return {width:b.width,height:b.height,layoutWidth:n.offsetWidth,layoutHeight:n.offsetHeight,left:b.left,right:b.right,top:b.top,bottom:b.bottom,areaLeft:a.left,areaRight:a.right,areaTop:a.top,areaBottom:a.bottom};}""")
+        assert abs(sizes['width'] / sizes['layoutWidth'] - 1.2) < .015, sizes
+        assert abs(sizes['height'] / sizes['layoutHeight'] - 1.2) < .015, sizes
+        assert sizes['left'] >= sizes['areaLeft'] - 1 and sizes['right'] <= sizes['areaRight'] + 1, sizes
+        assert sizes['top'] >= sizes['areaTop'] - 1 and sizes['bottom'] <= sizes['areaBottom'] + 1, sizes
+
 def overflow(page):
+    mobile_size_composition(page)
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
     if page.locator('.table-shell').count() and not page.locator('.board-scroll.is-zoomed').count():
         assert page.evaluate('document.documentElement.scrollHeight <= window.innerHeight + 1')
@@ -354,6 +371,7 @@ def main():
                 act(page, 'bet', bet='small')
                 act(page, 'roll')
                 expect(page.locator('.mobile-reveal-dialog')).to_be_visible()
+                mobile_size_composition(page)
                 act(page, 'pause')
                 clock=page.locator('#elapsed').inner_text()
                 page.wait_for_timeout(500)
@@ -398,6 +416,7 @@ def main():
                 act(page, 'bet', bet='rou-red')
                 act(page, 'roll')
                 expect(page.locator('.mobile-reveal-dialog')).to_be_visible()
+                mobile_size_composition(page)
                 act(page, 'pause')
                 clock=page.locator('#elapsed').inner_text()
                 page.wait_for_timeout(500)

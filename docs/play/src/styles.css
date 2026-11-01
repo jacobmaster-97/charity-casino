@@ -266,3 +266,15 @@
 }
 
 .mobile-table .printed-cell.mobile-paid .cell-bg{fill:#b5924444;stroke:#ffe5a3;stroke-width:4}
+
+/* 0.6.1: requested 20% shorter mobile header and 20% larger reveal window. */
+.table-shell.mobile-table{--mobile-hud-height:35.2px;--mobile-popup-scale:1.2}
+.table-shell.mobile-table>.mobile-hud{flex:0 0 var(--mobile-hud-height);height:var(--mobile-hud-height);min-height:var(--mobile-hud-height);max-height:var(--mobile-hud-height)}
+.table-shell.mobile-table>.mobile-hud button{height:var(--mobile-hud-height);min-height:var(--mobile-hud-height);padding:2px 4px;font-size:14px;line-height:1.1}
+.mobile-hud .mobile-table-title{font-size:16px}
+.mobile-hud #bank-value{font-size:14.4px}
+.mobile-hud #elapsed,.mobile-hud .mobile-round-stake,.mobile-hud #countdown{font-size:14px;line-height:1.2}
+.mobile-reveal-layer{top:calc(var(--mobile-hud-height,44px) + 8px + env(safe-area-inset-top,0px))}
+/* Clamp the unscaled box first, so its scaled rectangle stays inside the layer.
+   Scaling the complete window retains the wheel geometry and enlarges controls too. */
+.mobile-reveal-dialog{width:min(520px,calc(100% / var(--mobile-popup-scale,1.2)));max-height:calc(100% / var(--mobile-popup-scale,1.2));transform:scale(var(--mobile-popup-scale,1.2));transform-origin:center}

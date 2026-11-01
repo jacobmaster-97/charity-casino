@@ -1,6 +1,6 @@
-import {ROULETTE_WHEEL,ROULETTE_BETS,ROULETTE_BET_MAP,rouletteColor,rouletteCells} from './roulette.mjs?v=0.6.0';
-import {chipFace,chipColorIndex} from './board.mjs?v=0.6.0';
-import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.6.0';
+import {ROULETTE_WHEEL,ROULETTE_BETS,ROULETTE_BET_MAP,rouletteColor,rouletteCells} from './roulette.mjs?v=0.6.1';
+import {chipFace,chipColorIndex} from './board.mjs?v=0.6.1';
+import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.6.1';
 const rouletteEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const roulettePoint=(radius,angle)=>({x:200+radius*Math.sin(angle*Math.PI/180),y:200-radius*Math.cos(angle*Math.PI/180)});
 function rouletteWheel(r,paused){

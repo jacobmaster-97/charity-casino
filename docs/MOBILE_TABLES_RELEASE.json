@@ -1,0 +1,21 @@
+{
+  "version": "0.6.0",
+  "status": "published_pages_success",
+  "repository": "jacobmaster-97/charity-casino",
+  "commit": "4d57dee90b2aa8e6f092fb9fb214bc3868f6f315",
+  "tree": "1e282a937219146134e218a50e1eab2a6c69d46f",
+  "parent": "90b2f88f55ac09f3efa79e306f365b2bdb86adad",
+  "pages_run": 41224588739,
+  "pages_status": "completed",
+  "pages_conclusion": "success",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.6.0",
+  "checks": 237,
+  "verified_files": 169,
+  "changed_files": 55,
+  "unchanged_png_copies": 26,
+  "runtime_files": 21,
+  "browser_smoke": "Python syntax only; not executed",
+  "real_mobile_safari": "UNVERIFIED",
+  "save_schema": 1,
+  "post_release_record_only": true
+}

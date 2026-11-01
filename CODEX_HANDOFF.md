@@ -1,10 +1,35 @@
 # CODEX_HANDOFF
 
-## 最新：0.6.0手機三桌已實作，等待發布驗證（2026-11-01）
+## 最新：0.6.1手機頂欄／彈窗尺寸調整，待發布（2026-11-01）
+
+使用者要求頂欄縮矮20%並配合文字、動畫小窗放大20%。只改手機三桌CSS：頂欄44→35.2px，標題16／資金14.4／其他14px；搖骰及輪盤小窗transform1.2，未縮放寬高先反向限制，保持安全區與螢幕邊界。遮罩上沿跟新頂欄高度，底部控制不縮。Game／計時／保存／動畫原進度不改，所有快取0.6.1。237項既有檢查（含封裝及Pages）全部通過，待核對GitHub發布。browser_smoke.py新增真DOM比例檢查但只語法通過，Safari／觸控／實際矩形未驗證，不重試舊IPC／HTTP。35.2px頂欄低於一般44px為使用者明確要求取捨，不需再確認。詳docs/MOBILE_TABLES_061.md。前版main4d57dee90b2aa8e6f092fb9fb214bc3868f6f315，發布後更新收據。宣傳圖v5另留預覽，本輪不換圖或部署宣傳素材。
+
+
+## 最新：港漫宣傳圖v5女性曲線調整（2026-11-01）
+
+使用者要求增添兩位女性角色身材曲線；已以image_gen在v4基礎調整成年女性腰臀輪廓與合身皮褸剪裁，保留前方男主角、港漫筆觸、三角構圖、無文字及16:9。交付docs/previews/promotion-hk-manhua-v5/charity-casino-manhua-1920x1080.png，尺寸／PNG解碼通過，來源SHA記assets.json，原始生成圖保留。只改宣傳圖預覽，正式遊戲未改／未部署。下一步待使用者確認人物比例。
+
+
+## 最新：港漫宣傳圖v4後方兩人改為女性（2026-11-01）
+
+使用者要求後方兩名人物改為女性；已用image_gen將v3兩位站姿男子改成兩位成年女性，左短髮紅皮褸持籌碼、右長髮酒紅皮褸持牌。保留前方坐姿男主角、港漫筆觸、三角構圖、維港、三骰盅、輪盤、五色籌碼及無文字。交付docs/previews/promotion-hk-manhua-v4/charity-casino-manhua-1920x1080.png，尺寸及PNG解碼通過；原始生成圖留存，assets.json記SHA。只修改宣傳圖預覽，正式遊戲未變／未部署。下一步待使用者確認此人物版本。
+
+
+## 最新：人物改為港式漫畫宣傳圖v3（2026-11-01）
+
+使用者上載三張經典港產賭片海報要求替換三位人物與構圖，先生成前坐姿主角＋後方兩名紅皮褸男性的三角海報v2，後再指示以《龍虎門》《中華英雄》《風雲》等港漫繪畫人物。已用image_gen重繪為粗墨線／硬朗成人五官／重黑明暗及排線的原創三男，保留港景、三骰盅、輪盤與籌碼。最新交付docs/previews/promotion-hk-manhua-v3/charity-casino-manhua-1920x1080.png，維持無文字16:9；尺寸及PNG解碼通過，原圖留存，來源SHA記assets.json。屬宣傳圖預覽，不更換正式遊戲人物、玩法或部署。下一步等待使用者評閱畫風，不自行加文字。
+
+
+## 最新：無文字港式宣傳圖（2026-11-01）
+
+依使用者要求製作16:9無文字宣傳圖，沿用B港式賭片卡通大廳作風格參考，image_gen原創人物／豪華樓梯／翠綠枱布／三骰骰盅／輪盤／五色籌碼。交付docs/previews/promotion-hk-v1/charity-casino-promo-1920x1080.png，1920×1080尺寸及PNG解碼通過；raw-generated.png留原始生成圖，assets.json記來源與SHA。未加入文字、未更換正式素材、未部署，遊戲仍0.6.0。下一步由使用者決定是否調整構圖或後續加標題，不自行加入字樣。
+
+
+## 最新：0.6.0手機三桌已發布（2026-11-01）
 
 使用者已直接授權實裝大小／百家樂手機版，並改手機輪盤為鎖注後轉輪小窗。完成：大小移出sicbo-view.mjs而保持正式50格；手機大小／輪盤下注時無常駐動畫區，鎖注／有注到期依原Game進度開窗，重擲／重轉10秒仍在窗內。結果只讀停留1400ms或按回盤面，保留原唯一派彩／保存。百家樂手機一體32:68，卡牌按容器量尺寸、換牌／咪牌與旁注保持。合併頂列，更多原生dialog搬原控制，窄版分行且主按鍵44px；一般桌面／平板保留原大小上下／輪盤6:4，21點／德州不套新樣式。
 
-驗證目標237項（原223＋11手機流程＋3更多dialog），含原10,000局模擬、聲效24與封裝／Pages；23MB單檔與根／docs 21runtime同步，10張PNG不改、無手圖。browser_smoke.py補四小橫向尺寸及真小窗／暫停／更多路徑，僅Python語法檢查；未用瀏覽器或Safari，不重試舊HTTP／IPC。小格、極短高度、鍵盤、安全區、實機觸控／旋轉及聲效仍UNVERIFIED。詳docs/MOBILE_TABLES_060.md。回退首選MOBILE_TABLES_ENABLED=false＋更新快取封裝，勿清保存。發布前版main90b2f88f55ac09f3efa79e306f365b2bdb86adad，準備從該版以guarded ref發布；待核對新main及Pages成功後更新此節。
+237項檢查已通過（原223＋11手機流程＋3更多dialog），含原10,000局模擬、聲效24與封裝／Pages；23MB單檔與根／docs 21runtime同步，10張PNG不改、無手圖。browser_smoke.py補四小橫向尺寸及真小窗／暫停／更多路徑，僅Python語法檢查；未用瀏覽器或Safari，不重試舊HTTP／IPC。小格、極短高度、鍵盤、安全區、實機觸控／旋轉及聲效仍UNVERIFIED。詳docs/MOBILE_TABLES_060.md。回退首選MOBILE_TABLES_ENABLED=false＋更新快取封裝，勿清保存。發布前版main90b2f88f55ac09f3efa79e306f365b2bdb86adad，準備從該版以guarded ref發布；已發布main 4d57dee90b2aa8e6f092fb9fb214bc3868f6f315，tree 1e282a937219146134e218a50e1eab2a6c69d46f；Pages run41224588739 completed/success。169發布檔SHA一致、55檔變更、26份PNG副本不改及手圖不存在已核對。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.6.0 。發布後MOBILE_TABLES_RELEASE.json與本地交接只作收據，不另部署。
 
 
 ## 最新：大小搖骰GIF預覽（2026-10-31）

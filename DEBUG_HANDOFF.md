@@ -1,12 +1,17 @@
 # DEBUG_HANDOFF
 
+## 0.6.1：手機尺寸調整驗證邊界（2026-11-01）
+
+依新使用者指示，頂欄實際flex/min/max高度及按鍵由44→35.2px，高選擇器避免舊pause-button最低高度擋住；文字14–16px。小窗transform1.2，先用反比約束未縮放寬／最高，遮罩跟新頂欄高度。這是顯示層調整，不修／更改Game、聲效、重擲／重轉或保存。browser_smoke.py補真實矩形比例及邊界，但目前只Python語法檢查；既有HTTP／Chromium IPC限制持續，不重試，Safari實際排版與觸控仍UNVERIFIED。原237項及封裝／Pages已通過，待發布head核對；發布後另更新本地收據。詳MOBILE_TABLES_061.md。
+
+
 ## 0.6.0：手機三桌實裝與驗證邊界（2026-11-01）
 
 根因／對策：常駐大小骰盅及輪盤右欄壓縮手機投注空間，已依使用者新指示只在鎖注後用真Game狀態開窗。只讀MobileRoundReveal保留1400ms終局展示、暫停及旋轉生命週期；重擲／重轉10秒仍交由Game，空注不假開獎。較窄控制列分行、不靠縮字，百家樂32:68並改善第三張與換牌容器尺寸。native更多dialog需先還原整個工具列才另開明細，已補三項生命週期檢查。
 
 封裝曾捕捉新大小視圖escape與app名稱重複，專有命名後完整重跑；沒有改玩法修這個打包問題。另確認暫停遮罩z10高於動態小窗z9，原生工具在動畫／暫停前關閉。11項手機流程檢查含空注、10秒重擲／重轉、唯讀／唯一保存、恢復進度、旋轉及破產Game停止計分後仍可結束展示，不依賴額外Game計時器。
 
-既有HTTP／Chromium IPC路徑繼續停用，沒有實機或瀏覽器能力，故未宣稱Safari／觸控／實際排版通過。browser_smoke.py只語法檢查。小格需放大／精準，極短高度、安全區、鍵盤及多狀態仍UNVERIFIED，音訊硬體輸出仍沿0.5.1待使用者回報。發布前待完整檢查／根與docs同步及GitHub Pages新head驗證；詳MOBILE_TABLES_060.md。
+既有HTTP／Chromium IPC路徑繼續停用，沒有實機或瀏覽器能力，故未宣稱Safari／觸控／實際排版通過。browser_smoke.py只語法檢查。小格需放大／精準，極短高度、安全區、鍵盤及多狀態仍UNVERIFIED，音訊硬體輸出仍沿0.5.1待使用者回報。237項檢查及根／docs同步已通過；已發布main 4d57dee90b2aa8e6f092fb9fb214bc3868f6f315，Pages run41224588739 completed/success。169檔SHA一致、55檔變更及26份PNG不改，手圖不存在；發布後本地收據MOBILE_TABLES_RELEASE.json與交接不另部署。詳MOBILE_TABLES_060.md。
 
 
 ## 最新：GIF僅離線輸出（2026-10-31）
