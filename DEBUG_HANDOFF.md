@@ -1,10 +1,40 @@
 # DEBUG_HANDOFF
 
+## 0.8.0：獲使用者GitHub發布授權（2026-11-02）
+
+此次只發布已完成的新挑戰，並非重開排行榜開發。遠端main與預期0.7.1一致，GitHub連接器可讀Git物件；沿既有create_tree／create_commit／expected_sha更新ref流程，不讀取或索取認證權杖。保留既知HTTP／Chromium IPC停止重試限制，Safari／裝置缺口不因GitHub部署成功變為已驗證。發布前核對完整本機驗證及Pages，發布後記唯一commit與對應Pages run，不為事後收據另觸發部署。
+
+## 0.8.0：本機五分鐘截止、精度及驗證邊界（2026-11-02）
+
+第一階段現已實作，取代下方「本機尚未實裝」記錄。舊tick排除shop、GOAL／schema1只支援舊挑戰，單純換倒數文字不能完成新規則。已在原Game新增challenge分支、唯一closing／輸入屏障與最終保存，網頁入口明確啟用；舊引擎路徑僅供相容回歸。
+
+截止邊界假設：先expire再扣本段round.remaining會把截止前時間扣進新鎖注動畫。最小反證為有投注、只剩100ms的挑戰tick100後，揭盅動畫必須仍900ms；現先耗原階段時間再expire，回歸通過。分牌收尾假設：只比phase會把同為bj-player的下一手誤判無進展；改比較phase／activeHand／turnId，多手各停牌並唯一結算通過。到時原咪牌、重擲、換牌、輪盤及德州選擇都按原超時預設，不重抽、不另派彩。既有牌局動畫繼續到完成，全球時間固定300000ms。
+
+金額以整數美分的安全Number／BigInt操作，所有派彩、保本、AI籌碼、邊池及JSON對帳精確。首次大額德州保存測試用JSON字串比較把相同值不同鍵順序誤判，已改deepEqual，未放寬金額驗證。一次性HTML檢查最初誤找buy-前綴，實際正式按鍵為data-action=buy；修正檢查定位後商店四購買及結果五行／標籤平衡通過，無對應產品缺陷。
+
+最終npm run verify及verify:pages共281項通過（272＋3＋6），含500次混合五分鐘、10,000局原回歸及大額實際德州／視圖。根與docs的23 runtime SHA同步；十張runtime原PNG／單檔嵌入／Pages一致。能與0.7.1上傳快照對比的11張public PNG一致，另7張非runtime舊素材無該快照，未聲稱全18張有比較證據。細節見docs/LOCAL_FIVE_MINUTE_VALIDATION.json。
+
+未執行真瀏覽器、Safari、觸控、聲效輸出、原生背景／BFCache或實際畫面矩形。app事件測試是Node VM＋DOM替身，browser_smoke.py只語法檢查；不要把它們列為實機通過。遵守既有HTTP EPERM及Chromium IPC／crashpad路徑停止重試限制，本輪沒有啟動該路徑。主要未驗風險是極短橫屏／鍵盤、商店及結果長金額、音訊與原生生命週期。下一最小驗證是可用Safari實機走一局、暫停／回前景及300秒收尾，無需再重跑相同沙箱失敗。
+
+本輪僅本機0.8.0及封裝，未部署，遠端0.7.1保持；未接排行榜或雲端。本階段到此停止，後續需依使用者另行指示。
+
+## 提示詞交付邊界（2026-11-02）
+
+本輪僅整理docs/DEVELOPMENT_PROMPTS.md兩份未執行提示詞；未實裝本機五分鐘或Cloudflare。執行順序已明確為先本機後排行榜。提示詞保留基本防護選擇及金額精度／完成局保存／收尾的必要檢查，未加入全程後端。只核對文件一致性，未跑遊戲或雲端測試，舊256項不是新玩法證據。
+
+
+## 五分鐘精簡排行榜：使用者已選基本防護（2026-11-02）
+
+只更新文件。已選完場只上傳名稱／金額，接受基本防護；不採短暫伺服器牌局、計時／派彩權威或完整流水。欄位／精度檢查、參數化SQL、安全顯示、限流與重試去重是現行範圍；不能據此宣稱能驗證真實金額／有效五分鐘。前端hash或CAPTCHA亦不構成遊玩證明。不要再要求用戶批准已未選用的完整驗證。詳FIVE_MINUTE_LEADERBOARD_PLAN.md與LEADERBOARD_ANTICHEAT_OPTIONS.md。
+
+購物／大廳照計，手動／背景停錶。現Game GOAL/status、shop tick、schema1金額精度與本機到時收尾仍待實裝。正式0.7.1與既有HTTP／Chromium IPC停止重試限制保持，未執行新測試。
+
+
 ## 0.7.1：牌型隱藏／公共牌偏低／主畫面過長（2026-11-02）
 
 根因假設及最小反證：0.7.0手機CSS隱藏自己標籤所有span，故牌型消失；新增專用pk-hand-hint與已知兩對／等待／棄牌的真renderer檢查。公共牌固定bottom82px，故高螢幕也靠下；改量測上三對手底牌與投注的最下沿，留8px，手牌前留10px，新增可用帶及短屏恢復檢查。主頁舊min-height＋長表單及大廳窄版按鈕逐列造成文件過長；改可視高度、收合次要項並以圖片／入座鍵同場景縮放，新增比例／未解碼fallback檢查。
 
-一次性解析home/lobby模板，抓住場景包裝必須在底列前結束，已核對五個入座鍵在場景內、底列在外及所有標籤平衡。新增共5項，完整256項含封裝及Pages全部通過。browser_smoke新增真DOM牌型／上下距離／主畫面頁高路徑，但只Python語法，未執行。Safari、實際單屏可見性／安全區／鍵盤／長金額仍UNVERIFIED；沿用停止重試HTTP／Chromium IPC路徑。詳POKER_READABILITY_071.md；可回main 58b6be2114e0bef5002637b40c8d0450742be7b5，不清保存。
+一次性解析home/lobby模板，抓住場景包裝必須在底列前結束，已核對五個入座鍵在場景內、底列在外及所有標籤平衡。新增共5項，完整256項含封裝及Pages全部通過。browser_smoke新增真DOM牌型／上下距離／主畫面頁高路徑，但只Python語法，未執行。Safari、實際單屏可見性／安全區／鍵盤／長金額仍UNVERIFIED；沿用停止重試HTTP／Chromium IPC路徑。已發布main 690c6f02aaa194431fb7c263061d3ad17ee574d0，Pages run41389811878 completed/success；180檔SHA一致、49檔變更及26份PNG副本不改，無手圖。發布後收據／交接不另部署。詳POKER_READABILITY_071.md；可回main 58b6be2114e0bef5002637b40c8d0450742be7b5，不清保存。
 
 
 ## 0.7.0：德州無頭像手機圍桌實裝（2026-11-02）

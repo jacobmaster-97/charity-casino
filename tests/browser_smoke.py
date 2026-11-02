@@ -168,7 +168,7 @@ def main():
         act(page, 'shop')
         before = page.locator('#elapsed').inner_text()
         page.wait_for_timeout(1100)
-        assert page.locator('#elapsed').inner_text() == before
+        assert page.locator('#elapsed').inner_text() != before  # Shopping consumes challenge time.
         for item in ['protect', 'peek', 'reroll']:
             act(page, 'buy', item=item)
         expect(page.locator('#bank-value')).to_have_text('$72.90')
@@ -199,6 +199,9 @@ def main():
             act(page, 'export')
         downloaded = info.value
         snapshot = json.loads(Path(downloaded.path()).read_text())
+        assert snapshot['schema'] == 2
+        assert snapshot['profile']['ruleset'] == 'five-minute-v1'
+        assert snapshot['profile']['stats']['sicbo']['rounds'] == 1
         assert snapshot['profile']['rounds'] == 1
         assert snapshot['profile']['inventory']['reroll'] == 0
         assert snapshot['profile']['bank'] == 7790
@@ -227,7 +230,8 @@ def main():
         # This path verifies the live chip controls without a gameplay debug API.
         act(page, 'saves')
         rich = json.loads(json.dumps(snapshot))
-        rich['profile']['bank'] = 100000000  # $1,000,000
+        rich['profile']['stats']['sicbo']['net'] += 100000000-rich['profile']['bank']
+        rich['profile']['bank'] = 100000000  # Synthetic balanced ledger, $1,000,000
         page.locator('#import-file').set_input_files({'name':'rich.json','mimeType':'application/json','buffer':json.dumps(rich).encode()})
         act(page, 'table')
         large = page.locator('[data-action=chip][data-chip="10000000"]')
@@ -252,6 +256,7 @@ def main():
         act(page, 'leave')
         act(page, 'saves')
         squeeze_save = json.loads(json.dumps(snapshot))
+        squeeze_save['profile']['stats']['sicbo']['net'] += 10000-squeeze_save['profile']['bank']
         squeeze_save['profile']['bank'] = 10000
         initial = [0, 1, 2, 3, 5, 6]
         squeeze_save['baccaratShoe'] = {'cards': initial + [n for n in range(416) if n not in initial], 'cursor': 0, 'cycle': 1}
@@ -298,6 +303,7 @@ def main():
         # Blackjack: deterministic split + double through the normal saved-shoe import.
         act(page, 'saves')
         bj_save = json.loads(json.dumps(bac_snapshot))
+        bj_save['profile']['stats']['sicbo']['net'] += 10000-bj_save['profile']['bank']
         bj_save['profile']['bank'] = 10000
         bj_first = [7, 9, 20, 6, 2, 3, 61]
         bj_save['blackjackShoe'] = {'cards': bj_first + [n for n in range(312) if n not in bj_first], 'cursor': 0, 'cycle': 1}
@@ -518,6 +524,19 @@ def main():
                 if page.locator('.pk-result').count():
                     break
                 page.wait_for_timeout(300)
+            # Completed challenge fixture exercises the real result DOM on each viewport.
+            result_save=json.loads(json.dumps(snapshot))
+            result_save['profile'].update({'elapsedMs':300000,'status':'finished','endReason':'timeout'})
+            result_page=mobile.new_page()
+            result_page.goto(URL)
+            result_page.locator('#import-file').set_input_files({'name':'finished.json','mimeType':'application/json','buffer':json.dumps(result_save).encode()})
+            expect(result_page.locator('.challenge-result-modal')).to_be_visible()
+            expect(result_page.locator('[data-stat-table]')).to_have_count(5)
+            overflow(result_page)
+            for action in result_page.locator('.challenge-result-actions button').all():
+                box=action.bounding_box()
+                assert box['height']>=43.9 and box['y']>=0 and box['y']+box['height']<=height+1
+            result_page.screenshot(path=str(OUT / f'prototype-challenge-result-{width}.png'),full_page=True)
             mobile.close()
         assert errors == [], errors
         browser.close()

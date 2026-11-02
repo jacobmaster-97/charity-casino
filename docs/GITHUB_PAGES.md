@@ -2,6 +2,8 @@
 
 ## 本輪狀態
 
+2026-11-02：使用者已另行授權發布0.8.0本機五分鐘挑戰至原倉庫main及既有Pages。準備從0.7.1提交690c6f02aaa194431fb7c263061d3ad17ee574d0，以expected_sha保護更新；保留未改的資產及存檔，源碼與docs/play的23個runtime一同發布。281項本機檢查及封裝證據見LOCAL_FIVE_MINUTE_VALIDATION.json，裝置仍未驗證。發布後的commit／Pages結果見LOCAL_FIVE_MINUTE_RELEASE.json及最新交接；下列早期版本記錄保留為歷史。
+
 目前已啟用Pages，建置40895801619確認實際從main根目錄發布。0.1.1已同時支援根目錄及/docs兩種布局，圖像路徑修正見ASSET_PATH_FIX.md。
 
 使用者要求將遊戲上載GitHub以便即時存取。已連接帳號`jacobmaster-97`，使用者已指定專用倉庫 https://github.com/jacobmaster-97/charity-casino 。已上載至main，保留原有初始提交。內容提交：`5f9b8e08d42ed3cb45e4a68ff09557f4359750da`；76檔遠端blob SHA全部吻合，收據見GITHUB_UPLOAD.json。

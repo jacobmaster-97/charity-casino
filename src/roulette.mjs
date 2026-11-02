@@ -1,4 +1,5 @@
-import {randomBelow} from './baccarat.mjs?v=0.7.1';
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.8.0';
+import {randomBelow} from './baccarat.mjs?v=0.8.0';
 export const ROULETTE_ENABLED=true;
 export const ROULETTE_SPIN_MS=4800;
 export const ROULETTE_POCKETS=['0','00',...Array.from({length:36},(_,i)=>String(i+1))];
@@ -20,8 +21,8 @@ export function rouletteExclusions(outcome,randomIndex=randomBelow){
 }
 export function settleRouletteRound(bets,outcome,protectedRound=false){
  if(!ROULETTE_POCKETS.includes(outcome))throw new Error('無效輪盤號碼');let stake=0,returned=0;
- const lines=Object.entries(bets).map(([id,amount])=>{const b=ROULETTE_BET_MAP[id];if(!b||!Number.isSafeInteger(amount)||amount<=0)throw new Error('無效輪盤投注');const win=b.pockets.includes(outcome),rate=win?b.rate:-1,payout=win?amount*(b.rate+1):0;stake+=amount;returned+=payout;return {id,amount,rate,payout,net:payout-amount};});
- const refund=protectedRound&&returned<stake?Math.floor((stake-returned)/2):0;return {stake,returned,refund,net:returned+refund-stake,lines,outcome};
+ const lines=Object.entries(bets).map(([id,amount])=>{const b=ROULETTE_BET_MAP[id];if(!b||!isCash(amount)||amount<=0)throw new Error('無效輪盤投注');const win=b.pockets.includes(outcome),rate=win?b.rate:-1,payout=win?cashRatio(amount,b.rate+1):0;stake=cashAdd(stake,amount);returned=cashAdd(returned,payout);return {id,amount,rate,payout,net:cashSub(payout,amount)};});
+ const refund=protectedRound&&returned<stake?cashRatio(cashSub(stake,returned),1,2):0;return {stake,returned,refund,net:cashSub(cashAdd(returned,refund),stake),lines,outcome};
 }
 const rouletteModulo=n=>(n%360+360)%360;
 export function rouletteSpin(outcome,previous=null){

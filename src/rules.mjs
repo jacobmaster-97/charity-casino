@@ -1,14 +1,17 @@
+import {cashAdd,cashSub,cashRatio,isCash,cashShortRatio,cashMoney} from './cash.mjs?v=0.8.0';
 export const GOAL = 2_500_000_000; // cents; $25,000,000
 const CHIP_DENOMINATIONS = [1,5,10,25,100,500,1000,5000,10000,50000,100000,500000,1000000,5000000,10000000].map(dollars=>dollars*100);
 export function getChipDenominations(bankCents) {
-  if(!Number.isSafeInteger(bankCents)||bankCents<0)throw new Error('無效資金');
+  if(!isCash(bankCents)||bankCents<0)throw new Error('無效資金');
   const affordable=CHIP_DENOMINATIONS.filter(amount=>amount<=bankCents);
   return affordable.length>=5 ? affordable.slice(-5) : CHIP_DENOMINATIONS.slice(0,5);
 }
 export function chipLabel(cents) {
-  if(cents>=1_000_000_000)return `$${cents/1_000_000_000}千萬`;
-  if(cents>=1_000_000)return `$${cents/1_000_000}萬`;
-  if(cents>=100_000)return `$${cents/100_000}千`;
+  if(cents>=1000000000000000){const digits=String(cents);return `$${digits[0]}.${digits.slice(1,3).padEnd(2,'0')}e${digits.length-3}`;}
+
+  if(cents>=1_000_000_000)return `$${cashShortRatio(cents,1_000_000_000)}千萬`;
+  if(cents>=1_000_000)return `$${cashShortRatio(cents,1_000_000)}萬`;
+  if(cents>=100_000)return `$${cashShortRatio(cents,100_000)}千`;
   return money(cents);
 }
 export const ITEM_IDS = ['protect', 'peek', 'reroll', 'swap'];
@@ -46,18 +49,18 @@ export function netRate(id, dice) {
 export function settleBets(bets, dice, protectedRound=false) {
   let stake=0, returned=0;
   const lines=Object.entries(bets).map(([id,amount])=>{
-    if(!Number.isSafeInteger(amount)||amount<=0) throw new Error('無效下注金額');
-    const rate=netRate(id,dice), payout=rate<0?0:amount*(rate+1);
-    stake+=amount; returned+=payout;
-    return {id,amount,rate,payout,net:payout-amount};
+    if(!isCash(amount)||amount<=0) throw new Error('無效下注金額');
+    const rate=netRate(id,dice), payout=rate<0?0:cashRatio(amount,rate+1);
+    stake=cashAdd(stake,amount); returned=cashAdd(returned,payout);
+    return {id,amount,rate,payout,net:cashSub(payout,amount)};
   });
-  const refund=protectedRound&&returned<stake ? Math.floor((stake-returned)/2):0;
-  return {stake,returned,refund,net:returned+refund-stake,lines};
+  const refund=protectedRound&&returned<stake ? cashRatio(cashSub(stake,returned),1,2):0;
+  return {stake,returned,refund,net:cashSub(cashAdd(returned,refund),stake),lines};
 }
 export function randomDie() {
   const data=new Uint32Array(1);
   do { globalThis.crypto.getRandomValues(data); } while(data[0]>=4_294_967_292);
   return data[0]%6+1;
 }
-export const money=cents=>new Intl.NumberFormat('zh-HK',{style:'currency',currency:'USD',currencyDisplay:'narrowSymbol',minimumFractionDigits:cents%100?2:0,maximumFractionDigits:2}).format(cents/100);
+export const money=cashMoney;
 export const duration=ms=>{const s=Math.floor(ms/1000);return `${Math.floor(s/3600).toString().padStart(2,'0')}:${Math.floor(s/60%60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;};

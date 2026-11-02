@@ -15,3 +15,7 @@
 - 0.7.0使用者「可實裝畫面」已批准德州手機橫向無頭像v2；已接現有六人Game及TablePanels，加注面板不暫停、不另保存。詳docs/POKER_MOBILE_070.md；過去只預覽的限制已被本次批准取代。桌面與直向保留舊德州布局。
 
 - 0.7.1依最新回饋補回自己牌型，以對手／手牌間可用帶放公共牌；首頁及大廳單屏、次要項收合。第3點主畫面範圍按已說明假設實作，非另行確定新規則。詳docs/POKER_READABILITY_071.md；保存／AI／計時未改。
+
+- 0.8.0已依使用者正式執行第一階段，僅本機五分鐘挑戰／五桌統計／精確金額及獨立新存檔；入口Game({challenge:true})，舊schema1相容路徑僅供保留／回歸。詳docs/LOCAL_FIVE_MINUTE_080.md。本輪不部署GitHub或建立Cloudflare，完成後停止，不自行開始提示詞二。
+
+- 後續使用者明確要求「將新版發佈到GitHub」，已授權發布0.8.0至原jacobmaster-97/charity-casino main及既有Pages，取代上一輪不發布邊界；仍不開發排行榜、不建立Cloudflare或其他服務。

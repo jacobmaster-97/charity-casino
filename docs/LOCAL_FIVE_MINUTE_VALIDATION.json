@@ -1,0 +1,104 @@
+{
+  "version": "0.8.0",
+  "scope": "local-only five-minute challenge",
+  "recorded_at_utc": "2026-11-02T15:51:06.562430+00:00",
+  "checks": {
+    "npm_run_verify": "PASS",
+    "unit_and_component_tests": 272,
+    "standalone_package_tests": 3,
+    "npm_run_verify_pages": "PASS",
+    "pages_tests": 6,
+    "total_tests_passed": 281,
+    "tests_failed": 0,
+    "mixed_five_minute_sessions": 500,
+    "existing_simulated_rounds": 10000,
+    "browser_smoke_python_compile": "PASS",
+    "template_html_parse": {
+      "home": "PASS",
+      "lobby": "PASS",
+      "shop": "PASS (four buy buttons)",
+      "result": "PASS (five table rows)"
+    },
+    "app_event_tests": "Node VM with DOM/event doubles; not a browser"
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 23647638,
+    "sha256": "58d170b64eb72eab0555b53230c588c15093afaf178c0c12a9b2a299b699a636"
+  },
+  "pages_runtime": {
+    "file_count": 23,
+    "source_sha_match": true,
+    "entry_path": "docs/index.html",
+    "entry_sha256": "d1539a84f6db443f667c7f7bcc539af57ea0847d331a44fb5ba425e3902e6279"
+  },
+  "runtime_pngs": [
+    {
+      "path": "public/art/baccarat-b/cards.png",
+      "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd"
+    },
+    {
+      "path": "public/art/prototype-b/dice.png",
+      "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b"
+    },
+    {
+      "path": "public/art/prototype-b/dome.png",
+      "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca"
+    },
+    {
+      "path": "public/art/prototype-b/props.png",
+      "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf"
+    },
+    {
+      "path": "public/art/prototype-b/table.png",
+      "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chip.png",
+      "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chips-five.png",
+      "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/dice.png",
+      "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d"
+    },
+    {
+      "path": "public/art/sicbo-board-b/felt.png",
+      "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9"
+    },
+    {
+      "path": "public/art/styles/b/lobby-populated-v4.png",
+      "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f"
+    }
+  ],
+  "public_pngs_matching_available_071_snapshot": 11,
+  "other_original_pngs_without_071_comparison": 7,
+  "removed_hand_image_absent": true,
+  "save_contract": {
+    "schema": 2,
+    "ruleset": "five-minute-v1",
+    "prefix": "charity-casino-five-minute-v2",
+    "legacy_prefix_retained": "charity-casino-prototype-v1",
+    "restore_elapsed_time": true,
+    "persists_midhand": false
+  },
+  "unverified": [
+    "Actual browser rendering and whole-page scroll",
+    "iPad Safari / phone landscape / tablet / desktop device testing",
+    "Touch, keyboard and safe area",
+    "Native background / BFCache lifecycle",
+    "Audio hardware playback",
+    "Extreme-amount layout and device performance"
+  ],
+  "not_executed": [
+    "Browser smoke runtime",
+    "Local HTTP / Chromium IPC retry",
+    "GitHub upload or Pages deployment",
+    "Cloudflare / Supabase / leaderboard or online API"
+  ],
+  "remote_release_unchanged": "0.7.1",
+  "historical_github_upload_snapshot": "dist/github-upload remains 0.7.1; not the 0.8.0 local artifact"
+}

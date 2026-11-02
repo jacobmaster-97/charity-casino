@@ -1,0 +1,31 @@
+{
+  "version": "0.7.1",
+  "date": "2026-11-02",
+  "repository": "jacobmaster-97/charity-casino",
+  "base_commit": "58b6be2114e0bef5002637b40c8d0450742be7b5",
+  "commit": "690c6f02aaa194431fb7c263061d3ad17ee574d0",
+  "tree": "c31d14957fd27d3c7d7c0112340b0637dcd332b6",
+  "pages": {
+    "run_id": 41389811878,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41389811878"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.7.1",
+  "prepared_files_verified": 180,
+  "changed_files": 49,
+  "unchanged_png_copies": 26,
+  "hand_graphic_present": false,
+  "checks": {
+    "unit": 247,
+    "package": 3,
+    "pages": 6,
+    "total": 256,
+    "main_templates": "balanced; five station buttons inside map scene; footer outside",
+    "browser_smoke": "Python syntax only",
+    "safari_device": "UNVERIFIED"
+  },
+  "scope": "Own-hand hint restored; community centered higher between measured clearances; home/story/lobby fit to usable viewport with secondary controls folded",
+  "main_screen_scope": "Optional clarification pending; implemented home, lobby and poker as stated assumption",
+  "bookkeeping": "Post-release receipt and handoff changes remain local; no second deployment."
+}

@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.7.1';
+import {baccaratBoardMarkup} from './board.mjs?v=0.8.0';
 // Move existing secondary controls into a native dialog; gameplay keeps its clock.
 export class TablePanels{
  constructor(root){this.root=root;this.selection='';this.dialog=null;this.detail=null;this.marker=null;this.tools=null;this.toolsMarker=null;}

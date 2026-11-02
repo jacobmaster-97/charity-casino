@@ -1,3 +1,4 @@
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.8.0';
 // Cards are unique IDs 0..415 (eight decks); a round never reshuffles revealed information.
 export const BACCARAT_ENABLED=true;
 export const BACCARAT_DEAL_MS=400/.7;
@@ -25,12 +26,12 @@ export function completeBaccaratHand(initial,draw){
  const playerTotal=baccaratPoints(player),bankerTotal=baccaratPoints(banker),winner=playerTotal===bankerTotal?'tie':playerTotal>bankerTotal?'player':'banker';return {player,banker,playerTotal,bankerTotal,winner,natural,supplements};
 }
 export function settleBaccaratBet(bets,hand,protectedRound=false){
- const entries=Object.entries(bets);if(entries.length!==1)throw new Error('百家樂每局只押一項');const [id,amount]=entries[0];if(!BACCARAT_BETS.some(b=>b.id===id)||!Number.isSafeInteger(amount)||amount<=0)throw new Error('無效百家樂投注');
+ const entries=Object.entries(bets);if(entries.length!==1)throw new Error('百家樂每局只押一項');const [id,amount]=entries[0];if(!BACCARAT_BETS.some(b=>b.id===id)||!isCash(amount)||amount<=0)throw new Error('無效百家樂投注');
  const win=id==='bac-'+hand.winner,push=hand.winner==='tie'&&id!=='bac-tie';
  // Win credit is rounded down to the cent; no accumulated commission debt.
- const profit=win?(id==='bac-banker'?Math.floor(amount*95/100):id==='bac-tie'?amount*8:amount):0;
- const returned=win?amount+profit:push?amount:0,refund=protectedRound&&returned<amount?Math.floor((amount-returned)/2):0;
- return {stake:amount,returned,refund,commission:win&&id==='bac-banker'?amount-profit:0,net:returned+refund-amount,winner:hand.winner,playerTotal:hand.playerTotal,bankerTotal:hand.bankerTotal,lines:[{id,amount,rate:win?BACCARAT_BET_MAP[id].rate:push?0:-1,payout:returned,net:returned-amount}]};
+ const profit=win?(id==='bac-banker'?cashRatio(amount,95,100):id==='bac-tie'?cashRatio(amount,8):amount):0;
+ const returned=win?cashAdd(amount,profit):push?amount:0,refund=protectedRound&&returned<amount?cashRatio(cashSub(amount,returned),1,2):0;
+ return {stake:amount,returned,refund,commission:win&&id==='bac-banker'?cashSub(amount,profit):0,net:cashSub(cashAdd(returned,refund),amount),winner:hand.winner,playerTotal:hand.playerTotal,bankerTotal:hand.bankerTotal,lines:[{id,amount,rate:win?BACCARAT_BET_MAP[id].rate:push?0:-1,payout:returned,net:cashSub(returned,amount)}]};
 }
 
 export function baccaratSideRate(id,hand){
@@ -44,7 +45,7 @@ export function settleBaccaratRound(bets,hand,protectedRound=false){
  const mains=Object.fromEntries(entries.filter(([id])=>BACCARAT_BETS.some(b=>b.id===id)));
  const main=Object.keys(mains).length?settleBaccaratBet(mains,hand):{stake:0,returned:0,commission:0,lines:[]};
  let stake=main.stake,returned=main.returned;const lines=[...main.lines];
- for(const [id,amount] of entries){if(Object.hasOwn(mains,id))continue;if(!BACCARAT_SIDEBETS.some(b=>b.id===id)||!Number.isSafeInteger(amount)||amount<=0)throw new Error('無效旁注金額');const rate=baccaratSideRate(id,hand),payout=rate<0?0:amount*(rate+1);stake+=amount;returned+=payout;lines.push({id,amount,rate,payout,net:payout-amount});}
- const refund=protectedRound&&returned<stake?Math.floor((stake-returned)/2):0;
- return {stake,returned,refund,commission:main.commission,net:returned+refund-stake,winner:hand.winner,playerTotal:hand.playerTotal,bankerTotal:hand.bankerTotal,lines};
+ for(const [id,amount] of entries){if(Object.hasOwn(mains,id))continue;if(!BACCARAT_SIDEBETS.some(b=>b.id===id)||!isCash(amount)||amount<=0)throw new Error('無效旁注金額');const rate=baccaratSideRate(id,hand),payout=rate<0?0:cashRatio(amount,rate+1);stake=cashAdd(stake,amount);returned=cashAdd(returned,payout);lines.push({id,amount,rate,payout,net:cashSub(payout,amount)});}
+ const refund=protectedRound&&returned<stake?cashRatio(cashSub(stake,returned),1,2):0;
+ return {stake,returned,refund,commission:main.commission,net:cashSub(cashAdd(returned,refund),stake),winner:hand.winner,playerTotal:hand.playerTotal,bankerTotal:hand.bankerTotal,lines};
 }

@@ -1,4 +1,5 @@
-import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.7.1';
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.8.0';
+import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.8.0';
 const blackjackHand=(id,bet,cards=[],fromSplit=false,splitA=false)=>({id,bet,cards,fromSplit,splitA,swapped:false,actions:0,doubled:false,status:'playing'});
 // These methods run on Game: one owner for funds, timers, items and checkpoints.
 export const blackjackMethods={
@@ -6,11 +7,11 @@ export const blackjackMethods={
    if(!this.blackjackShoe||312-this.blackjackShoe.cursor<BLACKJACK_CUT)this.blackjackShoe=makeBlackjackShoe(this.randomIndex,(this.blackjackShoe?.cycle||0)+1);
    this.round={kind:'blackjack',phase:'betting',bankAtStart:this.profile.bank,bets:{},remaining:20000,used:null,peek:null,result:null,hands:[],dealer:[],dealerShown:false,dealerChecked:false,activeHand:0,insurance:0,originalBet:0,acesSplit:false,nextHandId:1,discard:[],readyToSettle:false,preserveActionMs:null,lastDeal:null};return true;
  },
- addBlackjackBet(id,amount){if(!this.canBet||id!=='bj-main'||!Number.isSafeInteger(amount)||amount<=0||amount>this.available||amount<100&&!(this.profile.bank<100&&this.stake===0&&amount===this.profile.bank))return false;this.round.bets[id]=(this.round.bets[id]||0)+amount;return true;},
+ addBlackjackBet(id,amount){if(!this.canBet||id!=='bj-main'||!isCash(amount)||amount<=0||amount>this.available||amount<100&&!(this.profile.bank<100&&this.stake===0&&amount===this.profile.bank))return false;this.round.bets[id]=cashAdd(this.round.bets[id]||0,amount);return true;},
  drawBlackjackCard(){if(this.blackjackShoe.cursor>=312)throw new Error('21點牌靴已耗盡');return this.blackjackShoe.cards[this.blackjackShoe.cursor++];},
  lockBlackjack(){
    if(!this.canBet)return false;if(!this.stake){this.newBlackjackRound();return 'skipped';}
-   const r=this.round;r.originalBet=this.stake;this.profile.bank-=r.originalBet;r.hands=[blackjackHand('bj-main',r.originalBet)];
+   const r=this.round;r.originalBet=this.stake;this.profile.bank=cashSub(this.profile.bank,r.originalBet);r.hands=[blackjackHand('bj-main',r.originalBet)];
    this.queueBlackjackAnimation([{side:'player',handId:'bj-main'},{side:'dealer'},{side:'player',handId:'bj-main'},{side:'dealer'}],'initial',null,'bj-dealing');return true;
  },
  queueBlackjackAnimation(events,after,preserve=null,phase='bj-animating'){
@@ -29,8 +30,8 @@ export const blackjackMethods={
    else if(after==='dealer')this.continueBlackjackDealer();return true;
  },
  chooseBlackjackInsurance(amount=0){
-   const r=this.round;if(this.paused||r?.phase!=='bj-insurance'||!Number.isSafeInteger(amount)||amount<0||amount>Math.floor(r.originalBet/2)||amount>this.profile.bank)return false;
-   r.insurance=amount;if(amount){this.profile.bank-=amount;r.bets['bj-insurance']=amount;}this.checkBlackjackOpening();return amount?{betAdded:{id:'bj-insurance',amount}}:true;
+   const r=this.round;if(!this.acceptsActions||this.paused||r?.phase!=='bj-insurance'||!isCash(amount)||amount<0||amount>cashRatio(r.originalBet,1,2)||amount>this.profile.bank)return false;
+   r.insurance=amount;if(amount){this.profile.bank=cashSub(this.profile.bank,amount);r.bets['bj-insurance']=amount;}this.checkBlackjackOpening();return amount?{betAdded:{id:'bj-insurance',amount}}:true;
  },
  checkBlackjackOpening(){
    const r=this.round;r.dealerChecked=true;r.dealerBlackjack=blackjackNatural(r.dealer);for(const h of r.hands)if(blackjackHandNatural(h))h.status='blackjack';
@@ -52,9 +53,9 @@ export const blackjackMethods={
    const r=this.round,h=r.hands[r.activeHand];
    if(action==='stand'||action==='surrender'){h.status=action==='stand'?'stood':'surrendered';h.actions++;r.activeHand++;this.enterBlackjackPlayer();return true;}
    if(action==='hit'){h.actions++;this.queueBlackjackAnimation([{side:'player',handId:h.id}],'player');return true;}
-   if(action==='double'){const amount=h.bet;this.profile.bank-=amount;h.bet+=amount;r.bets[h.id]=h.bet;h.actions++;h.doubled=true;this.queueBlackjackAnimation([{side:'player',handId:h.id}],'player');return {betAdded:{id:h.id,amount}};}
+   if(action==='double'){const amount=h.bet;this.profile.bank=cashSub(this.profile.bank,amount);h.bet=cashAdd(h.bet,amount);r.bets[h.id]=h.bet;h.actions++;h.doubled=true;this.queueBlackjackAnimation([{side:'player',handId:h.id}],'player');return {betAdded:{id:h.id,amount}};}
    const splitA=blackjackCardValue(h.cards[0])===1,id='bj-hand-'+r.nextHandId++,amount=h.bet;
-   this.profile.bank-=amount;r.bets[id]=amount;if(splitA)r.acesSplit=true;
+   this.profile.bank=cashSub(this.profile.bank,amount);r.bets[id]=amount;if(splitA)r.acesSplit=true;
    const left=blackjackHand(h.id,amount,[h.cards[0]],true,splitA),right=blackjackHand(id,amount,[h.cards[1]],true,splitA);r.hands.splice(r.activeHand,1,left,right);
    this.queueBlackjackAnimation([{side:'player',handId:left.id},{side:'player',handId:right.id}],'split');return {betAdded:{id,amount}};
  },

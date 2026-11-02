@@ -1,4 +1,5 @@
-import {randomBelow} from './baccarat.mjs?v=0.7.1';
+import {cashAdd,cashSub,cashRatio,cashMin,cashMax,isCash,cashCompare,cashFraction} from './cash.mjs?v=0.8.0';
+import {randomBelow} from './baccarat.mjs?v=0.8.0';
 export const POKER_ENABLED=true;
 export const POKER_NAMES=['阿豪','嘉欣','龍哥','小曼','阿傑','秀姐','阿森','樂怡','志強','美玲'];
 export const POKER_STYLES=['穩健','進取','鬆手','善變','謹慎'];
@@ -19,40 +20,40 @@ export function pokerBest(cards){
 }
 export function pokerBlinds(bank){const big=bank<100?Math.max(1,bank):bank<100000?100:bank<1000000?1000:bank<10000000?10000:bank<100000000?100000:1000000;return {small:Math.max(1,Math.floor(big/2)),big};}
 export const pokerDifficulty=bank=>bank<100000?0:bank<10000000?1:2;
-export function validatePokerTable(t){
+export function validatePokerTable(t,{extended=false}={}){
  if(!t||!Number.isInteger(t.button)||t.button<0||t.button>5||!['normal','fast'].includes(t.speed)||!Number.isSafeInteger(t.nextId)||t.nextId<6||t.nextId>1e8||!Array.isArray(t.seats)||t.seats.length!==5)throw new Error('德州桌資料無效');
- const seats=t.seats.map(s=>{if(!s||!Number.isSafeInteger(s.id)||s.id<1||s.id>=t.nextId||!Number.isSafeInteger(s.stack)||s.stack<0||s.stack>1e12||!Number.isInteger(s.style)||s.style<0||s.style>=5)throw new Error('德州對手資料無效');return {id:s.id,stack:s.stack,style:s.style};});
+ const seats=t.seats.map(s=>{if(!s||!Number.isSafeInteger(s.id)||s.id<1||s.id>=t.nextId||!isCash(s.stack)||s.stack<0||!extended&&s.stack>1e12||!Number.isInteger(s.style)||s.style<0||s.style>=5)throw new Error('德州對手資料無效');return {id:s.id,stack:s.stack,style:s.style};});
  if(new Set(seats.map(s=>s.id)).size!==5)throw new Error('德州對手重複');return {button:t.button,speed:t.speed,nextId:t.nextId,seats};
 }
 export function pokerOptions(game,seat=0){
- const r=game.round,p=r?.players?.[seat],live=game.screen==='table'&&!game.paused&&r?.kind==='poker',turn=live&&r.actor===seat&&['poker-player','poker-ai'].includes(r.phase)&&!p.folded&&p.stack>0;
- if(!p)return {turn:false};const call=Math.max(0,r.currentBet-p.street),maxTo=p.street+p.stack,minTo=r.currentBet+(r.currentBet?r.lastFullRaise:r.blinds.big),opponent=r.players.some((q,i)=>i!==seat&&!q.folded&&q.stack>0);
- const reopen=!p.hasActed||r.currentBet-p.lastActedBet>=r.lastFullRaise,raise=!!(turn&&opponent&&reopen&&maxTo>r.currentBet);
- return {turn:!!turn,call:Math.min(call,p.stack),owed:call,check:!!(turn&&!call),fold:!!turn,raise,minTo,maxTo,allIn:!!(turn&&(maxTo<=r.currentBet||raise)),protect:!!(live&&!r.used&&game.profile.inventory.protect>0&&(r.phase==='poker-ready'||turn&&seat===0&&!r.playerHasActed)),peek:!!(live&&turn&&seat===0&&!r.used&&game.profile.inventory.peek>0&&r.players.some((q,i)=>i>0&&!q.folded)),swap:!!(live&&turn&&seat===0&&!r.used&&game.profile.inventory.swap>0&&!r.playerHasActed&&r.streetIndex===0)};
+ const r=game.round,p=r?.players?.[seat],live=game.screen==='table'&&!game.paused&&game.acceptsActions!==false&&r?.kind==='poker',turn=live&&r.actor===seat&&['poker-player','poker-ai'].includes(r.phase)&&!p.folded&&p.stack>0;
+ if(!p)return {turn:false};const call=cashMax(0,cashSub(r.currentBet,p.street)),maxTo=cashAdd(p.street,p.stack),minTo=cashAdd(r.currentBet,r.currentBet?r.lastFullRaise:r.blinds.big),opponent=r.players.some((q,i)=>i!==seat&&!q.folded&&q.stack>0);
+ const reopen=!p.hasActed||cashSub(r.currentBet,p.lastActedBet)>=r.lastFullRaise,raise=!!(turn&&opponent&&reopen&&maxTo>r.currentBet);
+ return {turn:!!turn,call:cashMin(call,p.stack),owed:call,check:!!(turn&&!call),fold:!!turn,raise,minTo,maxTo,allIn:!!(turn&&(maxTo<=r.currentBet||raise)),protect:!!(live&&!r.used&&game.profile.inventory.protect>0&&(r.phase==='poker-ready'||turn&&seat===0&&!r.playerHasActed)),peek:!!(live&&turn&&seat===0&&!r.used&&game.profile.inventory.peek>0&&r.players.some((q,i)=>i>0&&!q.folded)),swap:!!(live&&turn&&seat===0&&!r.used&&game.profile.inventory.swap>0&&!r.playerHasActed&&r.streetIndex===0)};
 }
 export function pokerPotLayers(players){
- if(!Array.isArray(players)||players.length!==6||players.some(p=>!Number.isSafeInteger(p.total)||p.total<0))throw new Error('無效彩池投入');
- const levels=[...new Set(players.map(p=>p.total).filter(v=>v>0))].sort((a,b)=>a-b);let previous=0;
- return levels.map(level=>{const contributors=players.map((p,i)=>p.total>=level?i:-1).filter(i=>i>=0),amount=(level-previous)*contributors.length;previous=level;return {amount,contributors,eligible:contributors.filter(i=>!players[i].folded),uncalled:contributors.length===1};});
+ if(!Array.isArray(players)||players.length!==6||players.some(p=>!isCash(p.total)||p.total<0))throw new Error('無效彩池投入');
+ const levels=[...new Set(players.map(p=>p.total).filter(v=>v>0))].sort(cashCompare);let previous=0;
+ return levels.map(level=>{const contributors=players.map((p,i)=>p.total>=level?i:-1).filter(i=>i>=0),amount=cashRatio(cashSub(level,previous),contributors.length);previous=level;return {amount,contributors,eligible:contributors.filter(i=>!players[i].folded),uncalled:contributors.length===1};});
 }
 export function pokerPots(players,board,button){
- if(!Array.isArray(players)||players.length!==6||players.some(p=>!Number.isSafeInteger(p.total)||p.total<0))throw new Error('無效彩池投入');
+ if(!Array.isArray(players)||players.length!==6||players.some(p=>!isCash(p.total)||p.total<0))throw new Error('無效彩池投入');
  const alive=players.map((p,i)=>p.folded?-1:i).filter(i=>i>=0);if(!alive.length)throw new Error('沒有有效玩家');
  const scores=alive.length===1?null:players.map(p=>p.folded?null:pokerBest([...p.cards,...board]));
  const payouts=Array(6).fill(0),pots=[];
  for(const layer of pokerPotLayers(players)){const {contributors,amount,eligible,uncalled}=layer;let winners;
    if(uncalled)winners=contributors;else if(alive.length===1)winners=alive;else{if(!eligible.length)throw new Error('邊池無合資格玩家');const high=Math.max(...eligible.map(i=>scores[i].score));winners=eligible.filter(i=>scores[i].score===high);}
-   winners.sort((a,b)=>((a-button+5)%6)-((b-button+5)%6));const share=Math.floor(amount/winners.length),remainder=amount%winners.length;const shares=winners.map((seat,j)=>({seat,amount:share+(j<remainder?1:0)}));for(const s of shares)payouts[s.seat]+=s.amount;pots.push({amount,eligible,winners:[...winners],shares,uncalled});
+   winners.sort((a,b)=>((a-button+5)%6)-((b-button+5)%6));const share=cashRatio(amount,1,winners.length),remainder=Number(BigInt(amount)%BigInt(winners.length));const shares=winners.map((seat,j)=>({seat,amount:cashAdd(share,j<remainder?1:0)}));for(const s of shares)payouts[s.seat]=cashAdd(payouts[s.seat],s.amount);pots.push({amount,eligible,winners:[...winners],shares,uncalled});
  }
- return {pots,payouts,scores,total:players.reduce((n,p)=>n+p.total,0)};
+ return {pots,payouts,scores,total:players.reduce((n,p)=>cashAdd(n,p.total),0)};
 }
-export function settlePokerRound(r){const distribution=pokerPots(r.players,r.board,r.button),stake=r.players[0].total,returned=distribution.payouts[0],refund=r.used==='protect'&&returned<stake?Math.floor((stake-returned)/2):0;return {...distribution,stake,returned,refund,net:returned+refund-stake,lines:distribution.pots.map((p,i)=>({id:'pot-'+i,amount:p.amount,payout:p.shares.find(s=>s.seat===0)?.amount||0}))};}
+export function settlePokerRound(r){const distribution=pokerPots(r.players,r.board,r.button),stake=r.players[0].total,returned=distribution.payouts[0],refund=r.used==='protect'&&returned<stake?cashRatio(cashSub(stake,returned),1,2):0;return {...distribution,stake,returned,refund,net:cashSub(cashAdd(returned,refund),stake),lines:distribution.pots.map((p,i)=>({id:'pot-'+i,amount:p.amount,payout:p.shares.find(s=>s.seat===0)?.amount||0}))};}
 // Only receives the actor's cards and public information. No opponent hole cards or future deck.
 export function pokerAI({cards,board,options,pot,big,style,difficulty,randomIndex=randomBelow}){
  const roll=randomIndex(1000)/1000,ranks=cards.map(pokerRank).sort((a,b)=>b-a),pair=ranks[0]===ranks[1];
  let strength=board.length>=3?Math.min(.98,.20+pokerBest([...cards,...board]).category*.14+ranks[0]/140):pair?.48+ranks[0]/35:(ranks[0]+ranks[1])/45+(Math.floor(cards[0]/13)===Math.floor(cards[1]/13)?.08:0)-(ranks[0]-ranks[1]>4?.08:0);
- strength=Math.max(.02,Math.min(.98,strength+(randomIndex(1000)/1000-.5)*[.5,.24,.08][difficulty]));const loose=[0,.08,.17,.04,-.06][style],bluff=difficulty===0?.025:difficulty===1?.07:.12,price=options.call/Math.max(1,pot+options.call),tolerance=.24+strength*.55+loose+difficulty*.02;
+ strength=Math.max(.02,Math.min(.98,strength+(randomIndex(1000)/1000-.5)*[.5,.24,.08][difficulty]));const loose=[0,.08,.17,.04,-.06][style],bluff=difficulty===0?.025:difficulty===1?.07:.12,price=cashFraction(options.call,cashMax(1,cashAdd(pot,options.call))),tolerance=.24+strength*.55+loose+difficulty*.02;
  if(options.call&&roll>tolerance&&strength<price+.48-difficulty*.04)return {action:'fold'};
- if(options.raise&&(strength>.62&&roll<.18+strength*.25+loose||roll<bluff)){const to=Math.min(options.maxTo,options.minTo+Math.floor(pot*.5/big)*big);return {action:'raise',to};}
+ if(options.raise&&(strength>.62&&roll<.18+strength*.25+loose||roll<bluff)){const to=cashMin(options.maxTo,cashAdd(options.minTo,cashRatio(cashRatio(pot,1,2*big),big)));return {action:'raise',to};}
  return {action:options.check?'check':'call'};
 }

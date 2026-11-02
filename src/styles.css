@@ -458,14 +458,14 @@
  .home .field-note{margin-bottom:4px}
 }
 .game-shell.lobby-shell{height:var(--game-viewport-height,100dvh);min-height:0;display:flex;flex-direction:column;gap:4px;padding:4px max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));overflow:hidden}
-.lobby-shell>.hud{height:44px;min-height:44px;flex:0 0 44px;padding:0;flex-wrap:nowrap;gap:12px}
-.lobby-shell>.hud .brand{font-size:16px;min-width:0}
-.lobby-shell>.hud .brand small{display:none}
-.lobby-shell>.hud .seal{width:32px;height:32px;font-size:22px}
-.lobby-shell>.hud .hud-stat{order:0;flex:1;min-width:0;padding:0;background:none}
-.lobby-shell>.hud .hud-stat>span{display:block;margin:0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lobby-shell>.hud .hud-stat strong{font-size:18px;white-space:nowrap}
-.lobby-shell>.hud .pause-button{min-height:44px;height:44px;padding:4px 8px;font-size:16px}
+:is(.lobby-shell,.shop-shell)>.hud{height:44px;min-height:44px;flex:0 0 44px;padding:0;flex-wrap:nowrap;gap:12px}
+:is(.lobby-shell,.shop-shell)>.hud .brand{font-size:16px;min-width:0}
+:is(.lobby-shell,.shop-shell)>.hud .brand small{display:none}
+:is(.lobby-shell,.shop-shell)>.hud .seal{width:32px;height:32px;font-size:22px}
+:is(.lobby-shell,.shop-shell)>.hud .hud-stat{order:0;flex:1;min-width:0;padding:0;background:none}
+:is(.lobby-shell,.shop-shell)>.hud .hud-stat>span{display:block;margin:0;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+:is(.lobby-shell,.shop-shell)>.hud .hud-stat strong{font-size:18px;white-space:nowrap}
+:is(.lobby-shell,.shop-shell)>.hud .pause-button{min-height:44px;height:44px;padding:4px 8px;font-size:16px}
 .lobby-shell>.lobby{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;gap:4px;overflow:hidden}
 .lobby-shell .section-heading{position:absolute;z-index:2;left:8px;right:8px;top:4px;min-height:44px;margin:0;align-items:center;gap:8px;pointer-events:none}
 .lobby-shell .section-heading>button{pointer-events:auto;min-height:44px;height:44px;padding:4px 8px;font-size:16px;background:#17271ff2}
@@ -489,8 +489,8 @@
 .lobby-save-info:not([open]) .save-note{display:none}
 .lobby-shell .goal-bar{flex:0 0 3px}
 @media(max-width:739px){
- .lobby-shell>.hud .brand{display:none}
- .lobby-shell>.hud .hud-stat.bank{flex:1.2}
+ :is(.lobby-shell,.shop-shell)>.hud .brand{display:none}
+ :is(.lobby-shell,.shop-shell)>.hud .hud-stat.bank{flex:1.2}
  .lobby-shell .goal-copy>span+span{display:none}
  .lobby-shell .lobby-actions button{padding:4px 6px}
  .lobby-shell .lobby-label-long{display:none}
@@ -522,3 +522,48 @@
 .home .field-note{margin:2px 0 4px}
 .home .home-entry-actions{margin-top:4px}
 @media(max-height:280px){.home .home-entry{overflow:auto}.home .home-options .home-links{position:fixed;right:max(24px,env(safe-area-inset-right));bottom:48px}}
+
+/* Local five-minute results: totals and five table rows share one bounded panel. */
+.modal.challenge-result-modal{width:min(920px,calc(100vw - 24px));max-width:920px;max-height:calc(var(--game-viewport-height,100dvh) - 24px);padding:12px 18px;overflow:auto}
+.challenge-result{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:8px 20px;min-width:0}
+.challenge-result-summary{min-width:0;align-self:center}
+.challenge-result-summary .eyebrow{font-size:14px;letter-spacing:.08em;margin:0 0 4px;display:block}
+.challenge-result-summary h2{font-size:24px;line-height:1.2;margin:0 0 8px}
+.challenge-result-summary p{font-size:14px;line-height:1.4;margin:5px 0}
+.challenge-result-summary>span:not(.eyebrow){font-size:14px;color:#d4ceb9}
+.challenge-final-bank{display:block;font-size:clamp(20px,3vw,32px);line-height:1.2;color:#f4d897;overflow-wrap:anywhere}
+.challenge-result-breakdown{min-width:0;align-self:center}
+.challenge-result table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:16px;line-height:1.2}
+.challenge-result caption{font-size:16px;text-align:left;margin-bottom:5px;color:#f4d897}
+.challenge-result th,.challenge-result td{padding:5px 3px;border-bottom:1px solid #87734866;text-align:right;overflow-wrap:anywhere}
+.challenge-result th:first-child{width:29%;text-align:left;font-weight:600}
+.challenge-result thead th:nth-child(2){width:16%}
+.challenge-result .stat-win{color:#7ceaff}
+.challenge-result .stat-loss{color:#ffb5ad}
+.challenge-result .challenge-stat-note{font-size:14px;line-height:1.35;margin:6px 0 0;color:#c6cbbb}
+.challenge-result-actions{grid-column:1/-1;display:flex;gap:8px;justify-content:center}
+.challenge-result-actions button{min-height:44px;padding:4px 12px;font-size:16px;flex:1;max-width:280px;margin:0}
+@media(max-width:559px){.challenge-result{grid-template-columns:minmax(0,1fr);gap:12px}.challenge-result-summary h2{font-size:22px}.challenge-result-actions{flex-wrap:wrap}}
+/* Shopping is active play time; keep Buy controls visible, with descriptions scrolling inside cards. */
+.game-shell.shop-shell{height:var(--game-viewport-height,100dvh);min-height:0;display:flex;flex-direction:column;gap:4px;padding:4px max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));overflow:hidden}
+.shop-shell .shop-page{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px;position:relative}
+.shop-shell .section-heading{flex:0 0 44px;min-height:44px;margin:0;gap:8px;align-items:center}
+.shop-shell .section-heading>div:first-child{flex:1;min-width:0}
+.shop-shell .section-heading .eyebrow,.shop-shell .section-heading p{display:none}
+.shop-shell .section-heading h1{font-size:22px;line-height:1.2}
+.shop-shell .section-heading>button{height:44px;min-height:44px;padding:4px 8px;font-size:16px}
+.shop-shell .shop-notice{flex:0 0 auto;margin:0;padding:3px 8px;font-size:14px;line-height:1.4;gap:8px;display:flex;flex-wrap:wrap}
+.shop-shell .shop-grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:minmax(0,1fr);gap:8px;margin:0}
+.shop-shell .shop-card{min-height:0;min-width:0;max-height:100%;display:flex;flex-direction:column;padding:8px;gap:4px;overflow:hidden}
+.shop-shell .shop-card>.prop{width:32px;height:32px;min-height:32px;margin:0}
+.shop-shell .shop-card>.eyebrow{display:none}
+.shop-shell .shop-card h2{font-size:18px;line-height:1.2;margin:0}
+.shop-shell .shop-card>p{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;font-size:14px;line-height:1.4;margin:0}
+.shop-shell .shop-card-bottom{flex:0 0 auto;display:flex;flex-direction:column;gap:2px;margin:0;padding:0;font-size:14px}
+.shop-shell .shop-card-bottom button{width:100%;min-height:44px;padding:4px;font-size:16px;overflow-wrap:anywhere;line-height:1.2}
+.shop-details{position:relative}
+.shop-details>summary{height:44px;min-width:44px;display:flex;align-items:center;justify-content:center;padding:4px 8px;border:1px solid #87734888;border-radius:6px;cursor:pointer;font-size:14px;list-style:none}
+.shop-details>summary::-webkit-details-marker{display:none}
+.shop-details .save-note{overflow-wrap:anywhere;position:absolute;top:48px;right:0;z-index:5;width:min(330px,calc(100vw - 32px));max-height:calc(var(--game-viewport-height,100dvh) - 110px);overflow:auto;padding:12px;margin:0;background:#172d21;border:1px solid #d1b276;border-radius:8px;font-size:14px;line-height:1.5}
+.shop-details:not([open]) .save-note{display:none}
+@media(max-width:559px){.shop-shell .shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}.shop-shell .section-heading h1{font-size:20px}.shop-shell .section-heading>button{font-size:14px}}

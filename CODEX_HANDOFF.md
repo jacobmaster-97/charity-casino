@@ -1,10 +1,42 @@
 # CODEX_HANDOFF
 
-## 最新：0.7.1牌型／公共牌位置及主畫面整屏修正（2026-11-02）
+## 最新：0.8.0已獲明確GitHub發布指示，發布準備（2026-11-02）
+
+使用者於本機交付後要求「將新版發佈到GitHub」，已授權更新原jacobmaster-97/charity-casino main及既有Pages，先前本機不發布的邊界已解除。遠端讀取確認main仍為690c6f02aaa194431fb7c263061d3ad17ee574d0／tree c31d14957fd27d3c7d7c0112340b0637dcd332b6，沒有其他新提交。準備以該commit為parent，保留未變資產，僅送發布差異，最後以expected_sha更新main；再核對Pages部署結果。下方0.8.0本機驗證及裝置未驗項仍適用，不接排行榜／Cloudflare。發布完成後另記commit、tree、檔案SHA及Pages run；若未完成不得當已發布。
+
+## 最新：0.8.0本機五分鐘挑戰已實裝及封裝，階段一停止（2026-11-02）
+
+使用者本輪正式要求執行第一階段，取代下方「只整理提示詞」狀態。本機入口每次$100／有效300秒，以最終資金為目標，不再以$25,000,000通關。購物、大廳、思考、下注及動畫照計；手動或背景／失焦暫停同時凍結總及行動餘秒，回前景需按繼續。Game為唯一計時／資金／派彩owner；到時禁止新輸入及新局，按原超時預設收尾已下注局，保留動畫並只結算一次。全押可用0等派彩後再判破產。
+
+結果含名稱、最終資金、五桌局數及淨贏取（派彩＋保本退款－投注，含負數），購物支出另列。cash.mjs以整數美分及Number／BigInt精確處理五桌、AI籌碼、邊池、成本、顯示與JSON，沒有新增達標上限。新schema2／five-minute-v1用獨立charity-casino-five-minute-v2槽，保留舊schema1及匯出；舊資產不能匯入，恢復不補滿五分鐘。保留完成局checkpoint策略，最終結束亦保存；不新增局中持久快照，重整回最後完成局。引擎預設legacy相容供既有回歸，網頁明確Game({challenge:true})，不能漏此旗標。
+
+重要檔案：src/cash.mjs、challenge.mjs、game.mjs、storage.mjs、app.mjs、五桌金額／視圖與styles.css；tests/challenge.test.mjs、challenge-app.test.mjs；封裝腳本及Pages測試。細節與裝置缺口見docs/LOCAL_FIVE_MINUTE_080.md，最終檢查／SHA見docs/LOCAL_FIVE_MINUTE_VALIDATION.json。既有美術及聲效保留，十張runtime PNG與0.7.1快照及封裝一致、無手圖。
+
+驗證：npm run verify通過272項規則／元件／app事件替身＋3單檔；npm run verify:pages通過6項，共281項。含500次混合五分鐘流程、既有10,000局模擬、超大德州實際牌局／JSON及五款renderer。Python browser_smoke語法及首頁／大廳／商店／五行結果HTML解析通過；這些不是瀏覽器證據。Safari、觸控、原生背景／BFCache、音訊硬體、鍵盤、安全區及實際比例／整頁不捲動仍UNVERIFIED；未重試既知HTTP／Chromium IPC失敗路徑。
+
+交付：dist/charity-casino-prototype.html（23,647,638 bytes；SHA256 58d170b64eb72eab0555b53230c588c15093afaf178c0c12a9b2a299b699a636）及本機docs/index.html／docs/play，23 runtime同步，dist/manifest.json已更新並保留早期發布metadata。未上傳GitHub或部署Pages，遠端仍0.7.1；dist/github-upload是歷史0.7.1快照，github-upload.zip為0.1.2、另一舊zip為0.1.0，不能誤當本輪新包。未建立Cloudflare／Supabase／排行榜／API。依使用者要求階段一完成後停止；下一最安全任務僅為Safari實機核對本機版本，不自行開始提示詞二或發布。
+
+## 最新：已整理兩階段開發提示詞，先本機後排行榜（2026-11-02，香港）
+
+使用者要求現階段整理提示詞，本機遊戲開發完成後才做排行榜。已新增docs/DEVELOPMENT_PROMPTS.md，含兩份可直接使用的提示詞：一、先完成本機$100／有效五分鐘、購物大廳照計、手動／背景停錶、到時自動收尾及五桌／保存／介面回歸；二、本機完成後才接Cloudflare Workers＋D1，只完場上傳名稱金額及基本防護，不接管牌局或暫存驗證。
+
+本輪僅寫提示詞，不代表立即執行其中開發或部署。保留只做基本防護的最新選擇；同名非唯一、每身分最佳／每局一筆仍需釐清，不擅自當定案。正式仍0.7.1，未改runtime／雲端、未跑遊戲測試。下一最安全任務：使用提示詞一完成本機五分鐘挑戰；不得提前接排行榜。
+
+
+## 最新：Cloudflare精簡排行榜已選基本防護（2026-11-02，香港）
+
+使用者明確選「只上傳名稱金額，接受基本防護」。五分鐘、下注、暫停與派彩均本機處理，完場才發收分請求；不採提案的全程後端或短暫牌局狀態驗證，不保存遊玩流水。只做名稱／金額格式與精度、安全顯示、參數化SQL、限流及同一完場重試去重，不承諾可驗證合法贏款或阻止所有改分。不要再把短暫驗證當待批准需求。
+
+玩法仍為$100起步、有效300秒最高期末資金；購物／大廳照計，手動或切背景停，回前景按繼續保留原總／行動餘秒；到時自動收尾已下注局，結算後破產提早結束。匿名免註冊。同名非唯一身分，每人最佳／每局一筆、去重技術ID、金額精度與逐桌收尾待細化，不用姓名直接覆寫。
+
+已更新docs/FIVE_MINUTE_LEADERBOARD_PLAN.md及LEADERBOARD_ANTICHEAT_OPTIONS.md（原伺服器驗證僅保留為未採用參考），GAME_BRIEF亦同步。正式仍0.7.1，本輪只文件，未建Cloudflare／改runtime／部署／執行測試；舊256項不是新機制證據。下一最安全任務：完成本機五分鐘規格及精簡上傳／查榜API合約，再實作。
+
+
+## 最新：0.7.1牌型／公共牌位置及主畫面整屏已發布（2026-11-02）
 
 使用者三點回饋：橫向補牌型、公共牌／彩池上移置中且不碰對手、主畫面不用捲動。已恢復自己原框內14px牌型，等待／棄牌亦有提示；公共牌整組量測上三對手的框／底牌／投注足跡後留8px，自己手牌前留10px，偏上置中並在短高度收容。原13飛行目標、勝出金框、牌局／聲效／保存不改。
 
-第3點已提問但尚無回覆，按已說明假設同時處理首頁、大廳、牌桌。首頁分欄及收合存檔音效；大廳圖片與五個入座鍵1672:941同場景縮放，HUD及底列保留；故事卡短橫屏兩欄。快取0.7.1，PNG不改。新增3德州位置／牌型及2大廳比例檢查；256項（247元件＋3封裝＋6 Pages）完整驗收通過。模板一次性解析通過，browser_smoke只語法；Safari／真DOM／觸控／鍵盤仍UNVERIFIED，勿重試舊HTTP／IPC。詳docs/POKER_READABILITY_071.md。準備由main 58b6be2114e0bef5002637b40c8d0450742be7b5 guarded ref發布；可回該commit整體回退，不清保存。下一步：Safari橫屏核對牌型、對手間距及主畫面無整頁捲動。
+第3點已提問但尚無回覆，按已說明假設同時處理首頁、大廳、牌桌。首頁分欄及收合存檔音效；大廳圖片與五個入座鍵1672:941同場景縮放，HUD及底列保留；故事卡短橫屏兩欄。快取0.7.1，PNG不改。新增3德州位置／牌型及2大廳比例檢查；256項（247元件＋3封裝＋6 Pages）完整驗收通過。模板一次性解析通過，browser_smoke只語法；Safari／真DOM／觸控／鍵盤仍UNVERIFIED，勿重試舊HTTP／IPC。詳docs/POKER_READABILITY_071.md。已由前版guarded ref發布main 690c6f02aaa194431fb7c263061d3ad17ee574d0，tree c31d14957fd27d3c7d7c0112340b0637dcd332b6；Pages run41389811878 completed/success。180發布檔SHA一致、49檔變更、26份PNG副本不改且無手圖。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.7.1 。發布後POKER_READABILITY_RELEASE.json與本地交接不另部署；可回該commit整體回退，不清保存。下一步：Safari橫屏核對牌型、對手間距及主畫面無整頁捲動。
 
 
 ## 最新：0.7.0德州手機無頭像圍桌版已發布（2026-11-02）
