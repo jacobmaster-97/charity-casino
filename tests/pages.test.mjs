@@ -51,10 +51,11 @@ test('repository-root Pages resolves actual app and CSS images to existing PNGs'
   assert.ok((await stat(path.join(root,'.nojekyll'))).isFile());
 });
 test('root and docs entry points version app and CSS without breaking relative paths',async()=>{
+  const version=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
   for(const entry of ['index.html','docs/index.html']){
     const html=await readFile(path.join(root,entry),'utf8');
-    assert.match(html,/src\/styles\.css\?v=0\.6\.3/);
-    assert.match(html,/src\/app\.mjs\?v=0\.6\.3/);
+    assert.ok(html.includes(`src/styles.css?v=${version}"`));
+    assert.ok(html.includes(`src/app.mjs?v=${version}"`));
   }
 });
 test('all entry-module dependencies share the release version to avoid stale export caches',async()=>{

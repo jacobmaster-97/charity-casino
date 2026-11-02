@@ -8,7 +8,7 @@ class PanelNode{
  append(...nodes){for(const n of nodes){n.remove();n.parentNode=this;this.children.push(n);}}
  remove(){if(this.parentNode){const list=this.parentNode.children;list.splice(list.indexOf(this),1);this.parentNode=null;}}
  replaceWith(n){const parent=this.parentNode,index=parent.children.indexOf(this);n.remove();parent.children[index]=n;n.parentNode=parent;this.parentNode=null;}
- querySelector(s){const matches=n=>s.startsWith('.')?n.classList.contains(s.slice(1)):s==='[data-action="table-tools"]'?n.dataset.action==='table-tools':n.tagName===s;return this.children.find(matches)||this.children.map(n=>n.querySelector(s)).find(Boolean)||null;}
+ querySelector(s){const matches=n=>s.startsWith('.')?n.classList.contains(s.slice(1)):s.startsWith('[data-action=')?n.dataset.action===s.match(/"([^"]+)"/)[1]:n.tagName===s;return this.children.find(matches)||this.children.map(n=>n.querySelector(s)).find(Boolean)||null;}
  querySelectorAll(){const found=[];const walk=n=>{for(const c of n.children){if(c.tagName==='details')found.push(c);walk(c);}};walk(this);return found;}
  addEventListener(type,fn){this.listeners[type]=fn;}
  setAttribute(k,v){this.attrs[k]=v;}
@@ -49,4 +49,11 @@ test('mobile More refresh preserves one current shelf and pause restores all nod
 }));
 test('closing More returns keyboard focus to its own trigger',()=>withDocument(()=>{
  const f=fixture(),trigger=new PanelNode('button');trigger.dataset.action='table-tools';f.root.append(trigger);const p=new TablePanels(f.root);p.mount();p.openTools();p.close();assert.equal(trigger.focused,true);assert.equal(p.tools,null);assert.equal(f.bar.parentNode,f.root);
+}));
+
+test('poker raise panel reuses native tools, continues the action clock and returns focus to Raise',()=>withDocument(()=>{
+ const f=fixture(),detail=new PanelNode('details','poker-raise-panel'),summary=new PanelNode('summary','','加注至總額'),trigger=new PanelNode('button');trigger.dataset.action='pk-open-raise';detail.append(summary);f.bar.append(detail);f.root.append(trigger);const p=new TablePanels(f.root),g=new Game({randomIndex:()=>0});g.start('加注');g.enterTable('poker');g.startPoker();for(let i=0;g.round.phase!=='poker-player';i++){assert.ok(i<1000);g.tick(g.round.remaining||1);}p.mount();p.open(detail);assert.equal(p.dialog.className,'table-tool-dialog poker-raise-dialog');assert.equal(p.selection,'poker-raise-panel');const bank=g.profile.bank;g.tick(1000);assert.equal(g.round.remaining,29000);assert.equal(g.profile.bank,bank);assert.equal(g.paused,false);p.close();assert.equal(trigger.focused,true);assert.equal(detail.parentNode,f.bar);
+}));
+test('turn changes can clear a retained raise panel before the next player turn mounts',()=>withDocument(()=>{
+ const f=fixture(),detail=new PanelNode('details','poker-raise-panel');detail.append(new PanelNode('summary','','加注至總額'));f.bar.append(detail);const p=new TablePanels(f.root);p.mount();p.open(detail);p.beforeRender();assert.equal(p.selection,'poker-raise-panel');p.release();p.mount();assert.equal(p.selection,'');assert.equal(p.dialog,null);assert.equal(detail.parentNode,f.bar);
 }));

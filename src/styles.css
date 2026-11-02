@@ -285,3 +285,121 @@
 /* 0.6.3: cool wager labels stay distinct from warm gold board printing. */
 .chip-face>b{color:#07324d;background:#eefbff;border:1px solid #31b6dd;border-radius:999px;padding:.08em .2em;line-height:1.05;box-shadow:0 1px 2px #00131f66}
 .rou-cell-amount{fill:#7ceaff;stroke:#071c30;stroke-width:4px;stroke-linejoin:round;paint-order:stroke fill;font-weight:800}
+
+/* Approved landscape poker v2: six text-only seats, shared Game and chip targets. */
+.table-shell.mobile-table>.mobile-poker-hud{grid-template-columns:60px max-content minmax(94px,1fr) auto minmax(120px,1fr) 64px;padding:0 24px;gap:10px}
+.mobile-poker-hud .pk-hud-blinds{text-align:right;font-size:14px;color:#c5c6aa;overflow:hidden;text-overflow:ellipsis}
+.table-shell.mobile-table>.mobile-poker-hud #elapsed{display:inline;font-size:14px}
+.table-shell .poker-mobile{padding:0 24px 12px;gap:0}
+.table-shell .poker-mobile .poker-felt{padding:0;border:0;border-radius:0;box-shadow:none;background:none;overflow:visible}
+.poker-mobile .poker-arena{position:relative;display:block;padding:0;gap:0;isolation:isolate}
+.poker-mobile .poker-arena::before{content:"";position:absolute;z-index:-1;inset:27px 79px 8px;border:8px solid #642832;border-radius:999px;background:linear-gradient(#0b35284d,#0b35284d),url('../public/art/sicbo-board-b/felt.png') center/cover;box-shadow:0 0 0 2px #c8a96a,inset 0 0 0 1px #c8a96a,inset 0 0 0 18px #d8bf7610}
+.poker-mobile .pk-opponents{display:contents}
+.poker-mobile .pk-opponent{position:absolute;top:0;width:128px;height:48px;display:block;padding:0 4px;border:1px solid #7f8763;border-radius:8px;background:#132a21;overflow:visible;transform:translateX(-50%)}
+.poker-mobile .pk-opponent[data-seat="1"]{left:25%}
+.poker-mobile .pk-opponent[data-seat="2"]{left:50%}
+.poker-mobile .pk-opponent[data-seat="3"]{left:75%}
+.poker-mobile .pk-opponent[data-seat="4"]{left:55px;top:calc(100% - 143px);width:110px}
+.poker-mobile .pk-opponent[data-seat="5"]{left:calc(100% - 55px);top:calc(100% - 143px);width:110px}
+.poker-mobile .pk-opponent header{height:23px;min-height:23px;gap:3px;font-size:16px}
+.poker-mobile .pk-opponent header strong{overflow:hidden;text-overflow:ellipsis}
+.poker-mobile .pk-position{width:19px;height:19px;font-size:10px}
+.poker-mobile .pk-stack{height:22px;min-height:0;justify-content:center;line-height:22px;font-size:14px}
+.poker-mobile .pk-stack>span:first-child{overflow:hidden;text-overflow:ellipsis}
+.poker-mobile .pk-opponent .pk-stack .pk-small-chip{display:inline-block;position:absolute;left:calc(50% - 12px);top:24px;width:24px;height:24px;opacity:0;pointer-events:none}
+.poker-mobile .pk-opponent .pk-opponent-cards{position:absolute;left:4px;top:52px;display:flex;width:42px;height:27px;padding:0;gap:4px}
+.poker-mobile .pk-opponent .pk-seat-bet{position:absolute;left:49px;right:0;top:52px;height:27px;display:flex;justify-content:flex-start;gap:2px;color:#7ceaff;font-size:14px}
+.poker-mobile .pk-seat-bet>span:last-child{overflow:hidden;text-overflow:ellipsis}
+.poker-mobile .pk-opponent .pk-seat-bet .pk-small-chip{display:inline-block;width:18px;height:18px;flex:0 0 18px}
+.poker-mobile .pk-opponent .pk-seat-bet .chip-face{width:18px;height:18px}
+.poker-mobile .pk-opponent .pk-chip-layer .chip-face>b{display:none}
+.poker-mobile .pk-folded{opacity:.56}
+.poker-mobile .pk-opponent.pk-winning{border-color:#ffe09a;box-shadow:inset 0 0 0 2px #f3cf80}
+.poker-mobile .pk-community{position:absolute;left:50%;bottom:82px;transform:translateX(-50%);width:256px;height:93px;display:flex;flex-direction:column;padding:0;gap:4px}
+.poker-mobile .pk-pot-label{flex:0 0 22px;min-width:0;min-height:22px;flex-direction:row;flex-wrap:nowrap;gap:5px;font-size:16px}
+.poker-mobile .pk-pot-label strong{font-size:18px}
+.poker-mobile .pk-pot-label>.pk-chip-target{position:absolute;left:-22px;top:0;width:24px;height:22px;pointer-events:none}
+.poker-mobile .pk-blind-label{display:none}
+.poker-mobile .pk-board-cards{flex:0 0 67px;height:67px;max-height:none;gap:4px}
+.poker-mobile .pk-player{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:284px;height:78px;display:block;padding:4px 8px;border-color:#44b2bf;background:#102b22}
+.poker-mobile .pk-player-label{position:absolute;left:10px;top:12px;width:70px;display:block;font-size:16px}
+.poker-mobile .pk-player-label strong{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.poker-mobile .pk-player-label>span{display:none}
+.poker-mobile .pk-player-cards{position:absolute;left:50%;top:3px;transform:translateX(-50%);width:104px;height:70px;max-height:none;gap:4px}
+.poker-mobile .pk-player-wager{position:absolute;right:8px;top:8px;width:74px;display:flex;flex-direction:column;align-items:flex-end;gap:5px;font-size:14px;color:#7ceaff}
+.poker-mobile .pk-player-wager>strong{font-size:16px;color:#f4d897}
+.poker-mobile .pk-player-wager>span:not(.pk-chip-target){max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.poker-mobile .pk-player-wager>.pk-chip-target{position:absolute;left:-13px;top:29px;width:24px;height:24px;flex-basis:24px}
+.poker-mobile .pk-player-wager>.pk-small-chip{display:inline-block;left:auto;right:0;top:31px;opacity:0;pointer-events:none}
+.poker-mobile .pk-player-wager .chip-face{width:24px;height:24px}
+.poker-mobile .pk-console{display:block;position:relative;padding:5px 0 0;margin-top:4px;border-top:1px solid #687f5c99}
+.poker-mobile .pk-console>.pk-status{position:absolute;width:1px;height:1px;min-height:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.poker-mobile .pk-mobile-actions{display:grid;grid-template-columns:80fr 128fr 188fr 174fr 178fr;gap:8px}
+.poker-mobile .pk-mobile-actions button,.poker-mobile .pk-ready button,.poker-mobile .pk-mobile-wait button,.poker-mobile .pk-result button,.poker-mobile .pk-choice button,.poker-mobile .pk-peek-choice button{height:44px;min-height:44px;min-width:44px;padding:4px 6px;font-size:18px;line-height:1.15;white-space:nowrap}
+.poker-mobile .pk-mobile-actions button{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.poker-mobile .pk-allin-short{display:none}
+.poker-mobile .pk-ready,.poker-mobile .pk-mobile-wait{display:flex;align-items:center;gap:8px;min-height:44px;height:44px}
+.poker-mobile .pk-ready>span{flex:1;font-size:14px}
+.poker-mobile .pk-mobile-wait>span{flex:1;text-align:center;font-size:16px}
+.poker-mobile .pk-result{min-height:44px;padding:0;display:flex;flex-wrap:nowrap;gap:8px}
+.poker-mobile .pk-result>strong{font-size:16px;white-space:nowrap}
+.poker-mobile .pk-result>span{flex:1;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.poker-mobile .pk-result>div{display:flex;flex-shrink:0;width:auto;gap:6px}
+.poker-mobile .pk-choice{min-height:44px;height:44px;font-size:16px;justify-content:space-between}
+.poker-mobile .pk-peek-choice{display:flex;gap:6px;align-items:center;min-height:44px}
+.poker-mobile .pk-peek-choice>span{display:none}
+.poker-mobile .pk-peek-choice>div{display:grid;grid-template-columns:repeat(6,minmax(44px,1fr));gap:6px;flex:1}
+.poker-mobile .pk-peek-choice button{font-size:16px;padding:3px}
+.table-shell.mobile-table .poker-mobile .console-tools{display:none}
+.poker-raise-dialog{width:min(420px,calc(100vw - 32px));padding:14px}
+.poker-raise-dialog .table-tool-heading{margin-bottom:6px}
+.poker-raise-dialog .table-tool-heading h2{font-size:18px}
+.poker-raise-dialog .table-tool-heading button{min-height:44px;font-size:16px}
+.poker-raise-dialog .pk-raise-heading{display:flex;gap:8px;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:8px}
+.poker-raise-dialog [data-countdown]{white-space:nowrap;color:#f4d897}
+.poker-raise-dialog .pk-raise-input{display:block;margin-bottom:8px}
+.poker-raise-dialog .pk-raise-input label{display:none}
+.poker-raise-dialog .pk-raise-input input{width:100%;min-height:44px;height:44px;font-size:18px}
+.poker-raise-dialog .pk-chip-picker{gap:6px;margin-bottom:8px}
+.poker-raise-dialog .pk-chip-picker button{height:48px;min-height:48px;min-width:0;padding:2px}
+.poker-raise-dialog .pk-chip-picker button>span:last-child{display:none}
+.poker-raise-dialog .pk-chip-picker .chip-face{width:40px;height:40px}
+.poker-raise-dialog .pk-raise-confirm{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.poker-raise-dialog .pk-raise-confirm button{min-height:44px;height:44px;font-size:18px}
+.poker-raise-dialog .poker-raise-panel{display:flex;flex-direction:column}
+.poker-raise-dialog .pk-chip-picker{order:2}
+.poker-raise-dialog .pk-raise-confirm{order:3}
+@media(max-width:739px){
+ .table-shell.mobile-table>.mobile-poker-hud{grid-template-columns:60px max-content minmax(92px,1fr) auto 64px;padding:0 12px;gap:8px}
+ .mobile-poker-hud .pk-hud-blinds{display:none}
+ .table-shell .poker-mobile{padding-left:12px;padding-right:12px}
+ .poker-mobile .pk-community{width:226px;height:85px}
+ .poker-mobile .pk-board-cards{flex-basis:59px;height:59px}
+ .poker-mobile .pk-player-cards{width:96px;height:65px;top:6px}
+ .poker-mobile .pk-mobile-actions{grid-template-columns:58fr 86fr 154fr 130fr 175fr;gap:6px}
+ .poker-mobile .pk-allin-wide{display:none}
+ .poker-mobile .pk-allin-short{display:inline}
+ .poker-mobile .pk-result>span{display:none}
+ .poker-mobile .pk-result>div{flex:1}
+}
+@media(max-height:359px){
+ .poker-mobile .poker-arena::before{inset:20px 79px 4px}
+ .poker-mobile .pk-opponent-cards,.poker-mobile .pk-seat-bet{top:50px}
+ .poker-mobile .pk-community{bottom:75px;height:77px;width:204px}
+ .poker-mobile .pk-board-cards{height:51px;flex-basis:51px}
+ .poker-mobile .pk-player{height:72px}
+ .poker-mobile .pk-player-cards{height:63px;width:94px;top:4px}
+}
+@media(max-height:359px){
+ /* Short landscape phones consolidate cards and stakes inside each name plate. */
+ .poker-mobile .pk-opponent{padding:0 44px 0 3px}
+ .poker-mobile .pk-opponent header{height:16px;min-height:16px;font-size:14px;gap:1px}
+ .poker-mobile .pk-opponent .pk-position{width:16px;height:16px;font-size:9px}
+ .poker-mobile .pk-stack{height:15px;line-height:15px}
+ .poker-mobile .pk-opponent .pk-opponent-cards{left:auto;right:2px;top:10px;width:38px;height:24px;gap:4px}
+ .poker-mobile .pk-opponent .pk-seat-bet{left:3px;right:43px;top:31px;height:15px;gap:0}
+ .poker-mobile .pk-opponent .pk-seat-bet .pk-small-chip{position:absolute;right:0;width:15px;height:15px;opacity:0}
+ .poker-mobile .pk-opponent .pk-seat-bet>span:last-child{padding-right:0}
+}
+.poker-mobile .pk-mobile-actions [data-poker-action="call"]{display:flex;align-items:center;justify-content:center;gap:6px}
+@media(max-width:739px){.poker-mobile .pk-mobile-actions [data-poker-action="call"]{flex-direction:column;gap:0;font-size:16px;line-height:1.1}}

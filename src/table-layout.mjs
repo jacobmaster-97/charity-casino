@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.6.3';
+import {baccaratBoardMarkup} from './board.mjs?v=0.7.0';
 // Move existing secondary controls into a native dialog; gameplay keeps its clock.
 export class TablePanels{
  constructor(root){this.root=root;this.selection='';this.dialog=null;this.detail=null;this.marker=null;this.tools=null;this.toolsMarker=null;}
@@ -24,7 +24,7 @@ export class TablePanels{
  open(detail){
    this.release();this.selection=detail.classList[0];this.detail=detail;
    const summary=detail.querySelector('summary');this.marker=document.createComment('table tool');detail.replaceWith(this.marker);
-   const dialog=document.createElement('dialog');this.dialog=dialog;dialog.className='table-tool-dialog';dialog.setAttribute('aria-labelledby','table-tool-title');
+   const dialog=document.createElement('dialog');this.dialog=dialog;dialog.className='table-tool-dialog'+(detail.classList.contains('poker-raise-panel')?' poker-raise-dialog':'');dialog.setAttribute('aria-labelledby','table-tool-title');
    const heading=document.createElement('div');heading.className='table-tool-heading';
    const title=document.createElement('h2');title.id='table-tool-title';title.textContent=summary.textContent.trim();
    const close=document.createElement('button');close.type='button';close.dataset.action='close-table-tool';close.className='outlined';close.textContent='返回牌桌';
@@ -41,9 +41,12 @@ export class TablePanels{
    const close=document.createElement('button');close.type='button';close.dataset.action='close-table-tool';close.textContent='返回牌桌';heading.append(title,close);dialog.append(heading,tools);this.root.append(dialog);
    dialog.addEventListener('cancel',event=>{event.preventDefault();this.close();});dialog.addEventListener('close',()=>{if(this.dialog===dialog)this.close();});dialog.showModal();
  }
- close(){const trigger=this.detail?.querySelector('summary')||this.root.querySelector('[data-action="table-tools"]');this.release();trigger?.focus({preventScroll:true});}
+ close(){const trigger=(this.detail?.classList.contains('poker-raise-panel')?this.root.querySelector('[data-action="pk-open-raise"]'):this.detail?.querySelector('summary'))||this.root.querySelector('[data-action="table-tools"]');this.release();trigger?.focus({preventScroll:true});}
 }
 export const MOBILE_TABLES_ENABLED=true;
+export const MOBILE_POKER_ENABLED=true;
+// Keep the approved around-table layout on landscape phones; keyboard height is not its owner.
+export function mobilePokerViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_POKER_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&width>height&&width<=1100&&height<=600;}
 // Width/height of the layout viewport, not the software keyboard's visual viewport.
 export function mobileTableViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_TABLES_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&(width<=679||width<=1100&&height<=600);}
 // Presentation-only result dwell. Never changes Game, outcomes, clocks or checkpoints.

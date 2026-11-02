@@ -466,6 +466,31 @@ def main():
                 if page.locator('[data-poker-action=fold]').count():
                     overflow(page)
                     page.screenshot(path=str(OUT / f'prototype-poker-turn-{width}.png'), full_page=True)
+                    if width > height and width <= 1100 and height <= 600:
+                        expect(page.locator('.poker-mobile')).to_be_visible()
+                        expect(page.locator('.poker-mobile .pk-avatar')).to_have_count(0)
+                        expect(page.locator('.poker-mobile .pk-opponent')).to_have_count(5)
+                        for control in page.locator('.pk-mobile-actions button').all():
+                            box = control.bounding_box()
+                            assert box['height'] >= 43.9 and box['width'] >= 44
+                        opener = page.locator('[data-action=pk-open-raise]')
+                        if opener.is_enabled():
+                            bank_before = page.locator('#bank-value').inner_text()
+                            opener.tap()
+                            expect(page.locator('.poker-raise-dialog')).to_be_visible()
+                            expect(page.locator('.poker-raise-dialog [data-countdown]')).to_be_visible()
+                            expect(page.locator('.poker-raise-dialog [data-action=pk-chip]')).to_have_count(5)
+                            assert page.locator('#bank-value').inner_text() == bank_before
+                            page.screenshot(path=str(OUT / f'prototype-poker-raise-{width}.png'), full_page=True)
+                            # Escape is the native close path; it must not pause or bet.
+                            page.keyboard.press('Escape')
+                            expect(page.locator('.poker-raise-dialog')).to_have_count(0)
+                            assert page.locator('#bank-value').inner_text() == bank_before
+                        act(page, 'pause')
+                        expect(page.locator('.modal')).to_be_visible()
+                        page.wait_for_timeout(300)
+                        act(page, 'resume')
+                        expect(page.locator('.pk-mobile-actions')).to_be_visible()
                     break
                 if page.locator('.pk-result').count():
                     break
