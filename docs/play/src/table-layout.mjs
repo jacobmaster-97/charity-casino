@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.7.0';
+import {baccaratBoardMarkup} from './board.mjs?v=0.7.1';
 // Move existing secondary controls into a native dialog; gameplay keeps its clock.
 export class TablePanels{
  constructor(root){this.root=root;this.selection='';this.dialog=null;this.detail=null;this.marker=null;this.tools=null;this.toolsMarker=null;}
@@ -83,4 +83,13 @@ export function fitBaccaratSurface(root){
  if(!svg||height<=0)return false;
  if(Number(svg.dataset.boardHeight)!==height)board.innerHTML=baccaratBoardMarkup(svg.dataset.enabled==='true',height);
  return true;
+}
+
+// Fit the actual 1672×941 lobby texture and its table hit targets as one scene.
+export function fitLobbySurface(root){
+ const frame=root.querySelector('.lobby-map'),scene=root.querySelector('.lobby-map-scene');
+ if(!frame||!scene||frame.clientWidth<=0||frame.clientHeight<=0)return false;
+ const image=scene.querySelector('img'),ratio=image?.naturalWidth>0&&image?.naturalHeight>0?image.naturalWidth/image.naturalHeight:1672/941;
+ const width=Math.min(frame.clientWidth,frame.clientHeight*ratio);
+ scene.style.setProperty('width',width+'px');scene.style.setProperty('height',width/ratio+'px');return true;
 }

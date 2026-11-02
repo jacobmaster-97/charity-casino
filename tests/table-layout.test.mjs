@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {TablePanels,updateGameViewport} from '../src/table-layout.mjs';
+import {TablePanels,updateGameViewport,fitLobbySurface} from '../src/table-layout.mjs';
 import {Game} from '../src/game.mjs';
 // Native-dialog lifecycle doubles; these checks are not browser layout evidence.
 class PanelNode{
@@ -57,3 +57,10 @@ test('poker raise panel reuses native tools, continues the action clock and retu
 test('turn changes can clear a retained raise panel before the next player turn mounts',()=>withDocument(()=>{
  const f=fixture(),detail=new PanelNode('details','poker-raise-panel');detail.append(new PanelNode('summary','','加注至總額'));f.bar.append(detail);const p=new TablePanels(f.root);p.mount();p.open(detail);p.beforeRender();assert.equal(p.selection,'poker-raise-panel');p.release();p.mount();assert.equal(p.selection,'');assert.equal(p.dialog,null);assert.equal(detail.parentNode,f.bar);
 }));
+
+test('lobby scene and table hit targets fit the real texture ratio within both phone orientations',()=>{
+ for(const [w,h] of [[304,430],[552,205],[651,260],[828,280],[1424,700]]){const values={},scene={querySelector:()=>({naturalWidth:1672,naturalHeight:941}),style:{setProperty:(k,v)=>values[k]=parseFloat(v)}},frame={clientWidth:w,clientHeight:h},root={querySelector:s=>s==='.lobby-map'?frame:scene};assert.equal(fitLobbySurface(root),true);assert.ok(values.width<=w+.001);assert.ok(values.height<=h+.001);assert.ok(Math.abs(values.width/values.height-1672/941)<.00001);}
+});
+test('lobby fits before image decoding with the known asset ratio and does not write when hidden',()=>{
+ const values={},scene={querySelector:()=>({naturalWidth:0,naturalHeight:0}),style:{setProperty:(k,v)=>values[k]=parseFloat(v)}},frame={clientWidth:552,clientHeight:205},root={querySelector:s=>s==='.lobby-map'?frame:scene};assert.equal(fitLobbySurface(root),true);assert.ok(Math.abs(values.width/values.height-1672/941)<.00001);frame.clientHeight=0;assert.equal(fitLobbySurface(root),false);
+});

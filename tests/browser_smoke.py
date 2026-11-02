@@ -14,8 +14,11 @@ URL = (ROOT / 'dist/charity-casino-prototype.html').as_uri()
 OUT = ROOT / 'docs/previews'
 
 def start(page, player='試玩者'):
+    if page.locator('.home-options[open]').count():
+        page.locator('.home-options summary').click()
     page.locator('#player-name').fill(player)
     page.locator('#start-form button[type=submit]').click()
+    overflow(page)
     page.locator('[data-action=enter]').click()
 
 def act(page, name, **attrs):
@@ -31,6 +34,8 @@ def act(page, name, **attrs):
     if name == 'remove' and not page.locator('details.bet-details').evaluate('(n)=>n.open'):
         page.locator('details.bet-details summary').click()
     candidate = page.locator(selector + ':visible')
+    if not candidate.count() and page.locator('.home-options summary').count():
+        page.locator('.home-options summary').click()
     if not candidate.count() and page.locator('.mobile-table [data-action=table-tools]:visible').count():
         page.locator('.mobile-table [data-action=table-tools]:visible').click()
     page.locator(selector + ':visible').first.click()
@@ -79,13 +84,27 @@ def mobile_size_composition(page):
 def overflow(page):
     mobile_size_composition(page)
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
-    if page.locator('.table-shell').count() and not page.locator('.board-scroll.is-zoomed').count():
+    if page.locator('.table-shell,.home,.lobby-shell,.story-page').count() and not page.locator('.board-scroll.is-zoomed').count():
         assert page.evaluate('document.documentElement.scrollHeight <= window.innerHeight + 1')
-        for selector in ['.table-nav', '.console-dock', '.action-area', '.chip-picker', '.console-tools']:
+        for selector in ['.table-nav', '.console-dock', '.action-area', '.chip-picker', '.console-tools', '.home #player-name', '.home .mode-picker', '.home .start-button', '.home-entry-actions', '.lobby-bottom']:
             node = page.locator(selector)
             if node.count() and node.is_visible():
                 box = node.bounding_box()
                 assert box and box['y'] >= 0 and box['y'] + box['height'] <= page.viewport_size['height'] + 1, (selector, box)
+
+
+
+def poker_readability(page):
+    expect(page.locator('.poker-mobile .pk-hand-hint')).to_be_visible()
+    geometry=page.evaluate("""() => {
+      const arena=document.querySelector('.poker-mobile .poker-arena'), community=arena.querySelector('.pk-community'), own=arena.querySelector('.pk-player');
+      const rect=n=>{const r=n.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,width:r.width,height:r.height};};
+      const top=[...arena.querySelectorAll('.pk-opponent[data-seat="1"],.pk-opponent[data-seat="2"],.pk-opponent[data-seat="3"]')].flatMap(n=>[n,...n.querySelectorAll('.pk-opponent-cards,.pk-seat-bet')]).map(rect);
+      return {arena:rect(arena),community:rect(community),own:rect(own),occupiedBottom:Math.max(...top.map(r=>r.bottom))};
+    }""")
+    assert geometry['community']['top'] >= geometry['occupiedBottom']+7.5,geometry
+    assert geometry['community']['bottom'] <= geometry['own']['top']-9.5,geometry
+    assert abs((geometry['community']['left']+geometry['community']['right'])/2-(geometry['arena']['left']+geometry['arena']['right'])/2)<1,geometry
 
 
 def roulette_composition(page):
@@ -133,6 +152,7 @@ def main():
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.add_init_script('let diceIndex=0; crypto.getRandomValues=(array)=>{array[0]=[1,2,3][diceIndex++%3];return array;};')
         page.goto(URL)
+        page.locator('.home-options summary').click()
         expect(page.locator('[data-action=sound-test]')).to_be_visible()
         act(page, 'sound-test')
         expect(page.locator('[data-action=sound]')).to_have_attribute('aria-pressed', 'true')
@@ -370,6 +390,8 @@ def main():
             page = mobile.new_page()
             page.on('pageerror', lambda error: errors.append(str(error)))
             page.goto(URL)
+            overflow(page)
+            page.screenshot(path=str(OUT / f'prototype-home-{width}.png'), full_page=True)
             start(page, '手機測試')
             overflow(page)
             page.screenshot(path=str(OUT / f'prototype-lobby-{width}.png'), full_page=True)
@@ -468,6 +490,7 @@ def main():
                     page.screenshot(path=str(OUT / f'prototype-poker-turn-{width}.png'), full_page=True)
                     if width > height and width <= 1100 and height <= 600:
                         expect(page.locator('.poker-mobile')).to_be_visible()
+                        poker_readability(page)
                         expect(page.locator('.poker-mobile .pk-avatar')).to_have_count(0)
                         expect(page.locator('.poker-mobile .pk-opponent')).to_have_count(5)
                         for control in page.locator('.pk-mobile-actions button').all():

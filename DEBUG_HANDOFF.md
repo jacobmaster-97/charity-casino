@@ -1,12 +1,19 @@
 # DEBUG_HANDOFF
 
+## 0.7.1：牌型隱藏／公共牌偏低／主畫面過長（2026-11-02）
+
+根因假設及最小反證：0.7.0手機CSS隱藏自己標籤所有span，故牌型消失；新增專用pk-hand-hint與已知兩對／等待／棄牌的真renderer檢查。公共牌固定bottom82px，故高螢幕也靠下；改量測上三對手底牌與投注的最下沿，留8px，手牌前留10px，新增可用帶及短屏恢復檢查。主頁舊min-height＋長表單及大廳窄版按鈕逐列造成文件過長；改可視高度、收合次要項並以圖片／入座鍵同場景縮放，新增比例／未解碼fallback檢查。
+
+一次性解析home/lobby模板，抓住場景包裝必須在底列前結束，已核對五個入座鍵在場景內、底列在外及所有標籤平衡。新增共5項，完整256項含封裝及Pages全部通過。browser_smoke新增真DOM牌型／上下距離／主畫面頁高路徑，但只Python語法，未執行。Safari、實際單屏可見性／安全區／鍵盤／長金額仍UNVERIFIED；沿用停止重試HTTP／Chromium IPC路徑。詳POKER_READABILITY_071.md；可回main 58b6be2114e0bef5002637b40c8d0450742be7b5，不清保存。
+
+
 ## 0.7.0：德州無頭像手機圍桌實裝（2026-11-02）
 
 新批准已解除v2只預覽限制。圍桌保留13目標／原Game，面板沿TablePanels，不另建計時或下注owner；turnId改變時清面板，旋轉profile獨立檢查，避免兩種mobile尺寸間旋轉未重繪。短橫屏將對手牌與注額合併姓名框；不是隱藏牌或另算結果。新增12流程＋2面板測試，251項含封裝與Pages全部通過。測試首次使用不存在的card-back類別造成一項失敗，已按正式renderer的「未揭示的牌」ARIA修正測試定位，未改合法透視或棄牌規則。
 
 Pages檢查首次捕捉測試寫死0.6.3，已改讀package版本比對根／docs入口，避免以後版本更新漏修測試；未繞過快取同步檢查。
 
-沒有可用瀏覽器工具；browser_smoke更新但只Python語法驗證。Safari實機、可視矩形、鍵盤、安全區、旋轉後焦點及長金額仍UNVERIFIED。保留既有停止HTTP／Chromium IPC路徑限制。回退MOBILE_POKER_ENABLED=false＋重封裝，不清保存；詳POKER_MOBILE_070.md。
+沒有可用瀏覽器工具；browser_smoke更新但只Python語法驗證。Safari實機、可視矩形、鍵盤、安全區、旋轉後焦點及長金額仍UNVERIFIED。保留既有停止HTTP／Chromium IPC路徑限制。回退MOBILE_POKER_ENABLED=false＋重封裝，不清保存；詳POKER_MOBILE_070.md。 已發布main 58b6be2114e0bef5002637b40c8d0450742be7b5，Pages run41384534881 completed/success；178檔SHA一致、26份PNG副本不改，發布後收據與交接不另部署。
 
 
 ## 最新：德州預覽v2無頭像（2026-11-02）

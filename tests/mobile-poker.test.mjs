@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Game} from '../src/game.mjs';
 import {pokerOptions} from '../src/poker.mjs';
-import {pokerTableView} from '../src/poker-view.mjs';
+import {pokerTableView,pokerCommunityPlacement,fitPokerSurface} from '../src/poker-view.mjs';
 import {mobilePokerViewport} from '../src/table-layout.mjs';
 import {validateSave} from '../src/storage.mjs';
 const button=(a,t,c='',e='')=>`<button data-action="${a}" class="${c}" ${e}>${t}</button>`;
@@ -54,4 +54,20 @@ test('mobile pause preserves the remaining seconds and the completed-hand save r
 });
 test('mobile settlement marks only actual winning opponents, excluding refunds, without avatar or winner captions',()=>{
  const {g}=fixture();turn(g);finish(g);const h=view(g),expected=[...new Set(g.round.result.pots.filter(p=>!p.uncalled).flatMap(p=>p.winners).filter(i=>i>0))].sort(),actual=[...h.matchAll(/data-winner-seat="(\d)"/g)].map(m=>Number(m[1]));assert.deepEqual(actual,expected);assert.ok(!h.includes('pk-winner-badge'));assert.ok(!h.includes('pk-avatar'));assert.ok(h.includes('data-action="next"'));
+});
+
+test('landscape hand hint shows the own best rank and pending or folded states without exposing opponents',()=>{
+ const {g}=fixture();turn(g);assert.ok(view(g).includes('class="pk-hand-hint" aria-live="polite">等待公共牌'));
+ g.round.players[0].cards=[28,32];g.round.board=[30,0,6,2,34];const before=JSON.stringify(g),h=view(g);assert.ok(h.includes('class="pk-hand-hint" aria-live="polite">牌型：兩對'));assert.ok(h.includes('class="pk-board-caption">公共牌 · '));assert.equal(JSON.stringify(g),before);
+ g.round.players[0].folded=true;assert.ok(view(g).includes('class="pk-hand-hint" aria-live="polite">已棄牌'));
+});
+test('community placement moves upward inside the free band without touching opponents or own cards',()=>{
+ for(const [arenaTop,opponentsBottom,playerTop,preferredHeight] of [[43,122,241,93],[43,122,226,85],[43,91,177,77],[43,122,441,93],[55,155,310,93]]){
+  const p=pokerCommunityPlacement({arenaTop,opponentsBottom,playerTop,preferredHeight});assert.ok(p);assert.ok(p.top+arenaTop>=opponentsBottom+8);assert.ok(p.top+arenaTop+p.height<=playerTop-10+.001);assert.ok(p.height<=preferredHeight);assert.ok(p.height>=42);
+ }
+ const p=pokerCommunityPlacement({arenaTop:43,opponentsBottom:122,playerTop:241,preferredHeight:93});assert.ok(p.top<101);assert.equal(pokerCommunityPlacement({arenaTop:43,opponentsBottom:122,playerTop:150,preferredHeight:93}),null);assert.equal(pokerCommunityPlacement({arenaTop:NaN,opponentsBottom:122,playerTop:241,preferredHeight:93}),null);
+});
+test('poker fitting uses opponent card footprints and restores preferred size after a short-height resize',()=>{
+ let opponentBottom=122,playerTop=226;const writes={},style={setProperty:(k,v)=>writes[k]=v};const community={clientHeight:85,style},own={getBoundingClientRect:()=>({top:playerTop})},seat={getBoundingClientRect:()=>({bottom:91,width:128,height:48}),querySelectorAll:()=>[{getBoundingClientRect:()=>({bottom:opponentBottom,width:42,height:27})}]};const arena={getBoundingClientRect:()=>({top:43}),querySelector:s=>s==='.pk-community'?community:own,querySelectorAll:()=>[seat]},root={querySelector:s=>s==='.poker-screen'?{}:arena,querySelectorAll:()=>[]},old=globalThis.getComputedStyle;globalThis.getComputedStyle=()=>({getPropertyValue:()=> '85px'});
+ try{fitPokerSurface(root);assert.ok(parseFloat(writes['--pk-fit-top'])+43>=130);opponentBottom=91;playerTop=177;fitPokerSurface(root);assert.ok(parseFloat(writes['--pk-fit-height'])<85);opponentBottom=122;playerTop=360;fitPokerSurface(root);assert.equal(writes['--pk-fit-height'],'85px');}finally{globalThis.getComputedStyle=old;}
 });

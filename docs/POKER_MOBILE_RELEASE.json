@@ -1,0 +1,29 @@
+{
+  "version": "0.7.0",
+  "date": "2026-11-02",
+  "repository": "jacobmaster-97/charity-casino",
+  "base_commit": "7f36d66ef73c426c4ff6d85309739ba42a2f59c4",
+  "commit": "58b6be2114e0bef5002637b40c8d0450742be7b5",
+  "tree": "2f16a8a5545df348a2a1bd08a158130d35c3b786",
+  "pages": {
+    "run_id": 41384534881,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41384534881"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.7.0",
+  "prepared_files_verified": 178,
+  "changed_files": 50,
+  "unchanged_png_copies": 26,
+  "hand_graphic_present": false,
+  "checks": {
+    "unit": 242,
+    "package": 3,
+    "pages": 6,
+    "total": 251,
+    "browser_smoke": "Python syntax only",
+    "safari_device": "UNVERIFIED"
+  },
+  "scope": "Approved avatar-free landscape poker UI v2 and native raise panel; existing rules, state, clocks, sounds and schema1 saves preserved",
+  "bookkeeping": "Post-release receipt and handoff updates remain local; no extra deployment."
+}
