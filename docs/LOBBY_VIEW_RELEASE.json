@@ -1,0 +1,31 @@
+{
+  "version": "0.9.1",
+  "game_name": "五分鐘賭神",
+  "date": "2026-11-03",
+  "repository": "jacobmaster-97/charity-casino",
+  "base_commit": "4cc7a668d3b9e9dac989a97fab155445669a8e83",
+  "commit": "735e739a1a32dcdf7812228d3b36645359fc1e39",
+  "tree": "f495bbacb565a7eec40028a101c475dccbc90889",
+  "pages": {
+    "run_id": 41602536032,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41602536032"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.9.1",
+  "prepared_files_verified": 206,
+  "changed_files": 56,
+  "unchanged_png_copies": 30,
+  "hand_graphic_present": false,
+  "checks": {
+    "unit": 293,
+    "package": 3,
+    "pages": 6,
+    "total": 302,
+    "browser_smoke": "Python syntax only",
+    "safari_device": "UNVERIFIED"
+  },
+  "scope": "Publish compact 35.2px lobby HUD, map-only area and relocated More controls; preserve artwork, gameplay and save identities.",
+  "rollback_commit": "4cc7a668d3b9e9dac989a97fab155445669a8e83",
+  "bookkeeping": "Post-release receipt and local handoff updates do not trigger another deployment."
+}

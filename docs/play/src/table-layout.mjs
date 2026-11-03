@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.9.1';
+import {baccaratBoardMarkup} from './board.mjs?v=0.9.2';
 // Move existing secondary controls into a native dialog; gameplay keeps its clock.
 export class TablePanels{
  constructor(root){this.root=root;this.selection='';this.dialog=null;this.detail=null;this.marker=null;this.tools=null;this.toolsMarker=null;}
@@ -46,7 +46,7 @@ export class TablePanels{
 export const MOBILE_TABLES_ENABLED=true;
 export const MOBILE_POKER_ENABLED=true;
 // Keep the approved around-table layout on landscape phones; keyboard height is not its owner.
-export function mobilePokerViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_POKER_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&width>height&&width<=1100&&height<=600;}
+export function mobilePokerViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_POKER_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&height>0&&width>height&&width<=1100&&height<=600;}
 // Width/height of the layout viewport, not the software keyboard's visual viewport.
 export function mobileTableViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_TABLES_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&(width<=679||width<=1100&&height<=600);}
 // Presentation-only result dwell. Never changes Game, outcomes, clocks or checkpoints.
@@ -85,11 +85,32 @@ export function fitBaccaratSurface(root){
  return true;
 }
 
-// Fit the actual 1672×941 lobby texture and its table hit targets as one scene.
-export function fitLobbySurface(root){
+// One canvas owns both the original texture and its percentage-positioned hit targets.
+export function lobbyWideViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){
+ return Number.isFinite(width)&&Number.isFinite(height)&&height>0&&width>height&&width<=1100&&height<=600;
+}
+const LOBBY_TARGETS=[{x:.33,y:.40,width:88,height:44},{x:.73,y:.40,width:88,height:44},{x:.17,y:.68,width:88,height:44},{x:.50,y:.68,width:88,height:44},{x:.85,y:.69,width:88,height:44}];
+export function lobbySceneLayout(frameWidth,frameHeight,{fillWidth=false,ratio=1672/941,targets=LOBBY_TARGETS}={}){
+ if(!Number.isFinite(frameWidth)||!Number.isFinite(frameHeight)||!Number.isFinite(ratio)||frameWidth<=0||frameHeight<=0||ratio<=0)return null;
+ const width=Math.min(frameWidth,frameHeight*ratio),height=width/ratio;
+ const contained={width,height,left:(frameWidth-width)/2,top:(frameHeight-height)/2,mode:'contain'};
+ if(!fillWidth||frameWidth<=frameHeight*ratio)return contained;
+ const wideHeight=frameWidth/ratio,padding=8;
+ const topEdge=Math.min(...targets.map(t=>t.y*wideHeight-t.height*.25));
+ const bottomEdge=Math.max(...targets.map(t=>t.y*wideHeight+t.height*.75));
+ const minTop=Math.max(frameHeight-wideHeight,padding-topEdge),maxTop=Math.min(0,frameHeight-padding-bottomEdge);
+ // With too little vertical space, keep the complete scene rather than clip an entry.
+ if(minTop>maxTop)return contained;
+ const top=Math.max(minTop,Math.min((frameHeight-wideHeight)*.15,maxTop));
+ return {width:frameWidth,height:wideHeight,left:0,top,mode:'width'};
+}
+export function fitLobbySurface(root,fillWidth=lobbyWideViewport()){
  const frame=root.querySelector('.lobby-map'),scene=root.querySelector('.lobby-map-scene');
  if(!frame||!scene||frame.clientWidth<=0||frame.clientHeight<=0)return false;
  const image=scene.querySelector('img'),ratio=image?.naturalWidth>0&&image?.naturalHeight>0?image.naturalWidth/image.naturalHeight:1672/941;
- const width=Math.min(frame.clientWidth,frame.clientHeight*ratio);
- scene.style.setProperty('width',width+'px');scene.style.setProperty('height',width/ratio+'px');return true;
+ const measured=fillWidth?[...(scene.querySelectorAll?.('.station')||[])].map(node=>({x:parseFloat(node.style?.getPropertyValue?.('--x'))/100,y:parseFloat(node.style?.getPropertyValue?.('--y'))/100,width:node.offsetWidth||88,height:node.offsetHeight||44})).filter(t=>Number.isFinite(t.x)&&Number.isFinite(t.y)&&t.x>=0&&t.x<=1&&t.y>=0&&t.y<=1):[];
+ const layout=lobbySceneLayout(frame.clientWidth,frame.clientHeight,{fillWidth,ratio,targets:measured.length?measured:LOBBY_TARGETS});if(!layout)return false;
+ for(const key of ['width','height','left','top'])scene.style.setProperty(key,layout[key]+'px');
+ if(scene.dataset)scene.dataset.lobbyFit=layout.mode;
+ return true;
 }

@@ -1,5 +1,5 @@
-import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.9.1';
-import {cardRank,randomBelow} from './baccarat.mjs?v=0.9.1';
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.9.2';
+import {cardRank,randomBelow} from './baccarat.mjs?v=0.9.2';
 export const BLACKJACK_ENABLED=true;
 export const BLACKJACK_DEAL_MS=400/.7;
 export const BLACKJACK_CUT=104; // Enough cards for four hands, dealer and one replacement.

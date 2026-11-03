@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {TablePanels,updateGameViewport,fitLobbySurface} from '../src/table-layout.mjs';
+import {TablePanels,updateGameViewport,fitLobbySurface,lobbyWideViewport,lobbySceneLayout} from '../src/table-layout.mjs';
 import {Game} from '../src/game.mjs';
 // Native-dialog lifecycle doubles; these checks are not browser layout evidence.
 class PanelNode{
@@ -63,4 +63,32 @@ test('lobby scene and table hit targets fit the real texture ratio within both p
 });
 test('lobby fits before image decoding with the known asset ratio and does not write when hidden',()=>{
  const values={},scene={querySelector:()=>({naturalWidth:0,naturalHeight:0}),style:{setProperty:(k,v)=>values[k]=parseFloat(v)}},frame={clientWidth:552,clientHeight:205},root={querySelector:s=>s==='.lobby-map'?frame:scene};assert.equal(fitLobbySurface(root),true);assert.ok(Math.abs(values.width/values.height-1672/941)<.00001);frame.clientHeight=0;assert.equal(fitLobbySurface(root),false);
+});
+
+const wideTargets=[{x:.33,y:.40,width:93.2,height:44},{x:.73,y:.40,width:93.2,height:44},{x:.17,y:.68,width:93.2,height:44},{x:.50,y:.68,width:93.2,height:44},{x:.85,y:.69,width:93.2,height:44}];
+function assertLobbyTargetsVisible(layout,w,h,targets=wideTargets){
+ for(const t of targets){const left=layout.left+t.x*layout.width-t.width/2,top=layout.top+t.y*layout.height-t.height/4;assert.ok(left>=-.01&&left+t.width<=w+.01,{left,w});assert.ok(top>=-.01&&top+t.height<=h+.01,{top,h});}
+}
+test('phone landscape selects width fill without a device-name or hardcoded safe-area dependency',()=>{
+ for(const [w,h] of [[932,430],[844,390],[667,375],[915,412]])assert.equal(lobbyWideViewport(w,h),true);
+ for(const [w,h] of [[430,932],[1024,768],[1440,1000],[932,-1],[NaN,430],[932,Infinity]])assert.equal(lobbyWideViewport(w,h),false);
+});
+test('approved iPhone 16 Plus example fills the inner width with the same ratio and upper-biased crop',()=>{
+ const l=lobbySceneLayout(812,363.8,{fillWidth:true,targets:wideTargets});assert.equal(l.mode,'width');assert.equal(l.width,812);assert.equal(l.left,0);assert.ok(Math.abs(l.height-456.99282296650716)<.000001);assert.ok(Math.abs(l.top+13.978923444976072)<.000001);assert.ok(Math.abs(l.width/l.height-1672/941)<1e-10);assertLobbyTargetsVisible(l,812,363.8);
+});
+test('changing browser chrome height keeps every entry visible and moves the crop instead of stretching',()=>{
+ for(const [w,h] of [[812,363.8],[812,300],[894,280],[1000,240],[650,260],[552,268]]){const l=lobbySceneLayout(w,h,{fillWidth:true,targets:wideTargets});assert.equal(l.mode,'width');assert.equal(l.width,w);assert.ok(l.top<=0&&l.top+l.height>=h);assertLobbyTargetsVisible(l,w,h);for(const t of wideTargets){const top=l.top+t.y*l.height-t.height/4;assert.ok(top>=8-.001&&top+t.height<=h-8+.001);}}
+});
+test('an exceptionally short map falls back to the full scene rather than hiding a table button',()=>{
+ const l=lobbySceneLayout(812,180,{fillWidth:true,targets:wideTargets});assert.equal(l.mode,'contain');assert.ok(l.width<812);assert.equal(l.height,180);assertLobbyTargetsVisible(l,812,180);
+});
+test('real fitting reads actual target sizes and resets crop offsets when returning to contain mode',()=>{
+ const values={},frame={clientWidth:812,clientHeight:270},largeTargets=wideTargets.map(t=>({...t,height:60}));
+ const nodes=largeTargets.map(t=>({style:{getPropertyValue:key=>t[key==='--x'?'x':'y']*100+'%'},offsetWidth:t.width,offsetHeight:t.height}));
+ const scene={dataset:{},querySelector:()=>({naturalWidth:0,naturalHeight:0}),querySelectorAll:()=>nodes,style:{setProperty:(k,v)=>values[k]=parseFloat(v)}};
+ const root={querySelector:s=>s==='.lobby-map'?frame:scene};assert.equal(fitLobbySurface(root,true),true);assert.equal(scene.dataset.lobbyFit,'width');assert.equal(values.width,812);assertLobbyTargetsVisible(values,812,270,largeTargets);
+ frame.clientHeight=363.8;fitLobbySurface(root,false);assert.equal(scene.dataset.lobbyFit,'contain');assert.ok(values.left>0);assert.equal(values.top,0);assert.ok(values.height<=frame.clientHeight);
+});
+test('invalid scene measurements do not produce crop coordinates',()=>{
+ for(const [w,h,ratio] of [[0,100,1],[-1,100,1],[100,0,1],[Infinity,100,1],[100,100,0],[100,100,NaN]])assert.equal(lobbySceneLayout(w,h,{fillWidth:true,ratio}),null);
 });

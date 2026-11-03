@@ -666,3 +666,7 @@
  .lobby-hud-caption,.lobby-pause-label{display:none}
  .lobby-shell>.hud.lobby-hud .lobby-hud-actions button{padding:2px 6px}
 }
+
+/* 0.9.2: the measured canvas can crop vertically while keeping image and targets aligned. */
+.lobby-shell .lobby-map{position:relative;display:block}
+.lobby-shell .lobby-map-scene{position:absolute;max-width:none;max-height:none;margin:0}

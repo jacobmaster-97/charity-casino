@@ -94,11 +94,19 @@ def overflow(page):
         board = page.locator('.lobby-map').bounding_box()
         assert abs(hud['height'] - 35.2) < .2, hud
         assert page.locator('.lobby-bottom,.lobby .section-heading,.lobby .goal-bar').count() == 0
-        assert shell['height'] - board['height'] - hud['height'] <= 20, (shell, board, hud)
+        padding = page.locator('.lobby-shell').evaluate("n=>{const s=getComputedStyle(n);return parseFloat(s.paddingTop)+parseFloat(s.paddingBottom)+parseFloat(s.rowGap);}")
+        assert shell['height'] - board['height'] - hud['height'] <= padding + 1, (shell, board, hud)
+        scene = page.locator('.lobby-map-scene')
+        if scene.get_attribute('data-lobby-fit') == 'width':
+            bounds = scene.bounding_box()
+            inner_width = page.locator('.lobby-map').evaluate('n=>n.clientWidth')
+            assert abs(bounds['width'] - inner_width) < 1, (bounds, board)
+            assert abs(bounds['width'] / bounds['height'] - 1672/941) < .01, bounds
         for station in page.locator('.station').all():
             hit = station.bounding_box()
             assert hit and hit['height'] >= 44 and hit['width'] >= 88, hit
             assert hit['x'] >= board['x'] - 1 and hit['x'] + hit['width'] <= board['x'] + board['width'] + 1, (hit, board)
+            assert hit['y'] >= board['y'] - 1 and hit['y'] + hit['height'] <= board['y'] + board['height'] + 1, (hit, board)
     for node in page.locator('.title-menu-button').all():
         box = node.bounding_box()
         assert box and box['width'] >= 44 and box['height'] >= 44, box
@@ -417,7 +425,7 @@ def main():
         assert roulette_snapshot['blackjackShoe'] == poker_snapshot['blackjackShoe']
         assert roulette_snapshot['baccaratShoe'] == poker_snapshot['baccaratShoe']
         context.close()
-        for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(568,320),(667,375),(740,360),(844,390),(915,412),(768,1024),(1024,768)]:
+        for width, height in [(720,1280),(1080,2400),(390,844),(320,568),(568,320),(667,375),(740,360),(844,390),(915,412),(932,430),(932,354),(430,932),(768,1024),(1024,768)]:
             mobile = browser.new_context(viewport={'width':width,'height':height}, is_mobile=True, has_touch=True, reduced_motion='reduce')
             page = mobile.new_page()
             page.on('pageerror', lambda error: errors.append(str(error)))

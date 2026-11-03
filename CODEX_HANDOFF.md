@@ -1,8 +1,30 @@
 # CODEX_HANDOFF
 
-## 最新：0.9.1已獲GitHub發布指示，準備發布（2026-11-03）
+## 最新：0.9.2填寬已實裝，準備授權發布（2026-11-03）
 
-使用者「更新GitHub」已授權更新原jacobmaster-97/charity-casino main及既有Pages。已讀遠端head確認0.9.0 commit4cc7a668d3b9e9dac989a97fab155445669a8e83／tree c4b91b6234608aa453b77a9712b2210561861036，準備以該parent／expected_sha非force更新。只發布已完成0.9.1，不改遊戲、不新建雲端。待核對完整發布檔SHA及對應Pages run，未成功前不稱已發布；結果另記LOBBY_VIEW_RELEASE.json。
+使用者「實裝至GitHub」已確認先前lobby-iphone16plus-wide-v1，取代只預覽限制。手機橫向依實際DOM安全區內框等比例填寬，偏上15%取景；五入座與圖同scene，讀實際按鍵高度限制裁切，極短回完整圖。桌面／直向完整圖。沒有硬寫932×430或59／21安全區，原35.2px HUD、五桌規則／存檔及12貼圖不變。
+
+308項通過（299元件／規則／app替身＋3封裝＋6Pages），新增6項layout測試；browser_smoke只Python語法，沒有Safari／真DOM／觸控證據。單檔29,862,635 bytes，SHA256 3bff2220d86ee66868f561090ec1313474b68df38f17cd7c31c0f96bff25ee41。詳docs/LOBBY_WIDE_092.md及LOBBY_WIDE_VALIDATION.json。
+
+使用者已授權原main／Pages發布，基準735e739a1a32dcdf7812228d3b36645359fc1e39；本提交為待部署內容，實際結果另於LOBBY_WIDE_RELEASE.json。沒有排行榜／Cloudflare／付款。未重試HTTP／Chromium IPC；下一安全任務：完成檔SHA核對、非強制更新main及確認該commit Pages成功，之後由實機驗證。
+
+## 最新：iPhone 16 Plus大廳填寬預覽v1，先確認後實裝（2026-11-03）
+
+使用者指出0.9.1兩側仍有留白、主要用iPhone 16 Plus，要求用盡橫向寬度；後續明確「先讓我預覽」。本輪只新增docs/previews/lobby-iphone16plus-wide-v1/及文件，沒有改正式程式／素材／版號或部署，102份正式檔SHA與預覽前一致，網站仍0.9.1。
+
+以932×430畫布、左右59／底21px示意安全區，重建目前與建議版PNG／SVG；數值是排版假設，不是實機讀取。建議等比例放大填滿812px地圖內寬，消除原各約83px內側留白；人物不拉伸，偏上15%取景保留壁畫人物及五個入座鍵，下方地板／前景／賭桌底部裁去部分。模型線性放大約25.6%，裁上約14px／下79px，不當Safari實測。
+
+交付lobby-wide.png、lobby-current.png（重建非截圖）、comparison.png及切換index.html，附render-preview.mjs／layout／validation／README。原背景PNG完整嵌入不改像素，按鈕獨立44px，保留原百分比。3PNG解碼／尺寸、SVG XML、10按鍵界內、比例／零左右留白、JS語法及102正式檔SHA通過，輸出已目視。未跑真瀏覽器／Safari／觸控，不用舊302項當預覽證據，未重試HTTP／Chromium IPC。
+
+下一最安全任務：等使用者確認上下裁切／取景與填寬效果，才實裝實際viewport／安全區的填寬邏輯，不硬寫示意手機尺寸、不自行修改或發布正式版。
+
+## 最新：0.9.1大廳更新已發布GitHub／Pages成功（2026-11-03）
+
+使用者「更新GitHub」已授權原倉庫main及Pages。以0.9.0 commit4cc7a668d3b9e9dac989a97fab155445669a8e83為parent及expected_sha、force:false發布成功。新commit735e739a1a32dcdf7812228d3b36645359fc1e39，tree f495bbacb565a7eec40028a101c475dccbc90889；206份發布檔案Git blob SHA一致，56檔變更，30份PNG副本不改，無手圖。完整npm run verify及prepare:github通過302項（293＋3＋6），本輪不再改遊戲程式。
+
+Pages run41602536032 completed/success、head_sha吻合。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.9.1 ，提交 https://github.com/jacobmaster-97/charity-casino/commit/735e739a1a32dcdf7812228d3b36645359fc1e39 。收據docs/LOBBY_VIEW_RELEASE.json及dist發布metadata同步；事後收據及本地交接不另部署。dist/github-upload現為0.9.1發布快照，舊zip仍是歷史包。若需回復可用前版0.9.0整體commit及對應快取，不清玩家保存。
+
+沒有建立Cloudflare、排行榜或付款。Safari／真DOM／橫屏旋轉／35.2px點按／安全區及音訊硬體仍未驗，未直接HTTP核對公開Pages，未重試舊HTTP／Chromium IPC路徑。下一最安全任務：手機／iPad橫向實測地圖、更多、商店及暫停，勿把部署成功當實機驗證。
 
 ## 最新：0.9.1大廳地圖／精簡頂欄已本機完成（2026-11-03）
 

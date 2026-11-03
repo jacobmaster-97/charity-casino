@@ -1,8 +1,26 @@
 # DEBUG_HANDOFF
 
-## 0.9.1發布授權及核對（2026-11-03）
+## 0.9.2：確認填寬後實裝／發布準備（2026-11-03）
 
-使用者已授權更新GitHub，遠端0.9.0 head與預期一致。沿原GitHub連接器Git tree／commit／expected_sha非force更新，不取用或索取權杖，發布後核對相同head_sha的Pages run。只發布本機0.9.1，沒有新的玩法修改；保留HTTP／Chromium IPC停止重試及Safari未驗界線，不為事後本地收據另部署。
+舊contain因高度限制產生內側留白。已按使用者確認接入真DOM frame量測及等比例width fill；scene絕對定位並移除max-height:100%防止圖被壓扁，切回contain重設left／top。五入座座標共用scene，依offsetHeight保護8px邊界；很矮時fallback contain。預覽812×363.8金值符合，沒有硬寫示意安全區。
+
+308項通過（299＋3＋6）；新增6項含視口、金值、短高、fallback、60px實際按鍵替身及非法尺寸，Python編譯通過。12 runtime PNG及24 src Pages鏡像已逐位元組核對。一次性檢查曾把未發布舊v3 PNG及docs/play/art歷史副本當成目前runtime，斷言失敗；改依12張runtime清單及24 src檔核對通過，非遊戲缺陷，沒有為此修改素材。
+
+原HTTP／Chromium IPC限制未重試，真Safari安全區／地址欄／旋轉／捲動／點按及音訊未驗證。GitHub發布授權已獲得，當前基準0.9.1 commit735e739；實際commit／run於部署後寫收據。下一最小驗證為已發布?v=0.9.2的iPhone16Plus橫向，不以模型冒充實機。
+
+## iPhone 16 Plus左右留白：只製作填寬預覽（2026-11-03）
+
+使用者0.9.1實機截圖顯示圖框內左右仍空白；來源fitLobbySurface使用min(frameWidth,frameHeight×原圖比例)以完整顯示整圖，寬橫屏受到高度限制，非padding再縮一點能消除。原計畫改填寬，使用者隨即要求先預覽，故沒有做任何runtime／CSS／快取變更。
+
+只新增lobby-iphone16plus-wide-v1的SVG排版及PNG／HTML對照。取景由居中改偏上15%，避免裁掉上方壁畫人物頭部，下方前景裁切較多；五按鈕均44px完整可見。SVG初次按鈕8位色輸出黑色，改6位色＋fill-opacity後目視正常，此為靜態輸出修正，非正式CSS問題。102份正式檔SHA不改。
+
+3PNG解碼／尺寸、XML、10入座幾何及JS語法通過，812px填滿／25.6%放大是示意模型，左右59／下21安全區未讀自裝置。Safari實際viewport／地址欄／旋轉／觸控未驗證，不跑或挪用舊302項，不重試HTTP／Chromium IPC。下一步先等確認；若日後實裝，需讓同一scene／入座點同步放大、依真正安全區及高度處理裁切，不只改img寬度造成按鈕錯位。
+
+## 0.9.1已發布／部署核對（2026-11-03）
+
+使用者已授權更新GitHub，遠端0.9.0 head與預期一致；以expected_sha、force:false更新main成功，commit735e739a1a32dcdf7812228d3b36645359fc1e39／tree f495bbacb565a7eec40028a101c475dccbc90889。206準備檔SHA吻合、56變更、30PNG副本不改。Pages run41602536032 completed/success且head_sha正確；完整302項發布前檢查通過，無新玩法修改，未遇GitHub拒絕、未讀取或索取權杖。收據LOBBY_VIEW_RELEASE.json及本地metadata更新，不再觸發第二次部署。
+
+未直接HTTP核對公開Pages，Safari／實際DOM矩形／橫向旋轉／35.2px點按／安全區／長金額與硬體聲效仍未驗。保留HTTP／Chromium IPC停止重試，未重試；部署成功只證明GitHub發布層。下一個最小驗證：iPad／手機開?v=0.9.1看地圖及更多，核對商店／暫停與到時結算；不擴做排行榜或付款。
 
 ## 0.9.1：大廳高度分配與更多收尾（2026-11-03）
 
