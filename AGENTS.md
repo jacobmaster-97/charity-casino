@@ -19,3 +19,7 @@
 - 0.8.0已依使用者正式執行第一階段，僅本機五分鐘挑戰／五桌統計／精確金額及獨立新存檔；入口Game({challenge:true})，舊schema1相容路徑僅供保留／回歸。詳docs/LOCAL_FIVE_MINUTE_080.md。本輪不部署GitHub或建立Cloudflare，完成後停止，不自行開始提示詞二。
 
 - 後續使用者明確要求「將新版發佈到GitHub」，已授權發布0.8.0至原jacobmaster-97/charity-casino main及既有Pages，取代上一輪不發布邊界；仍不開發排行榜、不建立Cloudflare或其他服務。
+
+- 0.9.0使用者「實裝主畫面」已確認home-landscape-v2及「五分鐘賭神」名稱／Logo。接入真DOM四入口、原開始／續玩／音效／存檔，詳docs/HOME_SCREEN_090.md；不再要求先確認此主頁，不自行接排行榜或付款。此輪只本機實裝／封裝，未另發布遠端。
+
+- 後續使用者「更新github」已明確授權發布0.9.0至原倉庫main及既有Pages。保持同一網址與存檔前綴，不開發排行榜或付款；發布結果見最新交接及HOME_SCREEN_RELEASE.json。

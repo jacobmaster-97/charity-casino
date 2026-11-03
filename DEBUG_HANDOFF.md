@@ -1,8 +1,38 @@
 # DEBUG_HANDOFF
 
-## 0.8.0：獲使用者GitHub發布授權（2026-11-02）
+## 0.9.0發布前：素材測試依賴未發布預覽（2026-11-03）
 
-此次只發布已完成的新挑戰，並非重開排行榜開發。遠端main與預期0.7.1一致，GitHub連接器可讀Git物件；沿既有create_tree／create_commit／expected_sha更新ref流程，不讀取或索取認證權杖。保留既知HTTP／Chromium IPC停止重試限制，Safari／裝置缺口不因GitHub部署成功變為已驗證。發布前核對完整本機驗證及Pages，發布後記唯一commit與對應Pages run，不為事後收據另觸發部署。
+根因假設為prepare-github刻意排除docs/previews，但home.test最後一項直接讀該路徑。最小反證：只複製該測試、home-view及兩正式圖／assets.json至乾淨暫存來源後跑Node，7過1個ENOENT；符合假設。已改以隨倉庫發布的assets.json批准SHA核對圖片，不減少完整圖checksum，也不把整批預覽放入正式發布。待乾淨來源重驗，遊戲程式未改。使用者已授權更新GitHub，舊0.8.0 lease保護；不重試HTTP／Chromium IPC，不索取權杖。
+
+## 0.9.0：主畫面已實裝，事件與封裝證據（2026-11-03）
+
+使用者已批准v2實裝，並非再次僅預覽。舊首頁表單直接可見，現由四入口開原overlay，姓名／模式／續玩放開始窗，聲效／存檔放設定，不能只換整張PNG。新增home-view只管呈現／量測，Game及Saves保持owner；22個其他mjs本文與0.8.0相同（只更新快取query），無玩法改動。
+
+軟鍵盤風險假設：既有render在oldModal時一律focus dialog，resize重繪可能令姓名欄失焦。已保留active id／selection，Node app替身證明重繪後聚焦與游標留存；實際Safari鍵盤未驗，不當已修實機問題。主頁專用backdrop按visualViewport高度，短橫屏表單兩欄及有界內捲；這是預防處理，非已觀察真DOM缺陷。Escape／返回還原主入口焦點回歸通過。
+
+最終297項通過（288＋3＋6），含新16項主頁／事件流程及既有500五分鐘／10,000局；主頁及四窗HTML標籤平衡、browser_smoke.py只語法。12PNG／24runtime同步；新插畫／Logo等於批准原檔，舊十張runtime不改，無手圖。沒有瀏覽器／Safari／實際矩形／細書法／觸控／鍵盤／硬體聲效驗證，不重試舊HTTP EPERM或Chromium IPC／crashpad路徑。Node DOM替身及數學模型不可作為整頁不捲動／實機通過證據。
+
+單檔及Pages目錄僅本機封裝，遠端最後0.8.0未更新；排行榜及支持作者不連網／付款。下一最小反證路徑為可用Safari橫向實測四入口、輸入時轉向與繼續讀檔餘秒。詳HOME_SCREEN_090.md／HOME_SCREEN_VALIDATION.json；若回復0.8.0程式保留存檔槽，勿清玩家資料。
+
+## 主頁v2／五分鐘賭神透明Logo（2026-11-03）
+
+使用者改名並要求電影感Logo，只修訂設計預覽，未修正式runtime。image_gen原創logo.png為RGBA2172×724，alpha0–255、與原生成檔SHA一致；以SVG viewBox／contain置入，沒有Python圖像編輯。v1背景直接重用且SHA一致，指定底部文案與舊重複小標已從三份SVG移除。四份展示圖及12按鍵幾何／XML／語法／95個正式檔不改通過。
+
+已目視確認「五分鐘賭神」繁體五字、透明Logo放於上方留白、不遮臉，預覽仍需使用者確認。書法小尺寸筆畫辨識、Safari焦點／觸控／安全區尚未驗證；沒有OCR、真瀏覽器或遊戲接線，未重試HTTP／Chromium IPC失敗路徑，未以舊281項當新Logo證據。標準SVG陰影鏈沿v1修正保留，本輪無新輸出缺陷。
+
+## 橫向主頁v1預覽及輸出修正（2026-11-03）
+
+本輪為使用者明確要求先確認的設計預覽，沒有正式缺陷修復／Game或發布變更。只新增docs/previews/home-landscape-v1/及文件，95份正式檔事前SHA一致。不得將上一輪0.8.0發布授權延伸到本次預覽。
+
+初次Inkscape輸出未顯示有filter的標題及按鈕，log明示unknown type svg:feDropShadow。假設是該輸出器不支援節點，以標準feGaussianBlur／feOffset／feFlood／feComposite／feMerge鏈替換後，三張PNG目視及解碼通過；不是正式遊戲渲染缺陷。另將標題放於上方留白，避免遮蓋新構圖人物。保留原始生成圖與分層SVG，可重製；profile／font cache目錄警告不影響此次成功輸出。
+
+檢查包括3尺寸／XML、12按鍵幾何至少50px、JS語法、四選項字樣及原插畫副本SHA；純色對比最低4.67，並非真機像素對比。Safari、DOM焦點／觸控、安全區、iPad4:3及直向均未驗證；不重試既有HTTP／Chromium IPC失敗路徑，不用舊281項宣稱新UI可玩。下一步只等使用者確認設計；沒有排行榜服務、支付或支持外連，不自行接正式頁。
+
+## 0.8.0：GitHub及Pages已發布，裝置驗證仍待做（2026-11-02）
+
+此次只發布已完成的新挑戰，並非重開排行榜開發。遠端main與預期0.7.1一致，沿既有create_tree／create_commit／expected_sha、force:false更新ref成功。commit 28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65／tree 6fef4ace76b4df0f75c93dec4db10703f0fb61bf，192份準備檔SHA一致、67檔變更、26份PNG副本不改。Pages run41479517386 completed/success且head_sha吻合；未遇發布拒絕、未讀取或索取權杖。完整281項發布前檢查通過，收據LOCAL_FIVE_MINUTE_RELEASE.json。事後收據／本地交接不另部署。
+
+保留既知HTTP／Chromium IPC停止重試限制，未重試；沒有直接HTTP驗證公開Pages或執行Safari。裝置、觸控、聲效硬體、長金額實際排版及原生背景／BFCache仍未驗證，不因部署成功標為通過。最小下一步為iPad Safari從?v=0.8.0確認05:00／$100及暫停／自動收尾。不開排行榜／雲端；回退可使用上一個0.7.1 commit並保留本機新舊槽。
 
 ## 0.8.0：本機五分鐘截止、精度及驗證邊界（2026-11-02）
 

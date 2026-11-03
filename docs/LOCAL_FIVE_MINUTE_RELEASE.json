@@ -1,0 +1,32 @@
+{
+  "version": "0.8.0",
+  "date": "2026-11-02",
+  "repository": "jacobmaster-97/charity-casino",
+  "base_commit": "690c6f02aaa194431fb7c263061d3ad17ee574d0",
+  "commit": "28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65",
+  "tree": "6fef4ace76b4df0f75c93dec4db10703f0fb61bf",
+  "pages": {
+    "run_id": 41479517386,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41479517386"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.8.0",
+  "prepared_files_verified": 192,
+  "changed_files": 67,
+  "unchanged_png_copies": 26,
+  "hand_graphic_present": false,
+  "checks": {
+    "unit": 272,
+    "package": 3,
+    "pages": 6,
+    "total": 281,
+    "mixed_five_minute_sessions": 500,
+    "existing_simulated_rounds": 10000,
+    "browser_smoke": "Python syntax only",
+    "safari_device": "UNVERIFIED"
+  },
+  "scope": "Publish local five-minute challenge, exact money, per-game statistics, isolated schema2 saves; no leaderboard or cloud backend",
+  "rollback_commit": "690c6f02aaa194431fb7c263061d3ad17ee574d0",
+  "bookkeeping": "Post-release receipt and local handoff updates do not trigger another deployment."
+}

@@ -10,13 +10,13 @@ test('Pages entry references shipped runtime, without development server',async(
   assert.ok(html.includes('./play/src/app.mjs'));
   assert.ok(html.includes('./play/src/styles.css'));
   assert.ok(!html.includes('127.0.0.1'));
-  for(const file of ['cash.mjs','challenge.mjs','sicbo-view.mjs','app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
+  for(const file of ['home-view.mjs','cash.mjs','challenge.mjs','sicbo-view.mjs','app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
     assert.deepEqual(await readFile(path.join(site,'play/src',file)),await readFile(path.join(root,'src',file)));
   }
   assert.ok((await stat(path.join(site,'.nojekyll'))).isFile());
 });
 test('all runtime PNGs match original assets byte for byte',async()=>{
-  const images=['art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip','chips-five'].map(id=>`art/sicbo-board-b/${id}.png`),'art/baccarat-b/cards.png'];
+  const images=['art/home-b/background.png','art/home-b/logo.png','art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip','chips-five'].map(id=>`art/sicbo-board-b/${id}.png`),'art/baccarat-b/cards.png'];
   for(const file of images)assert.deepEqual(await readFile(path.join(site,'play/public',file)),await readFile(path.join(root,'public',file)));
 });
 test('CSS and runtime assets resolve inside both root and project Pages URLs',async()=>{
@@ -61,10 +61,10 @@ test('root and docs entry points version app and CSS without breaking relative p
 test('all entry-module dependencies share the release version to avoid stale export caches',async()=>{
   const version=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
   for(const base of [root,path.join(site,'play')]){
-    for(const file of ['cash.mjs','challenge.mjs','sicbo-view.mjs','app.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat-squeeze.mjs','baccarat-view.mjs']){
+    for(const file of ['home-view.mjs','cash.mjs','challenge.mjs','sicbo-view.mjs','app.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat-squeeze.mjs','baccarat-view.mjs']){
       const source=await readFile(path.join(base,'src',file),'utf8');
       const imports=[...source.matchAll(/from '(\.\/[^']+)'/g)].map(m=>m[1]);
-      assert.ok(imports.length>0||file==='cash.mjs');
+      assert.ok(imports.length>0||['cash.mjs','home-view.mjs'].includes(file));
       for(const dependency of imports){
         assert.ok(dependency.endsWith(`?v=${version}`),`${file} has an unversioned dependency`);
         assert.ok((await stat(path.join(base,'src',dependency.split('?')[0]))).isFile());

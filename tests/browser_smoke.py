@@ -14,8 +14,8 @@ URL = (ROOT / 'dist/charity-casino-prototype.html').as_uri()
 OUT = ROOT / 'docs/previews'
 
 def start(page, player='試玩者'):
-    if page.locator('.home-options[open]').count():
-        page.locator('.home-options summary').click()
+    if not page.locator('#start-form').count():
+        act(page, 'home-start')
     page.locator('#player-name').fill(player)
     page.locator('#start-form button[type=submit]').click()
     overflow(page)
@@ -34,8 +34,11 @@ def act(page, name, **attrs):
     if name == 'remove' and not page.locator('details.bet-details').evaluate('(n)=>n.open'):
         page.locator('details.bet-details summary').click()
     candidate = page.locator(selector + ':visible')
-    if not candidate.count() and page.locator('.home-options summary').count():
-        page.locator('.home-options summary').click()
+    if not candidate.count() and page.locator('.home-title-screen').count():
+        if name == 'continue':
+            act(page, 'home-start')
+        elif name in ['import', 'sound', 'sound-test', 'mode', 'export-legacy']:
+            act(page, 'home-settings')
     if not candidate.count() and page.locator('.mobile-table [data-action=table-tools]:visible').count():
         page.locator('.mobile-table [data-action=table-tools]:visible').click()
     page.locator(selector + ':visible').first.click()
@@ -83,6 +86,10 @@ def mobile_size_composition(page):
 
 def overflow(page):
     mobile_size_composition(page)
+    for node in page.locator('.title-menu-button').all():
+        box = node.bounding_box()
+        assert box and box['width'] >= 44 and box['height'] >= 44, box
+        assert box['x'] >= 0 and box['y'] >= 0 and box['x']+box['width'] <= page.viewport_size['width']+1 and box['y']+box['height'] <= page.viewport_size['height']+1, box
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1')
     if page.locator('.table-shell,.home,.lobby-shell,.story-page').count() and not page.locator('.board-scroll.is-zoomed').count():
         assert page.evaluate('document.documentElement.scrollHeight <= window.innerHeight + 1')
@@ -152,7 +159,7 @@ def main():
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.add_init_script('let diceIndex=0; crypto.getRandomValues=(array)=>{array[0]=[1,2,3][diceIndex++%3];return array;};')
         page.goto(URL)
-        page.locator('.home-options summary').click()
+        act(page, 'home-settings')
         expect(page.locator('[data-action=sound-test]')).to_be_visible()
         act(page, 'sound-test')
         expect(page.locator('[data-action=sound]')).to_have_attribute('aria-pressed', 'true')
@@ -160,9 +167,15 @@ def main():
         act(page, 'sound')
         expect(page.locator('[data-action=sound]')).to_have_attribute('aria-pressed', 'false')
         page.reload()
+        act(page, 'home-settings')
         expect(page.locator('[data-action=sound]')).to_have_attribute('aria-pressed', 'false')
         act(page, 'sound')
-        expect(page.locator('#player-name')).to_be_visible()
+        act(page, 'close-overlay')
+        expect(page.locator('.title-logo img')).to_have_attribute('alt', '五分鐘賭神')
+        for entrance in ['home-rank', 'home-support']:
+            act(page, entrance)
+            expect(page.locator('.home-info-status')).to_be_visible()
+            act(page, 'close-overlay')
         page.screenshot(path=str(OUT / 'prototype-home.png'), full_page=True)
         start(page)
         act(page, 'shop')

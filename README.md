@@ -1,8 +1,8 @@
-# 賭王慈善大賽 · 本機原型0.8.0
+# 五分鐘賭神 · 本機原型0.9.0
 
-目前本機版本：0.8.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
+目前本機版本：0.9.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
-此提交為0.8.0發布包，GitHub Pages完成此提交的部署後生效；部署結果另記於交接收據。
+此提交為0.9.0發布包，GitHub Pages完成此提交的部署後生效；實際部署結果另記於發布收據。
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -29,6 +29,8 @@ npm run verify
 執行語法、規則／存檔、單檔打包與封裝校驗。npm run build可重新產生HTML。
 
 ## 功能
+
+- 0.9.0（本機）：接入確認的「五分鐘賭神」主頁及電影感Logo，四個真正選單按鈕；開始遊戲開姓名／模式／續玩視窗，設定收音效／試聽／匯入及舊檔匯出。排行榜與支持作者清楚標示尚未開放，不串網絡／付款。詳docs/HOME_SCREEN_090.md。五桌及五分鐘規則／新舊存檔識別保持。
 
 - 0.8.0（本機）：$100／五分鐘最高資金挑戰，購物及大廳照計、手動／背景停錶、到時自動收尾。結算列五桌局數與淨贏取；精確大整數金額及獨立schema2存檔，保留舊檔。詳docs/LOCAL_FIVE_MINUTE_080.md。未接排行榜或雲端。
 - 0.7.1：橫向德州補回自己牌型；公共牌／彩池按對手與自己手牌的可用空間上移置中。首頁及大廳改單屏，次要選項收合。詳docs/POKER_READABILITY_071.md；Safari實機待驗。
@@ -72,7 +74,7 @@ npm run verify
 
 ## 驗證狀態
 
-共281項通過：272項規則／元件／app替身、3項單檔封裝、6項Pages；包含500次混合五分鐘挑戰與既有10,000局模擬。browser_smoke.py僅Python語法檢查，未執行瀏覽器。Safari、觸控、實際畫面比例／捲動及聲效輸出未驗證，詳docs/LOCAL_FIVE_MINUTE_VALIDATION.json及DEBUG_HANDOFF.md。
+共297項通過：288項規則／元件／app替身、3項單檔封裝、6項Pages；包含新主頁16項、500次混合五分鐘挑戰與既有10,000局模擬。browser_smoke.py僅Python語法檢查，未執行瀏覽器。Safari、觸控、實際畫面比例／捲動及聲效輸出未驗證，詳docs/HOME_SCREEN_VALIDATION.json及DEBUG_HANDOFF.md。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

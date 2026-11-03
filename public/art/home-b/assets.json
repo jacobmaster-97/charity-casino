@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-03",
+  "version": "0.9.0",
+  "status": "approved_design_integrated_locally",
+  "source": "OpenAI image_gen original project artwork; user-approved home v2",
+  "background_prompt": "docs/previews/home-landscape-v1/art-prompt.md",
+  "logo_prompt": "docs/previews/home-landscape-v2/logo-prompt.md",
+  "assets": [
+    {
+      "file": "background.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGB",
+      "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5",
+      "approved_source": "docs/previews/home-landscape-v1/background-art.png"
+    },
+    {
+      "file": "logo.png",
+      "size": [
+        2172,
+        724
+      ],
+      "mode": "RGBA",
+      "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e",
+      "approved_source": "docs/previews/home-landscape-v2/logo.png"
+    }
+  ],
+  "pixel_changes": false,
+  "layers": [
+    "illustration",
+    "transparent logo",
+    "real DOM menu buttons"
+  ],
+  "external_film_logo_copied": false
+}

@@ -1,4 +1,4 @@
-import {money,duration} from './rules.mjs?v=0.8.0';
+import {money,duration} from './rules.mjs?v=0.9.0';
 export const CHALLENGE_MS=300000;
 export const CHALLENGE_RULESET='five-minute-v1';
 export const CHALLENGE_TABLES={sicbo:'大小',baccarat:'百家樂',blackjack:'21點',poker:'德州撲克',roulette:'輪盤'};

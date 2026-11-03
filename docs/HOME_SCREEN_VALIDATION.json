@@ -1,0 +1,138 @@
+{
+  "version": "0.9.0",
+  "date": "2026-11-03",
+  "recorded_at_utc": "2026-11-03T01:56:50.996437+00:00",
+  "scope": "approved five-minute-god home integrated locally; no online services",
+  "checks": {
+    "npm_run_verify": "PASS",
+    "unit_and_component_tests": 288,
+    "new_home_tests": 16,
+    "package_tests": 3,
+    "npm_run_verify_pages": "PASS",
+    "pages_tests": 6,
+    "total_tests": 297,
+    "failed": 0,
+    "home_and_four_dialog_html_templates": "balanced HTML",
+    "browser_smoke_python_compile": "PASS",
+    "mixed_five_minute_sessions_retained": 500,
+    "existing_simulated_rounds_retained": 10000,
+    "node_app_tests": "event and DOM doubles; not browser evidence"
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29856799,
+    "sha256": "78908d3a9894d36385a8f334bbd47512d797f5b1fcff9482cbd3314278776e10"
+  },
+  "pages_runtime": {
+    "count": 24,
+    "sha_matches_source": true
+  },
+  "runtime_pngs": [
+    {
+      "path": "public/art/baccarat-b/cards.png",
+      "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd",
+      "bytes": 2187989
+    },
+    {
+      "path": "public/art/home-b/background.png",
+      "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5",
+      "bytes": 2287430
+    },
+    {
+      "path": "public/art/home-b/logo.png",
+      "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e",
+      "bytes": 2358990
+    },
+    {
+      "path": "public/art/prototype-b/dice.png",
+      "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b",
+      "bytes": 1587909
+    },
+    {
+      "path": "public/art/prototype-b/dome.png",
+      "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca",
+      "bytes": 1291799
+    },
+    {
+      "path": "public/art/prototype-b/props.png",
+      "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf",
+      "bytes": 1492795
+    },
+    {
+      "path": "public/art/prototype-b/table.png",
+      "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0",
+      "bytes": 2237982
+    },
+    {
+      "path": "public/art/sicbo-board-b/chip.png",
+      "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0",
+      "bytes": 1786628
+    },
+    {
+      "path": "public/art/sicbo-board-b/chips-five.png",
+      "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0",
+      "bytes": 929177
+    },
+    {
+      "path": "public/art/sicbo-board-b/dice.png",
+      "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d",
+      "bytes": 1310364
+    },
+    {
+      "path": "public/art/sicbo-board-b/felt.png",
+      "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9",
+      "bytes": 2196918
+    },
+    {
+      "path": "public/art/styles/b/lobby-populated-v4.png",
+      "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f",
+      "bytes": 2429310
+    }
+  ],
+  "approved_art_pixels_unchanged": true,
+  "existing_runtime_pngs_preserved": 10,
+  "other_module_bodies_unchanged_except_cache_queries": [
+    "src/poker-game.mjs",
+    "src/roulette-game.mjs",
+    "src/storage.mjs",
+    "src/baccarat-squeeze.mjs",
+    "src/sicbo-view.mjs",
+    "src/board.mjs",
+    "src/blackjack-view.mjs",
+    "src/blackjack.mjs",
+    "src/poker.mjs",
+    "src/sound.mjs",
+    "src/game.mjs",
+    "src/cash.mjs",
+    "src/roulette.mjs",
+    "src/roulette-view.mjs",
+    "src/rules.mjs",
+    "src/blackjack-game.mjs",
+    "src/table-layout.mjs",
+    "src/challenge.mjs",
+    "src/baccarat-view.mjs",
+    "src/poker-view.mjs",
+    "src/baccarat.mjs",
+    "src/server.mjs"
+  ],
+  "unverified": [
+    "Safari, Chrome and other true browser layouts",
+    "Phone landscape, iPad 4:3 and portrait fallback visual quality",
+    "Physical touch, safe area and software keyboard focus",
+    "Logo fine stroke recognition on small physical screen",
+    "Actual whole-page scroll / dialog rectangles",
+    "Hardware sound output",
+    "Extreme amount continuation button wrapping"
+  ],
+  "not_executed": [
+    "Local HTTP / Chromium IPC retry",
+    "Browser smoke runtime",
+    "GitHub publication / Pages deployment",
+    "Leaderboard / Cloudflare / payment services"
+  ],
+  "last_published_release": {
+    "version": "0.8.0",
+    "commit": "28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65"
+  },
+  "rollback": "Restore 0.8.0 runtime and matching cache queries without clearing either save namespace"
+}

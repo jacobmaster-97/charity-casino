@@ -1,8 +1,48 @@
 # CODEX_HANDOFF
 
-## 最新：0.8.0已獲明確GitHub發布指示，發布準備（2026-11-02）
+## 最新：使用者授權發布0.9.0，發布準備（2026-11-03）
 
-使用者於本機交付後要求「將新版發佈到GitHub」，已授權更新原jacobmaster-97/charity-casino main及既有Pages，先前本機不發布的邊界已解除。遠端讀取確認main仍為690c6f02aaa194431fb7c263061d3ad17ee574d0／tree c31d14957fd27d3c7d7c0112340b0637dcd332b6，沒有其他新提交。準備以該commit為parent，保留未變資產，僅送發布差異，最後以expected_sha更新main；再核對Pages部署結果。下方0.8.0本機驗證及裝置未驗項仍適用，不接排行榜／Cloudflare。發布完成後另記commit、tree、檔案SHA及Pages run；若未完成不得當已發布。
+使用者「更新github」已授權原倉庫main及Pages更新。遠端確認仍0.8.0 commit28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65／tree6fef4ace76b4df0f75c93dec4db10703f0fb61bf；準備以該parent及expected_sha非force更新，保留原資產／存檔。發布檢查重現tests/home.test對未上傳docs/previews的依賴（乾淨來源7過1個ENOENT），已改核對public/art/home-b/assets.json中原已批准SHA，遊戲本體不變。待完成重新驗證、準備來源、上傳新圖與Git tree核對，再確認對應Pages run；未完成不得當已發布。排行榜／付款仍不做。
+
+## 最新：0.9.0五分鐘賭神主畫面已本機實裝／封裝（2026-11-03）
+
+使用者「實裝主畫面」已批准v2，先前等待確認限制解除。已將確認的港漫背景及透明電影感Logo複製至public/art/home-b，逐位元組等於預覽；主頁改為真正DOM四入口：開始遊戲、賭神龍虎榜、設定、支持作者。指定底部文案及舊重複小標不再顯示，頁籤／一般HUD／故事銜接統一新名；技術存檔識別及前綴不改。
+
+開始遊戲開姓名／模式／續玩，驗證後進原故事卡，最後確認才啟動原Game $100／300秒。設定包含原音效／試聽、模式、續玩、匯入及有舊檔才可匯出；排行榜／支持作者清楚說明未開放，不連網、不付款或建立雲端。主頁對話框沿原inert／Tab圈，Escape／返回還原入口焦點，重新排版保留姓名與游標。橫向以1080單位及最少1920寬保持構圖、超寬擴右留白，4:3平板保留16:9置中；直向提供可點備用排列／橫向建議。safe-area及視口量測不改牌桌owner，主要選單至少44px。
+
+重要檔：src/home-view.mjs、app.mjs、styles.css、public/art/home-b及assets.json；build／pages／prepare-github腳本、tests/home.test.mjs、challenge-app及封裝測試；全快取0.9.0。22個其他mjs本文與已發布0.8.0快照一致（僅query快取版本差異），原十張runtime PNG不改。規格／UI審核見docs/HOME_SCREEN_090.md，驗證／SHA見HOME_SCREEN_VALIDATION.json。
+
+最終npm run verify通過288規則／元件／事件替身＋3單檔，verify:pages通過6，共297；新增16主頁／事件流程，保留500次混合五分鐘與10,000局回歸。主頁／四對話框實際renderer HTML解析平衡，browser_smoke只Python語法。12張PNG／24 runtime根與docs一致，無手圖。單檔dist/charity-casino-prototype.html 29,856,799 bytes，SHA256 78908d3a9894d36385a8f334bbd47512d797f5b1fcff9482cbd3314278776e10，manifest同步。
+
+沒有真瀏覽器／Safari／觸控／安全區／軟鍵盤或音訊硬體證據；目前預覽圖不是新實裝截圖，勿混稱。遵守HTTP／Chromium IPC停止重試，未重試。未另行發布GitHub／Pages，最後已發布仍0.8.0 commit28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65；dist/github-upload及zip為歷史包。下一最安全工作：iPad Safari核對主頁四入口、橫向／4:3、開始／續玩、鍵盤焦點及試聽；使用者要求發布時才發0.9.0，不自行開始排行榜。
+
+## 最新：改名五分鐘賭神／港式電影感Logo預覽v2，待確認（2026-11-03）
+
+使用者已確定新遊戲名「五分鐘賭神」，要求刪除「$100開局，五分鐘決勝」及重新設計Logo，參考香港《賭神》《賭俠》《賭聖》的電影片名字體氣勢。延續上一輪先確認才實裝限制，本次只新增docs/previews/home-landscape-v2/及文件，不替換正式主頁或部署，正式0.8.0維持。
+
+image_gen產出原創金色書法／酒紅立體邊緣的透明Logo（2172×724 RGBA），完整五字「五分鐘賭神」，沒有貼上／描摹電影原Logo。logo.png為原始副本，透明alpha及SHA吻合；SVG以contain／viewBox放進原留白，未修PNG像素。保留v1背景人物／四入口，刪底部指定文案及舊重複「五分鐘挑戰」小標。提供1440×480獨立Logo展示、1920×1080／844×390／667×375主頁PNG／SVG及切換HTML，來源／prompt／幾何見該目錄assets、logo-layout、validation及README。
+
+驗證：4份展示PNG解碼／尺寸、SVG XML、預覽JS／generator語法、必需名稱及文字移除、12個主按鍵至少50px／界內、Logo原始SHA及真alpha、背景SHA通過；95份正式檔與事前SHA一致。已目視五字、無遮臉及四選項；未做OCR／瀏覽器／Safari／觸控／實際小螢幕細筆辨識，不以舊281項當新設計證據。未接排行榜或支持付款。
+
+下一最安全任務：待使用者確認新Logo與主頁v2，得到明確確認後才統一正式遊戲名稱並替換原主頁／真DOM接線／實機驗證。不自行部署或開發Cloudflare。
+
+## 最新：橫向開始主頁v1僅設計預覽，等待確認（2026-11-03）
+
+使用者要求參照上載圖片設計橫向開始頁，四入口固定為「開始遊戲／賭神龍虎榜／設定／支持作者」，明確確認後才實裝並更換原主頁。本輪只新增docs/previews/home-landscape-v1/，沒有修改src／public／正式入口／Pages檔或部署。正式仍0.8.0、commit 28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65；上一輪發布授權不表示可以發布這次尚未確認的預覽。
+
+設計：左側港漫三人主視覺／金色標題與維港，右側四個直排立體牌匾；金色開始、酒紅排行榜、翠綠設定、墨綠支持。image_gen以既有promotion-hk-manhua-v5角色方向重構無字背景，精確中文字／按鈕另用SVG排版，不複製上載遊戲角色或石塊。提供1920×1080、844×390、667×375的PNG／SVG與切換HTML（用途提示，非遊戲接線）。source／prompt／分層／SHA／幾何及UI暫評見該目錄assets.json、art-prompt.md、layout.json、validation.json及README。
+
+驗證：3張PNG解碼及尺寸、SVG XML／四個正確標籤、12個按鍵皆在界內且至少50px高、原始插畫副本SHA、預覽JS／generator語法通過；95個正式來源／素材／發布檔與事前SHA一致。已目視輸出確認標題不遮臉、四按鈕可見；最小標籤20.1px、輔助14.2px，純配色對比最低4.67。未執行瀏覽器／Safari／觸控，未以舊281項充當預覽驗證。排行榜／設定／支持作者只入口設計，沒有後端、付款或外連；設定內容／支持連結未定。iPad4:3及直向未設計。
+
+下一最安全任務：讓使用者確認構圖／按鈕比例，得到明確確認後才接入原首頁流程、實作真DOM／安全區與補比例驗證；不得自行更換原主頁、部署或開始Cloudflare排行榜。
+
+## 最新：0.8.0已發布GitHub及Pages成功（2026-11-02）
+
+使用者於本機交付後要求「將新版發佈到GitHub」，已授權更新原jacobmaster-97/charity-casino main及既有Pages，先前本機不發布的邊界已解除。以0.7.1的690c6f02aaa194431fb7c263061d3ad17ee574d0為parent及expected_sha，非force更新main成功。新版commit 28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65，tree 6fef4ace76b4df0f75c93dec4db10703f0fb61bf；192份發布檔案Git blob SHA核對一致，67檔變更，26份PNG副本未改且無手圖。完整npm run verify與prepare:github通過281項，未改遊戲玩法；發布腳本補收LOCAL_FIVE_MINUTE_VALIDATION.json。
+
+Pages run41479517386 completed/success，head_sha與新版commit一致。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.8.0 ，提交 https://github.com/jacobmaster-97/charity-casino/commit/28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65 。收據docs/LOCAL_FIVE_MINUTE_RELEASE.json及dist發布metadata已更新；發布後收據與本地交接不另部署。dist/github-upload現為本輪0.8.0發布快照，舊zip仍是歷史版本，不當新包。需要回退時可回0.7.1 base commit整體版本，不清玩家保存。
+
+未建立Cloudflare、Supabase、排行榜或API。Safari、真DOM比例／整頁捲動、觸控、鍵盤、聲效硬體及原生背景仍UNVERIFIED；Pages部署成功不是實機證據，亦未直接HTTP核對公開Pages內容。下一最安全任務是iPad Safari實機核對05:00／$100、暫停恢復及到時收尾；不得自行開始排行榜。下方本機開發段落為發布前歷史。
 
 ## 最新：0.8.0本機五分鐘挑戰已實裝及封裝，階段一停止（2026-11-02）
 
