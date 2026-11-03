@@ -1,0 +1,36 @@
+{
+  "version": "0.9.0",
+  "game_name": "五分鐘賭神",
+  "date": "2026-11-03",
+  "repository": "jacobmaster-97/charity-casino",
+  "base_commit": "28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65",
+  "commit": "4cc7a668d3b9e9dac989a97fab155445669a8e83",
+  "tree": "c4b91b6234608aa453b77a9712b2210561861036",
+  "pages": {
+    "run_id": 41567146790,
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41567146790"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.9.0",
+  "prepared_files_verified": 203,
+  "changed_files": 68,
+  "total_png_copies": 30,
+  "unchanged_png_copies": 26,
+  "new_unique_pngs": 2,
+  "new_png_copies": 4,
+  "hand_graphic_present": false,
+  "checks": {
+    "unit": 288,
+    "package": 3,
+    "pages": 6,
+    "total": 297,
+    "clean_source_home_tests": 8,
+    "browser_smoke": "Python syntax only",
+    "safari_device": "UNVERIFIED"
+  },
+  "source_packaging_fix": "Use recorded approved PNG SHA values instead of excluded preview files in tests/home.test.mjs; no runtime behavior change",
+  "scope": "Approved title screen, logo, four native entries, existing start/continue/sound/save flows. No leaderboard or payment service.",
+  "rollback_commit": "28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65",
+  "bookkeeping": "Post-release receipt and local handoff updates do not trigger another deployment."
+}

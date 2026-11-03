@@ -1,8 +1,26 @@
 # DEBUG_HANDOFF
 
+## 0.9.1發布授權及核對（2026-11-03）
+
+使用者已授權更新GitHub，遠端0.9.0 head與預期一致。沿原GitHub連接器Git tree／commit／expected_sha非force更新，不取用或索取權杖，發布後核對相同head_sha的Pages run。只發布本機0.9.1，沒有新的玩法修改；保留HTTP／Chromium IPC停止重試及Safari未驗界線，不為事後本地收據另部署。
+
+## 0.9.1：大廳高度分配與更多收尾（2026-11-03）
+
+使用者舊版實機截圖顯示高度受限的地圖；來源確認底列44px、進度條3px及內gap8px仍佔flex高度，上方標題／大商店鍵又覆蓋地圖，HUD44px。移除該列／條及遮擋，把商店／更多／暫停放35.2px HUD，按原fitLobbySurface保持原圖與hit target比例。估算回收63.8px是CSS算式，不是假裝量到新Safari畫面。
+
+新更多沿原overlay，必須加進到時覆蓋列表，避免截止仍停留說明。新增5個app替身檢查通過。鍵盤收尾假設：Escape直接closeOverlay重設last，可能漏計前一interval後的時間；以75ms只推performance、不發interval後按Escape，先得到0!=75。補advance後再close，回歸75ms且完整302項通過，不改Game。一次性HUD擷取helper首跑漏傳overlay而ReferenceError，傳null後三個HTML解析通過，非正式app缺陷。
+
+302項＝293＋3＋6，12原runtime PNG不改、24runtime同步。browser_smoke已加35.2px／map可用高度／入座矩形及更多路徑，但只Python語法；實機／Safari／軟鍵盤／安全區／35.2px點按／超長錢額及音訊未驗。繼續禁止重試已知HTTP EPERM／Chromium IPC，沒有啟動該路徑。此輪僅本機0.9.1，尚未更新GitHub，無排行榜或付款。
+
+下一個最小驗證：手機／iPad橫向看頂欄35.2、地圖與五入口，更多開啟時倒數照計，讀檔返回及背景停錶；真正矩形與體感需要裝置，不能用模型或Node替身代替。詳LOBBY_VIEW_091.md及LOBBY_VIEW_VALIDATION.json。
+
 ## 0.9.0發布前：素材測試依賴未發布預覽（2026-11-03）
 
-根因假設為prepare-github刻意排除docs/previews，但home.test最後一項直接讀該路徑。最小反證：只複製該測試、home-view及兩正式圖／assets.json至乾淨暫存來源後跑Node，7過1個ENOENT；符合假設。已改以隨倉庫發布的assets.json批准SHA核對圖片，不減少完整圖checksum，也不把整批預覽放入正式發布。待乾淨來源重驗，遊戲程式未改。使用者已授權更新GitHub，舊0.8.0 lease保護；不重試HTTP／Chromium IPC，不索取權杖。
+根因假設為prepare-github刻意排除docs/previews，但home.test最後一項直接讀該路徑。最小反證：只複製該測試、home-view及兩正式圖／assets.json至乾淨暫存來源後跑Node，7過1個ENOENT；符合假設。已改以隨倉庫發布的assets.json批准SHA核對圖片，不減少完整圖checksum，也不把整批預覽放入正式發布。完整297項及無預覽的準備來源home8項已通過，遊戲程式未改。
+
+以0.8.0 expected_sha非force發布main成功，commit4cc7a668d3b9e9dac989a97fab155445669a8e83／tree c4b91b6234608aa453b77a9712b2210561861036。203準備檔SHA一致、68變更、新兩圖4份副本、舊26PNG副本不改。Pages run41567146790 completed/success、head_sha正確。HOME_SCREEN_RELEASE.json及本地發布metadata記錄，事後交接不另部署。未遇GitHub拒絕、不索取或讀取權杖。
+
+Safari／真DOM／鍵盤／觸控／聲效硬體仍未驗，未直接HTTP核對公開Pages，沒有重試已停止的HTTP／Chromium IPC路徑。部署成功不是實機證據；不接排行榜／付款。下一最小驗證為iPad Safari開?v=0.9.0，確認四入口、新挑戰及續玩餘秒，並轉向／試聽。
 
 ## 0.9.0：主畫面已實裝，事件與封裝證據（2026-11-03）
 

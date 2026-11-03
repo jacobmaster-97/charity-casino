@@ -34,6 +34,8 @@ def act(page, name, **attrs):
     if name == 'remove' and not page.locator('details.bet-details').evaluate('(n)=>n.open'):
         page.locator('details.bet-details summary').click()
     candidate = page.locator(selector + ':visible')
+    if not candidate.count() and page.locator('.lobby-hud').count() and name in ['home', 'saves']:
+        act(page, 'lobby-more')
     if not candidate.count() and page.locator('.home-title-screen').count():
         if name == 'continue':
             act(page, 'home-start')
@@ -86,6 +88,17 @@ def mobile_size_composition(page):
 
 def overflow(page):
     mobile_size_composition(page)
+    if page.locator('.lobby-hud').count():
+        hud = page.locator('.lobby-hud').bounding_box()
+        shell = page.locator('.lobby-shell').bounding_box()
+        board = page.locator('.lobby-map').bounding_box()
+        assert abs(hud['height'] - 35.2) < .2, hud
+        assert page.locator('.lobby-bottom,.lobby .section-heading,.lobby .goal-bar').count() == 0
+        assert shell['height'] - board['height'] - hud['height'] <= 20, (shell, board, hud)
+        for station in page.locator('.station').all():
+            hit = station.bounding_box()
+            assert hit and hit['height'] >= 44 and hit['width'] >= 88, hit
+            assert hit['x'] >= board['x'] - 1 and hit['x'] + hit['width'] <= board['x'] + board['width'] + 1, (hit, board)
     for node in page.locator('.title-menu-button').all():
         box = node.bounding_box()
         assert box and box['width'] >= 44 and box['height'] >= 44, box

@@ -14,7 +14,7 @@ async function gather(directory){
 }
 for(const dir of ['src','scripts','tests','.agents/skills/gamestudio','public/art/home-b','public/art/prototype-b','public/art/sicbo-board-b','public/art/baccarat-b','docs/play'])await gather(dir);
 files.push('docs/index.html','docs/.nojekyll','public/art/styles/b/lobby-populated-v4.png','public/art/styles/b/lobby-background.png','public/art/styles/b/asset.json');
-for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||entry.name.endsWith('_RELEASE.json')||['skill-installation.json','GITHUB_UPLOAD.json','LOCAL_FIVE_MINUTE_VALIDATION.json','HOME_SCREEN_VALIDATION.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
+for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||entry.name.endsWith('_RELEASE.json')||['skill-installation.json','GITHUB_UPLOAD.json','LOCAL_FIVE_MINUTE_VALIDATION.json','HOME_SCREEN_VALIDATION.json','LOBBY_VIEW_VALIDATION.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
 const manifest=[];
 for(const relative of [...new Set(files)].sort()){
   const source=path.join(root,relative),output=path.join(destination,relative),bytes=await readFile(source);

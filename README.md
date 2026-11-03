@@ -1,8 +1,8 @@
-# 五分鐘賭神 · 本機原型0.9.0
+# 五分鐘賭神 · 本機原型0.9.1
 
-目前本機版本：0.9.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
+目前本機版本：0.9.1，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
-此提交為0.9.0發布包，GitHub Pages完成此提交的部署後生效；實際部署結果另記於發布收據。
+此提交為0.9.1發布包，GitHub Pages完成此提交的部署後生效；實際部署結果另記於發布收據。
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -29,6 +29,8 @@ npm run verify
 執行語法、規則／存檔、單檔打包與封裝校驗。npm run build可重新產生HTML。
 
 ## 功能
+
+- 0.9.1（本機）：大廳刪除底部功能列、進度條及地圖上的標題／商店遮擋；商店、更多、暫停整合頂欄，頂欄44→35.2px。存檔、返回主頁及說明移至更多，閱讀時照計挑戰時間；地圖／五桌入座按原比例共同放大。詳docs/LOBBY_VIEW_091.md。
 
 - 0.9.0（本機）：接入確認的「五分鐘賭神」主頁及電影感Logo，四個真正選單按鈕；開始遊戲開姓名／模式／續玩視窗，設定收音效／試聽／匯入及舊檔匯出。排行榜與支持作者清楚標示尚未開放，不串網絡／付款。詳docs/HOME_SCREEN_090.md。五桌及五分鐘規則／新舊存檔識別保持。
 
@@ -74,7 +76,7 @@ npm run verify
 
 ## 驗證狀態
 
-共297項通過：288項規則／元件／app替身、3項單檔封裝、6項Pages；包含新主頁16項、500次混合五分鐘挑戰與既有10,000局模擬。browser_smoke.py僅Python語法檢查，未執行瀏覽器。Safari、觸控、實際畫面比例／捲動及聲效輸出未驗證，詳docs/HOME_SCREEN_VALIDATION.json及DEBUG_HANDOFF.md。
+共302項通過：293項規則／元件／app替身、3項單檔封裝、6項Pages；包含新大廳5項、新主頁16項、500次混合五分鐘挑戰與既有10,000局模擬。browser_smoke.py僅Python語法檢查，未執行瀏覽器。Safari、觸控、實際畫面比例／捲動及聲效輸出未驗證，詳docs/LOBBY_VIEW_VALIDATION.json及DEBUG_HANDOFF.md。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

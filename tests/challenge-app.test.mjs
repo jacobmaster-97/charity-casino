@@ -8,7 +8,7 @@ for(const match of source.matchAll(/^import \{[^\n]+\} from '([^']+)';/gm))Objec
 function boot({start=true}={}){
  const listeners={},events={},timers=[],clock={now:0},store=new Map(),focused=[];const blank={style:{setProperty(){}},dataset:{},classList:{add(){},remove(){},contains(){return false;}},focus(){},querySelector(){return blank;},querySelectorAll(){return [];},setAttribute(){}};
  const nameInput={...blank,id:'player-name',value:'接線測試',selectionStart:2,selectionEnd:2,focus(){focused.push('player-name');},setSelectionRange(a,b){this.selectionStart=a;this.selectionEnd=b;}};
- const app={...blank,innerHTML:'',addEventListener:(name,fn)=>events[name]=fn,querySelector:s=>s.startsWith('[data-action="home-')?{focus(){focused.push(s);}}:null,querySelectorAll:()=>[]},toast={...blank},elapsed={textContent:''},modal={...blank,querySelector:s=>s==='#player-name'?nameInput:blank};
+ const app={...blank,innerHTML:'',addEventListener:(name,fn)=>events[name]=fn,querySelector:s=>(s.startsWith('[data-action="home-')||s==='[data-action="lobby-more"]')?{focus(){focused.push(s);}}:null,querySelectorAll:()=>[]},toast={...blank},elapsed={textContent:''},modal={...blank,querySelector:s=>s==='#player-name'?nameInput:blank};
  const document={hidden:false,activeElement:{dataset:{},tagName:'BUTTON',classList:blank.classList},documentElement:{style:blank.style},querySelector:s=>s==='#app'?app:s==='#toast'?toast:s==='#player-name'&&app.innerHTML.includes('id="player-name"')?nameInput:s==='#elapsed'&&app.innerHTML.includes('id="elapsed"')?elapsed:s==='.modal'&&app.innerHTML.includes('class="modal ')?modal:null,querySelectorAll:()=>[],addEventListener:(name,fn)=>listeners[name]=fn};
  const window={localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>listeners['window-'+name]=fn};
  class QuietSound{enabled=true;play(){}sync(){}stopAll(){}unlock(){return Promise.resolve(false);}setMuted(v){this.enabled=!v;}test(){return Promise.resolve(false);}}
@@ -20,10 +20,10 @@ function boot({start=true}={}){
  vm.runInContext(code,context);
  const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
  if(start){events.input({target:{id:'player-name',value:'接線測試'}});act('enter');}
- return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},tick(ms){clock.now+=ms;timers[0]();}};
+ return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},elapse(ms){clock.now+=ms;},tick(ms){clock.now+=ms;timers[0]();}};
 }
 test('app starts the five-minute ruleset and shop HUD keeps counting down',()=>{
- const t=boot();assert.equal(t.subject.game.challenge,true);assert.ok(t.app.innerHTML.includes('五分鐘最高資金挑戰'));t.tick(1000);assert.equal(t.elapsed.textContent,'00:04:59');t.act('shop');assert.equal(t.subject.game.screen,'shop');assert.ok(t.app.innerHTML.includes('計時繼續'));t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);assert.equal(t.elapsed.textContent,'00:04:58');
+ const t=boot();assert.equal(t.subject.game.challenge,true);assert.ok(t.app.innerHTML.includes('lobby-map'));t.tick(1000);assert.equal(t.elapsed.textContent,'00:04:59');t.act('shop');assert.equal(t.subject.game.screen,'shop');assert.ok(t.app.innerHTML.includes('計時繼續'));t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);assert.equal(t.elapsed.textContent,'00:04:58');
 });
 test('rules do not pause, but background pauses even with an information panel open and needs Continue',()=>{
  const t=boot();t.act('rules');assert.equal(t.subject.game.paused,false);t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,1000);t.document.hidden=true;t.listeners.visibilitychange();assert.equal(t.subject.game.paused,true);t.tick(20000);assert.equal(t.subject.game.profile.elapsedMs,1000);t.document.hidden=false;t.listeners.visibilitychange();assert.equal(t.subject.game.paused,true);t.act('resume');t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);
@@ -58,4 +58,19 @@ test('returning to home and opening a new challenge never brings old bankroll in
 });
 test('a home start rerender retains the name input focus and caret for viewport changes',()=>{
  const t=boot({start:false});t.act('home-start');t.setName('手機玩家');t.document.activeElement=t.nameInput;t.subject.render();assert.equal(t.focused.at(-1),'player-name');assert.equal(t.nameInput.selectionStart,2);assert.ok(t.app.innerHTML.includes('value="手機玩家"'));
+});
+test('compact lobby puts shop and More in the HUD with all five stations and no bottom row or map heading',()=>{
+ const t=boot();assert.ok(t.app.innerHTML.includes('class="hud lobby-hud"'));assert.ok(t.app.innerHTML.includes('data-action="shop"'));assert.ok(t.app.innerHTML.includes('data-action="lobby-more"'));assert.equal((t.app.innerHTML.match(/data-action="table"/g)||[]).length,5);assert.ok(!/class="lobby-bottom"|class="goal-bar"|class="section-heading"|class="goal-copy"/.test(t.app.innerHTML));assert.ok(!t.app.innerHTML.includes('data-action="home"'));assert.ok(!t.app.innerHTML.includes('data-action="saves"'));
+});
+test('lobby More keeps counting and preserves the existing save route and keyboard trigger',()=>{
+ const t=boot();t.act('lobby-more');assert.ok(t.app.innerHTML.includes('id="lobby-menu-dialog"'));assert.ok(t.app.innerHTML.includes('計時繼續'));assert.ok(t.app.innerHTML.includes('遊玩及存檔說明'));t.tick(1234);assert.equal(t.subject.game.profile.elapsedMs,1234);assert.equal(t.subject.game.paused,false);t.act('saves');assert.ok(t.app.innerHTML.includes('只保存已完成局'));t.act('close-overlay');assert.equal(t.focused.at(-1),'[data-action="lobby-more"]');assert.equal(t.subject.game.profile.bank,10000);
+});
+test('the challenge deadline replaces lobby More with the final result without adding a round',()=>{
+ const t=boot();t.act('lobby-more');t.tick(300000);assert.equal(t.subject.game.profile.status,'finished');assert.ok(t.app.innerHTML.includes('challenge-result-modal'));assert.equal((t.app.innerHTML.match(/data-stat-table=/g)||[]).length,5);assert.ok(!t.app.innerHTML.includes('id="lobby-menu-dialog"'));assert.equal(t.subject.game.profile.rounds,0);assert.equal(t.subject.game.profile.bank,10000);
+});
+test('background still pauses both clocks while lobby More is open and Continue preserves the remaining time',()=>{
+ const t=boot();t.act('lobby-more');t.tick(500);t.document.hidden=true;t.listeners.visibilitychange();assert.equal(t.subject.game.paused,true);t.tick(20000);assert.equal(t.subject.game.profile.elapsedMs,500);t.document.hidden=false;t.listeners.visibilitychange();assert.equal(t.subject.game.paused,true);t.act('resume');t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,1500);assert.equal(t.subject.game.screen,'lobby');
+});
+test('Escape leaves lobby More, and Return Home remains reachable from the relocated controls',()=>{
+ const t=boot();t.act('lobby-more');t.elapse(75);let prevented=false;t.listeners.keydown({key:'Escape',target:{},preventDefault(){prevented=true;}});assert.equal(prevented,true);assert.equal(t.subject.game.profile.elapsedMs,75);assert.equal(t.focused.at(-1),'[data-action="lobby-more"]');assert.ok(!t.app.innerHTML.includes('id="lobby-menu-dialog"'));t.act('lobby-more');t.act('home');assert.equal(t.subject.game.screen,'home');assert.ok(t.app.innerHTML.includes('home-title-screen'));assert.ok(!t.app.innerHTML.includes('aria-modal="true"'));
 });

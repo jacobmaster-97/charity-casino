@@ -1,8 +1,28 @@
 # CODEX_HANDOFF
 
-## 最新：使用者授權發布0.9.0，發布準備（2026-11-03）
+## 最新：0.9.1已獲GitHub發布指示，準備發布（2026-11-03）
 
-使用者「更新github」已授權原倉庫main及Pages更新。遠端確認仍0.8.0 commit28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65／tree6fef4ace76b4df0f75c93dec4db10703f0fb61bf；準備以該parent及expected_sha非force更新，保留原資產／存檔。發布檢查重現tests/home.test對未上傳docs/previews的依賴（乾淨來源7過1個ENOENT），已改核對public/art/home-b/assets.json中原已批准SHA，遊戲本體不變。待完成重新驗證、準備來源、上傳新圖與Git tree核對，再確認對應Pages run；未完成不得當已發布。排行榜／付款仍不做。
+使用者「更新GitHub」已授權更新原jacobmaster-97/charity-casino main及既有Pages。已讀遠端head確認0.9.0 commit4cc7a668d3b9e9dac989a97fab155445669a8e83／tree c4b91b6234608aa453b77a9712b2210561861036，準備以該parent／expected_sha非force更新。只發布已完成0.9.1，不改遊戲、不新建雲端。待核對完整發布檔SHA及對應Pages run，未成功前不稱已發布；結果另記LOBBY_VIEW_RELEASE.json。
+
+## 最新：0.9.1大廳地圖／精簡頂欄已本機完成（2026-11-03）
+
+使用者實機回饋橫向地圖太小，允許刪底列／整合功能，指定頂欄縮矮20%。已移除大廳底列、進度條及蓋在地圖上的標題／大型商店鍵；HUD改35.2px（原44px），保留品牌、資金、餘時，商店／更多／暫停在同一列。更多含存檔／讀檔、返回主頁、姓名／完成局數及說明，開啟時照計，到時轉結果，背景仍停錶。Escape與返回還原更多焦點。五桌仍按原1672×941圖／百分比共縮放，入座88–120px寬／44px高，不拆名稱；沒有新圖或拉伸。
+
+主要改app.mjs、styles.css、challenge-app測試及browser_smoke；其餘23個mjs本文與發布0.9.0一致（僅query快取0.9.1），Game／派彩／存檔不改。源碼配置可多出63.8px map高度，屬算式而非實機測量，寬度限制時仍保持圖比例。頂欄35.2px低於一般44px為使用者指定取捨，不套商店／其他牌桌。
+
+驗證302項通過（293規則／元件／app事件替身＋3單檔＋6 Pages），新5項驗證精簡入口、更多照計／存檔、截止替換、背景及Escape／回主頁，保留500五分鐘及10,000局回歸。另補Escape收尾75ms的先紅後綠：先advance再close，避免重設last時漏掉interval間時間。HUD／map／more實際renderer HTML解析平衡；browser_smoke只Python語法。12 PNG與發布0.9.0逐位元組一致、24runtime根／docs同步、無手圖。
+
+本機dist/charity-casino-prototype.html 29,860,401 bytes，SHA256 a7ee68ead686d1e1663b0573068cd0d0fec0dd56d61b68a28071a4bd599092b8；Pages目錄及manifest同步。詳docs/LOBBY_VIEW_091.md／LOBBY_VIEW_VALIDATION.json。未另發布GitHub，最後網站0.9.0 commit4cc7a668d3b9e9dac989a97fab155445669a8e83；舊github-upload／zip不是0.9.1新包。
+
+Safari／真DOM地圖面積、橫屏／旋轉／安全區、35.2px點按舒適度、長金額及聲效硬體未驗證，未重試HTTP／Chromium IPC。下一最安全任務：iPad／手機橫向驗證地圖、更多、商店及停錶；使用者要求後才發布0.9.1，不自行接排行榜。
+
+## 最新：0.9.0已發布GitHub／Pages成功（2026-11-03）
+
+使用者「更新github」已授權原倉庫main及Pages更新。以0.8.0 commit28d4adb6d2fb5cb5e47832396ea4fa16baf1ab65為parent及expected_sha、force:false更新成功。新commit4cc7a668d3b9e9dac989a97fab155445669a8e83，tree c4b91b6234608aa453b77a9712b2210561861036；203份發布檔案Git blob SHA一致，68檔變更，新增兩張PNG各在根／docs各一份，原26份PNG副本不改且無手圖。背景blob f4547d332171bc90916101ae62d6ab557e4f3f5d、Logo blob81db007fa9675b7a55dead226df724870402efbf均核對吻合。
+
+Pages run41567146790 completed/success且head_sha吻合。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.9.0 ，提交 https://github.com/jacobmaster-97/charity-casino/commit/4cc7a668d3b9e9dac989a97fab155445669a8e83 。docs/HOME_SCREEN_RELEASE.json及dist發布metadata已更新；發布後收據及本地交接不另部署。dist/github-upload現為本輪0.9.0發布快照，舊zip仍是歷史包。
+
+發布前完整npm run verify及prepare:github共297項通過（288＋3＋6），另在準備來源無預覽目錄時home8項通過。發布檢查重現tests/home.test對未上傳docs/previews的依賴（乾淨來源7過1個ENOENT），已改核對public/art/home-b/assets.json中原批准SHA，遊戲本體不變。Safari／真DOM／觸控／鍵盤／硬體聲效及公開Pages直接HTTP未驗，未重試舊HTTP／Chromium IPC。沒有排行榜／Cloudflare／付款。回退可用上一0.8.0 commit及整套快取，不清玩家保存。下一最安全任務：iPad Safari驗證主畫面、開始／續玩、旋轉與試聽，不自行開發下一階段。
 
 ## 最新：0.9.0五分鐘賭神主畫面已本機實裝／封裝（2026-11-03）
 
