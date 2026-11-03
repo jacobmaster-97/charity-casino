@@ -1,5 +1,27 @@
 # DEBUG_HANDOFF
 
+## 0.9.4根因驗證及修正通過（2026-11-03）
+
+0.9.3首頁warm9圖15,021,561 bytes，大小入桌必等8圖12,833,572 bytes及decode。以永不完成請求測試原版26過1失敗（lobby != table），證實入桌門檻。修正為同步入桌、無首頁warm、只意圖hint最多2圖／全清單3種，不呼叫decode，沒有下載回呼改Game。全325項通過，未改Game／規則／PNG。
+
+測試新fixture第一次因start:false未填姓名而失敗，補姓名後app29／layout25及全套通過，非正式程式缺陷。node --test包裝首跑未回個別斷言，改專案原node runner得到明確紅燈；不再用該包裝當證據。
+
+承接剛才GitHub發布授權修復同遊戲回歸，待核對Pages，結果另記LOAD_RECOVERY_RELEASE.json。不要再次加全圖門檻／全局warm／強制decode。Safari瀑布圖、冷暖秒數、CPU記憶體及冷圖觀感未驗；原HTTP／Chromium IPC不重試。
+
+## 最新：0.9.3載入變慢，先驗證入桌門檻（2026-11-03）
+
+使用者發布後回報比之前更慢。源碼證據：首頁idle warm全部9張，入桌Promise.all等該桌4–8張圖load＋decode後才Game.enterTable；圖片位元組沒有減少。根因假設：全圖門檻直接增加點擊等待，無關預載及解碼亦可能爭頻寬／CPU；後者未取真Safari瀑布圖，不當成實測。
+
+最小可否證測試：模擬永不完成的貼圖請求，click table應在同一事件進桌；先用0.9.3得到lobby而非table作紅燈。再取消首頁全圖warm及入桌門檻，將預讀限於指向／聚焦／觸碰的該桌1–2張主要素材且不await，不允許晚到回呼導航／扣時／改Game。保留派彩及名稱框；不得再次加全圖或15秒門檻，勿僅縮loading文字。
+
+沿HTTP／Chromium IPC停止重試，無真機載入秒數證據。先完成本機修正、測試及交接；線上仍0.9.3，沒有本輪發布指示。
+
+## 0.9.3發布核對完成（2026-11-03）
+
+已依使用者授權發布1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9／tree 58090b221dd67b223bad2d670afebdb459f206d4，以expected_sha、force:false更新main，沒有拒絕或並發變更。212檔blob SHA全吻合、62檔變更、30PNG副本不改。Pages run41657918981 completed/success、head_sha吻合；UI_POLISH_RELEASE.json與dist metadata同步，事後收據及本地交接不另部署。
+
+發布前完整322項（313＋3＋6）通過，封裝SHA與先前本機0.9.3一致，沒有新遊戲修改。保留原HTTP／Chromium IPC停止重試，未啟動；browser_smoke僅Python編譯。未驗Safari實機小視窗、真DOM、旋轉／safe-area／觸控／捲動、實際載入秒數／解碼記憶體及音訊，也未直接HTTP核對公開頁。下一最小驗證：iPhone16Plus開https://jacobmaster-97.github.io/charity-casino/?v=0.9.3從冷快取開始逐桌入座與結算，測載入取消及背景恢復；不要以Pages成功宣稱性能已量測。
+
 ## 0.9.3發布準備：原遠端基準核對（2026-11-03）
 
 使用者已授權發布，遠端main仍為預期0.9.2 cba6438bb85dc486970e8dcb151a9766a3b54f4b，沒有並發變更。既有322項本機檢查已完成，發布前再核對封裝與Pages。禁止以舊inline框測試回退新介面，無須改Game；只上傳已完成內容與交接。

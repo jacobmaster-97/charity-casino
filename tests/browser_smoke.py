@@ -113,7 +113,7 @@ def overflow(page):
             assert hit and hit['height'] >= 44 and hit['width'] >= 88, hit
             assert hit['x'] >= board['x'] - 1 and hit['x'] + hit['width'] <= board['x'] + board['width'] + 1, (hit, board)
             assert hit['y'] >= board['y'] - 1 and hit['y'] + hit['height'] <= board['y'] + board['height'] + 1, (hit, board)
-    for dialog in page.locator('.payout-modal:visible,.table-loading-modal:visible').all():
+    for dialog in page.locator('.payout-modal:visible').all():
         box = dialog.bounding_box()
         assert box['x'] >= 0 and box['y'] >= 0 and box['x']+box['width'] <= page.viewport_size['width']+1 and box['y']+box['height'] <= page.viewport_size['height']+1, box
         for action in dialog.locator('button').all():

@@ -6,22 +6,22 @@ const entry=new URL('../src/app.mjs',import.meta.url),source=await readFile(entr
 for(const match of source.matchAll(/^import \{[^\n]+\} from '([^']+)';/gm))Object.assign(bindings,await import(new URL(match[1],entry)));
 // Event/DOM doubles exercise the real app and Game wiring, not browser layout or audio.
 function boot({start=true,artCache=null,mobile=false}={}){
- const listeners={},events={},timers=[],clock={now:0},store=new Map(),focused=[];const blank={style:{setProperty(){}},dataset:{},classList:{add(){},remove(){},contains(){return false;}},focus(){},querySelector(){return blank;},querySelectorAll(){return [];},setAttribute(){}};
+ const listeners={},events={},timers=[],deferred=[],clock={now:0},store=new Map(),focused=[];const blank={style:{setProperty(){}},dataset:{},classList:{add(){},remove(){},contains(){return false;}},focus(){},querySelector(){return blank;},querySelectorAll(){return [];},setAttribute(){}};
  const nameInput={...blank,id:'player-name',value:'接線測試',selectionStart:2,selectionEnd:2,focus(){focused.push('player-name');},setSelectionRange(a,b){this.selectionStart=a;this.selectionEnd=b;}};
  const app={...blank,innerHTML:'',addEventListener:(name,fn)=>events[name]=fn,querySelector:s=>(s.startsWith('[data-action="home-')||['[data-action="lobby-more"]','[data-action="round-result"]'].includes(s))?{focus(){focused.push(s);}}:null,querySelectorAll:()=>[]},toast={...blank},elapsed={textContent:''},modal={...blank,querySelector:s=>s==='#player-name'?nameInput:blank};
  const document={hidden:false,activeElement:{dataset:{},tagName:'BUTTON',classList:blank.classList},documentElement:{style:blank.style},querySelector:s=>s==='#app'?app:s==='#toast'?toast:s==='#player-name'&&app.innerHTML.includes('id="player-name"')?nameInput:s==='#elapsed'&&app.innerHTML.includes('id="elapsed"')?elapsed:s==='.modal'&&app.innerHTML.includes('class="modal ')?modal:null,querySelectorAll:()=>[],addEventListener:(name,fn)=>listeners[name]=fn};
- const window={localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>listeners['window-'+name]=fn};
+ const window={requestIdleCallback:fn=>deferred.push(fn),localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>listeners['window-'+name]=fn};
  class QuietSound{enabled=true;play(){}sync(){}stopAll(){}unlock(){return Promise.resolve(false);}setMuted(v){this.enabled=!v;}test(){return Promise.resolve(false);}}
  class QuietPanels{dialog=null;selection='';beforeRender(){}release(){}mount(){}close(){}}
  class QuietFlights{pending={};flights=[];cancel(){}mount(){}pause(){}landAll(){}queue(){}}
  class QuietSqueeze{mount(){}paint(){}}
- class QuietArtCache{ready(id){return artCache?artCache.ready(id):true;}load(id){return artCache?artCache.load(id):Promise.resolve(true);}warm(){return Promise.resolve();}}
- const context=vm.createContext({...bindings,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:()=>0,clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
+ class QuietArtCache{prefetch(id){return artCache?artCache.prefetch(id):Promise.resolve(true);}}
+ const context=vm.createContext({...bindings,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:fn=>{deferred.push(fn);return deferred.length;},clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
  const code=source.replace(/^import .*;\s*$/gm,'').replaceAll('import.meta.url',JSON.stringify(entry.href))+`;globalThis.subject={game,render,showRestored,openOverlay,closeOverlay};`;
  vm.runInContext(code,context);
- const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home','next','leave','finish','manual-save','cancel-table-entry','retry-table-entry','pause'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
+ const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home','next','leave','finish','manual-save','pause'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
  if(start){events.input({target:{id:'player-name',value:'接線測試'}});act('enter');}
- return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},elapse(ms){clock.now+=ms;},tick(ms){clock.now+=ms;timers[0]();}};
+ return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,runDeferred(){for(const fn of deferred.splice(0))fn();},hint(type,id,{disabled=false}={}){events[type]({target:{closest:()=>({dataset:{table:id},disabled})}});},setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},elapse(ms){clock.now+=ms;},tick(ms){clock.now+=ms;timers[0]();}};
 }
 test('app starts the five-minute ruleset and shop HUD keeps counting down',()=>{
  const t=boot();assert.equal(t.subject.game.challenge,true);assert.ok(t.app.innerHTML.includes('lobby-map'));t.tick(1000);assert.equal(t.elapsed.textContent,'00:04:59');t.act('shop');assert.equal(t.subject.game.screen,'shop');assert.ok(t.app.innerHTML.includes('計時繼續'));t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);assert.equal(t.elapsed.textContent,'00:04:58');
@@ -107,17 +107,22 @@ test('mobile roulette preserves the spinning reveal before the payout dialog',()
  for(let i=0;i<100&&g.round.phase!=='settled';i++)t.tick(100);
  assert.equal(g.round.phase,'settled');assert.ok(!t.app.innerHTML.includes('payout-modal'));t.tick(1400);assert.ok(t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('mobile-reveal-dialog'));
 });
-function delayedArt(){let resolve;return {ready:()=>false,load:()=>new Promise(r=>resolve=r),complete(ok=true){resolve(ok);}};}
-test('entry waits for decoded textures, keeps the challenge clock and opens only the requested table',async()=>{
- const art=delayedArt(),t=boot({artCache:art});t.act('table',{table:'roulette'});assert.equal(t.subject.game.screen,'lobby');assert.ok(t.app.innerHTML.includes('table-loading-modal'));t.tick(750);art.complete();await Promise.resolve();assert.equal(t.subject.game.screen,'table');assert.equal(t.subject.game.activeTable,'roulette');assert.equal(t.subject.game.profile.elapsedMs,750);
+function delayedArt(){let resolve;const pending=new Promise(r=>resolve=r);return {calls:[],prefetch(id){this.calls.push(id);return pending;},complete(ok=true){resolve(ok);}};}
+test('each table opens synchronously while the selected texture hint is still pending',()=>{
+ for(const id of ['sicbo','baccarat','blackjack','poker','roulette']){const art=delayedArt(),t=boot({artCache:art});t.hint('pointerdown',id);t.act('table',{table:id});assert.equal(t.subject.game.screen,'table');assert.equal(t.subject.game.activeTable,id);assert.ok(!t.app.innerHTML.includes('table-loading-modal'));assert.equal(t.subject.game.profile.elapsedMs,0);assert.deepEqual(art.calls,[id]);}
 });
-test('cancelled texture loading never navigates later; failure offers retry without starting a round',async()=>{
- const art=delayedArt(),t=boot({artCache:art});t.act('table',{table:'roulette'});t.act('cancel-table-entry');art.complete();await Promise.resolve();assert.equal(t.subject.game.screen,'lobby');assert.ok(!t.app.innerHTML.includes('table-loading-modal'));
- t.act('table',{table:'poker'});art.complete(false);await Promise.resolve();assert.equal(t.subject.game.screen,'lobby');assert.ok(t.app.innerHTML.includes('data-action="retry-table-entry"'));t.act('retry-table-entry');art.complete();await Promise.resolve();assert.equal(t.subject.game.activeTable,'poker');assert.equal(t.subject.game.profile.rounds,0);
+test('a late or failed texture hint cannot navigate or change a subsequent game',async()=>{
+ const art=delayedArt(),t=boot({artCache:art});t.hint('pointerover','roulette');t.act('table',{table:'roulette'});t.act('leave');t.act('table',{table:'poker'});const before=JSON.stringify(t.subject.game),html=t.app.innerHTML;art.complete(false);await Promise.resolve();assert.equal(JSON.stringify(t.subject.game),before);assert.equal(t.app.innerHTML,html);assert.equal(t.subject.game.activeTable,'poker');
 });
-test('background during texture preparation preserves pause until Continue; deadline cancels deferred entry',async()=>{
- const art=delayedArt(),t=boot({artCache:art});t.act('table',{table:'roulette'});t.tick(500);t.document.hidden=true;t.listeners.visibilitychange();art.complete();await Promise.resolve();t.tick(20000);assert.equal(t.subject.game.screen,'lobby');assert.equal(t.subject.game.profile.elapsedMs,500);assert.equal(t.subject.game.paused,true);t.document.hidden=false;t.act('resume');assert.equal(t.subject.game.screen,'table');assert.equal(t.subject.game.profile.elapsedMs,500);
- const art2=delayedArt(),u=boot({artCache:art2});u.act('table',{table:'poker'});u.tick(300000);art2.complete();await Promise.resolve();assert.equal(u.subject.game.screen,'lobby');assert.equal(u.subject.game.profile.status,'finished');assert.equal(u.subject.game.profile.rounds,0);assert.ok(u.app.innerHTML.includes('challenge-result-modal'));
+test('background and deadline retain Game ownership while texture hints remain unresolved',async()=>{
+ const art=delayedArt(),t=boot({artCache:art});t.hint('pointerdown','roulette');t.act('table',{table:'roulette'});t.tick(500);const remaining=t.subject.game.round.remaining;t.document.hidden=true;t.listeners.visibilitychange();art.complete();await Promise.resolve();t.tick(20000);assert.equal(t.subject.game.screen,'table');assert.equal(t.subject.game.profile.elapsedMs,500);assert.equal(t.subject.game.round.remaining,remaining);assert.equal(t.subject.game.paused,true);t.document.hidden=false;t.act('resume');assert.equal(t.subject.game.round.remaining,remaining);
+ const art2=delayedArt(),u=boot({artCache:art2});u.hint('pointerover','poker');u.act('table',{table:'poker'});u.tick(300000);art2.complete();await Promise.resolve();assert.equal(u.subject.game.profile.status,'finished');assert.equal(u.subject.game.profile.rounds,0);assert.ok(u.app.innerHTML.includes('challenge-result-modal'));
+});
+test('home and lobby never schedule a bulk texture warmup or background requests',()=>{
+ const art=delayedArt(),t=boot({start:false,artCache:art});t.runDeferred();assert.deepEqual(art.calls,[]);t.setName('啟動測試');t.act('enter');t.runDeferred();t.tick(5000);assert.deepEqual(art.calls,[]);assert.equal(t.subject.game.profile.elapsedMs,5000);
+});
+test('only a pointed, focused or touched lobby table gets hints; pause and other screens do not',()=>{
+ const art=delayedArt(),t=boot({artCache:art});t.hint('pointerover','roulette');t.hint('focusin','poker');t.hint('pointerdown','baccarat');assert.deepEqual(art.calls,['roulette','poker','baccarat']);t.hint('pointerdown','sicbo',{disabled:true});t.act('lobby-more');t.hint('pointerover','sicbo');t.act('close-overlay');t.act('pause');t.hint('focusin','sicbo');t.act('resume');t.act('table',{table:'blackjack'});t.hint('pointerover','sicbo');assert.deepEqual(art.calls,['roulette','poker','baccarat']);
 });
 
 test('Escape dismisses payout once and returns focus to View Payout',()=>{
@@ -125,4 +130,10 @@ test('Escape dismisses payout once and returns focus to View Payout',()=>{
 });
 test('all-in loss shows the settled payout before final results and offers no new round',()=>{
  const t=boot(),g=t.subject.game;g.randomIndex=()=>0;t.act('table',{table:'roulette'});g.addBet('rou-black',10000);g.lock();for(let i=0;i<100&&g.round.phase!=='settled';i++)g.tick(1000);assert.equal(g.profile.status,'finished');assert.equal(g.profile.endReason,'bust');t.subject.render();assert.ok(t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('data-action="next"'));assert.equal(g.profile.rounds,1);t.act('finish');assert.ok(t.app.innerHTML.includes('challenge-result-modal'));assert.equal(g.profile.bank,0);assert.equal(g.profile.rounds,1);
+});
+
+
+test('slow textures never block a table click behind an all-images loading gate',()=>{
+ const art={ready:()=>false,load:()=>new Promise(()=>{}),prefetch:()=>new Promise(()=>{})};
+ const t=boot({artCache:art});t.act('table',{table:'roulette'});assert.equal(t.subject.game.screen,'table');assert.equal(t.subject.game.activeTable,'roulette');assert.ok(!t.app.innerHTML.includes('table-loading-modal'));
 });

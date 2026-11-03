@@ -1,5 +1,23 @@
 # CODEX_HANDOFF
 
+## 最新：0.9.4載入回歸修正已完成／待發布核對（2026-11-03）
+
+使用者回報剛發布0.9.3載入更慢，已確認全圖load／decode門檻導致入桌等待。移除首頁全圖warm與入桌Promise.all、pendingTable及準備視窗；點擊同步進原Game，指向／聚焦／觸碰某桌才低優先度hint1–2張主要圖，不強制decode、不await，晚到回呼不導航或改狀態。保留名稱框／派彩／規則／PNG。
+
+325項（316＋3＋6）通過；原版永不完成請求的直接進桌測試lobby != table，修正後同測試及五桌29項app／25項table-layout通過。12PNG不改、24runtime鏡像及原發布212檔快照已核對。單檔29,866,314 bytes、SHA256 891cf19a7268b51672995d4a2ff0ea1cbec495fc6d1f0786a35ce05f673103b6。詳LOAD_RECOVERY_094.md／LOAD_RECOVERY_VALIDATION.json。
+
+沿用使用者上一輪「實裝到GitHub」的同main／Pages授權處理隨後回歸，非另加功能；這是授權範圍解讀，不是假稱使用者新發了0.9.4發布指令。基準1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9已核對。先前只本機為暫定範圍，現準備發布並確認Pages。沒有排行榜／雲端；不重試HTTP／Chromium IPC，Safari速度／圖逐步出現觀感仍未驗，下一安全任務核對來源SHA及部署。
+
+## 最新：0.9.3已發布GitHub／Pages成功（2026-11-03）
+
+使用者「實裝到GitHub」已授權發布完成的名稱框置中、五桌派彩小視窗及九張貼圖預載／解碼入桌準備。遊戲程式與上一輪本機0.9.3相同，沒有再改玩法／保存或素材。
+
+以0.9.2 commitcba6438bb85dc486970e8dcb151a9766a3b54f4b為parent及expected_sha、force:false更新原main成功。新commit1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9，tree 58090b221dd67b223bad2d670afebdb459f206d4；212份發布檔Git blob SHA全部吻合，62檔變更、30份PNG副本不改、沒有預覽目錄或手圖。Pages run41657918981 completed/success且head_sha吻合。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.9.3 ，提交 https://github.com/jacobmaster-97/charity-casino/commit/1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9 。
+
+發布前npm run verify及prepare:github共322項通過（313規則／元件／app替身＋3單檔＋6Pages）；Python smoke只編譯。單檔29,868,711 bytes，SHA256 2f109464727844429a7ba3fdb5f660900a6821fbc25a9ac76d71728dc7c214aa與本機驗證相同。詳docs/UI_POLISH_093.md、UI_POLISH_VALIDATION.json及UI_POLISH_RELEASE.json。dist/github-upload保持212檔精確發布快照；事後收據與本地交接不另觸發部署，舊ZIP仍是歷史包。
+
+沒有排行榜／Cloudflare／付款。Safari真DOM／小視窗／safe-area／旋轉／觸控／捲動、實際冷暖載入耗時／解碼記憶體及音訊仍未驗證，未直接HTTP核對公開頁；沒有重試原HTTP／Chromium IPC限制。回退用完整0.9.2及對應快取，不清存檔。下一最安全任務：iPhone16Plus開?v=0.9.3逐桌測派彩及冷暖載入，不把部署成功當成裝置證據。
+
 ## 最新：0.9.3已獲發布授權，待部署核對（2026-11-03）
 
 使用者「實裝到GitHub」已授權發布上一輪完成的0.9.3至原jacobmaster-97/charity-casino main及既有Pages。基準cba6438bb85dc486970e8dcb151a9766a3b54f4b／tree612b98949fe25292926f9bd43bf5a0c447bef823已核對，先前只本機限制解除。沒有另改Game、玩法或PNG。

@@ -1,0 +1,50 @@
+{
+  "version": "0.9.3",
+  "date": "2026-11-03",
+  "scope": "Approved centered lobby labels, five-game payout dialogs and decoded texture preparation published to existing GitHub Pages",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "commit": "1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9",
+  "parent_commit": "cba6438bb85dc486970e8dcb151a9766a3b54f4b",
+  "tree": "58090b221dd67b223bad2d670afebdb459f206d4",
+  "verified_files": 212,
+  "changed_files": 62,
+  "unchanged_png_copies": 30,
+  "all_prepared_git_blob_shas_match": true,
+  "ref_update": {
+    "force": false,
+    "expected_sha": "cba6438bb85dc486970e8dcb151a9766a3b54f4b",
+    "verified": true
+  },
+  "pages_run": {
+    "run_id": 41657918981,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41657918981"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.9.3",
+  "play_url_http_verified": false,
+  "checks": {
+    "unit_component_and_app_doubles": 313,
+    "standalone": 3,
+    "pages": 6,
+    "total": 322,
+    "failed": 0
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29868711,
+    "sha256": "2f109464727844429a7ba3fdb5f660900a6821fbc25a9ac76d71728dc7c214aa"
+  },
+  "browser_smoke": "Python compile only; not executed in browser",
+  "unverified": [
+    "iPhone16Plus Safari popup, safe-area, address bar, rotation and touch",
+    "Actual cold/warm texture timing, decode memory, Safari eviction",
+    "Actual no whole-page scroll and hardware audio",
+    "Direct public Pages HTTP"
+  ],
+  "leaderboard_cloudflare_payment": "Not implemented or provisioned",
+  "rollback_commit": "cba6438bb85dc486970e8dcb151a9766a3b54f4b",
+  "post_release_document_policy": "Receipt and final local handoffs are written after this commit; no second deployment. dist/github-upload remains the exact verified 212-file source snapshot."
+}

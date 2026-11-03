@@ -1,8 +1,8 @@
-# 五分鐘賭神 · 原型0.9.3
+# 五分鐘賭神 · 原型0.9.4
 
-目前版本：0.9.3，開啟dist/charity-casino-prototype.html即可離線遊玩。
+目前版本：0.9.4，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
-此提交為0.9.3發布包，包含名稱框置中、五桌派彩小視窗及貼圖預載／準備流程。GitHub Pages完成此提交部署後生效，結果另記UI_POLISH_RELEASE.json；舊ZIP仍是歷史包。
+此提交為0.9.4回歸修正發布包：移除全圖入桌等待與首頁全圖預載，保留名稱框置中及派彩小視窗。沿用使用者剛才的原main／Pages發布授權，部署結果另記LOAD_RECOVERY_RELEASE.json；舊ZIP為歷史包。
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -30,6 +30,7 @@ npm run verify
 
 ## 功能
 
+- 0.9.4：回應載入比之前慢的回報，移除全圖load／decode入桌門檻及首頁warm；只在指向／聚焦／觸碰某桌時低優先度hint1–2張主要圖，不await、不強制decode、不因晚到回呼導航。詳docs/LOAD_RECOVERY_094.md。
 - 0.9.3：五個名稱框水平／垂直置中；五桌派彩改為居中小視窗，揭曉動畫先播完，倒數仍繼續；首頁閒時預載九張共用貼圖，首次未備妥則顯示準備視窗，支援取消／重試／暫停，解碼完成才入桌。詳docs/UI_POLISH_093.md。
 - 0.9.2：接入確認的iPhone 16 Plus填寬版。手機／短橫向視口等比例放大到安全區內地圖全寬，採偏上15%取景；讀取實際入座鍵大小限制裁切，五個按鈕與圖共用同一scene。桌面／直向保留完整圖，過短視口回復完整圖。詳docs/LOBBY_WIDE_092.md。
 
@@ -79,7 +80,7 @@ npm run verify
 
 ## 驗證狀態
 
-共322項通過：313項規則／元件／app替身、3項單檔封裝、6項Pages；新增9項app流程及5項貼圖cache檢查，保留前版填寬6項、前版大廳5項、新主頁16項、500次混合五分鐘挑戰與既有10,000局模擬。browser_smoke.py僅Python語法檢查，未執行瀏覽器。Safari、觸控、實際畫面比例／捲動及聲效輸出未驗證，詳docs/UI_POLISH_VALIDATION.json及DEBUG_HANDOFF.md。
+共325項通過：316項規則／元件／app替身、3項單檔封裝、6項Pages；包含6項載入流程及5項cache檢查（新寫／改寫）、前版五桌派彩及填寬、500次混合五分鐘挑戰與既有10,000局模擬。browser_smoke.py只Python編譯，未執行瀏覽器。Safari速度、CPU／記憶體、冷圖觀感、觸控／比例／捲動及聲效輸出未驗證，詳docs/LOAD_RECOVERY_VALIDATION.json及DEBUG_HANDOFF.md。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 
