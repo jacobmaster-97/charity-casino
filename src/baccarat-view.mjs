@@ -1,8 +1,8 @@
-import {cashAbs,cashDollars} from './cash.mjs?v=0.9.2';
-import {squeezePanel} from './baccarat-squeeze.mjs?v=0.9.2';
-import {BACCARAT_DEAL_MS,BACCARAT_BETS,BACCARAT_BET_MAP,baccaratPoints,cardRank} from './baccarat.mjs?v=0.9.2';
-import {money,getChipDenominations,chipLabel,ITEMS} from './rules.mjs?v=0.9.2';
-import {baccaratBoardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.9.2';
+import {cashAbs,cashDollars} from './cash.mjs?v=0.9.3';
+import {squeezePanel} from './baccarat-squeeze.mjs?v=0.9.3';
+import {BACCARAT_DEAL_MS,BACCARAT_BETS,BACCARAT_BET_MAP,baccaratPoints,cardRank} from './baccarat.mjs?v=0.9.3';
+import {money,getChipDenominations,chipLabel,ITEMS} from './rules.mjs?v=0.9.3';
+import {baccaratBoardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.9.3';
 const baccaratEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let cardClipSerial=0;
 export function baccaratCard(id,hidden,art,{action='',index=0,fresh=false,delay=0,paused=false}={}){
@@ -28,7 +28,7 @@ export function baccaratTableView({game,art,button,icon,chip,allIn,storageWarnin
  <div class="baccarat-felt"><section class="baccarat-stage"><div class="stage-topline"><span>${phaseText}</span><strong id="countdown" class="countdown">${r.remaining?Math.ceil(r.remaining/1000)+' 秒':''}</strong></div><div class="baccarat-hands">${hand('player','閒')}${hand('banker','莊')}</div><p class="baccarat-caption">${swapping?'點選首四張中的一張替換，或保留原牌。':settled?`${r.final.winner==='tie'?'和局':r.final.winner==='player'?'閒勝':'莊勝'}${r.final.natural?' · 天牌':''}`:'八副連續牌靴 · 按標準規則自動補牌'}</p></section>
  <div class="baccarat-lower">${r.peek?`<div class="insight">${icon('peek')}已透視${r.peek.side==='banker'?'莊':'閒'}第 ${r.peek.index+1} 張：<strong>${r.peek.value} 點</strong><span>牌序保持，仍可在原時限內改押。</span></div>`:''}
  ${swapping?`<div class="result-box"><h2>換牌券已啟用</h2><p>可換上方一張牌；超時保留原牌，不退券。換後重新判定天牌及補牌。</p>${button('keep-cards','保留原牌','outlined')}</div>`:''}
- ${settled?`<div class="result-box ${r.result.net>=0?'win':'loss'}"><span class="eyebrow">ROUND ${p.rounds} · 已完成</span><h2>本局${r.result.net>0?'贏得':r.result.net<0?'虧損':'損益'} <strong>${r.result.net>=0?'+':'−'}${money(cashAbs(r.result.net))}</strong></h2><p>下注 ${money(r.result.stake)} · 退回及派彩 ${money(r.result.returned)}${r.result.commission?` · 莊佣金 ${money(r.result.commission)}`:''}${r.result.refund?` · 保本 ${money(r.result.refund)}`:''}</p><p class="save-note">${storageWarning?baccaratEscape(storageWarning):'已保存完成局及牌靴進度。'}</p><div class="result-actions">${p.status==='active'?button('next','再玩一局','primary'):button('finish','查看挑戰結果','primary')}${button('leave','返回大廳','outlined')}${p.mode==='free'?button('manual-save','手動保存','quiet'):''}</div></div>`:''}
+ ${settled?button('round-result','查看派彩','outlined round-result-open','aria-haspopup="dialog"'):''}
  <div class="table-console"><div class="board-toolbar"><span>主注最多一項，點另一主注改押原額；旁注可複選或單押。</span></div><div class="board-scroll" tabindex="0" role="region" aria-label="百家樂主注及旁注區">${baccaratBoardMarkup(betting)}</div><p class="baccarat-side-note">對子 11:1；幸運六須莊6點勝：兩張 12:1／三張 20:1。命中另退本金。</p>
  <div class="console-dock"><div class="console-summary"><div><span>本局${target?' · '+target.label:wagers.length?' · 旁注':'投注'}</span><strong>${money(game.stake)}</strong></div><div><span>尚可投注</span><strong>${money(game.available)}</strong></div><span class="selected-amount">每次 ${money(allIn?game.available:chip)}</span></div>
  ${betting?`<div class="console-controls"><div class="chip-area"><span class="control-label">選擇籌碼</span><div class="chip-picker">${getChipDenominations(r.bankAtStart).map((c,i)=>button('chip',`${chipFace(i,chipLabel(c),art)}<span>${money(c)}</span>`,!allIn&&chip===c?'selected':'',`data-chip="${c}" data-color="${CHIP_COLORS[i]}" aria-pressed="${!allIn&&chip===c}" aria-label="選擇 ${money(c)} 籌碼" title="${CHIP_COLORS[i]} · ${money(c)}" ${c>game.available?'disabled':''}`)).join('')}</div></div><div class="amount-area"><div class="custom-bet"><label for="custom-amount">自訂每次金額</label><input id="custom-amount" type="text" inputmode="decimal" min="0.01" step="0.01" value="${cashDollars(allIn?game.available:chip)}" aria-label="每次下注金額，美元">${button('all-in','全押',allIn?'outlined selected':'outlined',`aria-pressed="${allIn}"`)}</div></div><div class="action-area">${button('roll','發牌 ↗','primary roll-button',game.stake?'':'disabled')}${button('clear','清除投注','outlined',game.stake?'':'disabled')}</div>${button('table-tools','更多','quiet more-table-tools','aria-label="開啟牌桌工具"')}</div>`:''}

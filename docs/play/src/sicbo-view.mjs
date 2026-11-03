@@ -1,6 +1,6 @@
-import {cashAbs,cashDollars} from './cash.mjs?v=0.9.2';
-import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.9.2';
-import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.9.2';
+import {cashAbs,cashDollars} from './cash.mjs?v=0.9.3';
+import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.9.3';
+import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.9.3';
 const sicboEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function die(value,index,selectable=false){const pos=`${(value-1)%2*100}% ${Math.floor((value-1)/2)*50}%`;return `<${selectable?'button':'div'} ${selectable?`type="button" data-action="reroll" data-index="${index}"`:''} class="die-wrap" aria-label="第 ${index+1} 顆骰子：${value} 點${selectable?'，點選重擲':''}"><span class="die-face" style="background-position:${pos}" aria-hidden="true"></span><span>${selectable?'重擲此骰':`${value} 點`}</span></${selectable?'button':'div'}>`;}
 export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,peekIndex,boardZoom,preciseBet,mobile=false,popup=false,popupElapsed=0}){
@@ -21,7 +21,7 @@ export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,p
     ${r.peek?`<div class="insight">${icon('peek')}第 ${r.peek.index+1} 顆：<strong>${r.peek.range}</strong><span>本局結果已固定</span></div>`:''}
     ${!mobile?decision:''}
     ${mobile&&result?`<div class="mobile-sicbo-result" role="status" aria-live="polite">${r.dice.join(' ＋ ')} ＝ ${r.dice.reduce((a,b)=>a+b,0)} 點 · ${r.dice.every(v=>v===r.dice[0])?'圍骰':r.dice.reduce((a,b)=>a+b,0)<=10?'小':'大'}</div>`:''}
-    ${result?`<div class="result-box ${result.net>=0?'win':'loss'}"><span class="eyebrow">ROUND ${p.rounds} · 已完成</span><h2>${result.net>0?'贏得':result.net===0?'本局損益':'本局虧損'} <strong>${result.net>=0?'+':'−'}${money(cashAbs(result.net))}</strong></h2><p>下注 ${money(result.stake)} · 退回及派彩 ${money(result.returned)}${result.refund?` · 保本退回 ${money(result.refund)}`:''}</p><p class="save-note">${storageWarning?sicboEscape(storageWarning):'已自動保存本局結算；重新開啟可從此處繼續。'}</p><div class="result-actions">${p.status==='active'?button('next','再玩一局','primary'):button('finish','查看挑戰結果','primary')}${button('leave','返回大廳','outlined')}${p.mode==='free'?button('manual-save','手動保存','quiet'):''}</div></div>`:''}
+ ${result?button('round-result','查看派彩','outlined round-result-open','aria-haspopup="dialog"'):''}
     <div class="table-console">
       <div class="board-toolbar"><span id="board-help"><span class="board-wide-hint">選籌碼，再點枱面下注</span><span class="board-mobile-hint">完整總覽 · 細格可放大／精準選格</span></span></div>
       <div class="board-scroll ${boardZoom?'is-zoomed':''}" tabindex="0" role="region" aria-label="大小完整投注盤面" aria-describedby="board-help">${boardMarkup(art,betting)}</div>

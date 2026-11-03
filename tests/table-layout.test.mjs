@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {TablePanels,updateGameViewport,fitLobbySurface,lobbyWideViewport,lobbySceneLayout} from '../src/table-layout.mjs';
+import {TableArtCache,TABLE_TEXTURES,TablePanels,updateGameViewport,fitLobbySurface,lobbyWideViewport,lobbySceneLayout} from '../src/table-layout.mjs';
 import {Game} from '../src/game.mjs';
 // Native-dialog lifecycle doubles; these checks are not browser layout evidence.
 class PanelNode{
@@ -91,4 +91,36 @@ test('real fitting reads actual target sizes and resets crop offsets when return
 });
 test('invalid scene measurements do not produce crop coordinates',()=>{
  for(const [w,h,ratio] of [[0,100,1],[-1,100,1],[100,0,1],[Infinity,100,1],[100,100,0],[100,100,NaN]])assert.equal(lobbySceneLayout(w,h,{fillWidth:true,ratio}),null);
+});
+
+function imageFixture(){
+ const images=[],timeouts=new Map();let next=0;
+ class FakeImage{
+  complete=false;naturalWidth=0;
+  constructor(){images.push(this);}
+  set src(value){this.url=value;}
+  decode(){return this.decodingResult||Promise.resolve();}
+  load(){this.complete=true;this.naturalWidth=100;return this.onload?.();}
+ }
+ const cache=new TableArtCache({url:ref=>'https://example.test/game/public'+ref,ImageClass:FakeImage,schedule:fn=>{const id=++next;timeouts.set(id,fn);return id;},cancel:id=>timeouts.delete(id)});
+ return {cache,images,timeouts};
+}
+test('texture cache shares in-flight files across tables and waits for decode, not just network completion',async()=>{
+ const {cache,images}=imageFixture(),one=cache.load('poker'),two=cache.load('blackjack');assert.equal(images.length,new Set([...TABLE_TEXTURES.poker,...TABLE_TEXTURES.blackjack]).size);
+ let decoded;images[0].decodingResult=new Promise(r=>decoded=r);for(const img of images)void img.load();await Promise.resolve();assert.equal(cache.ready('poker'),false);decoded();assert.equal(await one,true);assert.equal(await two,true);assert.equal(cache.ready('poker'),true);const count=images.length;assert.equal(await cache.load('poker'),true);assert.equal(images.length,count);assert.ok(images.every(img=>img.url.startsWith('https://example.test/game/public/art/')));
+});
+test('failed image retries only its missing texture and never reports a partial table ready',async()=>{
+ const {cache,images}=imageFixture(),first=cache.load('poker');images[0].onerror();for(const img of images.slice(1))await img.load();assert.equal(await first,false);assert.equal(cache.ready('poker'),false);const count=images.length,again=cache.load('poker');assert.equal(images.length,count+1);await images.at(-1).load();assert.equal(await again,true);assert.equal(cache.ready('poker'),true);
+});
+test('decode rejection and timeouts permit retry; a late old decode cannot mark a failed request ready',async()=>{
+ const {cache,images,timeouts}=imageFixture();const first=cache.image('/decode.png');images[0].decodingResult=Promise.reject(new Error('decode failed'));await images[0].load();assert.equal(await first,false);const second=cache.image('/decode.png');let resolve;images[1].decodingResult=new Promise(r=>resolve=r);void images[1].load();[...timeouts.values()][0]();assert.equal(await second,false);const third=cache.image('/decode.png');resolve();await Promise.resolve();assert.equal(cache.entries.get('/decode.png').ready,false);await images[2].load();assert.equal(await third,true);assert.equal(timeouts.size,0);
+});
+test('background warmup is shared, sequential and retains the exact nine approved table textures',async()=>{
+ const {cache,images}=imageFixture(),warm=cache.warm();assert.equal(cache.warm(),warm);assert.equal(images.length,1);
+ const refs=[...new Set(Object.values(TABLE_TEXTURES).flat())];assert.equal(refs.length,9);
+ for(let i=0;i<refs.length;i++){assert.equal(images.length,i+1);await images[i].load();await Promise.resolve();}
+ await warm;assert.equal(images.length,9);assert.ok(Object.keys(TABLE_TEXTURES).every(id=>cache.ready(id)));assert.ok(images.every(img=>img.decoding==='async'));
+});
+test('a missing Image API or invalid table fails without throwing or leaving a pending timer',async()=>{
+ const {timeouts}=imageFixture(),cache=new TableArtCache({url:r=>r,ImageClass:null,schedule:()=>{throw new Error('must not schedule');},cancel(){}});assert.equal(await cache.load('missing'),false);assert.equal(await cache.load('poker'),false);assert.equal(cache.entries.size,0);assert.equal(timeouts.size,0);
 });

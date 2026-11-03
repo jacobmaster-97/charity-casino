@@ -1,4 +1,4 @@
-import {cashAdd,cashSub,cashRatio,isCash,cashShortRatio,cashMoney} from './cash.mjs?v=0.9.2';
+import {cashAdd,cashSub,cashRatio,isCash,cashShortRatio,cashMoney} from './cash.mjs?v=0.9.3';
 export const GOAL = 2_500_000_000; // cents; $25,000,000
 const CHIP_DENOMINATIONS = [1,5,10,25,100,500,1000,5000,10000,50000,100000,500000,1000000,5000000,10000000].map(dollars=>dollars*100);
 export function getChipDenominations(bankCents) {

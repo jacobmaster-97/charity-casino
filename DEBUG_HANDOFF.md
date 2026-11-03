@@ -1,5 +1,33 @@
 # DEBUG_HANDOFF
 
+## 0.9.3發布準備：原遠端基準核對（2026-11-03）
+
+使用者已授權發布，遠端main仍為預期0.9.2 cba6438bb85dc486970e8dcb151a9766a3b54f4b，沒有並發變更。既有322項本機檢查已完成，發布前再核對封裝與Pages。禁止以舊inline框測試回退新介面，無須改Game；只上傳已完成內容與交接。
+
+以原base tree建立差異、逐檔blob SHA核對、expected_sha且force:false更新。實際commit／run結果另記收據。保留HTTP／Chromium IPC停止重試及Safari／載入秒數未驗證，沒有雲端或排行榜。
+
+## 最新：0.9.3驗證完成／未實機（2026-11-03）
+
+根因與修正：station沿原column flex頂齊，已在lobby owner加align-items／justify-content center，44px不變。舊inline result佔牌桌高度，已五桌統一移至app modal，只讀既有result，不重算／派彩。貼圖原入桌後才load／decode，新增同URL九圖cache及帶取消／重試／暫停／截止防護的準備視窗；每張圖15秒逾時後可重試，沒有永久卡死。
+
+新增app9及cache5項、完整322項（313＋3＋6）通過，含反覆開關／下局不重派、五桌、破產、揭曉先後、背景、過期回呼、decode失敗／逾時重試。browser_smoke只Python語法。12PNG／24runtime鏡像及0.9.2發布209檔快照核對通過；其餘mjs只有快取版本差異。
+
+本輪舊模板測試依次在board next、mobile-poker pk-result及roulette「已保存完成局」失敗，因畫面已按需求移至modal；只更新舊視圖契約，app測試承接實際next／leave／保存金額顯示，不為舊選擇器把大結果框加回，不改Game。bust測試原誤用schema1 lost，改為schema2 finished＋endReason bust。這些屬測試遷移，最後完整verify通過，沒有未解規則失敗。
+
+未重試HTTP／Chromium IPC，未跑Safari真DOM／觸控／安全區／地址欄／旋轉／捲動／記憶體／載入秒數及音訊；首頁預載不等於真機變快證據。沒有GitHub mutation或雲端；線上仍0.9.2。下一最小驗證：可用Safari環境冷快取開始、依序五桌入桌／結算、取消與背景準備再恢復，記錄冷暖時間和小視窗界內；不重試舊受限路徑。
+
+## 0.9.3維護中：派彩移位後回歸斷言更新（2026-11-03）
+
+新增app26項及貼圖cache5項已通過。完整verify先在board舊next斷言失敗，搜尋更新四款舊inline next預期後，第二次在mobile-poker另一個pk-result斷言失敗。根因為原畫面合約已由使用者要求改為查看派彩入口，沒有Game或派彩錯誤；不可為了舊選擇器把大結果框加回，或改計時／派彩。
+
+mobile-poker15項已通過；後續全套在roulette舊「已保存完成局」文字斷言失敗，該文字亦移至app modal。已全面搜尋原結果框、next及保存字句，下一步更新唯一剩餘文字預期，再跑roulette27及sound24、完整verify／Pages。所有next、leave、manual-save與防重複派彩改由真app的五桌modal檢查承接。另bust測試曾錯把schema1 lost套到schema2，已按既有Game finished＋endReason bust修正測試。未重試HTTP／Chromium IPC，不將Node替身當Safari。
+
+## 0.9.2發布及證據邊界（2026-11-03）
+
+已獲使用者授權，main以expected_sha、force:false發布cba6438bb85dc486970e8dcb151a9766a3b54f4b；tree 612b98949fe25292926f9bd43bf5a0c447bef823，209檔SHA吻合、56變更、30PNG副本不改。Pages run41607230248 completed/success且head_sha核對，build／deploy／report-build-status皆成功。收據LOBBY_WIDE_RELEASE.json及dist metadata同步；事後交接／收據不觸發第二次部署。
+
+308項通過（299＋3＋6）；12runtime PNG／24src Pages鏡像逐位元組通過，沒有新玩法修改或GitHub拒絕。保持原HTTP／Chromium IPC停止重試，沒有啟動；Python smoke只編譯。Safari真矩形／safe-area／地址欄／旋轉／捲動／44px點按／音訊及公開頁直接HTTP仍未驗。下一最小驗證：iPhone16Plus開https://jacobmaster-97.github.io/charity-casino/?v=0.9.2橫向查看五桌入口及上下取景；極短高度回完整圖為設計fallback。
+
 ## 0.9.2：確認填寬後實裝／發布準備（2026-11-03）
 
 舊contain因高度限制產生內側留白。已按使用者確認接入真DOM frame量測及等比例width fill；scene絕對定位並移除max-height:100%防止圖被壓扁，切回contain重設left／top。五入座座標共用scene，依offsetHeight保護8px邊界；很矮時fallback contain。預覽812×363.8金值符合，沒有硬寫示意安全區。

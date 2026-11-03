@@ -1,4 +1,33 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.9.2';
+import {baccaratBoardMarkup} from './board.mjs?v=0.9.3';
+// Keep decoded images alive across innerHTML scene changes; URLs match the CSS assets.
+const TABLE_COMMON=['/art/prototype-b/table.png','/art/prototype-b/props.png','/art/sicbo-board-b/chips-five.png'];
+export const TABLE_TEXTURES={
+ sicbo:[...TABLE_COMMON,'/art/prototype-b/dice.png','/art/prototype-b/dome.png','/art/sicbo-board-b/felt.png','/art/sicbo-board-b/dice.png','/art/sicbo-board-b/chip.png'],
+ baccarat:[...TABLE_COMMON,'/art/baccarat-b/cards.png','/art/sicbo-board-b/felt.png','/art/sicbo-board-b/chip.png'],
+ blackjack:[...TABLE_COMMON,'/art/baccarat-b/cards.png','/art/sicbo-board-b/felt.png'],
+ poker:[...TABLE_COMMON,'/art/baccarat-b/cards.png'],
+ roulette:[...TABLE_COMMON,'/art/sicbo-board-b/felt.png']
+};
+export class TableArtCache{
+ constructor({url,ImageClass=globalThis.Image,schedule=setTimeout,cancel=clearTimeout,timeout=15000}){this.url=url;this.ImageClass=ImageClass;this.schedule=schedule;this.cancel=cancel;this.timeout=timeout;this.entries=new Map();this.warming=null;}
+ ready(table){return Boolean(TABLE_TEXTURES[table])&&TABLE_TEXTURES[table].every(ref=>this.entries.get(ref)?.ready);}
+ image(ref){
+  if(this.entries.has(ref))return this.entries.get(ref).promise;
+  const entry={ready:false,image:null,promise:null};this.entries.set(ref,entry);
+  entry.promise=new Promise(resolve=>{
+   let done=false,decoding=false,timer;
+   const finish=ok=>{if(done)return;done=true;this.cancel(timer);if(entry.image)entry.image.onload=entry.image.onerror=null;entry.ready=ok;if(!ok&&this.entries.get(ref)===entry)this.entries.delete(ref);resolve(ok);};
+   try{
+    const img=entry.image=new this.ImageClass();img.decoding='async';
+    img.onload=async()=>{if(done||decoding)return;decoding=true;try{if(img.decode)await img.decode();finish(img.naturalWidth>0);}catch{finish(false);}};
+    img.onerror=()=>finish(false);timer=this.schedule(()=>finish(false),this.timeout);img.src=this.url(ref);
+    if(img.complete&&img.naturalWidth>0)void img.onload();
+   }catch{finish(false);}
+  });return entry.promise;
+ }
+ async load(table){if(!TABLE_TEXTURES[table])return false;return (await Promise.all(TABLE_TEXTURES[table].map(ref=>this.image(ref)))).every(Boolean);}
+ warm(){if(!this.warming)this.warming=(async()=>{for(const ref of new Set(Object.values(TABLE_TEXTURES).flat()))await this.image(ref);})();return this.warming;}
+}
 // Move existing secondary controls into a native dialog; gameplay keeps its clock.
 export class TablePanels{
  constructor(root){this.root=root;this.selection='';this.dialog=null;this.detail=null;this.marker=null;this.tools=null;this.toolsMarker=null;}

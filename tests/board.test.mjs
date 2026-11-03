@@ -60,7 +60,7 @@ test('real table template contains the entire lower console and all former sideb
  for(const cls of ['custom-bet','bet-details','bet-list','inventory','peek-picker','precise-bet'])assert.ok(html.includes(cls),cls);
  assert.equal((html.match(/data-action="chip"/g)||[]).length,5);
  deps.game.addBet('small',500);const placed=render(...Object.values(deps));assert.ok(placed.includes('data-action="remove"'));
- deps.game.lock();deps.game.tick(900);const settled=render(...Object.values(deps));assert.ok(settled.includes('data-action="next"'));assert.ok(!settled.includes('data-action="roll"'));assert.ok(settled.includes('aria-disabled="true"'));
+ deps.game.lock();deps.game.tick(900);const settled=render(...Object.values(deps));assert.ok(settled.includes('data-action="round-result"'));assert.ok(!settled.includes('data-action="roll"'));assert.ok(settled.includes('aria-disabled="true"'));
 });
 test('mixed-denomination stacks retain each original chip color',()=>{
  const markup=boardAmounts({small:600},{},art,{small:2},{small:500},10000,{small:[100,500]});

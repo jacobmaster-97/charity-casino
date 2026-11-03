@@ -1,5 +1,37 @@
 # CODEX_HANDOFF
 
+## 最新：0.9.3已獲發布授權，待部署核對（2026-11-03）
+
+使用者「實裝到GitHub」已授權發布上一輪完成的0.9.3至原jacobmaster-97/charity-casino main及既有Pages。基準cba6438bb85dc486970e8dcb151a9766a3b54f4b／tree612b98949fe25292926f9bd43bf5a0c447bef823已核對，先前只本機限制解除。沒有另改Game、玩法或PNG。
+
+內容為五桌名稱框置中、統一派彩小視窗、九張共用貼圖預載／解碼及入桌準備。322項驗證與單檔／Pages將在發布前核對，來源細節及UI審核見docs/UI_POLISH_093.md與UI_POLISH_VALIDATION.json。使用非強制expected_sha更新main，完成該commit Pages成功才記UI_POLISH_RELEASE.json。
+
+Safari／真DOM／載入秒數及音訊硬體未驗，不重試HTTP／Chromium IPC；不建立排行榜、Cloudflare或付款。下一安全任務：核對來源SHA、發布及Pages結果；下文僅本機段落為歷史狀態。
+
+## 最新：0.9.3三項畫面修整已本機完成（2026-11-03）
+
+使用者要求大廳名稱框置中／縮框、派彩小視窗、改善入桌貼圖延遲。已水平／垂直置中原五個44px名稱框，保留0.9.2等比例填寬及座標。五桌原大結果區改「查看派彩」入口，完成後自動開居中小視窗；大小／手機輪盤先播原揭曉再顯示。金額直接讀result，保留再玩／返回大廳／自由模式保存／查看盤面；截止及破產不提供新局。視窗不暫停、不重複派彩，Escape關閉並還原焦點，背景沿原暫停。
+
+TableArtCache在既有table-layout維護九張共用貼圖：首頁閒時順序預載、保留已解碼Image及共用Promise；入桌時必需貼圖全load／decode才呼叫原Game.enterTable。未備妥顯示準備視窗，倒數照走，可暫停／取消；15秒每圖逾時或解碼失敗提供重試，只補缺圖。舊回呼、背景完成、截止均不誤開局。沒有改PNG或聲效，不宣稱已減少下載位元組／實測秒數。
+
+重要檔：src/app.mjs、table-layout.mjs、styles.css、五桌*-view.mjs；tests/challenge-app與table-layout各新增9／5項、舊五桌模板斷言及browser_smoke更新。其餘mjs僅快取query0.9.3，Game／rules／保存本體不改。規格／UI審核及機器證據見docs/UI_POLISH_093.md、UI_POLISH_VALIDATION.json；prepare-github只新增該validation白名單，沒有執行上傳準備覆寫0.9.2快照。
+
+npm run verify及verify:pages共322項通過（313規則／元件／app替身＋3單檔＋6Pages），保留500次五分鐘及10,000局模擬。Python smoke只編譯。12runtime PNG與0.9.2發布快照、24src Pages逐位元組一致。單檔dist/charity-casino-prototype.html為29,868,711 bytes，SHA256 2f109464727844429a7ba3fdb5f660900a6821fbc25a9ac76d71728dc7c214aa。
+
+本輪沒有GitHub mutation，網站仍0.9.2 commit cba6438bb85dc486970e8dcb151a9766a3b54f4b。dist/github-upload保持209檔發布快照，舊ZIP為歷史包，新單檔及docs/play才是本機0.9.3；dist/manifest已明示published:false。沒有排行榜／雲端／付款。
+
+未驗證iPhone16Plus Safari小視窗尺寸／safe-area／地址欄／旋轉／點按／捲動、真正冷暖載入時間及材質記憶體／音訊硬體；不重試已知HTTP／Chromium IPC，不把Node當真瀏覽器。下一最安全任務：在可用Safari環境測五桌結算與冷暖載入；使用者要求發布時再準備0.9.3快照，不自行開始排行榜。
+
+## 最新：0.9.2填寬已發布GitHub／Pages成功（2026-11-03）
+
+使用者「實裝至GitHub」批准原填寬預覽及發布。手機橫向依實際安全區內map寬度等比例填寬、偏上15%取景，五入座與圖同scene並依實際按鍵高度限制裁切；極短視口回完整圖。桌面／直向完整圖，原35.2px HUD、五桌規則／存檔／12張runtime PNG不改。沒有硬寫示意932×430或59／21安全區。
+
+以0.9.1 commit735e739a1a32dcdf7812228d3b36645359fc1e39為parent及expected_sha、force:false更新main。新commitcba6438bb85dc486970e8dcb151a9766a3b54f4b，tree 612b98949fe25292926f9bd43bf5a0c447bef823，209份發布檔Git blob SHA全吻合、56檔變更、30PNG副本不改、沒有手圖／預覽目錄。Pages run41607230248 completed/success且head_sha吻合。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.9.2 ，提交 https://github.com/jacobmaster-97/charity-casino/commit/cba6438bb85dc486970e8dcb151a9766a3b54f4b 。
+
+308項通過（299規則／元件／app替身＋3單檔＋6Pages）；新增6項layout含金值／多高度／fallback／量測替身。單檔29,862,635 bytes，SHA256 3bff2220d86ee66868f561090ec1313474b68df38f17cd7c31c0f96bff25ee41。詳docs/LOBBY_WIDE_092.md、LOBBY_WIDE_VALIDATION.json及LOBBY_WIDE_RELEASE.json。dist/github-upload保持209檔精確發布快照；事後收據／本地交接不另部署，舊zip仍為歷史包。
+
+Safari真DOM／iPhone16Plus安全區／網址列／旋轉／裁切體感／捲動／觸控及硬體聲效仍未驗；browser_smoke只Python語法。未直接HTTP驗證公開頁，未重試已知HTTP／Chromium IPC。沒有排行榜／Cloudflare／付款。回復可用完整0.9.1及對應快取，不清存檔。下一最安全任務：實機開?v=0.9.2驗證五入座、地圖裁切、地址欄與旋轉，勿以部署成功當裝置證據。
+
 ## 最新：0.9.2填寬已實裝，準備授權發布（2026-11-03）
 
 使用者「實裝至GitHub」已確認先前lobby-iphone16plus-wide-v1，取代只預覽限制。手機橫向依實際DOM安全區內框等比例填寬，偏上15%取景；五入座與圖同scene，讀實際按鍵高度限制裁切，極短回完整圖。桌面／直向完整圖。沒有硬寫932×430或59／21安全區，原35.2px HUD、五桌規則／存檔及12貼圖不變。

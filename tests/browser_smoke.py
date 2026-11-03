@@ -27,6 +27,10 @@ def act(page, name, **attrs):
     selector = f'[data-action="{name}"]'
     for key, value in attrs.items():
         selector += f'[data-{key}="{value}"]'
+    modal_action = page.locator('.modal ' + selector + ':visible')
+    if modal_action.count():
+        modal_action.first.click()
+        return
     if name in ['leave', 'next', 'roll', 'pause'] and page.locator('.table-tool-dialog[open]').count():
         page.locator('[data-action=close-table-tool]').click()
     if name in ['board-zoom', 'rules', 'remove'] and page.locator('.mobile-table [data-action=table-tools]:visible').count() and not page.locator('.table-tool-dialog[open]').count():
@@ -103,10 +107,17 @@ def overflow(page):
             assert abs(bounds['width'] - inner_width) < 1, (bounds, board)
             assert abs(bounds['width'] / bounds['height'] - 1672/941) < .01, bounds
         for station in page.locator('.station').all():
+            alignment = station.evaluate("n=>{const s=getComputedStyle(n);return {horizontal:s.alignItems,vertical:s.justifyContent};}")
+            assert alignment == {'horizontal':'center','vertical':'center'}, alignment
             hit = station.bounding_box()
             assert hit and hit['height'] >= 44 and hit['width'] >= 88, hit
             assert hit['x'] >= board['x'] - 1 and hit['x'] + hit['width'] <= board['x'] + board['width'] + 1, (hit, board)
             assert hit['y'] >= board['y'] - 1 and hit['y'] + hit['height'] <= board['y'] + board['height'] + 1, (hit, board)
+    for dialog in page.locator('.payout-modal:visible,.table-loading-modal:visible').all():
+        box = dialog.bounding_box()
+        assert box['x'] >= 0 and box['y'] >= 0 and box['x']+box['width'] <= page.viewport_size['width']+1 and box['y']+box['height'] <= page.viewport_size['height']+1, box
+        for action in dialog.locator('button').all():
+            assert action.bounding_box()['height'] >= 44
     for node in page.locator('.title-menu-button').all():
         box = node.bounding_box()
         assert box and box['width'] >= 44 and box['height'] >= 44, box
@@ -224,7 +235,7 @@ def main():
         act(page, 'roll')
         expect(page.locator('[data-action=accept]')).to_be_visible()
         act(page, 'accept')
-        expect(page.locator('.result-box')).to_contain_text('贏得')
+        expect(page.locator('.payout-modal')).to_contain_text('本局損益')
         expect(page.locator('#bank-value')).to_have_text('$77.90')
         page.screenshot(path=str(OUT / 'prototype-result.png'), full_page=True)
         act(page, 'leave')
@@ -324,7 +335,7 @@ def main():
         assert scene.get_attribute('aria-valuenow') == progress
         scene.press('ArrowLeft')
         act(page, 'squeeze-reveal')
-        expect(page.locator('.baccarat-screen [data-action=next]')).to_be_visible(timeout=5000)
+        expect(page.locator('.payout-modal [data-action=next]')).to_be_visible(timeout=5000)
         page.screenshot(path=str(OUT / 'prototype-baccarat-result.png'), full_page=True)
         act(page, 'leave')
         act(page, 'saves')
@@ -358,7 +369,7 @@ def main():
         page.locator('[data-bj-action=double]').click()
         expect(page.locator('.bj-active header')).to_contain_text('第 2 手', timeout=5000)
         page.locator('[data-bj-action=stand]').click()
-        expect(page.locator('.blackjack-screen [data-action=next]')).to_be_visible(timeout=5000)
+        expect(page.locator('.payout-modal [data-action=next]')).to_be_visible(timeout=5000)
         expect(page.locator('#bank-value')).to_have_text('$105')
         page.screenshot(path=str(OUT / 'prototype-blackjack-result.png'), full_page=True)
         act(page, 'leave')
@@ -378,7 +389,7 @@ def main():
         act(page, 'close-table-tool')
         act(page, 'pk-start')
         for _ in range(180):
-            if page.locator('.pk-result').count():
+            if page.locator('.payout-modal').count():
                 break
             if page.locator('[data-poker-action=fold]').count():
                 overflow(page)
@@ -390,7 +401,7 @@ def main():
                 act(page, 'resume')
                 page.locator('[data-poker-action=fold]').click()
             page.wait_for_timeout(300)
-        expect(page.locator('.pk-result')).to_be_visible()
+        expect(page.locator('.payout-modal')).to_be_visible()
         act(page, 'leave')
         act(page, 'saves')
         with page.expect_download() as poker_download:
@@ -413,7 +424,7 @@ def main():
         page.wait_for_timeout(1100)
         assert page.locator('#elapsed').text_content() == roulette_clock
         act(page, 'resume')
-        expect(page.locator('.roulette-screen [data-action=next]')).to_be_visible(timeout=7000)
+        expect(page.locator('.payout-modal [data-action=next]')).to_be_visible(timeout=7000)
         page.screenshot(path=str(OUT / 'prototype-roulette-result.png'), full_page=True)
         act(page, 'leave')
         act(page, 'saves')
@@ -555,7 +566,7 @@ def main():
                         act(page, 'resume')
                         expect(page.locator('.pk-mobile-actions')).to_be_visible()
                     break
-                if page.locator('.pk-result').count():
+                if page.locator('.payout-modal').count():
                     break
                 page.wait_for_timeout(300)
             # Completed challenge fixture exercises the real result DOM on each viewport.
