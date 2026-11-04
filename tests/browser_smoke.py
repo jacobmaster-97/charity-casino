@@ -91,6 +91,25 @@ def mobile_size_composition(page):
         assert sizes['left'] >= sizes['areaLeft'] - 1 and sizes['right'] <= sizes['areaRight'] + 1, sizes
         assert sizes['top'] >= sizes['areaTop'] - 1 and sizes['bottom'] <= sizes['areaBottom'] + 1, sizes
 
+def blackjack_landscape_composition(page):
+    if not page.locator('.blackjack-mobile').count():
+        return
+    expect(page.locator('.mobile-blackjack-hud #elapsed')).to_be_visible()
+    expect(page.locator('.mobile-blackjack-hud .mobile-table-title')).to_have_text('21點')
+    expect(page.locator('#countdown')).to_have_count(1)
+    expect(page.locator('.blackjack-mobile .console-tools')).not_to_be_visible()
+    data = page.locator('.blackjack-mobile').evaluate("""root => {
+      const bounds=n=>{const r=n.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height};};
+      return {rows:[...root.querySelectorAll('.bj-cards')].map(n=>({area:bounds(n),cards:[...n.querySelectorAll('.playing-card')].map(bounds)})),actions:[...root.querySelectorAll('.bj-action-controls button')].map(bounds)};
+    }""")
+    for row in data['rows']:
+        for card in row['cards']:
+            assert card['height'] >= 60, row
+            assert card['top'] >= row['area']['top'] - 1 and card['bottom'] <= row['area']['bottom'] + 1, row
+            assert card['left'] >= row['area']['left'] - 1 and card['right'] <= row['area']['right'] + 1, row
+    for action in data['actions']:
+        assert action['height'] >= 44 and action['width'] >= 44, action
+
 def overflow(page):
     mobile_size_composition(page)
     if page.locator('.lobby-hud').count():
@@ -497,8 +516,21 @@ def main():
             page.locator('[data-action=bet][data-bet=bj-main]').tap()
             expect(page.locator('.bj-chip-target')).to_contain_text('5')
             page.screenshot(path=str(OUT / f'prototype-blackjack-{width}.png'), full_page=True)
-            act(page, 'clear')
-            act(page, 'leave')
+            if page.locator('.blackjack-mobile').count():
+                act(page, 'roll')
+                page.wait_for_function("document.querySelector('.bj-insurance,[data-bj-action=stand]:not(:disabled),.payout-modal')", timeout=10000)
+                if page.locator('.bj-insurance').count():
+                    act(page, 'bj-no-insurance')
+                    page.wait_for_function("document.querySelector('[data-bj-action=stand]:not(:disabled),.payout-modal')", timeout=10000)
+                blackjack_landscape_composition(page)
+                page.screenshot(path=str(OUT / f'prototype-blackjack-playing-{width}-{height}.png'), full_page=True)
+                if page.locator('[data-bj-action=stand]:enabled').count():
+                    page.locator('[data-bj-action=stand]').click()
+                expect(page.locator('.payout-modal')).to_be_visible(timeout=10000)
+                act(page, 'leave')
+            else:
+                act(page, 'clear')
+                act(page, 'leave')
             page.locator('[data-action=table][data-table=roulette]').tap()
             expect(page.locator('.rou-cell')).to_have_count(50)
             overflow(page)

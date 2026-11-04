@@ -1,5 +1,19 @@
 # DEBUG_HANDOFF
 
+## 0.10.1 · 21點手牌裁切根因與修復
+
+截圖對應舊21點未加入mobile HUD及35%／65%高度再扣工具／54px下注列，使手牌彈性列被壓至幾像素。現用共享剩餘高度的左右分區及獨立操作列，下注30px；隔離短直向隱藏非當前手CSS，修正選牌重疊及24px硬下限。新增旋轉測試最初發現事件替身覆寫前一resize listener，改累積後通過；不是正式app故障。
+
+345項（336＋3＋6）全部通過，Pages25個runtime與12原PNG一致；browser_smoke僅Python編譯。詳docs/BLACKJACK_LANDSCAPE_0101.md及VALIDATION.json。真Safari比例／安全區／1–4手／換牌觸控／直向與桌面視覺仍未驗，未重試HTTP／Chromium IPC。沿用前次實裝至GitHub後同一已部署頁面修復，下一步核對原main基準與blob SHA、expected_sha／force:false發布並核對Pages；不開排行榜／Cloudflare。
+
+## 0.10.0發布結果已核對
+
+已依使用者授權發布commit2dfb64310848ed15dd973caf84644312dbee1f85／tree 9134056d068e2a4c8eb1a2f41f54ee4c0b6df979；expected_sha、force:false更新main成功，221檔SHA吻合、63變更、30PNG副本不改。Pages run41771348441 completed/success且head_sha核對，收據及dist metadata同步；事後文件不另觸發部署。
+
+完整340項（331＋3＋6）通過；真實checkpoint分享接線不改Game／保存，取消不下載、fallback／retry／stale callbacks及編碼timeout已檢查。Canvas字寬替身正常樣本285px不足已改292px，同測試回綠；金額保留精確分，長圖高度8192保護，不輸出截斷金額。
+
+未執行真Safari、Canvas像素／字型／share sheet／目標App、DOM／讀屏／safe-area／觸控／旋轉／捲動及音訊硬體驗證，沒有重試已知HTTP／Chromium IPC，未直接HTTP核對公開頁。下一最小驗證：iPhone16Plus用https://jacobmaster-97.github.io/charity-casino/?v=0.10.0完成挑戰後按分享，檢查PNG真數字／兩種時間顯示、取消及不支援時下載，不重算牌局。
+
 ## 最新：v3正式接入／分享資料與失敗路徑檢查通過
 
 已按使用者實裝至GitHub接入真正結果DOM與本機Canvas PNG。分享source為完成checkpoint的凍結複本，renderer不讀Game可變狀態，晚回呼sequence隔離；Native File在點按前準備、取消不下載、無canShare時下載PNG，拒絕提供明確fallback，產圖／10秒編碼逾時可重試。裝飾圖2.5秒超時用本機底圖繼續，不影響牌局或重新發獎。

@@ -5,19 +5,19 @@ import vm from 'node:vm';
 const entry=new URL('../src/app.mjs',import.meta.url),source=await readFile(entry,'utf8'),bindings={};
 for(const match of source.matchAll(/^import \{[^\n]+\} from '([^']+)';/gm))Object.assign(bindings,await import(new URL(match[1],entry)));
 // Event/DOM doubles exercise the real app and Game wiring, not browser layout or audio.
-function boot({start=true,artCache=null,mobile=false}={}){
+function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled:false}}={}){
  const listeners={},events={},timers=[],deferred=[],clock={now:0},store=new Map(),focused=[];const blank={style:{setProperty(){}},dataset:{},classList:{add(){},remove(){},contains(){return false;}},focus(){},querySelector(){return blank;},querySelectorAll(){return [];},setAttribute(){}};
  const nameInput={...blank,id:'player-name',value:'接線測試',selectionStart:2,selectionEnd:2,focus(){focused.push('player-name');},setSelectionRange(a,b){this.selectionStart=a;this.selectionEnd=b;}};
  const app={...blank,innerHTML:'',addEventListener:(name,fn)=>events[name]=fn,querySelector:s=>(s.startsWith('[data-action="home-')||['[data-action="lobby-more"]','[data-action="round-result"]'].includes(s))?{focus(){focused.push(s);}}:null,querySelectorAll:()=>[]},toast={...blank},elapsed={textContent:''},modal={...blank,querySelector:s=>s==='#player-name'?nameInput:blank};
  const document={hidden:false,activeElement:{dataset:{},tagName:'BUTTON',classList:blank.classList},documentElement:{style:blank.style},querySelector:s=>s==='#app'?app:s==='#toast'?toast:s==='#player-name'&&app.innerHTML.includes('id="player-name"')?nameInput:s==='#elapsed'&&app.innerHTML.includes('id="elapsed"')?elapsed:s==='.modal'&&app.innerHTML.includes('class="modal ')?modal:null,querySelectorAll:()=>[],addEventListener:(name,fn)=>listeners[name]=fn};
- const window={requestIdleCallback:fn=>deferred.push(fn),localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>listeners['window-'+name]=fn};
+ const window={requestIdleCallback:fn=>deferred.push(fn),localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>{const key='window-'+name,previous=listeners[key];listeners[key]=previous?(...args)=>{previous(...args);fn(...args);}:fn;}};
  class QuietSound{enabled=true;play(){}sync(){}stopAll(){}unlock(){return Promise.resolve(false);}setMuted(v){this.enabled=!v;}test(){return Promise.resolve(false);}}
  class QuietPanels{dialog=null;selection='';beforeRender(){}release(){}mount(){}close(){}}
  class QuietFlights{pending={};flights=[];cancel(){}mount(){}pause(){}landAll(){}queue(){}}
  class QuietSqueeze{mount(){}paint(){}}
  class QuietRecordShare{source=null;state='ready';message='';fallback=false;sync(profile){this.source=profile;}reset(){this.source=null;}share(){this.shared=(this.shared||0)+1;return Promise.resolve('shared');}downloadImage(){this.downloads=(this.downloads||0)+1;}}
  class QuietArtCache{prefetch(id){return artCache?artCache.prefetch(id):Promise.resolve(true);}}
- const context=vm.createContext({...bindings,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:fn=>{deferred.push(fn);return deferred.length;},clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,RecordShare:QuietRecordShare,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
+ const context=vm.createContext({...bindings,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:fn=>{deferred.push(fn);return deferred.length;},clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,RecordShare:QuietRecordShare,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,mobileBlackjackViewport:()=>blackjackLandscape.enabled,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
  const code=source.replace(/^import .*;\s*$/gm,'').replaceAll('import.meta.url',JSON.stringify(entry.href))+`;globalThis.subject={game,render,showRestored,openOverlay,closeOverlay,recordShare};`;
  vm.runInContext(code,context);
  const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home','next','leave','finish','manual-save','pause','share-record','download-record','retry-record'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
@@ -147,4 +147,13 @@ test('bust record keeps play time, home and PNG-share actions and clears prepare
 });
 test('image preparation errors keep a reachable retry action on the finished record',()=>{
  const t=boot();t.tick(300000);const share=t.subject.recordShare;share.state='error';share.message='分享圖片準備失敗，請重新準備。';t.subject.render();assert.ok(t.app.innerHTML.includes('data-action="retry-record"'));t.act('retry-record');assert.equal(share.source,t.subject.game.checkpoint.profile);assert.ok(t.app.innerHTML.includes('返回主頁'));
+});
+
+test('landscape blackjack owns a single compact HUD and rotation preserves the live hand and clocks',()=>{
+ const viewport={enabled:true},t=boot({mobile:true,blackjackLandscape:viewport});t.act('table',{table:'blackjack'});const g=t.subject.game;
+ assert.ok(t.app.innerHTML.includes('mobile-blackjack-hud'));assert.equal((t.app.innerHTML.match(/id="countdown"/g)||[]).length,1);assert.ok(t.app.innerHTML.includes('data-action="table-tools"'));
+ assert.ok(g.addBet('bj-main',500));assert.ok(g.lock());for(let i=0;i<20&&g.round.phase==='bj-dealing';i++)g.tick(g.round.remaining);t.subject.render();
+ const live=g.round,snapshot=JSON.stringify(g);viewport.enabled=false;t.listeners['window-resize']();assert.ok(!t.app.innerHTML.includes('mobile-blackjack-hud'));assert.equal(JSON.stringify(g),snapshot);
+ viewport.enabled=true;t.listeners['window-resize']();assert.ok(t.app.innerHTML.includes('blackjack-mobile'));assert.equal(g.round,live);assert.equal(JSON.stringify(g),snapshot);
+ const remaining=g.round.remaining;t.act('pause');t.tick(10000);assert.equal(g.round.remaining,remaining);t.act('resume');assert.equal(g.round.remaining,remaining);
 });

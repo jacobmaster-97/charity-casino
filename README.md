@@ -1,8 +1,8 @@
-# 五分鐘賭神 · 原型0.10.0
+# 五分鐘賭神 · 原型0.10.1
 
-目前版本：0.10.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
+目前版本：0.10.1，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
-此提交為0.10.0發布包，接入已確認v3挑戰記錄與本機PNG原生分享。GitHub Pages部署完成後生效，實際結果另記CHALLENGE_RECORD_RELEASE.json；舊ZIP為歷史包。
+此提交為0.10.1發布包，修正21點手機橫向手牌被裁切與頂欄換行；莊家／玩家左右分區、次要工具收進更多，保留0.10.0紀錄及PNG分享。GitHub Pages實際部署結果另記BLACKJACK_LANDSCAPE_RELEASE.json；舊ZIP為歷史包。
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -30,6 +30,7 @@ npm run verify
 
 ## 功能
 
+- 0.10.1：修正21點手機橫向版面，詳docs/BLACKJACK_LANDSCAPE_0101.md。
 - 0.10.0：正式接入v3金箔深綠紀錄頁；完成隱藏時間、失敗顯示遊玩時間，保留五桌金額／返回主頁／分享。分享從真實結算快照在本機畫PNG，支援系統分享與下載fallback，取消不下載；無排行榜／後端。詳docs/CHALLENGE_RECORD_0100.md。
 - 0.9.4：回應載入比之前慢的回報，移除全圖load／decode入桌門檻及首頁warm；只在指向／聚焦／觸碰某桌時低優先度hint1–2張主要圖，不await、不強制decode、不因晚到回呼導航。詳docs/LOAD_RECOVERY_094.md。
 - 0.9.3：五個名稱框水平／垂直置中；五桌派彩改為居中小視窗，揭曉動畫先播完，倒數仍繼續；首頁閒時預載九張共用貼圖，首次未備妥則顯示準備視窗，支援取消／重試／暫停，解碼完成才入桌。詳docs/UI_POLISH_093.md。
@@ -81,7 +82,7 @@ npm run verify
 
 ## 驗證狀態
 
-共340項通過：331項規則／元件／app替身、3項單檔封裝、6項Pages。新增12項紀錄／Canvas命令／File／分享controller測試及3項app接線，保留500次五分鐘及10,000局模擬。browser_smoke只Python編譯，沒有瀏覽器或iPhone實機證據；Safari原生分享／PNG真像素／版面、讀屏及音訊硬體未驗，詳docs/CHALLENGE_RECORD_VALIDATION.json。
+共345項通過：336項規則／元件／app替身、3項單檔封裝、6項Pages。新增5項21點橫向斷點／階段／卡牌適配／旋轉及暫停接線檢查，保留500次五分鐘及10,000局模擬。browser_smoke只Python編譯，沒有瀏覽器或iPhone實機證據；Safari版面／safe-area／分牌／換牌觸控、原生分享及音訊硬體未驗，詳docs/BLACKJACK_LANDSCAPE_VALIDATION.json。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

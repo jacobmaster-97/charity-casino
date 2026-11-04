@@ -130,3 +130,26 @@ test('2,000 mixed-action rounds conserve cash, shoe uniqueness and single coupon
  }
  assert.equal(g.profile.rounds,2000);assert.ok(g.blackjackShoe.cycle>20);
 });
+
+test('landscape blackjack keeps cards, tools and insurance through real round phases',()=>{
+ const {g}=bjSetup([7,0,5,6]);
+ for(const stage of ['betting','insurance','playing','settled']){
+  if(stage==='insurance')bjStart(g);if(stage==='playing')g.chooseBlackjackInsurance();if(stage==='settled')bjFinish(g);
+  const before=JSON.stringify(g),html=bjView(g,{mobile:true});assert.ok(html.includes('blackjack-mobile'));
+  assert.ok(!html.includes('id="countdown"'));assert.ok(html.includes('mobile-only-tool'));assert.ok(html.includes('data-action="rules"'));
+  if(stage!=='betting')assert.equal((html.match(/class="bj-hand /g)||[]).length,g.round.hands.length);
+  if(stage==='insurance')assert.ok(html.includes('data-action="bj-no-insurance"'));
+  assert.equal(JSON.stringify(g),before);
+ }
+ assert.ok(!bjView(g).includes('blackjack-mobile'));assert.ok(!bjView(g).includes('mobile-only-tool'));
+});
+test('selectable long hands keep separate 44px targets and start at reachable scroll edge',()=>{
+ const styles={},node={clientWidth:160,clientHeight:90,querySelector:()=>({}),querySelectorAll:()=>Array(8).fill(0),style:{setProperty:(k,v)=>styles[k]=v}};
+ fitBlackjackSurface({querySelector:()=>({}),querySelectorAll:()=>[node]});
+ const width=parseFloat(styles['--bj-card-width']);assert.ok(width>=44);assert.ok(width*1.4<=90);assert.equal(styles['--bj-card-gap'],'8px');assert.equal(styles['justify-content'],'flex-start');
+ node.clientWidth=600;node.querySelectorAll=()=>Array(2).fill(0);fitBlackjackSurface({querySelector:()=>({}),querySelectorAll:()=>[node]});assert.equal(styles['justify-content'],'center');
+});
+test('short measured card containers no longer force taller 24px cards into clipped rows',()=>{
+ const styles={},node={clientWidth:240,clientHeight:20,querySelectorAll:()=>Array(2).fill(0),style:{setProperty:(k,v)=>styles[k]=v}};
+ fitBlackjackSurface({querySelector:()=>({}),querySelectorAll:()=>[node]});assert.ok(parseFloat(styles['--bj-card-width'])*1.4<=20);
+});

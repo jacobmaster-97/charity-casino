@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {TableArtCache,TABLE_TEXTURES,TablePanels,updateGameViewport,fitLobbySurface,lobbyWideViewport,lobbySceneLayout} from '../src/table-layout.mjs';
+import {TableArtCache,TABLE_TEXTURES,TablePanels,updateGameViewport,fitLobbySurface,lobbyWideViewport,lobbySceneLayout,mobileBlackjackViewport} from '../src/table-layout.mjs';
 import {Game} from '../src/game.mjs';
 // Native-dialog lifecycle doubles; these checks are not browser layout evidence.
 class PanelNode{
@@ -123,4 +123,9 @@ test('constructing cache sends no request and each chosen table hints at most tw
 });
 test('a missing Image API or unknown table fails optional hints without throwing',async()=>{
  const cache=new TableArtCache({url:r=>r,ImageClass:null,schedule:()=>{throw new Error('must not schedule');},cancel(){}});assert.equal(await cache.prefetch('missing'),false);assert.equal(await cache.prefetch('__proto__'),false);assert.equal(await cache.prefetch('poker'),false);assert.equal(cache.entries.size,0);
+});
+
+test('blackjack landscape breakpoint includes iPhone landscape and excludes portrait and large desktop',()=>{
+ for(const [w,h] of [[568,320],[667,375],[844,390],[932,430],[932,354],[1100,600]])assert.equal(mobileBlackjackViewport(w,h),true);
+ for(const [w,h] of [[430,932],[768,1024],[1024,768],[1280,720],[932,0],[NaN,430],[932,Infinity]])assert.equal(mobileBlackjackViewport(w,h),false);
 });

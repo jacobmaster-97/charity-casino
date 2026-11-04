@@ -1,5 +1,21 @@
 # CODEX_HANDOFF
 
+## 0.10.1 · 21點橫向介面修復已完成，準備發布
+
+手機橫向獨立斷點及單行35.2px頂欄；莊家／玩家左右分區，動作獨立底列、次要工具收進更多；隔離舊直向分牌CSS，換牌長手牌可在牌列滑動且每張≥44px。Game／規則／保存／時鐘與12原PNG不改。
+
+345項（336＋3＋6）全部通過，Pages25個runtime與12原PNG一致；browser_smoke僅Python編譯。詳docs/BLACKJACK_LANDSCAPE_0101.md及VALIDATION.json。真Safari比例／安全區／1–4手／換牌觸控／直向與桌面視覺仍未驗，未重試HTTP／Chromium IPC。沿用前次實裝至GitHub後同一已部署頁面修復，下一步核對原main基準與blob SHA、expected_sha／force:false發布並核對Pages；不開排行榜／Cloudflare。
+
+## 最新：0.10.0 v3紀錄及PNG分享已發布，Pages成功
+
+使用者「實裝至GitHub」已批准正式接入及發布。結果頁真DOM使用v3金箔深綠風格；完成隱藏時間，失敗顯示遊玩時間，兩者保留返回／分享及五桌金額，指定次要文字刪除。PNG依真實完成checkpoint.profile凍結快照本機Canvas繪製，不用示例卡；File點按前準備、同步呼叫原生分享，不支援下載PNG、取消不下載、拒絕／產圖逾時可重試。Game／規則／派彩／計時／保存及12原PNG不改，保留0.9.4即入桌。
+
+以0.9.4 commit061601d3b6d73611bd2a7cc364caf7f298c495ae為parent及expected_sha、force:false更新原main成功。新commit2dfb64310848ed15dd973caf84644312dbee1f85／tree 9134056d068e2a4c8eb1a2f41f54ee4c0b6df979，221份發布檔blob SHA全吻合、63檔變更、30PNG副本不改。Pages run41771348441 completed/success且head_sha吻合。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.10.0 ，提交 https://github.com/jacobmaster-97/charity-casino/commit/2dfb64310848ed15dd973caf84644312dbee1f85 。
+
+340項（331＋3＋6）通過，新增record12與app3；25runtime與Pages一致，12PNG原樣，保留500五分鐘及10,000局模擬。單檔29,887,474 bytes，SHA256 ebcd1e9c9de91221aaf12b2b0515650ecc34b070c3add34a84c602fb37973c55。詳CHALLENGE_RECORD_0100.md／CHALLENGE_RECORD_VALIDATION.json／CHALLENGE_RECORD_RELEASE.json。dist/github-upload保持221檔精確快照；實際收據及本地交接不另部署，舊ZIP歷史包。
+
+沒有排行榜／Cloudflare／付款。真Safari原生分享／收件App、Canvas實際PNG像素／字型、真DOM比例／safe-area／旋轉／觸控／讀屏／modal捲動及音訊仍未驗；browser_smoke只Python編譯，API／Canvas為替身，不當成實機證據，未重試HTTP／Chromium IPC。下一最安全任務：iPhone16Plus開?v=0.10.0完場，測完成／失敗頁及PNG分享／取消／下載；回退用整套0.9.4及快取，不清存檔。
+
 ## 最新：0.10.0 v3紀錄頁／PNG分享已完成，準備授權發布
 
 使用者「實裝至GitHub」已批准v3正式接入及原main／Pages發布。challenge.mjs用真DOM呈現原Logo／金箔深綠結果，完成不顯示時間、失敗顯示遊玩時間；保留五桌金額／返回／分享，指定次要文字刪除。record-share.mjs依真正完成checkpoint.profile凍結本機快照、Canvas動態PNG，不用示例圖、不截UI按鈕；File在點按前準備，原生canShare／share同步從點按觸發，不支援下載PNG，取消不下載，錯誤／逾時可重試。Game／派彩／計時／存檔及12PNG不改，不加全圖入桌門檻／排行榜／雲端。

@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.10.0';
+import {baccaratBoardMarkup} from './board.mjs?v=0.10.1';
 // Best-effort hints only for the table the player points at; never gate navigation.
 export const TABLE_TEXTURES={
  sicbo:['/art/sicbo-board-b/felt.png'],
@@ -73,6 +73,8 @@ export const MOBILE_TABLES_ENABLED=true;
 export const MOBILE_POKER_ENABLED=true;
 // Keep the approved around-table layout on landscape phones; keyboard height is not its owner.
 export function mobilePokerViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_POKER_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&height>0&&width>height&&width<=1100&&height<=600;}
+// Blackjack owns its landscape breakpoint independently of the poker feature flag.
+export function mobileBlackjackViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return Number.isFinite(width)&&Number.isFinite(height)&&height>0&&width>height&&width<=1100&&height<=600;}
 // Width/height of the layout viewport, not the software keyboard's visual viewport.
 export function mobileTableViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_TABLES_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&(width<=679||width<=1100&&height<=600);}
 // Presentation-only result dwell. Never changes Game, outcomes, clocks or checkpoints.

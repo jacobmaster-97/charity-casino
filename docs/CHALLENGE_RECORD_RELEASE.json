@@ -1,0 +1,60 @@
+{
+  "version": "0.10.0",
+  "scope": "Approved v3 challenge record DOM and real checkpoint PNG native sharing published to existing GitHub Pages",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "commit": "2dfb64310848ed15dd973caf84644312dbee1f85",
+  "parent_commit": "061601d3b6d73611bd2a7cc364caf7f298c495ae",
+  "tree": "9134056d068e2a4c8eb1a2f41f54ee4c0b6df979",
+  "verified_files": 221,
+  "changed_files": 63,
+  "unchanged_png_copies": 30,
+  "all_prepared_git_blob_shas_match": true,
+  "ref_update": {
+    "force": false,
+    "expected_sha": "061601d3b6d73611bd2a7cc364caf7f298c495ae",
+    "verified": true
+  },
+  "pages_run": {
+    "run_id": 41771348441,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "2dfb64310848ed15dd973caf84644312dbee1f85",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41771348441"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.10.0",
+  "play_url_http_verified": false,
+  "checks": {
+    "unit_component_and_app_doubles": 331,
+    "standalone": 3,
+    "pages": 6,
+    "total": 340,
+    "failed": 0
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29887474,
+    "sha256": "ebcd1e9c9de91221aaf12b2b0515650ecc34b070c3add34a84c602fb37973c55"
+  },
+  "runtime_files": 25,
+  "original_runtime_pngs": 12,
+  "sharing": {
+    "source": "Immutable actual finished checkpoint.profile",
+    "format": "image/png",
+    "native": "File prepared before tap; native files share when supported",
+    "fallback": "PNG download",
+    "cancel_downloads": false,
+    "sample_cards_used": false,
+    "game_saves_or_clocks_changed": false
+  },
+  "unverified": [
+    "iPhone16Plus Safari native share sheet and actual recipient App",
+    "Real browser Canvas PNG pixels and fonts",
+    "Actual DOM, safe area, rotation, touch, screen reader and modal scrolling",
+    "Hardware audio",
+    "Direct public Pages HTTP"
+  ],
+  "leaderboard_cloudflare_payment": "Not implemented or provisioned",
+  "rollback_commit": "061601d3b6d73611bd2a7cc364caf7f298c495ae",
+  "post_release_document_policy": "Actual receipt and final local handoffs written after this commit; no second deployment. dist/github-upload remains the exact verified221-file snapshot."
+}
