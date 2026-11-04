@@ -1,0 +1,51 @@
+{
+  "version": "0.11.1",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "authorization": "User selected A (要a 然後實裝), then requested continuation; published in the established GitHub-game workflow",
+  "selected_icon": "A · 金印賭字",
+  "base_commit": "2a6d8eb09201abe7ed6456874d6850cff1328e61",
+  "commit": "dc8427c423c9c56e027c0dcb97e9788326b062c9",
+  "tree": "a1df7419db52a5569a61a7cda8504cbb94698e88",
+  "expected_sha": "2a6d8eb09201abe7ed6456874d6850cff1328e61",
+  "force": false,
+  "ref_update": {
+    "success": true
+  },
+  "verified_files": 247,
+  "changed_files": 73,
+  "old_png_copies_unchanged": 30,
+  "new_binary_copies": 10,
+  "unique_binary_blobs": 5,
+  "binary_blob_shas_verified": true,
+  "all_blob_sha_match": true,
+  "tests": {
+    "unit_and_component": 346,
+    "standalone": 4,
+    "pages": 7,
+    "total": 357
+  },
+  "approved_source_sha256": "399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09",
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29997559,
+    "sha256": "1c3f64cbcdd25a6125d7507436bf867aecc861b398c1bcee35fa250cf73ddc5e"
+  },
+  "pages_run": {
+    "run_id": 41794205854,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "dc8427c423c9c56e027c0dcb97e9788326b062c9",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41794205854"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.11.1",
+  "public_url_http_verified": false,
+  "unverified": [
+    "Physical Safari favicon selection and cache replacement",
+    "iPhone16Plus Add to Home Screen mask and existing bookmark caches",
+    "Actual16px readability in browser tabs"
+  ],
+  "snapshot_note": "dist/github-upload is the exact247-file published snapshot. Post-release receipt and local handoffs are not separately deployed.",
+  "rollback": "Restore complete0.11.0 commit2a6d8eb09201abe7ed6456874d6850cff1328e61 and its cache versions; preserve saves. Shop/items remain disabled.",
+  "recorded_at_utc": "2026-11-04T07:44:58.892397+00:00"
+}

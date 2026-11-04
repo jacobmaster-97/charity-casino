@@ -5,6 +5,8 @@ const root=path.resolve(import.meta.dirname,'..');
 const output=path.join(root,'dist');
 await mkdir(output,{recursive:true});
 let html=await readFile(path.join(root,'index.html'),'utf8');
+// A local standalone file cannot be installed as a hosted app; its help opens the web version.
+html=html.replace(/\s*<link rel="manifest"[^>]*>/,'');
 let css=await readFile(path.join(root,'src/styles.css'),'utf8');
 let js='';
 for(const file of ['home-view','cash','rules','challenge','record-share','sound','baccarat','blackjack','blackjack-game','poker','poker-game','roulette','roulette-game','game','storage','board','table-layout','baccarat-squeeze','baccarat-view','blackjack-view','poker-view','roulette-view','sicbo-view','app']){

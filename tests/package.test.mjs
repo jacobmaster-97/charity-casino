@@ -42,3 +42,6 @@ test('standalone embeds all bookmark icons without a separate file or high-resol
  }
  assert.ok(!html.includes('href="./public/icons/'));assert.ok(!html.includes('source.png'));
 });
+test('offline package keeps home-screen help but does not reference a hosted app manifest',()=>{
+ assert.ok(!/<link rel="manifest"/.test(html));assert.ok(html.includes('加到主頁面'));assert.ok(html.includes('開啟網頁版'));assert.ok(!html.includes('beforeinstallprompt'));
+});

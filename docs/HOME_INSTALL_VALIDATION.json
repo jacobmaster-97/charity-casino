@@ -1,0 +1,92 @@
+{
+  "version": "0.12.0",
+  "recorded_at_utc": "2026-11-04T08:13:22.470484+00:00",
+  "scope": "Five-item home menu with platform-detected manual Add to Home Screen guide",
+  "user_override": "Always show a child dialog with steps, replacing the earlier native prompt proposal",
+  "checks": {
+    "npm_run_verify": "PASS",
+    "unit_component": 352,
+    "standalone": 5,
+    "pages": 8,
+    "total": 365,
+    "new_checks": 8,
+    "runtime_files": 25,
+    "runtime_and_icon_pages_mirrors": true,
+    "browser_smoke_python_compile": "PASS",
+    "browser_runtime": "NOT EXECUTED",
+    "geometry": "Measured-viewport and DOM/API doubles only; not physical Safari evidence",
+    "npm_run_prepare_github": "PASS"
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 30003462,
+    "sha256": "9e02db7c1f24c48791492673235609925be9455a5688ec73921206fbeb7c8a32"
+  },
+  "runtime_pngs": [
+    {
+      "path": "public/art/baccarat-b/cards.png",
+      "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd"
+    },
+    {
+      "path": "public/art/home-b/background.png",
+      "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5"
+    },
+    {
+      "path": "public/art/home-b/logo.png",
+      "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e"
+    },
+    {
+      "path": "public/art/prototype-b/dice.png",
+      "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b"
+    },
+    {
+      "path": "public/art/prototype-b/dome.png",
+      "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca"
+    },
+    {
+      "path": "public/art/prototype-b/props.png",
+      "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf"
+    },
+    {
+      "path": "public/art/prototype-b/table.png",
+      "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chip.png",
+      "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chips-five.png",
+      "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/dice.png",
+      "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d"
+    },
+    {
+      "path": "public/art/sicbo-board-b/felt.png",
+      "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9"
+    },
+    {
+      "path": "public/art/styles/b/lobby-populated-v4.png",
+      "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f"
+    }
+  ],
+  "old_A_icon_files_unchanged": true,
+  "new_app_icons": [
+    192,
+    512
+  ],
+  "service_worker_added": false,
+  "native_install_or_share_api_called": false,
+  "unverified": [
+    "iPhone16Plus Safari and Chrome instructions, fullscreen launch and saved-progress continuity",
+    "Android Chrome menu/install labels and full-screen launch",
+    "Actual home-menu and guide-dialog safe areas, large text and touch"
+  ],
+  "sources": [
+    "https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeinstallprompt_event",
+    "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable"
+  ],
+  "base_commit": "dc8427c423c9c56e027c0dcb97e9788326b062c9"
+}

@@ -85,3 +85,15 @@ test('root and docs favicon and iPhone bookmark links resolve under project Page
   }
  }
 });
+test('home-screen manifests use stable scoped starts, standalone mode and approved app icons in root and docs',async()=>{
+ const version=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
+ for(const entry of ['index.html','docs/index.html']){
+  const html=await readFile(path.join(root,entry),'utf8');assert.ok(html.includes('name="apple-mobile-web-app-capable" content="yes"'));
+  const href=html.match(/<link rel="manifest" href="([^"]+)"/)[1];assert.equal(href,'./manifest.webmanifest?v='+version);
+  const manifestURL=new URL(href,pathToFileURL(path.join(root,entry)));manifestURL.search='';const manifest=JSON.parse(await readFile(manifestURL,'utf8'));
+  assert.equal(manifest.display,'standalone');for(const key of ['id','scope','start_url'])assert.equal(manifest[key],'./');assert.equal(manifest.name,'五分鐘賭神');assert.equal(manifest.icons.length,2);
+  for(const icon of manifest.icons){
+   const bytes=await readFile(new URL(icon.src,manifestURL)),size=Number(icon.sizes.split('x')[0]);assert.ok([192,512].includes(size));assert.equal(bytes.readUInt32BE(16),size);assert.equal(bytes.readUInt32BE(20),size);assert.equal(bytes[25],2);assert.deepEqual(bytes,await readFile(path.join(root,'public/icons/a-gold-seal-v1',path.basename(icon.src))));
+  }
+ }
+});

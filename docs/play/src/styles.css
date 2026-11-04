@@ -579,10 +579,10 @@
 .title-frame:after{content:"";position:absolute;inset:calc(12 * var(--home-unit));border:1px solid #bf9b5233;border-radius:calc(15 * var(--home-unit))}
 .home-title-screen .title-logo{position:absolute;left:calc(95 * var(--home-unit));top:calc(44 * var(--home-unit));width:calc(970 * var(--home-unit));height:calc(190 * var(--home-unit));margin:0;line-height:1;pointer-events:none}
 .title-logo img{display:block;width:100%;height:100%;object-fit:contain;object-position:left center;user-select:none}
-.title-menu{position:absolute;left:calc((var(--home-viewWidth) - 754) * var(--home-unit));top:calc(254 * var(--home-unit));width:calc(650 * var(--home-unit));display:grid;gap:calc(22 * var(--home-unit))}
+.title-menu{position:absolute;left:calc((var(--home-viewWidth) - 754) * var(--home-unit));top:var(--home-menu-top,calc(240 * var(--home-unit)));width:calc(650 * var(--home-unit));display:grid;gap:var(--home-menu-gap,calc(20 * var(--home-unit)))}
 .title-menu-lead{position:absolute;left:0;bottom:calc(100% + 26 * var(--home-unit));width:100%;margin:0;text-align:center;font-size:max(14px,calc(41 * var(--home-unit)));font-weight:400;letter-spacing:calc(5 * var(--home-unit));color:#e5d3ac;line-height:1.3;white-space:nowrap}
 .title-menu-lead:before{content:"◆";position:absolute;bottom:calc(100% + 8 * var(--home-unit));left:6%;width:88%;color:#d5b170;font-size:max(10px,calc(28 * var(--home-unit)));background:linear-gradient(90deg,#c7a26199 30%,transparent 30% 70%,#c7a26199 70%) center/100% 1px no-repeat}
-.home-title-screen .title-menu-button{--menu-edge:#ffedb0;--menu-face:linear-gradient(#fff0b1,#e5b75b 48%,#b87a2f);--menu-ink:#2d190d;--menu-base:#8c3e12;position:relative;display:grid;grid-template-columns:calc(126 * var(--home-unit)) minmax(0,1fr) calc(70 * var(--home-unit));align-items:center;min-height:44px;height:calc(144 * var(--home-unit));padding:0;border:0;border-radius:0;background:transparent;color:var(--menu-ink);font-size:max(18px,calc(58 * var(--home-unit)));font-weight:900;line-height:1.2;text-align:left;isolation:isolate;filter:drop-shadow(0 calc(10 * var(--home-unit)) 0 var(--menu-base)) drop-shadow(0 calc(12 * var(--home-unit)) calc(10 * var(--home-unit)) #0008);transition:filter .15s,transform .15s}
+.home-title-screen .title-menu-button{--menu-edge:#ffedb0;--menu-face:linear-gradient(#fff0b1,#e5b75b 48%,#b87a2f);--menu-ink:#2d190d;--menu-base:#8c3e12;position:relative;display:grid;grid-template-columns:calc(126 * var(--home-unit)) minmax(0,1fr) calc(70 * var(--home-unit));align-items:center;min-height:44px;height:var(--home-menu-button-height,calc(128 * var(--home-unit)));padding:0;border:0;border-radius:0;background:transparent;color:var(--menu-ink);font-size:max(18px,calc(58 * var(--home-unit)));font-weight:900;line-height:1.2;text-align:left;isolation:isolate;filter:drop-shadow(0 calc(10 * var(--home-unit)) 0 var(--menu-base)) drop-shadow(0 calc(12 * var(--home-unit)) calc(10 * var(--home-unit)) #0008);transition:filter .15s,transform .15s}
 .title-menu-button:before,.title-menu-button:after{content:"";position:absolute;z-index:-1;pointer-events:none;clip-path:polygon(4% 0,96% 0,100% 17%,100% 83%,96% 100%,4% 100%,0 83%,0 17%)}
 .title-menu-button:before{inset:0;background:var(--menu-edge)}
 .title-menu-button:after{inset:max(1px,calc(4 * var(--home-unit)));background:var(--menu-face);box-shadow:inset 0 calc(9 * var(--home-unit)) #fff1bb33,inset 0 calc(-9 * var(--home-unit)) #0003}
@@ -800,3 +800,18 @@
 .blackjack-mobile .bj-swap-notice{min-height:48px}
 
 @media(max-height:360px){.blackjack-mobile .bj-oval-status{display:none}}
+
+/* 0.12.0: five home choices and browser-specific manual home-screen help. */
+.home-title-screen .title-menu-install{--menu-edge:#cfb579;--menu-face:linear-gradient(#3c5b48,#1a3829);--menu-base:#09271c;--menu-ink:#fff0c8}
+.home-scene[data-menu-compact="true"] .title-menu-lead{display:none}
+.install-browser-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.install-browser-picker button{min-height:44px;font-size:16px}
+.install-browser-picker button[aria-pressed="true"]{background:#d9b66e;color:#241b0e;border-color:#ffe2a2}
+.home-menu-dialog .install-platform{margin:12px 0 8px;font-size:14px;color:#d6be87}
+.install-steps{padding-left:1.6em;margin:10px 0 18px}
+.install-steps li{padding-left:4px;margin:12px 0;font-size:16px;line-height:1.65}
+.install-steps li::marker{color:#efcf85;font-weight:700}
+.home-menu-dialog .install-note{padding:10px 12px;border:1px solid #6b774f;border-radius:8px;background:#10291f;font-size:14px;line-height:1.6}
+.install-note a{display:block;margin-top:6px;color:#f2d490}
+@media(orientation:portrait){.home-title-screen .title-menu{bottom:24px;gap:8px}.home-title-screen .title-menu-button{height:clamp(44px,7vh,60px);min-height:44px;font-size:21px}.home-title-screen .title-menu-lead{display:none}}
+@media(orientation:portrait) and (max-height:620px){.title-orientation{display:none}.home-title-screen .title-logo{top:14px;height:23%}}

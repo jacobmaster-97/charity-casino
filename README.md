@@ -1,8 +1,8 @@
-# 五分鐘賭神 · 原型0.11.1
+# 五分鐘賭神 · 原型0.12.0
 
-目前版本：0.11.1，開啟dist/charity-casino-prototype.html即可離線遊玩。
+目前版本：0.12.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
-此版本接入使用者選定的A款金印賭字favicon及iPhone書籤圖示，保留0.11.0橢圓賭枱、玩法及商店／道具關閉狀態。實際GitHub Pages部署見docs/BOOKMARK_ICON_RELEASE.json。
+主頁新增「加到主頁面」，放在設定與支持作者之間；點擊顯示偵測平台的Safari／Chrome手動指引。保留A圖示、五桌及存檔，商店／道具仍關閉。實際發布結果見docs/HOME_INSTALL_RELEASE.json。
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -30,6 +30,7 @@ npm run verify
 
 ## 功能
 
+- 0.12.0：五選項主頁及平台加入指引，詳docs/HOME_INSTALL_0120.md。
 - 0.11.1：A款favicon及iPhone書籤圖示，詳docs/BOOKMARK_ICON_0111.md。
 - 0.11.0：21點賭枱式設計正式接入，商店與道具暫停開放，詳docs/BLACKJACK_OVAL_0110.md。
 - 0.10.2本機：商店與道具暫停開放，21點新賭枱僅預覽，未發布。
@@ -85,7 +86,7 @@ npm run verify
 
 ## 驗證狀態
 
-共357項通過：346項規則／元件、4項單檔、7項Pages。新增4項圖示尺寸／資產／內嵌及專案路徑驗證，原12PNG與25runtime邏輯保持。真Safari分頁、iPhone主畫面及快取未驗，詳docs/BOOKMARK_ICON_VALIDATION.json。
+共365項通過：352規則／元件、5單檔、8 Pages。新增8項主頁／平台指引／manifest及離線檢查；真Safari／Chrome手動加入、全螢幕與跨WebApp存檔延續未驗，詳docs/HOME_INSTALL_VALIDATION.json。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 

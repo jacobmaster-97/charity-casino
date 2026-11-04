@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 const root=path.resolve(import.meta.dirname,'..');
 const destination=path.join(root,'dist/github-upload');
 await rm(destination,{recursive:true,force:true});
-const files=['.gitignore','.nojekyll','index.html','package.json','README.md','AGENTS.md','CODEX_HANDOFF.md','DEBUG_HANDOFF.md'];
+const files=['.gitignore','.nojekyll','index.html','manifest.webmanifest','package.json','README.md','AGENTS.md','CODEX_HANDOFF.md','DEBUG_HANDOFF.md'];
 async function gather(directory){
   for(const entry of await readdir(path.join(root,directory),{withFileTypes:true})){
     const relative=path.join(directory,entry.name);
@@ -13,8 +13,8 @@ async function gather(directory){
   }
 }
 for(const dir of ['src','scripts','tests','.agents/skills/gamestudio','public/icons/a-gold-seal-v1','public/art/home-b','public/art/prototype-b','public/art/sicbo-board-b','public/art/baccarat-b','docs/play'])await gather(dir);
-files.push('docs/index.html','docs/.nojekyll','public/art/styles/b/lobby-populated-v4.png','public/art/styles/b/lobby-background.png','public/art/styles/b/asset.json');
-for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||entry.name.endsWith('_RELEASE.json')||['skill-installation.json','GITHUB_UPLOAD.json','LOCAL_FIVE_MINUTE_VALIDATION.json','HOME_SCREEN_VALIDATION.json','LOBBY_VIEW_VALIDATION.json','LOBBY_WIDE_VALIDATION.json','UI_POLISH_VALIDATION.json','LOAD_RECOVERY_VALIDATION.json','CHALLENGE_RECORD_VALIDATION.json','BLACKJACK_LANDSCAPE_VALIDATION.json','FEATURES_PAUSED_VALIDATION.json','BLACKJACK_OVAL_VALIDATION.json','BOOKMARK_ICON_VALIDATION.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
+files.push('docs/manifest.webmanifest','docs/index.html','docs/.nojekyll','public/art/styles/b/lobby-populated-v4.png','public/art/styles/b/lobby-background.png','public/art/styles/b/asset.json');
+for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||entry.name.endsWith('_RELEASE.json')||['skill-installation.json','GITHUB_UPLOAD.json','LOCAL_FIVE_MINUTE_VALIDATION.json','HOME_SCREEN_VALIDATION.json','LOBBY_VIEW_VALIDATION.json','LOBBY_WIDE_VALIDATION.json','UI_POLISH_VALIDATION.json','LOAD_RECOVERY_VALIDATION.json','CHALLENGE_RECORD_VALIDATION.json','BLACKJACK_LANDSCAPE_VALIDATION.json','FEATURES_PAUSED_VALIDATION.json','BLACKJACK_OVAL_VALIDATION.json','BOOKMARK_ICON_VALIDATION.json','HOME_INSTALL_VALIDATION.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
 const manifest=[];
 for(const relative of [...new Set(files)].sort()){
   const source=path.join(root,relative),output=path.join(destination,relative),bytes=await readFile(source);

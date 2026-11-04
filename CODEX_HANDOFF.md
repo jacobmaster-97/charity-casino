@@ -1,5 +1,25 @@
 # CODEX_HANDOFF
 
+## 0.12.0 · 五項主選單與加入主畫面指引完成，準備發布
+
+使用者最新修正已取代原生安裝提案：主頁在設定／支持作者間加「加到主頁面」，點擊只顯示子視窗。按Safari／Chrome及iOS／Android偵測顯示對應步驟，亦可自行切換；未知／內嵌提供手動選擇，已standalone提示無需加入，file包可開網頁版。沒有呼叫原生安裝／分享，不建立／改動Game或存檔。
+
+五列依實際安全區調整，主要按鍵≥44px，短螢幕收次要標語，維持主頁單屏。為手動加入後全螢幕提供root／docs manifest與A圖192／512、mobile-web-app-capable，無ServiceWorker或離線承諾。原A5檔及12遊戲PNG不變，商店／道具仍關閉。
+
+365項（352＋5＋8）通過；新增8項，25runtime／Pages副本一致。browser_smoke僅Python編譯，純幾何／DOM替身不是Safari實機，未重試HTTP／Chromium IPC。真iPhone16Plus Safari／Chrome、Android選單、全螢幕啟動／安全區及WebApp存檔延續未驗。單檔30003462 bytes，SHA256 9e02db7c1f24c48791492673235609925be9455a5688ec73921206fbeb7c8a32。詳docs/HOME_INSTALL_0120.md／HOME_INSTALL_VALIDATION.json。
+
+下一步prepare／新PNG blob及全檔SHA核對、expected_sha／force:false更新原main並核對Pages；實際收據另記HOME_INSTALL_RELEASE.json。無排行榜／Cloudflare。
+
+## 0.11.1 · A款書籤圖示已發布，Pages成功
+
+使用者已選A金印賭字並要求實裝／繼續，正式接favicon16／32PNG、ICO16／32／48及iPhone180書籤圖示，原A SHA保持399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09。只做尺寸格式輸出，不改圖案，root／docs相對路徑與版本同步，單檔圖示內嵌。四個小圖71,962 bytes，頁面不引用2.6MB來源圖。
+
+以2a6d8eb09201abe7ed6456874d6850cff1328e61作parent／expected_sha，force:false更新原main成功。commit dc8427c423c9c56e027c0dcb97e9788326b062c9／tree a1df7419db52a5569a61a7cda8504cbb94698e88，247檔全blob SHA吻合、73檔改動、舊30PNG副本不變；新10二進位副本對應5個blob均核對sha。Pages run41794205854 completed/success，head_sha與main核對。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.11.1 。詳docs/BOOKMARK_ICON_0111.md／BOOKMARK_ICON_VALIDATION.json／BOOKMARK_ICON_RELEASE.json。
+
+357項（346＋4＋7）通過，原圖及所有PNG／ICO尺寸已解碼，25runtime忽略cache版本與0.11.0一致、12原遊戲PNG不變。單檔29,997,559 bytes，SHA256 1c3f64cbcdd25a6125d7507436bf867aecc861b398c1bcee35fa250cf73ddc5e。發布前臨時驗證腳本曾因Path變數重用誤寫本機source.png，已攔截並逐位元組還原，改名／重驗圖示與Pages、完整manifest及遠端tree SHA後才發布；原始生成圖及舊線上版未受影響。正式匯出script沒有此問題。
+
+真Safari分頁／16px辨識、iPhone16Plus主畫面遮罩與舊書籤快取未驗；未重試HTTP／Chromium IPC，未直接HTTP核對公開頁。商店及道具仍關閉，沒有排行榜／Cloudflare。dist/github-upload保留247檔精確已發布快照，事後收據／本地交接不另部署；舊ZIP歷史包。下一最安全任務：iPhone16Plus開新版並加入主畫面，若舊捷徑快取仍舊圖，重加捷徑即可，不清遊戲存檔。回退整套0.11.0及其快取版本，存檔保留。
+
 ## 0.11.1 · A款圖示已實裝，準備發布
 
 使用者選「要a 然後實裝」並要求繼續；A金印賭字接入favicon16／32PNG、ICO16／32／48及Apple180書籤圖示，原圖逐位元組保留、僅標準尺寸格式匯出。root／docs連結版本化，離線包內嵌，小圖71,962 bytes、頁面不引用2.6MB原圖。更多見docs/BOOKMARK_ICON_0111.md／BOOKMARK_ICON_VALIDATION.json。

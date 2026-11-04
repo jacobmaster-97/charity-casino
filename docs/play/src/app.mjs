@@ -1,23 +1,23 @@
-import {homeView,homeDialogView,fitHomeSurface} from './home-view.mjs?v=0.11.1';
-import {cashAbs,cashAdd,cashRatio,cashMin,cashMax,cashParse,cashEncode,parseDollars} from './cash.mjs?v=0.11.1';
-import {challengeResultView} from './challenge.mjs?v=0.11.1';
-import {RecordShare} from './record-share.mjs?v=0.11.1';
-import {sicboTableView} from './sicbo-view.mjs?v=0.11.1';
-import {CasinoSound} from './sound.mjs?v=0.11.1';
-import {ROULETTE_ENABLED} from './roulette.mjs?v=0.11.1';
-import {rouletteTableView,fitRouletteSurface,paintRouletteChips} from './roulette-view.mjs?v=0.11.1';
-import {POKER_ENABLED} from './poker.mjs?v=0.11.1';
-import {pokerTableView,paintPokerChips,queuePokerMotions,fitPokerSurface} from './poker-view.mjs?v=0.11.1';
-import {BLACKJACK_ENABLED,blackjackOptions} from './blackjack.mjs?v=0.11.1';
-import {blackjackTableView,paintBlackjackChips,fitBlackjackSurface} from './blackjack-view.mjs?v=0.11.1';
-import {TableArtCache,TABLE_TEXTURES,TablePanels,updateGameViewport,fitBaccaratSurface,fitLobbySurface,mobileTableViewport,mobilePokerViewport,mobileBlackjackViewport,MobileRoundReveal} from './table-layout.mjs?v=0.11.1';
-import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.11.1';
-import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.11.1';
-import {baccaratTableView} from './baccarat-view.mjs?v=0.11.1';
-import {Game} from './game.mjs?v=0.11.1';
-import {GAME_FEATURES,ITEMS,money,duration,chipLabel} from './rules.mjs?v=0.11.1';
-import {boardAmounts,ChipFlights,chipColorIndex} from './board.mjs?v=0.11.1';
-import {Saves,validateSave} from './storage.mjs?v=0.11.1';
+import {homeView,homeDialogView,fitHomeSurface,homeInstallInfo} from './home-view.mjs?v=0.12.0';
+import {cashAbs,cashAdd,cashRatio,cashMin,cashMax,cashParse,cashEncode,parseDollars} from './cash.mjs?v=0.12.0';
+import {challengeResultView} from './challenge.mjs?v=0.12.0';
+import {RecordShare} from './record-share.mjs?v=0.12.0';
+import {sicboTableView} from './sicbo-view.mjs?v=0.12.0';
+import {CasinoSound} from './sound.mjs?v=0.12.0';
+import {ROULETTE_ENABLED} from './roulette.mjs?v=0.12.0';
+import {rouletteTableView,fitRouletteSurface,paintRouletteChips} from './roulette-view.mjs?v=0.12.0';
+import {POKER_ENABLED} from './poker.mjs?v=0.12.0';
+import {pokerTableView,paintPokerChips,queuePokerMotions,fitPokerSurface} from './poker-view.mjs?v=0.12.0';
+import {BLACKJACK_ENABLED,blackjackOptions} from './blackjack.mjs?v=0.12.0';
+import {blackjackTableView,paintBlackjackChips,fitBlackjackSurface} from './blackjack-view.mjs?v=0.12.0';
+import {TableArtCache,TABLE_TEXTURES,TablePanels,updateGameViewport,fitBaccaratSurface,fitLobbySurface,mobileTableViewport,mobilePokerViewport,mobileBlackjackViewport,MobileRoundReveal} from './table-layout.mjs?v=0.12.0';
+import {BaccaratSqueezeController} from './baccarat-squeeze.mjs?v=0.12.0';
+import {BACCARAT_ENABLED,BACCARAT_BETS} from './baccarat.mjs?v=0.12.0';
+import {baccaratTableView} from './baccarat-view.mjs?v=0.12.0';
+import {Game} from './game.mjs?v=0.12.0';
+import {GAME_FEATURES,ITEMS,money,duration,chipLabel} from './rules.mjs?v=0.12.0';
+import {boardAmounts,ChipFlights,chipColorIndex} from './board.mjs?v=0.12.0';
+import {Saves,validateSave} from './storage.mjs?v=0.12.0';
 
 const app=document.querySelector('#app'),toastNode=document.querySelector('#toast');
 const tablePanels=new TablePanels(app),roundReveal=new MobileRoundReveal();updateGameViewport();
@@ -28,7 +28,7 @@ window.visualViewport?.addEventListener('resize',relayoutTables);
 let storage;try{storage=window.localStorage;}catch{storage=null;}
 const sounds=new CasinoSound({storage});
 const saves=new Saves(storage||{getItem(){throw new Error('無法使用瀏覽器儲存空間');},setItem(){throw new Error('無法使用瀏覽器儲存空間');}},{challenge:true});
-let homeReturnFocus=null,lobbyReturnFocus=false;
+let homeReturnFocus=null,lobbyReturnFocus=false,homeInstallBrowser=null;
 let storageWarning='',mode='race',name='',story=false,group='大小',chip=500,allIn=false,peekIndex=0,peekSide='player',overlay=null,toastTimer,last=performance.now();
 const game=new Game({challenge:true,features:GAME_FEATURES,onCue:name=>sounds.play(name),onComplete:save=>{try{saves.write(save);storageWarning='';}catch{storageWarning='自動保存失敗，請匯出完成局存檔。';}}});
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -67,7 +67,7 @@ function payoutContent(){
  const r=game.round,result=r.result,p=game.profile;
  return `<span class="eyebrow">${tableName(game.activeTable)} · 第 ${p.rounds} 局</span><h2 id="round-result-title">本局損益 <strong class="${result.net>=0?'payout-win':'payout-loss'}">${result.net>=0?'+':'−'}${money(cashAbs(result.net))}</strong></h2><dl class="payout-values"><div><dt>本局投注</dt><dd>${money(result.stake)}</dd></div><div><dt>退回及派彩</dt><dd>${money(result.returned)}</dd></div>${result.commission?`<div><dt>莊佣金</dt><dd>${money(result.commission)}</dd></div>`:''}${result.refund?`<div><dt>保本退回</dt><dd>${money(result.refund)}</dd></div>`:''}</dl><p class="payout-save-note">${storageWarning?esc(storageWarning):'已保存完成局'}</p><div class="payout-actions">${p.status==='active'?button('next',game.activeTable==='poker'?'再玩一手':'再玩一局','primary'):button('finish','查看挑戰結果','primary')}${button('leave','返回大廳','outlined')}${p.mode==='free'?button('manual-save','手動保存','quiet'):''}${button('close-overlay','查看盤面','quiet')}</div><small>${p.status==='active'?'挑戰計時繼續':'本次挑戰已結束'}</small>`;
 }
-function modal(){if(!overlay)return '';if(game.screen==='home'&&['start','settings','rank','support'].includes(overlay))return homeDialogView({kind:overlay,name,mode,save:readSave(),legacy:readLegacySave(),warning:storageWarning,button,escape:esc,money,soundControls});const isPause=overlay==='pause',isRules=overlay==='rules';let content;
+function modal(){if(!overlay)return '';if(game.screen==='home'&&['start','settings','rank','install','support'].includes(overlay))return homeDialogView({kind:overlay,name,mode,save:readSave(),legacy:readLegacySave(),warning:storageWarning,button,escape:esc,money,soundControls,installBrowser:homeInstallBrowser,installInfo:homeInstallInfo({userAgent:window.navigator?.userAgent,platform:window.navigator?.platform,maxTouchPoints:window.navigator?.maxTouchPoints,standalone:window.navigator?.standalone,displayStandalone:window.matchMedia?.('(display-mode: standalone)').matches,protocol:window.location?.protocol})});const isPause=overlay==='pause',isRules=overlay==='rules';let content;
   if(overlay==='round-result')return `<div class="modal-backdrop payout-backdrop"><section class="modal payout-modal" role="dialog" aria-modal="true" aria-labelledby="round-result-title" tabindex="-1">${payoutContent()}</section></div>`;
   if(isPause)content=`<span class="eyebrow">TAKE YOUR TIME</span><h2>牌桌已遮住，稍歇一會。</h2><p>挑戰計時與行動倒數已停止。<br>按「繼續」恢復原本的牌局與剩餘秒數。</p>${button('resume','繼續','primary')}${soundControls()}`;
   else if(isRules&&game.activeTable==='roulette')content=`<span class="eyebrow">AMERICAN ROULETTE · 計時繼續</span><h2>美式輪盤</h2><ul class="rules-list"><li>0、00、1–36共38格。只接受獨立單號、三個十二數組、三個直列及紅／黑、單／雙、1–18／19–36六種外圍注；沒有邊線／交點投注。</li><li>淨賠：單號35:1；十二數組／直列2:1；六種外圍1:1，命中另退本金。0及00皆不屬紅黑、單雙或大小，這些等額注遇零全輸。</li><li>可多項同押，合計不超資金。一般每次至少$1，資金不足$1時可全押。下注30秒，可提早啟動；未下注超時跳過${game.features.items?'，已用道具不退':''}。</li><li>鎖注後不能改注。每次轉動4.8秒，輪盤與小球減速至最終號碼；實際時間計入挑戰時間，暫停與背景停表並遮桌。</li>${game.features.items?`<li>每局最多一件，啟用即扣，無免費配給。保本在鎖注前使用，按全部投注合計淨虧損退50%；透視在鎖注前排除五個確定不會開出的單號，可調整投注但不重抽結果或延長倒數。</li>`:''}${game.features.items?`<li>輪盤的重轉券使用商店「重擲／重轉券」共用庫存，必須鎖注前先啟用。首次開獎後有10秒選擇接受或重轉一次；超時接受，不退券。重轉從完整38格抽取，可以同號；全部原投注按最後結果結算。</li>`:''}<li>小格可用放大或精準下注選單。只有最終結果結算後保存，再判歸零或五分鐘結束；重整回上次完成局。</li></ul>${button('close-overlay','回到牌桌','primary')}`;
@@ -84,21 +84,21 @@ function render(){
  roundReveal.sync(game,mobileActive());
  if(payoutRound!==game.round){payoutRound=game.round;payoutShown=false;}
  if(game.screen==='table'&&game.round?.phase==='settled'&&game.round.result&&!roundReveal.visible&&!overlay&&!payoutShown){overlay='round-result';payoutShown=true;}
- sounds.sync(game);tablePanels.beforeRender();const oldBlackjackHands=app.querySelector('.blackjack-mobile .bj-hands'),oldBlackjackScroll=oldBlackjackHands?{left:oldBlackjackHands.scrollLeft,handId:oldBlackjackHands.querySelector('.bj-featured')?.dataset.hand}:null;const oldScroll=document.querySelector('.board-scroll')?.scrollLeft||0;const inventoryOpen=Boolean(document.querySelector('.inventory')?.open);const homeOptionsOpen=Boolean(document.querySelector('.home-options')?.open);const detailsOpen=['bet-details','precise-bet','shoe-details'].filter(c=>document.querySelector('.'+c)?.open);const boardTop=document.querySelector('.board-scroll')?.scrollTop||0;if(game.screen!=='table'||boardRound!==game.round){flights.cancel();boardRound=game.round;boardCounts={};boardLast={};boardChips={};blackjackSwapHandId=null;pokerUI={turn:null,raiseTo:null,selection:null,motionSeen:0};}const active=document.activeElement,action=active?.dataset?.action,bet=active?.dataset?.bet,selectedChip=active?.dataset?.chip,oldModal=Boolean(document.querySelector('.modal')),oldPopup=Boolean(document.querySelector('.mobile-reveal-dialog'));const ended=game.screen!=='home'&&game.profile&&game.profile.status!=='active';if(ended&&(!overlay||['rules','saves','lobby-menu'].includes(overlay))&&!roundReveal.visible)overlay='finish';
+ sounds.sync(game);tablePanels.beforeRender();const oldBlackjackHands=app.querySelector('.blackjack-mobile .bj-hands'),oldBlackjackScroll=oldBlackjackHands?{left:oldBlackjackHands.scrollLeft,handId:oldBlackjackHands.querySelector('.bj-featured')?.dataset.hand}:null;const oldScroll=document.querySelector('.board-scroll')?.scrollLeft||0;const inventoryOpen=Boolean(document.querySelector('.inventory')?.open);const homeOptionsOpen=Boolean(document.querySelector('.home-options')?.open);const detailsOpen=['bet-details','precise-bet','shoe-details'].filter(c=>document.querySelector('.'+c)?.open);const boardTop=document.querySelector('.board-scroll')?.scrollTop||0;if(game.screen!=='table'||boardRound!==game.round){flights.cancel();boardRound=game.round;boardCounts={};boardLast={};boardChips={};blackjackSwapHandId=null;pokerUI={turn:null,raiseTo:null,selection:null,motionSeen:0};}const active=document.activeElement,action=active?.dataset?.action,bet=active?.dataset?.bet,selectedChip=active?.dataset?.chip,selectedBrowser=active?.dataset?.browser,oldModal=Boolean(document.querySelector('.modal')),oldPopup=Boolean(document.querySelector('.mobile-reveal-dialog'));const ended=game.screen!=='home'&&game.profile&&game.profile.status!=='active';if(ended&&(!overlay||['rules','saves','lobby-menu'].includes(overlay))&&!roundReveal.visible)overlay='finish';
   if(overlay==='finish')recordShare.sync(game.checkpoint?.profile||game.profile,art);else if(game.screen==='home'&&recordShare.source)recordShare.reset();
   if(game.activeTable==='poker'&&pokerUI.turn!==game.round?.turnId){pokerUI.turn=game.round?.turnId;pokerUI.raiseTo=null;pokerUI.selection=null;tablePanels.release();}
   app.innerHTML=`<div class="${overlay?'under-overlay'+(overlay==='round-result'?' payout-background':''):''}" ${overlay?'inert':''}>${game.screen==='home'?(story?storyCard():home()):`<div class="game-shell ${game.screen==='table'?'table-shell'+(mobileActive()?' mobile-table':''):game.screen==='lobby'?'lobby-shell':game.screen==='shop'?'shop-shell':''}">${hud()}${game.screen==='lobby'?lobby():game.screen==='shop'?shop():game.activeTable==='roulette'?rouletteTableView({game,art,button,icon,chip,allIn,boardZoom,preciseBet:roulettePrecise,storageWarning,mobile:mobileActive(),popup:roundReveal.visible}):game.activeTable==='poker'?pokerTableView({game,art,button,icon,ui:pokerUI,storageWarning,mobile:mobileActive()}):game.activeTable==='blackjack'?blackjackTableView({game,art,button,icon,chip,allIn,storageWarning,swapHandId:blackjackSwapHandId,mobile:mobileActive()}):game.activeTable==='baccarat'?baccaratTableView({game,art,button,icon,chip,allIn,storageWarning,peekSide}):table()}${storageWarning?`<p class="storage-warning">${esc(storageWarning)}</p>`:''}</div>`}</div>${modal()}<input id="import-file" type="file" accept="application/json,.json" hidden>`;
   fitHomeSurface(app);fitLobbySurface(app);fitBaccaratSurface(app);fitBlackjackSurface(app,oldBlackjackScroll);fitPokerSurface(app);fitRouletteSurface(app);
   const homeOptions=document.querySelector('.home-options');if(homeOptions)homeOptions.open=homeOptionsOpen;const boardScroll=document.querySelector('.board-scroll');if(boardScroll){boardScroll.scrollLeft=oldScroll;boardScroll.scrollTop=boardTop;}for(const c of detailsOpen){const d=document.querySelector('.'+c);if(d)d.open=true;}const inventory=document.querySelector('.inventory');if(inventory)inventory.open=inventoryOpen;if(game.screen==='table'&&game.activeTable==='poker')pokerUI.motionSeen=queuePokerMotions({root:app,game,flights,seen:pokerUI.motionSeen});paintBoard();flights.mount();flights.pause(game.paused);document.querySelectorAll('.flying-chip').forEach(n=>n.hidden=Boolean(overlay));
   if(overlay){const d=document.querySelector('.modal');if(overlay==='start'&&active?.id==='player-name'){const input=d.querySelector('#player-name');input?.focus({preventScroll:true});if(input?.setSelectionRange&&Number.isInteger(active.selectionStart))input.setSelectionRange(active.selectionStart,active.selectionEnd);}else if(action==='sound'||action==='sound-test')d.querySelector(`[data-action="${action}"]`)?.focus({preventScroll:true});else if(overlay==='finish'&&action&&d.querySelector(`[data-action="${action}"]:not(:disabled)`))d.querySelector(`[data-action="${action}"]:not(:disabled)`).focus({preventScroll:true});else if(!oldModal)(d.querySelector(overlay==='start'?'#player-name':'button:not(:disabled)')||d).focus({preventScroll:true});else d.focus();}
-  else if(action){const options=[...app.querySelectorAll('[data-action]')];options.find(b=>b.tagName===active.tagName&&b.dataset.action===action&&(!bet||b.dataset.bet===bet)&&(!selectedChip||b.dataset.chip===selectedChip))?.focus({preventScroll:true});}
+  else if(action){const options=[...app.querySelectorAll('[data-action]')];options.find(b=>b.tagName===active.tagName&&b.dataset.action===action&&(!bet||b.dataset.bet===bet)&&(!selectedChip||b.dataset.chip===selectedChip)&&(!selectedBrowser||b.dataset.browser===selectedBrowser))?.focus({preventScroll:true});}
   tablePanels.mount(Boolean(overlay)||roundReveal.visible||Boolean(game.round?.squeeze)||game.screen!=='table');
   const popupNode=app.querySelector('.mobile-reveal-dialog');if(!popupNode&&oldPopup&&!overlay)app.querySelector('.result-actions button:not(:disabled),.mobile-hud [data-action=pause]')?.focus({preventScroll:true});if(popupNode&&!overlay&&!popupNode.contains(document.activeElement)&&document.activeElement?.dataset?.action!=='pause')(popupNode.querySelector('button:not(:disabled)')||popupNode).focus({preventScroll:true});
   squeeze.mount();
 }
 function soundButton(){return button('sound',sounds.enabled?'音效：開':'音效：關','outlined sound-toggle',`aria-pressed="${sounds.enabled}" aria-label="${sounds.enabled?'關閉聲效':'開啟聲效'}"`);}
 function soundControls(){return `<div class="sound-controls">${soundButton()}${button('sound-test','啟動並試聽','outlined sound-toggle')}<p>如未聽到，可再按一次試聽。</p></div>`;}
-function openOverlay(type){if(game.screen==='home'&&['start','settings','rank','support'].includes(type))homeReturnFocus='home-'+type;if(type==='lobby-menu')lobbyReturnFocus=true;advance();if(type==='pause')game.paused=true;overlay=type;render();}
+function openOverlay(type){if(type==='install')homeInstallBrowser=null;if(game.screen==='home'&&['start','settings','rank','install','support'].includes(type))homeReturnFocus='home-'+type;if(type==='lobby-menu')lobbyReturnFocus=true;advance();if(type==='pause')game.paused=true;overlay=type;render();}
 function closeOverlay(){const wasPayout=overlay==='round-result';overlay=null;game.paused=false;last=performance.now();render();if(game.screen==='home'&&homeReturnFocus)app.querySelector(`[data-action="${homeReturnFocus}"]`)?.focus({preventScroll:true});homeReturnFocus=null;if(game.screen==='lobby'&&lobbyReturnFocus)app.querySelector('[data-action="lobby-more"]')?.focus({preventScroll:true});lobbyReturnFocus=false;if(wasPayout&&game.screen==='table'&&game.round?.phase==='settled')app.querySelector('[data-action="round-result"]')?.focus({preventScroll:true});}
 function showRestored(save){game.restore(validateSave(save));chip=500;allIn=false;mode=game.profile.mode;overlay=null;story=false;last=performance.now();render();notify('已恢復最後完成局；未完成的牌局不會保留。');}
 function exportSave(save=game.checkpoint){if(!save)return notify('完成第一局後，才有可匯出的存檔。');const blob=new Blob([JSON.stringify(cashEncode(save),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`charity-casino-${save.profile.mode}-round-${save.profile.rounds}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -128,7 +128,8 @@ app.addEventListener('click',event=>{
   if(a==='close-table-tool'){tablePanels.close();return;}
   if(a==='sound-test'){const allowed=()=>!document.hidden&&(game.screen==='home'||overlay==='pause');const attempt=sounds.test(allowed);render();void attempt.then(played=>{if(played&&allowed()){notify('正在試播籌碼聲。');render();}});return;}
   if(a==='sound'){sounds.setMuted(sounds.enabled);void sounds.unlock();render();return;}
-  if(game.screen==='home'&&['home-start','home-settings','home-rank','home-support'].includes(a)){openOverlay(a.slice(5));return;}
+  if(game.screen==='home'&&['home-start','home-settings','home-rank','home-install','home-support'].includes(a)){openOverlay(a.slice(5));return;}
+  if(a==='install-browser'&&game.screen==='home'&&overlay==='install'&&['safari','chrome'].includes(target.dataset.browser)){homeInstallBrowser=target.dataset.browser;render();app.querySelector(`[data-action="install-browser"][data-browser="${homeInstallBrowser}"]`)?.focus({preventScroll:true});return;}
   if(a==='mode'){mode=target.dataset.mode;render();return;}
   if(a==='enter'){game.start(name,mode);chip=500;allIn=false;story=false;last=performance.now();render();return;}
   if(a==='continue'){const save=readSave();if(save)showRestored(save);return;}

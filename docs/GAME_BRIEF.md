@@ -1,5 +1,7 @@
 # 五分鐘賭神 — 遊戲框架總覽
 
+最新主頁要求：設定與支持作者之間新增「加到主頁面」，重新排五項。使用者已改成點擊後只開對應Safari／Chrome步驟子視窗，先偵測平台，未知可手動選；不再要求程式直接開原生加入頁。0.12.0另補standalone manifest支援手動加入後App式開啟，原A圖／玩法／存檔及商店關閉狀態維持。詳HOME_INSTALL_0120.md，實際發布見HOME_INSTALL_RELEASE.json。
+
 最新批准：使用者選A金印賭字並要求實裝／繼續，0.11.1接入瀏覽器與iPhone書籤圖示，原A不改圖案，只輸出小尺寸格式，正式頁面／離線包／Pages同步；沿原GitHub遊戲流程發布。其餘玩法／存檔及商店關閉狀態維持。詳BOOKMARK_ICON_0111.md，實際部署另見BOOKMARK_ICON_RELEASE.json。
 
 最新設計要求：網站書籤圖示須符合遊戲美術，三個版本、確認後才實裝。docs/previews/bookmark-icons-v1提供A金印賭字／B五分鐘籌碼／C黑桃王者及大小比較頁；僅預覽，正式0.11.0與GitHub不改。待選款再接favicon／touch-icon。

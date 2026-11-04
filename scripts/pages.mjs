@@ -22,6 +22,9 @@ const html=(await readFile(path.join(root,'index.html'),'utf8'))
   .replaceAll('href="./public/icons/','href="./play/public/icons/')
   .replace('href="./src/styles.css','href="./play/src/styles.css')
   .replace('src="./src/app.mjs','src="./play/src/app.mjs');
+const manifest=JSON.parse(await readFile(path.join(root,'manifest.webmanifest'),'utf8'));
+for(const icon of manifest.icons)icon.src=icon.src.replace('./public/','./play/public/');
+await writeFile(path.join(destination,'manifest.webmanifest'),JSON.stringify(manifest,null,2)+'\n');
 await writeFile(path.join(destination,'index.html'),html);
 await writeFile(path.join(destination,'.nojekyll'),'');
 console.log('GitHub Pages ready: docs/index.html + docs/play/ (twelve game PNGs, twenty-five runtime files, approved A bookmark icons).');

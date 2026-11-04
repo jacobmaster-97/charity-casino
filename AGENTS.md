@@ -55,3 +55,5 @@
 - 最新書籤圖示：使用者明確三款先預覽、確認才實裝，docs/previews/bookmark-icons-v1有image_gen生成A金印賭字／B五分鐘籌碼／C黑桃王者。原圖、提示詞、來源hash與隔離大小比較頁保留；未改正式favicon／touch-icon／版本或GitHub。先等選款／修訂，不沿用舊發布授權自動接入或開店。
 
 - 0.11.1使用者「要a 然後實裝」及「繼續工作」已選A金印賭字，取代先預覽限制，沿既有GitHub遊戲流程正式接入／發布。PNG16／32、ICO16／32／48及Apple180，原圖保留，頁面只載小圖，單檔內嵌，root／docs相對路徑同步。詳docs/BOOKMARK_ICON_0111.md；不重繪或改Logo、商店與道具保持關閉，不開排行榜／Cloudflare。
+
+- 0.12.0依使用者最新追加，主頁五項按開始／龍虎榜／設定／加到主頁面／支持作者排列。點新項只顯平台對應步驟子視窗，取代原生安裝提示提案；Safari3步、iPhone Chrome4步，Android用實際⋮選單，未知可切換。補最小standalone manifest與A192／512，無SW或原生安裝／分享API。詳docs/HOME_INSTALL_0120.md；沿原GitHub遊戲流程實裝發布，商店／道具維持關閉，不開排行榜／Cloudflare。

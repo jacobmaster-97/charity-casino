@@ -11,7 +11,9 @@
   "png_sizes": [
     16,
     32,
-    180
+    180,
+    192,
+    512
   ],
   "ico_sizes": [
     16,
@@ -38,6 +40,16 @@
       "file": "apple-touch-icon.png",
       "bytes": 53463,
       "sha256": "f947de8e0b6adbf8660620bcbb34498c575e2c649c66bf8850a314bad0f56fe8"
+    },
+    {
+      "file": "install-192.png",
+      "bytes": 60225,
+      "sha256": "381b79bc936ac084442d031245592e0d1104178489d4bc328e335b2af5a3d107"
+    },
+    {
+      "file": "install-512.png",
+      "bytes": 406728,
+      "sha256": "893a074344b9c9d967d8864cc4a3f7efa1f829481c970805ee32edd8374d85e0"
     },
     {
       "file": "favicon.ico",

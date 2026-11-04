@@ -5,12 +5,12 @@ import vm from 'node:vm';
 const entry=new URL('../src/app.mjs',import.meta.url),source=await readFile(entry,'utf8'),bindings={};
 for(const match of source.matchAll(/^import \{[^\n]+\} from '([^']+)';/gm))Object.assign(bindings,await import(new URL(match[1],entry)));
 // Event/DOM doubles exercise the real app and Game wiring, not browser layout or audio.
-function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled:false},features=bindings.GAME_FEATURES}={}){
+function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled:false},features=bindings.GAME_FEATURES,installNavigator={userAgent:'iPhone Safari/605.1',platform:'iPhone'}}={}){
  const listeners={},events={},timers=[],deferred=[],clock={now:0},store=new Map(),focused=[];const blank={style:{setProperty(){}},dataset:{},classList:{add(){},remove(){},contains(){return false;}},focus(){},querySelector(){return blank;},querySelectorAll(){return [];},setAttribute(){}};
  const nameInput={...blank,id:'player-name',value:'接線測試',selectionStart:2,selectionEnd:2,focus(){focused.push('player-name');},setSelectionRange(a,b){this.selectionStart=a;this.selectionEnd=b;}};
  const app={...blank,innerHTML:'',addEventListener:(name,fn)=>events[name]=fn,querySelector:s=>(s.startsWith('[data-action="home-')||['[data-action="lobby-more"]','[data-action="round-result"]'].includes(s))?{focus(){focused.push(s);}}:null,querySelectorAll:()=>[]},toast={...blank},elapsed={textContent:''},modal={...blank,querySelector:s=>s==='#player-name'?nameInput:blank};
  const document={hidden:false,activeElement:{dataset:{},tagName:'BUTTON',classList:blank.classList},documentElement:{style:blank.style},querySelector:s=>s==='#app'?app:s==='#toast'?toast:s==='#player-name'&&app.innerHTML.includes('id="player-name"')?nameInput:s==='#elapsed'&&app.innerHTML.includes('id="elapsed"')?elapsed:s==='.modal'&&app.innerHTML.includes('class="modal ')?modal:null,querySelectorAll:()=>[],addEventListener:(name,fn)=>listeners[name]=fn};
- const window={requestIdleCallback:fn=>deferred.push(fn),localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>{const key='window-'+name,previous=listeners[key];listeners[key]=previous?(...args)=>{previous(...args);fn(...args);}:fn;}};
+ const window={navigator:installNavigator,requestIdleCallback:fn=>deferred.push(fn),localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v)},addEventListener:(name,fn)=>{const key='window-'+name,previous=listeners[key];listeners[key]=previous?(...args)=>{previous(...args);fn(...args);}:fn;}};
  class QuietSound{enabled=true;play(){}sync(){}stopAll(){}unlock(){return Promise.resolve(false);}setMuted(v){this.enabled=!v;}test(){return Promise.resolve(false);}}
  class QuietPanels{dialog=null;selection='';beforeRender(){}release(){}mount(){}close(){}}
  class QuietFlights{pending={};flights=[];cancel(){}mount(){}pause(){}landAll(){}queue(){}}
@@ -36,8 +36,8 @@ test('manual pause freezes the active timer, then exact deadline opens the five-
 test('deadline inside an informational panel replaces it with the result and does not reset the clock',()=>{
  const t=boot();t.act('saves');t.tick(300000);assert.equal(t.subject.game.remainingMs,0);assert.ok(t.app.innerHTML.includes('五桌戰績'));assert.equal(t.subject.game.profile.rounds,0);assert.equal(t.subject.game.profile.bank,10000);
 });
-test('home shows the approved four choices and does not create a challenge while browsing menus',()=>{
- const t=boot({start:false});assert.equal((t.app.innerHTML.match(/class="title-menu-button /g)||[]).length,4);assert.ok(t.app.innerHTML.includes('alt="五分鐘賭神"'));assert.ok(!t.app.innerHTML.includes('id="start-form"'));t.tick(20000);assert.equal(t.subject.game.profile,null);assert.equal(t.store.size,0);
+test('home shows the approved five choices and does not create a challenge while browsing menus',()=>{
+ const t=boot({start:false});assert.equal((t.app.innerHTML.match(/class="title-menu-button /g)||[]).length,5);assert.ok(t.app.innerHTML.includes('alt="五分鐘賭神"'));assert.ok(!t.app.innerHTML.includes('id="start-form"'));t.tick(20000);assert.equal(t.subject.game.profile,null);assert.equal(t.store.size,0);
  for(const a of ['home-rank','home-support']){t.act(a);assert.ok(t.app.innerHTML.includes('aria-modal="true"'));assert.equal(t.subject.game.profile,null);t.act('close-overlay');}
 });
 test('home start validates the name, passes through the story, then starts exactly $100 and five minutes',()=>{
@@ -171,4 +171,12 @@ test('all five live table UIs and rules hide inventory while ordinary betting re
   if(table==='poker')assert.ok(g.startPoker());else assert.ok(g.addBet({sicbo:'small',baccarat:'bac-player',blackjack:'bj-main',roulette:'rou-black'}[table],500));
   assert.deepEqual(g.profile.inventory,{protect:2,peek:2,reroll:2,swap:2});
  }
+});
+
+test('home install opens matching instructions, switches browsers and returns focus without touching Game or saves',()=>{
+ const t=boot({start:false}),before=JSON.stringify(t.subject.game);t.act('home-install');assert.ok(t.app.innerHTML.includes('home-dialog-install'));assert.ok(t.app.innerHTML.includes('選擇「加入主畫面」'));t.tick(5000);assert.equal(t.subject.game.profile,null);
+ t.act('install-browser',{browser:'chrome'});assert.ok(t.app.innerHTML.includes('右下角「新增」'));t.act('close-overlay');assert.equal(t.focused.at(-1),'[data-action="home-install"]');assert.equal(JSON.stringify(t.subject.game),before);assert.equal(t.store.size,0);
+});
+test('Chrome iPhone automatically selects its manual guide without calling share or install prompts',()=>{
+ const t=boot({start:false,installNavigator:{userAgent:'iPhone CriOS/140 Safari/605.1',share(){assert.fail('must not invoke native sharing');}}});t.act('home-install');assert.ok(t.app.innerHTML.includes('data-browser="chrome" aria-pressed="true"'));assert.ok(t.app.innerHTML.includes('右上角「分享」'));assert.equal(t.subject.game.profile,null);
 });

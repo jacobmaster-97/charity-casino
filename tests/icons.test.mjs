@@ -10,7 +10,7 @@ test('approved A original and small opaque PNG exports retain expected sizes and
  for(const [file,size] of [['source.png',1254],['favicon-16.png',16],['favicon-32.png',32],['apple-touch-icon.png',180]]){
   const bytes=await readFile(new URL(file,dir));assert.deepEqual([...bytes.subarray(0,8)],[137,80,78,71,13,10,26,10]);assert.equal(bytes.readUInt32BE(16),size);assert.equal(bytes.readUInt32BE(20),size);assert.equal(bytes[25],2,'RGB, without transparent pixels');
  }
- const small=meta.files.filter(f=>!['source.png'].includes(f.file));assert.ok(small.reduce((n,f)=>n+f.bytes,0)<80000,'Only small exports belong on the page, not the 2.6MB source.');
+ const small=meta.files.filter(f=>['favicon-16.png','favicon-32.png','apple-touch-icon.png','favicon.ico'].includes(f.file));assert.ok(small.reduce((n,f)=>n+f.bytes,0)<80000,'Only small exports belong on the page, not the 2.6MB source.');
 });
 test('ICO contains valid separate 16, 32 and 48 pixel entries within the file',async()=>{
  const bytes=await readFile(new URL('favicon.ico',dir));assert.equal(bytes.readUInt16LE(0),0);assert.equal(bytes.readUInt16LE(2),1);assert.equal(bytes.readUInt16LE(4),3);const sizes=[];
