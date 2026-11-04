@@ -1,5 +1,5 @@
-import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.10.1';
-import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.10.1';
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.11.0';
+import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.11.0';
 const blackjackHand=(id,bet,cards=[],fromSplit=false,splitA=false)=>({id,bet,cards,fromSplit,splitA,swapped:false,actions:0,doubled:false,status:'playing'});
 // These methods run on Game: one owner for funds, timers, items and checkpoints.
 export const blackjackMethods={
@@ -59,7 +59,7 @@ export const blackjackMethods={
    const left=blackjackHand(h.id,amount,[h.cards[0]],true,splitA),right=blackjackHand(id,amount,[h.cards[1]],true,splitA);r.hands.splice(r.activeHand,1,left,right);
    this.queueBlackjackAnimation([{side:'player',handId:left.id},{side:'player',handId:right.id}],'split');return {betAdded:{id,amount}};
  },
- useBlackjackItem(id,index=0,expectedHandId=null){
+ useBlackjackItem(id,index=0,expectedHandId=null){if(this.features?.items===false)return false;
    if(expectedHandId!==null&&this.round?.hands?.[this.round.activeHand]?.id!==expectedHandId)return false;
    const options=blackjackOptions(this),r=this.round;if(!['protect','peek','swap'].includes(id)||!options[id])return false;
    const h=r.hands[r.activeHand];if(id==='swap'&&(!Number.isInteger(index)||index<0||index>=h.cards.length))return false;

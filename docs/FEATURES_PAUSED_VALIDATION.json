@@ -1,0 +1,118 @@
+{
+  "local_version": "0.10.2",
+  "published_version": "0.10.1",
+  "recorded_at_utc": "2026-11-04T04:44:39.894486+00:00",
+  "scope": {
+    "blackjack_table_design": "PREVIEW ONLY, awaiting confirmation",
+    "shop_items": "Disabled locally; existing assets and saved inventory preserved",
+    "github": "NOT UPDATED"
+  },
+  "checks": {
+    "npm_run_verify": "PASS",
+    "unit_component": 341,
+    "standalone": 3,
+    "pages": 6,
+    "total": 350,
+    "browser_smoke_python_compile": "PASS",
+    "browser_runtime": "NOT EXECUTED",
+    "blackjack_production_table_markup": "Unchanged from shipped0.10.1, except inventory visibility outside the table composition",
+    "production_styles_css_sha_unchanged": true,
+    "preview_renderer": "system librsvg/cairo, static SVG; not browser evidence"
+  },
+  "preview_screens": [
+    {
+      "state": "playing",
+      "png": "playing.png",
+      "svg": "playing.svg",
+      "pixels": [
+        1864,
+        860
+      ],
+      "buttons": 8,
+      "sha256": "cc0255b2b78140bf8c7b38b7367baa66f42c6e7be459bdcbfe60f43fe9d9d3c8"
+    },
+    {
+      "state": "split",
+      "png": "split.png",
+      "svg": "split.svg",
+      "pixels": [
+        1864,
+        860
+      ],
+      "buttons": 8,
+      "sha256": "98e50275b5d282f0d5866c9c101e84acae0d04f3666baa7ab23ede49cc617812"
+    },
+    {
+      "state": "betting",
+      "png": "betting.png",
+      "svg": "betting.svg",
+      "pixels": [
+        1864,
+        860
+      ],
+      "buttons": 12,
+      "sha256": "7808817865fe3e7b7f1019b2a9a9118f2ca66f178405a520cda2c1c8494420d0"
+    }
+  ],
+  "runtime_pngs": [
+    {
+      "path": "public/art/baccarat-b/cards.png",
+      "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd"
+    },
+    {
+      "path": "public/art/home-b/background.png",
+      "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5"
+    },
+    {
+      "path": "public/art/home-b/logo.png",
+      "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e"
+    },
+    {
+      "path": "public/art/prototype-b/dice.png",
+      "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b"
+    },
+    {
+      "path": "public/art/prototype-b/dome.png",
+      "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca"
+    },
+    {
+      "path": "public/art/prototype-b/props.png",
+      "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf"
+    },
+    {
+      "path": "public/art/prototype-b/table.png",
+      "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chip.png",
+      "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chips-five.png",
+      "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/dice.png",
+      "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d"
+    },
+    {
+      "path": "public/art/sicbo-board-b/felt.png",
+      "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9"
+    },
+    {
+      "path": "public/art/styles/b/lobby-populated-v4.png",
+      "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f"
+    }
+  ],
+  "runtime_files": 25,
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29894596,
+    "sha256": "8088a765f7b49cc2dd101ab37047a816f8d663990eda83968ffbb14cc9074262"
+  },
+  "unverified": [
+    "Real iPhone16Plus Safari CSS and touch",
+    "1–4 hands, long hands and small viewports in the proposed table layout",
+    "Native PNG sharing and audio hardware"
+  ]
+}

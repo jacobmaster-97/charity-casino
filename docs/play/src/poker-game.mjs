@@ -1,5 +1,5 @@
-import {cashAdd,cashSub,cashRatio,cashMin,cashMax,isCash,cashDollars} from './cash.mjs?v=0.10.1';
-import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.10.1';
+import {cashAdd,cashSub,cashRatio,cashMin,cashMax,isCash,cashDollars} from './cash.mjs?v=0.11.0';
+import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.11.0';
 // Methods run on the existing Game; it remains the only wallet, timer and checkpoint owner.
 export const pokerMethods={
  newPokerRound(){
@@ -56,7 +56,7 @@ export const pokerMethods={
  },
  pokerTimeout(){const r=this.round;if(!this.acceptsActions||this.paused||r?.phase!=='poker-player')return false;return this.pokerAction(pokerOptions(this).check?'check':'fold',null,r.turnId);},
  actPokerAI(){const r=this.round;if(this.paused||r?.phase!=='poker-ai')return false;const seat=r.actor,p=r.players[seat],options=pokerOptions(this,seat),decision=pokerAI({cards:p.cards,board:r.board,options,pot:r.players.reduce((n,q)=>cashAdd(n,q.total),0),big:r.blinds.big,style:p.style,difficulty:r.difficulty,randomIndex:this.randomIndex});return this.pokerAction(decision.action,decision.to??null,r.turnId,seat);},
- usePokerItem(id,index=0,expectedTurn=null){
+ usePokerItem(id,index=0,expectedTurn=null){if(this.features?.items===false)return false;
    const r=this.round;if(expectedTurn!==null&&expectedTurn!==r?.turnId)return false;const o=pokerOptions(this);if(!['protect','peek','swap'].includes(id)||!o[id])return false;
    if(id==='swap'&&(!Number.isInteger(index)||index<0||index>1)||id==='peek'&&(!Number.isInteger(index)||index<1||index>5||r.players[index].folded))return false;
    this.profile.inventory[id]--;r.used=id;if(id==='peek'){const cardIndex=this.randomIndex(2);r.peek={seat:index,index:cardIndex,card:r.players[index].cards[cardIndex]};}

@@ -1,16 +1,16 @@
-import {CHALLENGE_MS,CHALLENGE_RULESET,challengeStats} from './challenge.mjs?v=0.10.1';
-import {cashAdd,cashSub,cashRatio,cashMax,isCash} from './cash.mjs?v=0.10.1';
-import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.10.1';
-import {rouletteMethods} from './roulette-game.mjs?v=0.10.1';
-import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.10.1';
-import {pokerMethods} from './poker-game.mjs?v=0.10.1';
-import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.10.1';
-import {blackjackMethods} from './blackjack-game.mjs?v=0.10.1';
-import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.10.1';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.10.1';
+import {CHALLENGE_MS,CHALLENGE_RULESET,challengeStats} from './challenge.mjs?v=0.11.0';
+import {cashAdd,cashSub,cashRatio,cashMax,isCash} from './cash.mjs?v=0.11.0';
+import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.11.0';
+import {rouletteMethods} from './roulette-game.mjs?v=0.11.0';
+import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.11.0';
+import {pokerMethods} from './poker-game.mjs?v=0.11.0';
+import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.11.0';
+import {blackjackMethods} from './blackjack-game.mjs?v=0.11.0';
+import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.11.0';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.11.0';
 // The web entry opts into the new rules; the default also supports schema-1 legacy regression fixtures.
 export class Game {
-  constructor({roll=randomDie,onComplete=()=>{},onCue=()=>{},randomIndex=randomBelow,challenge=false}={}) { this.challenge=challenge;this.closing=false;this._resolving=false;this.roll=roll;this.onComplete=onComplete;this.onCue=onCue;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.blackjackShoe=null;this.pokerTable=null;this.randomIndex=randomIndex; }
+  constructor({roll=randomDie,onComplete=()=>{},onCue=()=>{},randomIndex=randomBelow,challenge=false,features={shop:true,items:true}}={}) { this.features=Object.freeze({shop:features.shop!==false,items:features.items!==false});this.challenge=challenge;this.closing=false;this._resolving=false;this.roll=roll;this.onComplete=onComplete;this.onCue=onCue;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.blackjackShoe=null;this.pokerTable=null;this.randomIndex=randomIndex; }
   cue(name){try{this.onCue(name);}catch{}}
   start(name,mode='race') {
     if(!name.trim()||[...name.trim()].length>16||!['race','free'].includes(mode))throw new Error('請輸入 1–16 字姓名');
@@ -45,6 +45,7 @@ export class Game {
   clearBets(){if(!this.canBet)return false;this.round.bets={};return true;}
   undoBet(id){if(!this.canBet||!this.round.bets[id])return false;delete this.round.bets[id];return true;}
   useItem(id,index=0,expectedHandId=null){
+    if(!this.features.items)return false;
     if(this.activeTable==='roulette')return this.useRouletteItem(id);
     if(this.activeTable==='poker')return this.usePokerItem(id,index,expectedHandId);
     if(this.activeTable==='baccarat')return this.useBaccaratItem(id,index);
@@ -66,7 +67,7 @@ export class Game {
   reveal(){
     if(this.round.phase!=='revealing')return false;
     this.cue('dice-open');
-    if(!this.round.used&&this.profile.inventory.reroll>0){this.round.phase='reroll';this.round.remaining=10000;}else this.settle();
+    if(this.features.items&&!this.round.used&&this.profile.inventory.reroll>0){this.round.phase='reroll';this.round.remaining=10000;}else this.settle();
     return true;
   }
   chooseReroll(index=null){
@@ -124,9 +125,9 @@ export class Game {
     if(this.paused||this.screen!=='table'||(this.round?.phase!=='settled'&&(this.stake>0||this.round?.used||this.round?.phase!=='betting')))return false;
     this.round=null;this.screen='lobby';return true;
   }
-  shop(){if(!this.acceptsActions||this.paused||this.screen!=='lobby'||this.profile.status!=='active')return false;this.screen='shop';return true;}
+  shop(){if(!this.features.shop||!this.features.items||!this.acceptsActions||this.paused||this.screen!=='lobby'||this.profile.status!=='active')return false;this.screen='shop';return true;}
   buy(id){
-    if(!this.acceptsActions||this.paused||this.screen!=='shop'||!ITEM_IDS.includes(id)||this.profile.status!=='active')return false;
+    if(!this.features.shop||!this.features.items||!this.acceptsActions||this.paused||this.screen!=='shop'||!ITEM_IDS.includes(id)||this.profile.status!=='active')return false;
     const cost=cashMax(1,cashRatio(this.profile.bank,1,10,'round'));if(cost>this.profile.bank)return false;
     this.profile.bank=cashSub(this.profile.bank,cost);this.profile.inventory[id]++;
     if(this.challenge)this.profile.itemsSpent=cashAdd(this.profile.itemsSpent,cost);
@@ -145,6 +146,7 @@ export class Game {
     this.round.bets[id]=cashAdd(this.round.bets[id]||0,amount);return true;
   }
   useBaccaratItem(id,side){
+    if(!this.features.items)return false;
     if(!this.canBet||this.round.used||!['protect','peek','swap'].includes(id)||!(this.profile.inventory[id]>0))return false;
     if(id==='peek'&&(!this.stake||!['player','banker'].includes(side)))return false;
     this.profile.inventory[id]--;this.round.used=id;

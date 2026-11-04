@@ -1,0 +1,47 @@
+{
+  "version": "0.10.1",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "authorization": "Repair the same deployed game after the user's preceding implementation-to-GitHub request and landscape-blackjack bug report; no cloud services added",
+  "base_commit": "2dfb64310848ed15dd973caf84644312dbee1f85",
+  "commit": "2ba346e82210681b29e2c41bee9b7895af8d2a80",
+  "tree": "6f1e0cfeb8b00105785742c5248930037c8bc0ef",
+  "expected_sha": "2dfb64310848ed15dd973caf84644312dbee1f85",
+  "force": false,
+  "ref_update": {
+    "success": true
+  },
+  "verified_files": 224,
+  "changed_files": 60,
+  "png_copies_unchanged": 30,
+  "all_blob_sha_match": true,
+  "tests": {
+    "unit_and_component": 336,
+    "standalone": 3,
+    "pages": 6,
+    "total": 345
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29892936,
+    "sha256": "9d628eedc4d4990d8d885944741beb535cd0613d916e04b0a8693d698f255fab"
+  },
+  "pages_run": {
+    "run_id": 41773328646,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "2ba346e82210681b29e2c41bee9b7895af8d2a80",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41773328646"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.10.1",
+  "public_url_http_verified": false,
+  "unverified": [
+    "Physical iPhone16Plus Safari layout, safe areas, orientation and actual card visibility",
+    "One-to-four split hands and swap target touch scrolling in real browser",
+    "iPad, desktop and portrait visual regression",
+    "Native PNG share and hardware audio"
+  ],
+  "snapshot_note": "dist/github-upload is the exact224-file published snapshot. Post-release receipt and local handoffs are not separately deployed.",
+  "rollback": "Restore complete0.10.0 commit2dfb64310848ed15dd973caf84644312dbee1f85 and its module cache versions; preserve saves",
+  "recorded_at_utc": "2026-11-04T04:29:10.628859+00:00"
+}

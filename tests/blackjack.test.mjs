@@ -5,7 +5,7 @@ import {Game} from '../src/game.mjs';
 import {GOAL} from '../src/rules.mjs';
 import {validateSave,Saves} from '../src/storage.mjs';
 import {BLACKJACK_DEAL_MS as D,BLACKJACK_CUT,blackjackValue,blackjackNatural,blackjackHandNatural,makeBlackjackShoe,validateBlackjackShoe,blackjackOptions,settleBlackjackRound} from '../src/blackjack.mjs';
-import {blackjackTableView,paintBlackjackChips,fitBlackjackSurface} from '../src/blackjack-view.mjs';
+import {blackjackTableView,paintBlackjackChips,fitBlackjackSurface,blackjackOvalLayout} from '../src/blackjack-view.mjs';
 import {ChipFlights} from '../src/board.mjs';
 const bjCard=(rank,suit=0,deck=0)=>deck*52+suit*13+rank-1;
 function bjFixture(first){assert.equal(new Set(first).size,first.length);return {cards:[...first,...Array.from({length:312},(_,i)=>i).filter(n=>!first.includes(n))],cursor:0,cycle:1};}
@@ -114,7 +114,7 @@ test('split/double chip flight uses the actual hand DOM target and does not requ
  try{const fx=new ChipFlights({art:p=>p});fx.queue('bj-hand-2',500,{x:0,y:0});fx.mount();assert.equal(style.width,'48px');assert.ok(frames.at(-1).transform.includes('translate(110px,203px)'));}finally{globalThis.document=old;}
 });
 test('card fitting keeps fanned long hands inside their measured area without mutating cards',()=>{
- const styles={},node={clientWidth:240,clientHeight:100,querySelectorAll:()=>Array(8).fill(0),style:{setProperty:(k,v)=>styles[k]=v}},root={querySelector:()=>({}),querySelectorAll:()=>[node]};assert.ok(fitBlackjackSurface(root));const width=Number(styles['--bj-card-width'].slice(0,-2)),gap=Number(styles['--bj-card-gap'].slice(0,-2));assert.ok(width*8+gap*7<=240+1e-8);assert.ok(width*1.4<=100+1e-8);
+ const styles={},node={clientWidth:240,clientHeight:100,querySelectorAll:()=>Array(8).fill(0),style:{setProperty:(k,v)=>styles[k]=v}},root={querySelector:s=>s==='.blackjack-screen'?{}:null,querySelectorAll:()=>[node]};assert.ok(fitBlackjackSurface(root));const width=Number(styles['--bj-card-width'].slice(0,-2)),gap=Number(styles['--bj-card-gap'].slice(0,-2));assert.ok(width*8+gap*7<=240+1e-8);assert.ok(width*1.4<=100+1e-8);
 });
 test('pure settlement preserves bust losses against dealer bust and distinguishes ordinary 21 from Blackjack',()=>{
  const round={originalBet:100,insurance:0,used:null,dealer:[9,6,5],hands:[{id:'bj-main',bet:100,cards:[9,12,4],status:'bust'},{id:'bj-hand-1',bet:100,cards:[9,22],fromSplit:true,status:'stood'}]};const result=settleBlackjackRound(round);assert.equal(result.dealerTotal,23);assert.equal(result.lines[0].payout,0);assert.equal(result.lines[1].payout,200);assert.equal(result.net,0);
@@ -136,7 +136,7 @@ test('landscape blackjack keeps cards, tools and insurance through real round ph
  for(const stage of ['betting','insurance','playing','settled']){
   if(stage==='insurance')bjStart(g);if(stage==='playing')g.chooseBlackjackInsurance();if(stage==='settled')bjFinish(g);
   const before=JSON.stringify(g),html=bjView(g,{mobile:true});assert.ok(html.includes('blackjack-mobile'));
-  assert.ok(!html.includes('id="countdown"'));assert.ok(html.includes('mobile-only-tool'));assert.ok(html.includes('data-action="rules"'));
+  assert.equal((html.match(/id="countdown"/g)||[]).length,stage==='settled'?0:1);assert.ok(html.includes('bj-oval-arena'));assert.ok(html.includes('mobile-only-tool'));assert.ok(html.includes('data-action="rules"'));
   if(stage!=='betting')assert.equal((html.match(/class="bj-hand /g)||[]).length,g.round.hands.length);
   if(stage==='insurance')assert.ok(html.includes('data-action="bj-no-insurance"'));
   assert.equal(JSON.stringify(g),before);
@@ -145,11 +145,32 @@ test('landscape blackjack keeps cards, tools and insurance through real round ph
 });
 test('selectable long hands keep separate 44px targets and start at reachable scroll edge',()=>{
  const styles={},node={clientWidth:160,clientHeight:90,querySelector:()=>({}),querySelectorAll:()=>Array(8).fill(0),style:{setProperty:(k,v)=>styles[k]=v}};
- fitBlackjackSurface({querySelector:()=>({}),querySelectorAll:()=>[node]});
+ fitBlackjackSurface({querySelector:s=>s==='.blackjack-screen'?{}:null,querySelectorAll:()=>[node]});
  const width=parseFloat(styles['--bj-card-width']);assert.ok(width>=44);assert.ok(width*1.4<=90);assert.equal(styles['--bj-card-gap'],'8px');assert.equal(styles['justify-content'],'flex-start');
- node.clientWidth=600;node.querySelectorAll=()=>Array(2).fill(0);fitBlackjackSurface({querySelector:()=>({}),querySelectorAll:()=>[node]});assert.equal(styles['justify-content'],'center');
+ node.clientWidth=600;node.querySelectorAll=()=>Array(2).fill(0);fitBlackjackSurface({querySelector:s=>s==='.blackjack-screen'?{}:null,querySelectorAll:()=>[node]});assert.equal(styles['justify-content'],'center');
 });
 test('short measured card containers no longer force taller 24px cards into clipped rows',()=>{
  const styles={},node={clientWidth:240,clientHeight:20,querySelectorAll:()=>Array(2).fill(0),style:{setProperty:(k,v)=>styles[k]=v}};
- fitBlackjackSurface({querySelector:()=>({}),querySelectorAll:()=>[node]});assert.ok(parseFloat(styles['--bj-card-width'])*1.4<=20);
+ fitBlackjackSurface({querySelector:s=>s==='.blackjack-screen'?{}:null,querySelectorAll:()=>[node]});assert.ok(parseFloat(styles['--bj-card-width'])*1.4<=20);
+});
+
+test('oval measured tracks separate dealer and player and preserve readable card space in one to four hands',()=>{
+ for(const width of [480,552,740,814,932])for(const height of [214,240,280,320,420])for(let count=1;count<=4;count++){
+  const r=blackjackOvalLayout(width,height,count);assert.ok(r);assert.ok(8+r.dealerHeight<=height-6-r.playerHeight);assert.ok(r.playerHeight>=78);assert.ok(r.dealerHeight>=62);assert.ok(r.handWidth<=width);if(count>1){assert.ok(r.handWidth>=190);assert.equal(r.playerHeight,130);}
+  if(r.showPrint){assert.ok(r.printTop>=8+r.dealerHeight);assert.ok(r.printTop+18<=height-6-r.playerHeight);}
+ }
+ for(const args of [[NaN,240,1],[500,0,1],[500,200,0],[500,200,5],[500,200,1.5]])assert.equal(blackjackOvalLayout(...args),null);
+});
+test('actual four-hand oval markup has one active clock, distinct targets and balanced containers through settlement',()=>{
+ const {g}=bjSetup([7,9,20,6,33,46,59,72,2,3]);bjStart(g,500);for(let i=0;i<3;i++){assert.ok(g.blackjackAction('split'));bjAnimate(g);}assert.equal(g.round.hands.length,4);
+ for(const final of [false,true]){
+  if(final)bjFinish(g);const before=JSON.stringify(g),html=bjView(g,{mobile:true}),stack=[];
+  for(const m of html.matchAll(/<(\/?)(div|section|article|header)\b[^>]*>/g)){if(m[1])assert.equal(stack.pop(),m[2]);else stack.push(m[2]);}
+  assert.equal(stack.length,0);assert.equal((html.match(/data-hand=/g)||[]).length,4);assert.equal((html.match(/id="countdown"/g)||[]).length,final?0:1);assert.ok(!html.includes('undefined'));assert.equal(JSON.stringify(g),before);
+ }
+});
+test('oval fit preserves manual scroll on same hand and centers the next active hand without touching cards',()=>{
+ const styles={},featured={dataset:{hand:'bj-hand-2'},offsetLeft:440,offsetWidth:190},hands={dataset:{count:'4'},clientWidth:500,scrollLeft:0,offsetLeft:0,querySelector:()=>featured},arena={clientWidth:500,clientHeight:240,querySelector:()=>hands,style:{setProperty:(k,v)=>styles[k]=v},dataset:{}},root={querySelector:s=>s==='.blackjack-screen'?{}:arena,querySelectorAll:()=>[]};
+ fitBlackjackSurface(root,{left:84,handId:'bj-hand-2'});assert.equal(hands.scrollLeft,84);assert.equal(hands.dataset.overflow,'true');
+ fitBlackjackSurface(root,{left:84,handId:'bj-main'});assert.equal(hands.scrollLeft,285);assert.ok(parseFloat(styles['--bj-oval-player'])>=130);
 });

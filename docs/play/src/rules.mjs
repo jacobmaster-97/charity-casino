@@ -1,4 +1,6 @@
-import {cashAdd,cashSub,cashRatio,isCash,cashShortRatio,cashMoney} from './cash.mjs?v=0.10.1';
+import {cashAdd,cashSub,cashRatio,isCash,cashShortRatio,cashMoney} from './cash.mjs?v=0.11.0';
+// Temporary product switches. Existing saves keep their inventory; re-enable deliberately.
+export const GAME_FEATURES=Object.freeze({shop:false,items:false});
 export const GOAL = 2_500_000_000; // cents; $25,000,000
 const CHIP_DENOMINATIONS = [1,5,10,25,100,500,1000,5000,10000,50000,100000,500000,1000000,5000000,10000000].map(dollars=>dollars*100);
 export function getChipDenominations(bankCents) {

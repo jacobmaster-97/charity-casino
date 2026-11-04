@@ -5,7 +5,7 @@ import vm from 'node:vm';
 const entry=new URL('../src/app.mjs',import.meta.url),source=await readFile(entry,'utf8'),bindings={};
 for(const match of source.matchAll(/^import \{[^\n]+\} from '([^']+)';/gm))Object.assign(bindings,await import(new URL(match[1],entry)));
 // Event/DOM doubles exercise the real app and Game wiring, not browser layout or audio.
-function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled:false}}={}){
+function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled:false},features=bindings.GAME_FEATURES}={}){
  const listeners={},events={},timers=[],deferred=[],clock={now:0},store=new Map(),focused=[];const blank={style:{setProperty(){}},dataset:{},classList:{add(){},remove(){},contains(){return false;}},focus(){},querySelector(){return blank;},querySelectorAll(){return [];},setAttribute(){}};
  const nameInput={...blank,id:'player-name',value:'接線測試',selectionStart:2,selectionEnd:2,focus(){focused.push('player-name');},setSelectionRange(a,b){this.selectionStart=a;this.selectionEnd=b;}};
  const app={...blank,innerHTML:'',addEventListener:(name,fn)=>events[name]=fn,querySelector:s=>(s.startsWith('[data-action="home-')||['[data-action="lobby-more"]','[data-action="round-result"]'].includes(s))?{focus(){focused.push(s);}}:null,querySelectorAll:()=>[]},toast={...blank},elapsed={textContent:''},modal={...blank,querySelector:s=>s==='#player-name'?nameInput:blank};
@@ -17,7 +17,7 @@ function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled
  class QuietSqueeze{mount(){}paint(){}}
  class QuietRecordShare{source=null;state='ready';message='';fallback=false;sync(profile){this.source=profile;}reset(){this.source=null;}share(){this.shared=(this.shared||0)+1;return Promise.resolve('shared');}downloadImage(){this.downloads=(this.downloads||0)+1;}}
  class QuietArtCache{prefetch(id){return artCache?artCache.prefetch(id):Promise.resolve(true);}}
- const context=vm.createContext({...bindings,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:fn=>{deferred.push(fn);return deferred.length;},clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,RecordShare:QuietRecordShare,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,mobileBlackjackViewport:()=>blackjackLandscape.enabled,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
+ const context=vm.createContext({...bindings,GAME_FEATURES:features,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:fn=>{deferred.push(fn);return deferred.length;},clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,RecordShare:QuietRecordShare,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,mobileBlackjackViewport:()=>blackjackLandscape.enabled,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
  const code=source.replace(/^import .*;\s*$/gm,'').replaceAll('import.meta.url',JSON.stringify(entry.href))+`;globalThis.subject={game,render,showRestored,openOverlay,closeOverlay,recordShare};`;
  vm.runInContext(code,context);
  const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home','next','leave','finish','manual-save','pause','share-record','download-record','retry-record'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
@@ -25,7 +25,7 @@ function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled
  return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,runDeferred(){for(const fn of deferred.splice(0))fn();},hint(type,id,{disabled=false}={}){events[type]({target:{closest:()=>({dataset:{table:id},disabled})}});},setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},elapse(ms){clock.now+=ms;},tick(ms){clock.now+=ms;timers[0]();}};
 }
 test('app starts the five-minute ruleset and shop HUD keeps counting down',()=>{
- const t=boot();assert.equal(t.subject.game.challenge,true);assert.ok(t.app.innerHTML.includes('lobby-map'));t.tick(1000);assert.equal(t.elapsed.textContent,'00:04:59');t.act('shop');assert.equal(t.subject.game.screen,'shop');assert.ok(t.app.innerHTML.includes('計時繼續'));t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);assert.equal(t.elapsed.textContent,'00:04:58');
+ const t=boot({features:{shop:true,items:true}});assert.equal(t.subject.game.challenge,true);assert.ok(t.app.innerHTML.includes('lobby-map'));t.tick(1000);assert.equal(t.elapsed.textContent,'00:04:59');t.act('shop');assert.equal(t.subject.game.screen,'shop');assert.ok(t.app.innerHTML.includes('計時繼續'));t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);assert.equal(t.elapsed.textContent,'00:04:58');
 });
 test('rules do not pause, but background pauses even with an information panel open and needs Continue',()=>{
  const t=boot();t.act('rules');assert.equal(t.subject.game.paused,false);t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,1000);t.document.hidden=true;t.listeners.visibilitychange();assert.equal(t.subject.game.paused,true);t.tick(20000);assert.equal(t.subject.game.profile.elapsedMs,1000);t.document.hidden=false;t.listeners.visibilitychange();assert.equal(t.subject.game.paused,true);t.act('resume');t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);
@@ -61,8 +61,8 @@ test('returning to home and opening a new challenge never brings old bankroll in
 test('a home start rerender retains the name input focus and caret for viewport changes',()=>{
  const t=boot({start:false});t.act('home-start');t.setName('手機玩家');t.document.activeElement=t.nameInput;t.subject.render();assert.equal(t.focused.at(-1),'player-name');assert.equal(t.nameInput.selectionStart,2);assert.ok(t.app.innerHTML.includes('value="手機玩家"'));
 });
-test('compact lobby puts shop and More in the HUD with all five stations and no bottom row or map heading',()=>{
- const t=boot();assert.ok(t.app.innerHTML.includes('class="hud lobby-hud"'));assert.ok(t.app.innerHTML.includes('data-action="shop"'));assert.ok(t.app.innerHTML.includes('data-action="lobby-more"'));assert.equal((t.app.innerHTML.match(/data-action="table"/g)||[]).length,5);assert.ok(!/class="lobby-bottom"|class="goal-bar"|class="section-heading"|class="goal-copy"/.test(t.app.innerHTML));assert.ok(!t.app.innerHTML.includes('data-action="home"'));assert.ok(!t.app.innerHTML.includes('data-action="saves"'));
+test('compact lobby keeps More and five stations while the temporary shop switch hides its entry',()=>{
+ const t=boot();assert.ok(t.app.innerHTML.includes('class="hud lobby-hud"'));assert.ok(!t.app.innerHTML.includes('data-action="shop"'));assert.ok(t.app.innerHTML.includes('data-action="lobby-more"'));assert.equal((t.app.innerHTML.match(/data-action="table"/g)||[]).length,5);assert.ok(!/class="lobby-bottom"|class="goal-bar"|class="section-heading"|class="goal-copy"/.test(t.app.innerHTML));assert.ok(!t.app.innerHTML.includes('data-action="home"'));assert.ok(!t.app.innerHTML.includes('data-action="saves"'));
 });
 test('lobby More keeps counting and preserves the existing save route and keyboard trigger',()=>{
  const t=boot();t.act('lobby-more');assert.ok(t.app.innerHTML.includes('id="lobby-menu-dialog"'));assert.ok(t.app.innerHTML.includes('計時繼續'));assert.ok(t.app.innerHTML.includes('遊玩及存檔說明'));t.tick(1234);assert.equal(t.subject.game.profile.elapsedMs,1234);assert.equal(t.subject.game.paused,false);t.act('saves');assert.ok(t.app.innerHTML.includes('只保存已完成局'));t.act('close-overlay');assert.equal(t.focused.at(-1),'[data-action="lobby-more"]');assert.equal(t.subject.game.profile.bank,10000);
@@ -156,4 +156,19 @@ test('landscape blackjack owns a single compact HUD and rotation preserves the l
  const live=g.round,snapshot=JSON.stringify(g);viewport.enabled=false;t.listeners['window-resize']();assert.ok(!t.app.innerHTML.includes('mobile-blackjack-hud'));assert.equal(JSON.stringify(g),snapshot);
  viewport.enabled=true;t.listeners['window-resize']();assert.ok(t.app.innerHTML.includes('blackjack-mobile'));assert.equal(g.round,live);assert.equal(JSON.stringify(g),snapshot);
  const remaining=g.round.remaining;t.act('pause');t.tick(10000);assert.equal(g.round.remaining,remaining);t.act('resume');assert.equal(g.round.remaining,remaining);
+});
+
+test('disabled shop and item actions cannot navigate, open selections or spend saved inventory',()=>{
+ const t=boot(),g=t.subject.game;assert.equal(g.features.shop,false);assert.equal(g.features.items,false);assert.ok(!t.app.innerHTML.includes('data-action="shop"'));
+ const before=JSON.stringify(g);for(const action of ['shop','buy','use','rou-item','pk-item','pk-swap-card','pk-peek-seat','bj-swap-card'])t.act(action,{item:'protect'});
+ assert.equal(JSON.stringify(g),before);assert.equal(g.screen,'lobby');
+});
+test('all five live table UIs and rules hide inventory while ordinary betting remains available',()=>{
+ for(const table of ['sicbo','baccarat','blackjack','poker','roulette']){
+  const t=boot(),g=t.subject.game;t.act('table',{table});g.profile.inventory={protect:2,peek:2,reroll:2,swap:2};t.subject.render();
+  assert.ok(!t.app.innerHTML.includes('class="inventory"'),table);assert.ok(!t.app.innerHTML.includes('data-action="use"'),table);assert.ok(!t.app.innerHTML.includes('data-action="pk-item"'),table);
+  t.act('rules');assert.ok(!t.app.innerHTML.includes('道具'),table);t.act('close-overlay');
+  if(table==='poker')assert.ok(g.startPoker());else assert.ok(g.addBet({sicbo:'small',baccarat:'bac-player',blackjack:'bj-main',roulette:'rou-black'}[table],500));
+  assert.deepEqual(g.profile.inventory,{protect:2,peek:2,reroll:2,swap:2});
+ }
 });

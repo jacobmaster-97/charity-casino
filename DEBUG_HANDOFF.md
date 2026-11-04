@@ -1,5 +1,33 @@
 # DEBUG_HANDOFF
 
+## 0.11.0 · 已確認21點橢圓桌接入，準備授權發布
+
+使用者「實裝到github」已批准v1並授權原main／Pages，取代先預覽界線。手機橫向莊家上方／玩家下方，無頭像、真手牌／下注／點數及當前手倒數；分牌1–4手，窄屏僅手牌列滑動，換手置中、原手保留滑動。48px主要動作、35.2px既有頂欄例外，保險／派彩／明細維持原流程。桌面／直向原布局保留。
+
+商店及道具GAME_FEATURES兩項保持false，原庫存與12PNG保留、不自動重擲／開店。新增呈現不改Game派牌／賠率／派彩／五分鐘／保存。353項（344＋3＋6）全部通過、25runtime／Pages一致。新增測量配置／四手DOM／滑動跟隨3項；原500五分鐘與10,000局回歸保留。測量與DOM為替身、browser_smoke僅Python編譯，非Safari或實機證據；沒有HTTP／Chromium IPC重試。
+
+單檔29901233 bytes，SHA256 74661e766ef1a4426108eaeb2824773d804065172feb6e8589b2d8ea7eb65210。詳docs/BLACKJACK_OVAL_0110.md／BLACKJACK_OVAL_VALIDATION.json。真Safari／安全區／1–4手觸控／長手牌／旋轉、桌面／直向視覺及音訊／原生分享未驗。下一步核對main基準2ba346e82210681b29e2c41bee9b7895af8d2a80、準備快照、blob SHA及expected_sha／force:false發布，待Pages成功再記收據。無排行榜／Cloudflare。
+
+## 最新：21點設計僅預覽；道具停用保留庫存
+
+這輪是新設計預覽及明確功能收起，不是上一版布局再次失敗。以獨立示例SVG／PNG供確認，避免未批准新桌直接上線。Game配置與save分離，不能只藏按鈕而仍讓舊重擲券自動進入10秒選擇；現已加入口／直接API與自動重擲三層約束。
+
+使用者第2點已在本機0.10.2完成：src/rules.mjs GAME_FEATURES {shop:false,items:false}傳入Game，隱藏大廳商店／五桌道具及規則文案，阻止隱藏事件／直接購物與道具API、舊庫存自動重擲；不刪庫存／資產／舊程式、不退款、不加排程自動開放。Game底層預設仍支援舊功能回歸，app明確套停用配置，restore不覆寫配置。未來只按使用者決定重開兩開關，跑回歸及重封裝。
+
+350項（341＋3＋6）通過，新增引擎3／app2；原500五分鐘及10,000局保留，12PNG原樣，25runtime／Pages一致。browser_smoke改成無商店／道具路徑，只Python編譯。三PNG 1864×860已檢視，SVG／PNG與28按鍵靜態範圍檢查通過；非瀏覽器或實機證據，真Safari／safe-area／1–4手與長手牌／換牌／原生分享與音訊仍未驗，未重試HTTP／Chromium IPC。詳docs/FEATURES_PAUSED_0102.md／FEATURES_PAUSED_VALIDATION.json及預覽README。
+
+本機單檔29,894,596 bytes，SHA256 8088a765f7b49cc2dd101ab37047a816f8d663990eda83968ffbb14cc9074262。GitHub與dist/github-upload仍原0.10.1 commit2ba346e82210681b29e2c41bee9b7895af8d2a80、224檔精確快照；本輪未呼叫GitHub／prepare，沒有發佈新桌或隱藏功能。dist/manifest清楚標本機0.10.2未發布，原公開網址仍0.10.1。下一最安全任務：等待使用者確認新賭枱外觀，再接真DOM／多手適配並按發布要求處理；不自行開商店、排行榜／Cloudflare。
+
+## 0.10.1 · 修復發布及證據邊界
+
+根因為舊導航與35%／65%上下配置，玩家手牌列再扣下注54px／操作／工具而被壓扁。修正為左右分區及獨立動作底列、下注30px；舊短直向非當前手規則明確排除blackjack-mobile，換牌非重疊44px目標配局部橫向滑動。測試替身曾覆寫resize listener，已改累積並驗證旋轉／暫停不改局與餘秒。
+
+以原main 2dfb64310848ed15dd973caf84644312dbee1f85為parent及expected_sha、force:false發布commit 2ba346e82210681b29e2c41bee9b7895af8d2a80／tree 6f1e0cfeb8b00105785742c5248930037c8bc0ef；224檔blob SHA全吻合、60變更、30PNG副本不變。Pages run 41773328646 completed/success，head_sha與main核對。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.10.1 。詳docs/BLACKJACK_LANDSCAPE_0101.md／BLACKJACK_LANDSCAPE_VALIDATION.json／BLACKJACK_LANDSCAPE_RELEASE.json。
+
+345項（336＋3＋6）通過，25runtime及12原PNG一致。單檔29,892,936 bytes，SHA256 9d628eedc4d4990d8d885944741beb535cd0613d916e04b0a8693d698f255fab。browser_smoke僅Python編譯，Node／DOM替身不代表真CSS。未重試HTTP／Chromium IPC，未直接HTTP核對公開頁。真iPhone16Plus Safari比例／safe-area／工具列、1–4手／換牌滑動觸控、iPad／桌面／直向視覺及音訊／原生分享仍未驗。
+
+沿用前次實裝至GitHub後同一頁面的修復範圍；無排行榜／Cloudflare／付款。dist/github-upload保持224檔精確發布快照，事後收據／本地交接不另部署；舊ZIP歷史包。下一最安全任務：iPhone16Plus開?v=0.10.1玩21點，檢查保險／分牌／換牌及旋轉／暫停，確認牌面與五鍵完整、整頁不用捲。回退整套0.10.0及快取版本，保留存檔。
+
 ## 0.10.1 · 21點手牌裁切根因與修復
 
 截圖對應舊21點未加入mobile HUD及35%／65%高度再扣工具／54px下注列，使手牌彈性列被壓至幾像素。現用共享剩餘高度的左右分區及獨立操作列，下注30px；隔離短直向隱藏非當前手CSS，修正選牌重疊及24px硬下限。新增旋轉測試最初發現事件替身覆寫前一resize listener，改累積後通過；不是正式app故障。

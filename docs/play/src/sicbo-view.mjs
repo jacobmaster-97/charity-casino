@@ -1,10 +1,11 @@
-import {cashAbs,cashDollars} from './cash.mjs?v=0.10.1';
-import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.10.1';
-import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.10.1';
+import {cashAbs,cashDollars} from './cash.mjs?v=0.11.0';
+import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.11.0';
+import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.11.0';
 const sicboEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function die(value,index,selectable=false){const pos=`${(value-1)%2*100}% ${Math.floor((value-1)/2)*50}%`;return `<${selectable?'button':'div'} ${selectable?`type="button" data-action="reroll" data-index="${index}"`:''} class="die-wrap" aria-label="第 ${index+1} 顆骰子：${value} 點${selectable?'，點選重擲':''}"><span class="die-face" style="background-position:${pos}" aria-hidden="true"></span><span>${selectable?'重擲此骰':`${value} 點`}</span></${selectable?'button':'div'}>`;}
 export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,peekIndex,boardZoom,preciseBet,mobile=false,popup=false,popupElapsed=0}){
-  const r=game.round,p=game.profile,betting=r.phase==='betting',visible=['reroll','settled'].includes(r.phase),result=r.result;
+  const itemsEnabled=game.features?.items!==false;
+ const r=game.round,p=game.profile,betting=r.phase==='betting',visible=['reroll','settled'].includes(r.phase),result=r.result;
   const phaseText={betting:'請下注',revealing:'開骰中',reroll:'選擇重擲',settled:'本局完成'}[r.phase];
   const denominations=getChipDenominations(r.bankAtStart);
   const stage=`<div style="--dice-motion-delay:-${Math.max(0,900-r.remaining)}ms;--dice-motion-state:${game.paused?'paused':'running'}" class="dice-stage ${r.phase==='revealing'?'shaking':''}">
@@ -35,7 +36,7 @@ export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,p
         ${!betting?button('table-tools','更多工具','quiet more-table-tools phase-tools'):''}
         <div class="console-tools">${button('rules','玩法與賠率','quiet mobile-only-tool')}${button('board-zoom',boardZoom?'完整盤面':'放大盤面','quiet zoom-toggle',`aria-pressed="${boardZoom}"`)}
           <details class="bet-details"><summary>投注明細 <span>${Object.keys(r.bets).length} 項</span></summary><div class="bet-list">${Object.entries(r.bets).length?Object.entries(r.bets).map(([id,amount])=>`<div><span>${sicboEscape(BET_MAP[id].group)} · ${sicboEscape(BET_MAP[id].label)}</span><strong>${money(amount)}</strong>${betting?button('remove','×','remove',`data-bet="${id}" aria-label="移除${sicboEscape(BET_MAP[id].label)}投注"`):''}</div>`).join(''):'<div class="empty-bets">尚未下注</div>'}</div></details>
-          ${betting?`<details class="inventory"><summary>本局道具 <span>${r.used?'已用 1／1':'每局限用 1 件'}</span></summary><p class="field-note">重擲券持有即在開骰後提供選擇。</p><div class="peek-picker"><label for="peek-index">透視目標</label><select id="peek-index">${[0,1,2].map(i=>`<option value="${i}" ${peekIndex===i?'selected':''}>第 ${i+1} 顆骰子</option>`).join('')}</select></div>${['protect','peek','reroll'].map(id=>`<div class="item-row">${icon(id)}<span>${ITEMS[id].name}<small>持有 ${p.inventory[id]} 件</small></span>${id==='reroll'?'<small>揭曉後選擇</small>':button('use','使用','outlined',`data-item="${id}" ${r.used||!p.inventory[id]?'disabled':''}`)}</div>`).join('')}</details>`:''}
+          ${itemsEnabled&&betting?`<details class="inventory"><summary>本局道具 <span>${r.used?'已用 1／1':'每局限用 1 件'}</span></summary><p class="field-note">重擲券持有即在開骰後提供選擇。</p><div class="peek-picker"><label for="peek-index">透視目標</label><select id="peek-index">${[0,1,2].map(i=>`<option value="${i}" ${peekIndex===i?'selected':''}>第 ${i+1} 顆骰子</option>`).join('')}</select></div>${['protect','peek','reroll'].map(id=>`<div class="item-row">${icon(id)}<span>${ITEMS[id].name}<small>持有 ${p.inventory[id]} 件</small></span>${id==='reroll'?'<small>揭曉後選擇</small>':button('use','使用','outlined',`data-item="${id}" ${r.used||!p.inventory[id]?'disabled':''}`)}</div>`).join('')}</details>`:''}
           <details class="precise-bet"><summary>精準選格 <span>小螢幕適用</span></summary><label for="bet-target">選擇投注位置</label><select id="bet-target" ${betting?'':'disabled'}>${BETS.map(b=>`<option value="${b.id}" ${preciseBet===b.id?'selected':''}>${sicboEscape(b.group+' · '+b.label)}</option>`).join('')}</select>${button('bet',`下注所選位置`,'outlined',`data-bet="${preciseBet}" ${betting?'':'disabled'}`)}</details>
         </div>
       </div>

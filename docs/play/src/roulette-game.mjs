@@ -1,10 +1,10 @@
-import {cashAdd,cashSub,isCash} from './cash.mjs?v=0.10.1';
-import {ROULETTE_SPIN_MS,ROULETTE_BET_MAP,drawRoulette,rouletteExclusions,rouletteSpin} from './roulette.mjs?v=0.10.1';
+import {cashAdd,cashSub,isCash} from './cash.mjs?v=0.11.0';
+import {ROULETTE_SPIN_MS,ROULETTE_BET_MAP,drawRoulette,rouletteExclusions,rouletteSpin} from './roulette.mjs?v=0.11.0';
 // These methods run on Game, sharing its only wallet, inventory, clock and checkpoints.
 export const rouletteMethods={
  newRouletteRound(){const previous=this.round?.kind==='roulette'?this.round.spin||this.round.rest:null;this.rouletteRoundSerial=(this.rouletteRoundSerial||0)+1;this.round={kind:'roulette',id:this.rouletteRoundSerial,phase:'betting',bankAtStart:this.profile.bank,bets:{},remaining:30000,used:null,peek:null,result:null,outcome:drawRoulette(this.randomIndex),visibleOutcome:null,spin:null,rest:previous,rerolls:0,readyToSettle:false};return true;},
  addRouletteBet(id,amount,expectedRound=null){if(expectedRound!==null&&expectedRound!==this.round?.id)return false;if(!this.canBet||!ROULETTE_BET_MAP[id]||!isCash(amount)||amount<=0||amount>this.available||amount<100&&!(this.profile.bank<100&&this.stake===0&&amount===this.profile.bank))return false;this.round.bets[id]=cashAdd(this.round.bets[id]||0,amount);return true;},
- useRouletteItem(id,expectedRound=null){const r=this.round;if(expectedRound!==null&&expectedRound!==r?.id)return false;if(!this.canBet||r.used||!['protect','peek','reroll'].includes(id)||!(this.profile.inventory[id]>0))return false;this.profile.inventory[id]--;r.used=id;if(id==='peek')r.peek={excluded:rouletteExclusions(r.outcome,this.randomIndex)};return true;},
+ useRouletteItem(id,expectedRound=null){if(this.features?.items===false)return false;const r=this.round;if(expectedRound!==null&&expectedRound!==r?.id)return false;if(!this.canBet||r.used||!['protect','peek','reroll'].includes(id)||!(this.profile.inventory[id]>0))return false;this.profile.inventory[id]--;r.used=id;if(id==='peek')r.peek={excluded:rouletteExclusions(r.outcome,this.randomIndex)};return true;},
  lockRoulette(){if(!this.canBet)return false;if(!this.stake){this.newRouletteRound();return 'skipped';}this.profile.bank=cashSub(this.profile.bank,this.stake);this.startRouletteSpin();return true;},
  startRouletteSpin(){const r=this.round;r.spin=rouletteSpin(r.outcome,r.spin||r.rest);r.phase='rou-spinning';r.remaining=ROULETTE_SPIN_MS;r.visibleOutcome=null;},
  finishRouletteSpin(){const r=this.round;if(this.paused||r?.phase!=='rou-spinning')return false;r.visibleOutcome=r.outcome;if(r.used==='reroll'&&r.rerolls===0){r.phase='rou-reroll';r.remaining=10000;}else{r.readyToSettle=true;this.settle();}return true;},

@@ -96,7 +96,12 @@ def blackjack_landscape_composition(page):
         return
     expect(page.locator('.mobile-blackjack-hud #elapsed')).to_be_visible()
     expect(page.locator('.mobile-blackjack-hud .mobile-table-title')).to_have_text('21點')
-    expect(page.locator('#countdown')).to_have_count(1)
+    if page.locator('[data-bj-action=stand]:enabled').count() or page.locator('.bj-insurance').count() or page.locator('.bj-betting-zone').count():
+        expect(page.locator('#countdown')).to_have_count(1)
+    expect(page.locator('.bj-oval-arena')).to_be_visible()
+    dealer = page.locator('.blackjack-stage').bounding_box()
+    player = page.locator('.bj-player-area').bounding_box()
+    assert dealer['y'] + dealer['height'] <= player['y'] + 1, (dealer, player)
     expect(page.locator('.blackjack-mobile .console-tools')).not_to_be_visible()
     data = page.locator('.blackjack-mobile').evaluate("""root => {
       const bounds=n=>{const r=n.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height};};
@@ -230,14 +235,11 @@ def main():
             act(page, 'close-overlay')
         page.screenshot(path=str(OUT / 'prototype-home.png'), full_page=True)
         start(page)
-        act(page, 'shop')
+        expect(page.locator('[data-action=shop]')).to_have_count(0)
         before = page.locator('#elapsed').inner_text()
         page.wait_for_timeout(1100)
-        assert page.locator('#elapsed').inner_text() != before  # Shopping consumes challenge time.
-        for item in ['protect', 'peek', 'reroll']:
-            act(page, 'buy', item=item)
-        expect(page.locator('#bank-value')).to_have_text('$72.90')
-        act(page, 'close-shop')
+        assert page.locator('#elapsed').inner_text() != before
+        expect(page.locator('#bank-value')).to_have_text('$100')
         page.screenshot(path=str(OUT / 'prototype-lobby.png'), full_page=True)
         act(page, 'table')
         act(page, 'bet', bet='small')
@@ -253,10 +255,9 @@ def main():
         expect(page.get_by_role('dialog')).to_be_visible()
         act(page, 'resume')
         act(page, 'roll')
-        expect(page.locator('[data-action=accept]')).to_be_visible()
-        act(page, 'accept')
+        expect(page.locator('[data-action=accept]')).to_have_count(0)
         expect(page.locator('.payout-modal')).to_contain_text('本局損益')
-        expect(page.locator('#bank-value')).to_have_text('$77.90')
+        expect(page.locator('#bank-value')).to_have_text('$105')
         page.screenshot(path=str(OUT / 'prototype-result.png'), full_page=True)
         act(page, 'leave')
         act(page, 'saves')
@@ -269,22 +270,20 @@ def main():
         assert snapshot['profile']['stats']['sicbo']['rounds'] == 1
         assert snapshot['profile']['rounds'] == 1
         assert snapshot['profile']['inventory']['reroll'] == 0
-        assert snapshot['profile']['bank'] == 7790
+        assert snapshot['profile']['bank'] == 10500
         act(page, 'close-overlay')
         act(page, 'table')
-        page.locator('details.inventory summary').click()
-        page.locator('#peek-index').select_option('2')
-        act(page, 'use', item='peek')
-        expect(page.locator('.insight')).to_contain_text('高點 4–6')
+        expect(page.locator('details.inventory')).to_have_count(0)
+        expect(page.locator('[data-action=use]')).to_have_count(0)
         act(page, 'bet', bet='small')
         act(page, 'roll')
         page.reload()  # Discard this unfinished round.
         act(page, 'continue')
-        expect(page.locator('#bank-value')).to_have_text('$77.90')
+        expect(page.locator('#bank-value')).to_have_text('$105')
         act(page, 'saves')
         page.locator('#import-file').set_input_files({'name': 'bad.json', 'mimeType': 'application/json', 'buffer': b'{broken'})
         expect(page.locator('#toast')).to_contain_text('匯入失敗')
-        expect(page.locator('#bank-value')).to_have_text('$77.90')
+        expect(page.locator('#bank-value')).to_have_text('$105')
         act(page, 'close-overlay')
         page.evaluate("Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'))")
         expect(page.get_by_role('dialog', name='遊戲已暫停')).to_be_visible()
@@ -641,7 +640,7 @@ def main():
             mobile.close()
         assert errors == [], errors
         browser.close()
-        print('Browser smoke passed: play, pause, shop, checkpoint, reload, corrupt import, visibility handler and viewport overflow.')
+        print('Browser smoke passed: play, pause, hidden shop/items, checkpoint, reload, corrupt import, visibility handler and viewport overflow.')
 
 if __name__ == '__main__':
     main()

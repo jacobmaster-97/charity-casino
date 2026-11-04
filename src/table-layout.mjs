@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.10.1';
+import {baccaratBoardMarkup} from './board.mjs?v=0.11.0';
 // Best-effort hints only for the table the player points at; never gate navigation.
 export const TABLE_TEXTURES={
  sicbo:['/art/sicbo-board-b/felt.png'],
