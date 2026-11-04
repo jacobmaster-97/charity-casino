@@ -33,3 +33,12 @@ test('all twelve embedded PNGs exactly match the approved runtime textures',asyn
     assert.equal(createHash('sha256').update(embedded).digest('hex'),createHash('sha256').update(original).digest('hex'));
   }
 });
+test('standalone embeds all bookmark icons without a separate file or high-resolution download',async()=>{
+ const links=[...html.matchAll(/<link rel="(icon|apple-touch-icon)"([^>]*)>/g)];assert.equal(links.length,4);
+ for(const [,rel,attrs] of links){
+  const size=attrs.match(/sizes="([^"]+)"/)[1],data=attrs.match(/href="([^"]+)"/)[1];assert.ok(data.startsWith('data:image/'));
+  const file=rel==='apple-touch-icon'?'apple-touch-icon.png':size==='16x16'?'favicon-16.png':size==='32x32'?'favicon-32.png':'favicon.ico';
+  assert.deepEqual(Buffer.from(data.split(',')[1],'base64'),await readFile(path.join(root,'public/icons/a-gold-seal-v1',file)));
+ }
+ assert.ok(!html.includes('href="./public/icons/'));assert.ok(!html.includes('source.png'));
+});

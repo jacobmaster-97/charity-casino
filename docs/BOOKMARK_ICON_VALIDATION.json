@@ -1,0 +1,128 @@
+{
+  "version": "0.11.1",
+  "recorded_at_utc": "2026-11-04T06:14:37.747129+00:00",
+  "authorization": "User selected A (要a 然後實裝) and asked to continue; implemented in the existing GitHub game workflow",
+  "selected_icon": "A · 金印賭字",
+  "checks": {
+    "npm_run_verify": "PASS",
+    "unit_component": 346,
+    "standalone": 4,
+    "pages": 7,
+    "new_icon_checks": 4,
+    "pngs_and_all_ico_frames_decoded": "PASS",
+    "unchanged_runtime_logic_except_cache_versions": 25,
+    "browser_or_physical_safari": "NOT EXECUTED",
+    "total": 357,
+    "npm_run_prepare_github": "PASS",
+    "runtime_and_icon_pages_mirrors": "PASS"
+  },
+  "icon_assets": {
+    "selected": "A · 金印賭字",
+    "approval": "User selected A and requested implementation",
+    "source": {
+      "generated_with": "OpenAI image_gen",
+      "sha256": "399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09",
+      "original": "/workspace/generated_images/exec-16c320d0-048f-487c-adf5-9722ec4dde30.png",
+      "design": "Approved gold Traditional Chinese 賭 on burgundy; image content unchanged"
+    },
+    "processing": "ImageMagick Lanczos browser-size/format export only; no redrawing, crop or padding",
+    "png_sizes": [
+      16,
+      32,
+      180
+    ],
+    "ico_sizes": [
+      16,
+      32,
+      48
+    ],
+    "files": [
+      {
+        "file": "source.png",
+        "bytes": 2626663,
+        "sha256": "399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09"
+      },
+      {
+        "file": "favicon-16.png",
+        "bytes": 797,
+        "sha256": "153997931a8b9f67d1971283f2fa841e9f8b7191087f18e0f56c149deb1f6668"
+      },
+      {
+        "file": "favicon-32.png",
+        "bytes": 2616,
+        "sha256": "59071f0dc759964d1b609cea580bc7f2b67e702aefafd7fbff6c7098544ff5ea"
+      },
+      {
+        "file": "apple-touch-icon.png",
+        "bytes": 53463,
+        "sha256": "f947de8e0b6adbf8660620bcbb34498c575e2c649c66bf8850a314bad0f56fe8"
+      },
+      {
+        "file": "favicon.ico",
+        "bytes": 15086,
+        "sha256": "770a01192b72e7962afd50d5b486f6e2b36b64616546c5b91c983ec7a6709a13"
+      }
+    ]
+  },
+  "runtime_pngs": [
+    {
+      "path": "public/art/baccarat-b/cards.png",
+      "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd"
+    },
+    {
+      "path": "public/art/home-b/background.png",
+      "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5"
+    },
+    {
+      "path": "public/art/home-b/logo.png",
+      "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e"
+    },
+    {
+      "path": "public/art/prototype-b/dice.png",
+      "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b"
+    },
+    {
+      "path": "public/art/prototype-b/dome.png",
+      "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca"
+    },
+    {
+      "path": "public/art/prototype-b/props.png",
+      "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf"
+    },
+    {
+      "path": "public/art/prototype-b/table.png",
+      "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chip.png",
+      "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chips-five.png",
+      "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/dice.png",
+      "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d"
+    },
+    {
+      "path": "public/art/sicbo-board-b/felt.png",
+      "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9"
+    },
+    {
+      "path": "public/art/styles/b/lobby-populated-v4.png",
+      "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f"
+    }
+  ],
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29997559,
+    "sha256": "1c3f64cbcdd25a6125d7507436bf867aecc861b398c1bcee35fa250cf73ddc5e"
+  },
+  "base_commit": "2a6d8eb09201abe7ed6456874d6850cff1328e61",
+  "unverified": [
+    "Real Safari favicon display and cache replacement",
+    "iPhone16Plus Add to Home Screen crop and cached existing bookmarks",
+    "Browser icon-choice/downsampling; actual16px readability"
+  ]
+}

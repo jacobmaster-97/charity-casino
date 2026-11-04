@@ -1,0 +1,52 @@
+{
+  "version": "0.11.0",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "authorization": "User explicitly approved blackjack-table-v1 implementation and GitHub publication",
+  "base_commit": "2ba346e82210681b29e2c41bee9b7895af8d2a80",
+  "commit": "2a6d8eb09201abe7ed6456874d6850cff1328e61",
+  "tree": "fc566bdd10209bda94ea40053a948f4d9232b9e0",
+  "expected_sha": "2ba346e82210681b29e2c41bee9b7895af8d2a80",
+  "force": false,
+  "ref_update": {
+    "success": true
+  },
+  "verified_files": 230,
+  "changed_files": 62,
+  "png_copies_unchanged": 30,
+  "all_blob_sha_match": true,
+  "tests": {
+    "unit_and_component": 344,
+    "standalone": 3,
+    "pages": 6,
+    "total": 353
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29901233,
+    "sha256": "74661e766ef1a4426108eaeb2824773d804065172feb6e8589b2d8ea7eb65210"
+  },
+  "features": {
+    "shop": false,
+    "items": false,
+    "saved_inventory_preserved": true
+  },
+  "pages_run": {
+    "run_id": 41776326234,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "2a6d8eb09201abe7ed6456874d6850cff1328e61",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41776326234"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.11.0",
+  "public_url_http_verified": false,
+  "unverified": [
+    "Physical iPhone16Plus Safari layout, safe areas, orientation and toolbar heights",
+    "One-to-four hand touch scrolling and long hands in real browser",
+    "iPad, desktop and portrait visual regression",
+    "Native PNG sharing and hardware audio"
+  ],
+  "snapshot_note": "dist/github-upload is the exact230-file published snapshot. Post-release receipt and local handoffs are not separately deployed.",
+  "rollback": "Restore complete0.10.1 commit2ba346e82210681b29e2c41bee9b7895af8d2a80 with its module cache versions; preserve saves. That version reopens shop/items; to retain switches use the local0.10.2 package.",
+  "recorded_at_utc": "2026-11-04T04:59:35.188803+00:00"
+}

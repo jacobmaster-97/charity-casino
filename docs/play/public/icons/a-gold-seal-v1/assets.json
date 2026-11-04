@@ -1,0 +1,48 @@
+{
+  "selected": "A · 金印賭字",
+  "approval": "User selected A and requested implementation",
+  "source": {
+    "generated_with": "OpenAI image_gen",
+    "sha256": "399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09",
+    "original": "/workspace/generated_images/exec-16c320d0-048f-487c-adf5-9722ec4dde30.png",
+    "design": "Approved gold Traditional Chinese 賭 on burgundy; image content unchanged"
+  },
+  "processing": "ImageMagick Lanczos browser-size/format export only; no redrawing, crop or padding",
+  "png_sizes": [
+    16,
+    32,
+    180
+  ],
+  "ico_sizes": [
+    16,
+    32,
+    48
+  ],
+  "files": [
+    {
+      "file": "source.png",
+      "bytes": 2626663,
+      "sha256": "399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09"
+    },
+    {
+      "file": "favicon-16.png",
+      "bytes": 797,
+      "sha256": "153997931a8b9f67d1971283f2fa841e9f8b7191087f18e0f56c149deb1f6668"
+    },
+    {
+      "file": "favicon-32.png",
+      "bytes": 2616,
+      "sha256": "59071f0dc759964d1b609cea580bc7f2b67e702aefafd7fbff6c7098544ff5ea"
+    },
+    {
+      "file": "apple-touch-icon.png",
+      "bytes": 53463,
+      "sha256": "f947de8e0b6adbf8660620bcbb34498c575e2c649c66bf8850a314bad0f56fe8"
+    },
+    {
+      "file": "favicon.ico",
+      "bytes": 15086,
+      "sha256": "770a01192b72e7962afd50d5b486f6e2b36b64616546c5b91c983ec7a6709a13"
+    }
+  ]
+}

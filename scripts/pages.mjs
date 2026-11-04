@@ -1,4 +1,4 @@
-import {readFile,writeFile,mkdir,copyFile,rm} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,copyFile,rm,readdir} from 'node:fs/promises';
 import path from 'node:path';
 import {HOME_ART} from '../src/home-view.mjs';
 const root=path.resolve(import.meta.dirname,'..');
@@ -15,9 +15,13 @@ for(const file of images){
   await mkdir(path.dirname(output),{recursive:true});
   await copyFile(path.join(root,'public',file),output);
 }
+const iconDir='icons/a-gold-seal-v1';
+await mkdir(path.join(runtime,'public',iconDir),{recursive:true});
+for(const file of await readdir(path.join(root,'public',iconDir)))await copyFile(path.join(root,'public',iconDir,file),path.join(runtime,'public',iconDir,file));
 const html=(await readFile(path.join(root,'index.html'),'utf8'))
+  .replaceAll('href="./public/icons/','href="./play/public/icons/')
   .replace('href="./src/styles.css','href="./play/src/styles.css')
   .replace('src="./src/app.mjs','src="./play/src/app.mjs');
 await writeFile(path.join(destination,'index.html'),html);
 await writeFile(path.join(destination,'.nojekyll'),'');
-console.log('GitHub Pages ready: docs/index.html + docs/play/ (twelve PNGs, twenty-five runtime files).');
+console.log('GitHub Pages ready: docs/index.html + docs/play/ (twelve game PNGs, twenty-five runtime files, approved A bookmark icons).');

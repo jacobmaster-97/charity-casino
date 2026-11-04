@@ -1,5 +1,9 @@
 # 五分鐘賭神 — 遊戲框架總覽
 
+最新批准：使用者選A金印賭字並要求實裝／繼續，0.11.1接入瀏覽器與iPhone書籤圖示，原A不改圖案，只輸出小尺寸格式，正式頁面／離線包／Pages同步；沿原GitHub遊戲流程發布。其餘玩法／存檔及商店關閉狀態維持。詳BOOKMARK_ICON_0111.md，實際部署另見BOOKMARK_ICON_RELEASE.json。
+
+最新設計要求：網站書籤圖示須符合遊戲美術，三個版本、確認後才實裝。docs/previews/bookmark-icons-v1提供A金印賭字／B五分鐘籌碼／C黑桃王者及大小比較頁；僅預覽，正式0.11.0與GitHub不改。待選款再接favicon／touch-icon。
+
 最新批准：使用者「實裝到github」已確認blackjack-table-v1並授權接入／發布0.11.0。手機橫向21點採橢圓賭枱、莊家上方／玩家下方、無頭像、真實手牌／分牌／保險與倒數；商店及道具維持關閉，原庫存保留。桌面／直向保留原布局。先預覽限制已解除，原五分鐘／保存規則維持。詳BLACKJACK_OVAL_0110.md，實際發布見BLACKJACK_OVAL_RELEASE.json。
 
 最新要求：21點改為如德州撲克的賭枱式設計，先預覽。三張示例見docs/previews/blackjack-table-v1，未實裝新布局。商店及道具已在本機0.10.2暫時關閉，原庫存／素材保留，恢復存檔不會重開；正式GitHub仍0.10.1。本輪不發布，待確認再接入。詳FEATURES_PAUSED_0102.md。

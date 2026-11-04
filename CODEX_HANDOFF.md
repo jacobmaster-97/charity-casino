@@ -1,5 +1,31 @@
 # CODEX_HANDOFF
 
+## 0.11.1 · A款圖示已實裝，準備發布
+
+使用者選「要a 然後實裝」並要求繼續；A金印賭字接入favicon16／32PNG、ICO16／32／48及Apple180書籤圖示，原圖逐位元組保留、僅標準尺寸格式匯出。root／docs連結版本化，離線包內嵌，小圖71,962 bytes、頁面不引用2.6MB原圖。更多見docs/BOOKMARK_ICON_0111.md／BOOKMARK_ICON_VALIDATION.json。
+
+357項（346＋4＋7）全部通過，runtime及圖示Pages副本一致；新增圖示資產2／單檔1／Pages1檢查。25runtime忽略cache版本與0.11.0一致、12PNG原樣，商店與道具維持關閉。真Safari分頁／iPhone主畫面遮罩及舊書籤快取、16px識別未驗；沒有HTTP／Chromium IPC重試。
+
+單檔29997559 bytes，SHA256 1c3f64cbcdd25a6125d7507436bf867aecc861b398c1bcee35fa250cf73ddc5e。下一步prepare並核對新binary Git blobs／全樹SHA，expected_sha／force:false更新原main，確認Pages成功再記收據；不另開雲端或商店。
+
+## 最新：三款網頁書籤圖示設計待確認，正式保持0.11.0
+
+使用者明確「給我三個版本，確認後才實裝」。依原Logo金色／酒紅／深綠，使用image_gen生成A金印賭字、B五分鐘籌碼、C黑桃王者，原圖保留且複本存docs/previews/bookmark-icons-v1；完整prompts／assets／validation與隔離HTML比較頁齊備。16／32／80px僅CSS示意，非正式小圖匯出；未改favicon／apple-touch-icon或正式界面，未升版／封裝／GitHub。
+
+3張1254×1254 RGB正方形PNG解碼／不透明／原檔一致、12圖片引用與3組16／32px示意檢查通過，3圖已目視檢視。120正式程式／素材／封裝及發布狀態檔SHA未變。沒有重跑或引用本輪353項遊戲測試，未重試HTTP／Chromium IPC。真Safari小尺寸辨識／降採樣、iPhone書籤遮罩、最終ICO／touch-icon及快取均未驗。
+
+正式仍0.11.0 commit2a6d8eb09201abe7ed6456874d6850cff1328e61，商店／道具維持關閉。下一最安全任務：待使用者選A／B／C或修訂，確認後才匯出／接入／封裝及按授權發布；不得沿用舊發布授權自行安裝這輪新圖示。
+
+## 0.11.0 · 21點橢圓桌及商店／道具關閉已發布，Pages成功
+
+使用者「實裝到github」已批准v1正式接入／發布。手機橫向21點為上方莊家／下方玩家的深綠酒紅金邊橢圓桌，無頭像、真實手牌／點數／下注及當前手倒數，分牌1–4手、窄屏局部滑動／換手置中，主要動作48px。桌面／直向保留原布局；保險／派彩／五分鐘／保存及12原PNG維持。商店與道具開關維持false、舊庫存保留，不自動重擲或重開商店。
+
+以原main 2ba346e82210681b29e2c41bee9b7895af8d2a80為parent與expected_sha、force:false更新成功。commit 2a6d8eb09201abe7ed6456874d6850cff1328e61／tree fc566bdd10209bda94ea40053a948f4d9232b9e0；230檔blob SHA全吻合，62檔改動，30PNG副本不變。Pages run 41776326234 completed/success且head_sha與main核對。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.11.0 。詳docs/BLACKJACK_OVAL_0110.md／BLACKJACK_OVAL_VALIDATION.json／BLACKJACK_OVAL_RELEASE.json。
+
+353項（344＋3＋6）通過，25runtime／Pages鏡像一致，保留500五分鐘及10,000局回歸。新增3項測量配置／四手真DOM標記及結算／滑動跟隨檢查。單檔29,901,233 bytes，SHA256 74661e766ef1a4426108eaeb2824773d804065172feb6e8589b2d8ea7eb65210。瀏覽器腳本僅Python編譯；Node／DOM替身與純幾何不是真Safari畫面，未重試HTTP／Chromium IPC，未直接HTTP核對公開頁。真iPhone16Plus安全區／工具列／1–4手與長手牌／觸控／旋轉、iPad／桌面／直向視覺、原生分享及音訊硬體仍未驗。
+
+沒有排行榜／Cloudflare／付款。dist/github-upload保持230檔精確發布快照，事後收據及本地交接不另部署，舊ZIP歷史包。下一最安全任務：iPhone16Plus開?v=0.11.0測21點下注／分牌／保險／暫停旋轉及無整頁捲動，並確認大廳與各桌無商店／道具入口。回退整套0.10.1會重開商店／道具；若須保持關閉可用本機0.10.2包，保留所有存檔。
+
 ## 0.11.0 · 已確認21點橢圓桌接入，準備授權發布
 
 使用者「實裝到github」已批准v1並授權原main／Pages，取代先預覽界線。手機橫向莊家上方／玩家下方，無頭像、真手牌／下注／點數及當前手倒數；分牌1–4手，窄屏僅手牌列滑動，換手置中、原手保留滑動。48px主要動作、35.2px既有頂欄例外，保險／派彩／明細維持原流程。桌面／直向原布局保留。

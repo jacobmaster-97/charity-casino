@@ -51,3 +51,7 @@
 - 最新：使用者要求21點改為德州式賭枱且「先讓我預覽」，docs/previews/blackjack-table-v1只有三張靜態示例與切換HTML，未替換正式21點布局。另按第2點在本機0.10.2以GAME_FEATURES關閉商店／道具，保留存檔庫存／素材，阻止舊券自動重擲；詳docs/FEATURES_PAUSED_0102.md。這輪未發布，GitHub保持0.10.1，不准沿用舊發布授權自動上線新設計。待使用者確認後再接21點與發布；不自行重新開店或啟動排行榜／Cloudflare。
 
 - 0.11.0使用者「實裝到github」已批准blackjack-table-v1設計正式接入及發布，取代上一輪先預覽／未發布界線。手機橫向21點以橢圓深綠酒紅金邊賭枱、莊家上方／玩家下方、真實牌局與行動倒數呈現；分牌保留全部手牌、窄屏局部滑動與自動跟隨，桌面／直向沿用原布局。商店與道具GAME_FEATURES維持false，庫存保留，只有使用者決定才重新開放。詳docs/BLACKJACK_OVAL_0110.md及實際發布收據；不開排行榜／Cloudflare。
+
+- 最新書籤圖示：使用者明確三款先預覽、確認才實裝，docs/previews/bookmark-icons-v1有image_gen生成A金印賭字／B五分鐘籌碼／C黑桃王者。原圖、提示詞、來源hash與隔離大小比較頁保留；未改正式favicon／touch-icon／版本或GitHub。先等選款／修訂，不沿用舊發布授權自動接入或開店。
+
+- 0.11.1使用者「要a 然後實裝」及「繼續工作」已選A金印賭字，取代先預覽限制，沿既有GitHub遊戲流程正式接入／發布。PNG16／32、ICO16／32／48及Apple180，原圖保留，頁面只載小圖，單檔內嵌，root／docs相對路徑同步。詳docs/BOOKMARK_ICON_0111.md；不重繪或改Logo、商店與道具保持關閉，不開排行榜／Cloudflare。

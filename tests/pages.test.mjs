@@ -72,3 +72,16 @@ test('all entry-module dependencies share the release version to avoid stale exp
     }
   }
 });
+test('root and docs favicon and iPhone bookmark links resolve under project Pages and ship the approved bytes',async()=>{
+ const version=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
+ for(const entry of ['index.html','docs/index.html']){
+  const html=await readFile(path.join(root,entry),'utf8'),links=[...html.matchAll(/<link rel="(icon|apple-touch-icon)"([^>]*)>/g)];assert.equal(links.length,4);
+  assert.ok(html.includes('name="apple-mobile-web-app-title" content="五分鐘賭神"'));
+  for(const [,rel,attrs] of links){
+   const href=attrs.match(/href="([^"]+)"/)[1];assert.ok(href.endsWith('?v='+version));assert.ok(href.startsWith(entry.startsWith('docs/')?'./play/public/icons/':'./public/icons/'));assert.ok(!href.includes('source.png'));
+   const target=new URL(href,pathToFileURL(path.join(root,entry)));target.search='';const name=path.basename(target.pathname);assert.deepEqual(await readFile(target),await readFile(path.join(root,'public/icons/a-gold-seal-v1',name)));
+   for(const prefix of ['https://example.github.io/','https://example.github.io/charity-casino/'])assert.ok(new URL(href,new URL(entry,prefix)).href.startsWith(prefix));
+   if(rel==='apple-touch-icon')assert.ok(attrs.includes('sizes="180x180"'));
+  }
+ }
+});

@@ -21,6 +21,12 @@ for(const [index,ref] of references.entries()){
   bootstrap+=`document.documentElement.style.setProperty('--bundled-art-${index}', 'url("'+globalThis.__CASINO_ART[${JSON.stringify(ref)}]+'")');\n`;
 }
 bootstrap=`globalThis.__CASINO_ART=${JSON.stringify(assetMap)};\n`+bootstrap;
+// Inline only the small browser icons; the full approved source is never fetched at startup.
+for(const match of [...html.matchAll(/href="(\.\/public\/icons\/[^"?]+)(?:\?[^" ]*)?"/g)]){
+  const bytes=await readFile(path.join(root,match[1]));
+  const type=match[1].endsWith('.ico')?'image/x-icon':'image/png';
+  html=html.replace(match[0],`href="data:${type};base64,${bytes.toString('base64')}"`);
+}
 html=html.replace(/<link rel="stylesheet" href="\.\/src\/styles\.css(?:\?[^"\s]*)?">/,()=>`<style>${css}</style>`).replace(/<script type="module" src="\.\/src\/app\.mjs(?:\?[^"\s]*)?"><\/script>/,()=>`<script type="module">${bootstrap}${js.replaceAll('</script','<\\/script')}</script>`);
 if(/(?:src|href)="\.\/src\//.test(html)||/url\(['"]?\/art\//.test(html))throw new Error('Unbundled reference');
 await writeFile(path.join(output,'charity-casino-prototype.html'),html);

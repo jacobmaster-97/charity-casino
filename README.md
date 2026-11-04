@@ -1,8 +1,8 @@
-# 五分鐘賭神 · 原型0.11.0
+# 五分鐘賭神 · 原型0.11.1
 
-目前版本：0.11.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
+目前版本：0.11.1，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
-此版本接入已確認的21點手機橫向橢圓賭枱，保留上方莊家／下方玩家、分牌、保險及真實牌局操作；商店及道具維持暫停開放，原庫存／貼圖保留。發布至原GitHub Pages，實際commit／部署見docs/BLACKJACK_OVAL_RELEASE.json。
+此版本接入使用者選定的A款金印賭字favicon及iPhone書籤圖示，保留0.11.0橢圓賭枱、玩法及商店／道具關閉狀態。實際GitHub Pages部署見docs/BOOKMARK_ICON_RELEASE.json。
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -30,6 +30,7 @@ npm run verify
 
 ## 功能
 
+- 0.11.1：A款favicon及iPhone書籤圖示，詳docs/BOOKMARK_ICON_0111.md。
 - 0.11.0：21點賭枱式設計正式接入，商店與道具暫停開放，詳docs/BLACKJACK_OVAL_0110.md。
 - 0.10.2本機：商店與道具暫停開放，21點新賭枱僅預覽，未發布。
 - 0.10.1：修正21點手機橫向版面，詳docs/BLACKJACK_LANDSCAPE_0101.md。
@@ -84,7 +85,7 @@ npm run verify
 
 ## 驗證狀態
 
-共353項通過：344項規則／元件／app替身、3項單檔封裝、6項Pages。新增21點實際1–4手、橢圓桌高度配置及手牌滑動／跟隨檢查，保留功能開關／庫存、500次五分鐘及10,000局回歸。browser_smoke只Python編譯，無真Safari或iPhone實機證據，詳docs/BLACKJACK_OVAL_VALIDATION.json。
+共357項通過：346項規則／元件、4項單檔、7項Pages。新增4項圖示尺寸／資產／內嵌及專案路徑驗證，原12PNG與25runtime邏輯保持。真Safari分頁、iPhone主畫面及快取未驗，詳docs/BOOKMARK_ICON_VALIDATION.json。
 
 慢速發牌及咪牌詳規與限制見docs/BACCARAT_ANIMATION.md。百家樂實作及舊檔相容見docs/BACCARAT_IMPLEMENTATION.md；盤面及裝置驗證缺口見docs/SIC_BO_BOARD.md。素材來源見docs/PROTOTYPE_ART.md、public/art/prototype-b/assets.json及public/art/sicbo-board-b/assets.json。技能來源：https://github.com/guangyuspace/codex-gamestudio-skill 。
 
