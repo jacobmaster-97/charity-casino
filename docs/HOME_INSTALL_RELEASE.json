@@ -1,0 +1,51 @@
+{
+  "version": "0.12.0",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "authorization": "User requested the fifth home item, then explicitly changed its behavior to a platform-detected manual instruction dialog",
+  "behavior": "Manual Safari/Chrome steps only; no native install or share API call",
+  "base_commit": "dc8427c423c9c56e027c0dcb97e9788326b062c9",
+  "commit": "f445c77df6b91e5ba70e31f66ffe4560e6fc2110",
+  "tree": "7eb9c4d9a1d17b44d916bf85ddab1d269f6e8d51",
+  "expected_sha": "dc8427c423c9c56e027c0dcb97e9788326b062c9",
+  "force": false,
+  "ref_update": {
+    "success": true
+  },
+  "verified_files": 256,
+  "changed_files": 76,
+  "old_png_copies_unchanged": 38,
+  "new_binary_copies": 4,
+  "unique_binary_blobs": 2,
+  "all_blob_sha_match": true,
+  "tests": {
+    "unit_and_component": 352,
+    "standalone": 5,
+    "pages": 8,
+    "total": 365
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 30003462,
+    "sha256": "9e02db7c1f24c48791492673235609925be9455a5688ec73921206fbeb7c8a32"
+  },
+  "pages_run": {
+    "run_id": 41798911012,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "f445c77df6b91e5ba70e31f66ffe4560e6fc2110",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41798911012"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.12.0",
+  "public_url_http_verified": false,
+  "standalone_manifest_added": true,
+  "service_worker_added": false,
+  "unverified": [
+    "Physical iPhone16Plus Safari/Chrome guide, safe areas and fullscreen home-screen launch",
+    "Android Chrome menu labels, install flow and launch",
+    "Saved-progress continuity between browser and independent web app"
+  ],
+  "snapshot_note": "dist/github-upload is the exact256-file published snapshot; post-release receipt and local handoffs are not separately deployed",
+  "rollback": "Restore complete0.11.1 dc8427c423c9c56e027c0dcb97e9788326b062c9 and its cache versions; keep saves and closed shop/items.",
+  "recorded_at_utc": "2026-11-04T08:24:08.861559+00:00"
+}

@@ -57,3 +57,5 @@
 - 0.11.1使用者「要a 然後實裝」及「繼續工作」已選A金印賭字，取代先預覽限制，沿既有GitHub遊戲流程正式接入／發布。PNG16／32、ICO16／32／48及Apple180，原圖保留，頁面只載小圖，單檔內嵌，root／docs相對路徑同步。詳docs/BOOKMARK_ICON_0111.md；不重繪或改Logo、商店與道具保持關閉，不開排行榜／Cloudflare。
 
 - 0.12.0依使用者最新追加，主頁五項按開始／龍虎榜／設定／加到主頁面／支持作者排列。點新項只顯平台對應步驟子視窗，取代原生安裝提示提案；Safari3步、iPhone Chrome4步，Android用實際⋮選單，未知可切換。補最小standalone manifest與A192／512，無SW或原生安裝／分享API。詳docs/HOME_INSTALL_0120.md；沿原GitHub遊戲流程實裝發布，商店／道具維持關閉，不開排行榜／Cloudflare。
+
+- 0.12.1使用者要求刪除自由挑戰：正式app只提供race五分鐘，移除開始／設定模式選擇及自由模式手動存讀入口，拒絕free匯入／restore且不回落到free自動檔。原free鍵／舊檔不刪不改，底層legacy解碼及歷史測試保留，不能當作重新開放模式。詳docs/SINGLE_CHALLENGE_0121.md；沿原GitHub流程發布，商店／道具仍關閉。

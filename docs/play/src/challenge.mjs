@@ -1,5 +1,5 @@
-import {cashParse} from './cash.mjs?v=0.12.0';
-import {duration} from './rules.mjs?v=0.12.0';
+import {cashParse} from './cash.mjs?v=0.12.1';
+import {duration} from './rules.mjs?v=0.12.1';
 export const CHALLENGE_MS=300000;
 export const CHALLENGE_RULESET='five-minute-v1';
 export const CHALLENGE_TABLES={sicbo:'大小',baccarat:'百家樂',blackjack:'21點',poker:'德州撲克',roulette:'輪盤'};

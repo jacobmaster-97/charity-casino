@@ -22,7 +22,7 @@ function boot({start=true,artCache=null,mobile=false,blackjackLandscape={enabled
  vm.runInContext(code,context);
  const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home','next','leave','finish','manual-save','pause','share-record','download-record','retry-record'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
  if(start){events.input({target:{id:'player-name',value:'接線測試'}});act('enter');}
- return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,runDeferred(){for(const fn of deferred.splice(0))fn();},hint(type,id,{disabled=false}={}){events[type]({target:{closest:()=>({dataset:{table:id},disabled})}});},setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},elapse(ms){clock.now+=ms;},tick(ms){clock.now+=ms;timers[0]();}};
+ return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,async importSave(save){const text=JSON.stringify(save);await events.change({target:{id:'import-file',files:[{size:text.length,text:async()=>text}]}});},runDeferred(){for(const fn of deferred.splice(0))fn();},hint(type,id,{disabled=false}={}){events[type]({target:{closest:()=>({dataset:{table:id},disabled})}});},setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},elapse(ms){clock.now+=ms;},tick(ms){clock.now+=ms;timers[0]();}};
 }
 test('app starts the five-minute ruleset and shop HUD keeps counting down',()=>{
  const t=boot({features:{shop:true,items:true}});assert.equal(t.subject.game.challenge,true);assert.ok(t.app.innerHTML.includes('lobby-map'));t.tick(1000);assert.equal(t.elapsed.textContent,'00:04:59');t.act('shop');assert.equal(t.subject.game.screen,'shop');assert.ok(t.app.innerHTML.includes('計時繼續'));t.tick(1000);assert.equal(t.subject.game.profile.elapsedMs,2000);assert.equal(t.elapsed.textContent,'00:04:58');
@@ -43,8 +43,8 @@ test('home shows the approved five choices and does not create a challenge while
 test('home start validates the name, passes through the story, then starts exactly $100 and five minutes',()=>{
  const t=boot({start:false});t.act('home-start');assert.ok(t.app.innerHTML.includes('id="start-form"'));assert.equal(t.focused.at(-1),'player-name');t.setName('');t.submit();assert.ok(t.app.innerHTML.includes('home-dialog-start'));assert.ok(t.toast.textContent.includes('1–16'));t.setName('新賭神');t.submit();assert.ok(t.app.innerHTML.includes('class="story-page"'));assert.ok(!t.app.innerHTML.includes('aria-modal="true"'));t.tick(9000);assert.equal(t.subject.game.profile,null);t.act('enter');assert.equal(t.subject.game.profile.name,'新賭神');assert.equal(t.subject.game.profile.bank,10000);assert.equal(t.subject.game.remainingMs,300000);
 });
-test('home mode changes preserve escaped input and start the selected free challenge',()=>{
- const t=boot({start:false});t.act('home-start');t.setName('<測試>');t.act('mode',{mode:'free'});assert.ok(t.app.innerHTML.includes('value="&lt;測試&gt;"'));t.submit();t.act('enter');assert.equal(t.subject.game.profile.mode,'free');assert.equal(t.subject.game.profile.bank,10000);
+test('stale mode actions cannot reopen free mode and preserve the entered name',()=>{
+ const t=boot({start:false});t.act('home-start');t.setName('<測試>');t.act('mode',{mode:'free'});assert.ok(t.app.innerHTML.includes('value="&lt;測試&gt;"'));t.submit();t.act('enter');assert.equal(t.subject.game.profile.mode,'race');assert.equal(t.subject.game.profile.bank,10000);assert.equal(t.subject.game.remainingMs,300000);
 });
 test('home settings retains audio controls without starting the timer and closes back to its trigger',()=>{
  const t=boot({start:false});t.act('home-settings');assert.ok(t.app.innerHTML.includes('啟動並試聽'));assert.ok(t.app.innerHTML.includes('匯入挑戰存檔'));t.act('sound');assert.ok(t.app.innerHTML.includes('音效：關'));t.tick(30000);assert.equal(t.subject.game.profile,null);t.act('close-overlay');assert.equal(t.focused.at(-1),'[data-action="home-settings"]');assert.ok(!t.app.innerHTML.includes('aria-modal="true"'));
@@ -179,4 +179,15 @@ test('home install opens matching instructions, switches browsers and returns fo
 });
 test('Chrome iPhone automatically selects its manual guide without calling share or install prompts',()=>{
  const t=boot({start:false,installNavigator:{userAgent:'iPhone CriOS/140 Safari/605.1',share(){assert.fail('must not invoke native sharing');}}});t.act('home-install');assert.ok(t.app.innerHTML.includes('data-browser="chrome" aria-pressed="true"'));assert.ok(t.app.innerHTML.includes('右上角「分享」'));assert.equal(t.subject.game.profile,null);
+});
+
+test('free-mode saves remain byte-identical and cannot be imported or directly restored into the active challenge',async()=>{
+ const old=new bindings.Game({challenge:true});old.start('舊自由','free');old.tick(12500);old.saveCheckpoint();const t=boot(),g=t.subject.game;
+ t.store.set('charity-casino-five-minute-v2-free-auto',JSON.stringify(old.checkpoint));t.store.set('charity-casino-five-minute-v2-free-manual',JSON.stringify(old.checkpoint));t.store.set('charity-casino-free-auto','preserved legacy bytes');
+ const before=JSON.stringify(g),saved=JSON.stringify([...t.store]);await t.importSave(old.checkpoint);assert.ok(t.toast.textContent.includes('只支援五分鐘挑戰'));assert.equal(JSON.stringify(g),before);assert.equal(JSON.stringify([...t.store]),saved);
+ assert.equal(t.subject.showRestored(old.checkpoint),false);for(const action of ['mode','load-manual','manual-save'])t.act(action,{mode:'free'});assert.equal(JSON.stringify(g),before);assert.equal(JSON.stringify([...t.store]),saved);
+});
+test('only a race checkpoint is offered for continuation and resumes with its original remaining time',()=>{
+ const old=new bindings.Game({challenge:true});old.start('舊自由','free');old.saveCheckpoint();const t=boot({start:false});t.store.set('charity-casino-five-minute-v2-free-auto',JSON.stringify(old.checkpoint));t.act('home-start');assert.ok(!t.app.innerHTML.includes('data-action="continue"'));assert.ok(!t.app.innerHTML.includes('data-action="mode"'));
+ const race=new bindings.Game({challenge:true});race.start('五分鐘');race.tick(12500);race.saveCheckpoint();t.store.set('charity-casino-five-minute-v2-race-auto',JSON.stringify(race.checkpoint));t.subject.render();assert.ok(t.app.innerHTML.includes('data-action="continue"'));t.act('continue');assert.equal(t.subject.game.profile.mode,'race');assert.equal(t.subject.game.remainingMs,287500);assert.equal(t.store.get('charity-casino-five-minute-v2-free-auto'),JSON.stringify(old.checkpoint));
 });

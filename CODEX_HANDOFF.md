@@ -1,5 +1,25 @@
 # CODEX_HANDOFF
 
+## 0.12.1 · 自由挑戰入口已移除，準備發布
+
+依使用者刪除自由挑戰：開始／設定去掉模式選擇，正式app固定race，100元／300秒。續玩／讀檔只讀race-auto；free匯入及直接restore拒絕，舊mode／manual-save／load-manual事件忽略，玩家看不到自由模式／手動保存入口。free的auto／manual及舊schema1資料逐位元組保留，不遷移或合併；底層解碼及歷史回歸格式保留。
+
+368項（355＋5＋8）通過，新增3項；25runtime／Pages一致、原PNG／A圖示不變。原500五分鐘／10,000局回歸保持。browser_smoke僅Python編譯，未重試HTTP／Chromium IPC，真Safari開始／設定版面及匯入下載未驗。單檔30002580 bytes，SHA256 c1c6a33a8dca5b0a8cfce6373160e82280c761ba8d574462a55b3a223948721a。詳docs/SINGLE_CHALLENGE_0121.md／SINGLE_CHALLENGE_VALIDATION.json。
+
+下一步prepare／全檔SHA核對，以f445c77df6b91e5ba70e31f66ffe4560e6fc2110為基準expected_sha／force:false發布原main並核對Pages。主頁五項、加入主畫面指引、五桌／保存規則維持，商店／道具仍關閉，不開排行榜／Cloudflare。
+
+## 0.12.0 · 主頁第五項與平台指引已發布，Pages成功
+
+已按使用者最後修正，設定／支持作者間新增「加到主頁面」，只開子視窗顯示偵測平台對應步驟，取代先前原生安裝提案。Safari3步、iPhone Chrome4步，Android Chrome實際⋮選單；未知可切換、已standalone提示無需再加入、file包可開網頁版。切換／關閉不啟動挑戰、不改Game／存檔，關閉回原按鈕。
+
+五列按實際安全區調整，≥44px，短屏收次要標語，維持主頁單屏。root／docs提供穩定scope／id／start_url的standalone manifest、A192／512及iOS App顯示設定；單檔移除外部manifest。無原生安裝／分享呼叫、無SW／離線承諾，原A圖與12遊戲PNG保持、商店／道具仍關閉。
+
+以dc8427c423c9c56e027c0dcb97e9788326b062c9作parent／expected_sha、force:false更新原main成功。commit f445c77df6b91e5ba70e31f66ffe4560e6fc2110／tree 7eb9c4d9a1d17b44d916bf85ddab1d269f6e8d51，256檔全blob SHA吻合、76改動、舊38PNG副本不變，新4二進位副本對應2個blob亦核對。Pages run41798911012 completed/success，head_sha與main核對。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.12.0 。詳docs/HOME_INSTALL_0120.md／HOME_INSTALL_VALIDATION.json／HOME_INSTALL_RELEASE.json。
+
+365項（352＋5＋8）通過，25runtime／圖示Pages副本一致，原500五分鐘／10,000局回歸保留。單檔30,003,462 bytes，SHA256 9e02db7c1f24c48791492673235609925be9455a5688ec73921206fbeb7c8a32。browser_smoke僅Python編譯；純幾何／DOM替身不是真Safari，未重試HTTP／Chromium IPC，未直接HTTP核對公開頁。真iPhone16Plus Safari／Chrome、Android選單、主畫面全螢幕啟動／安全區／觸控及WebApp存檔延續未驗。
+
+無排行榜／Cloudflare。dist/github-upload保持256檔精確發布快照，事後收據／本地交接不另部署，舊ZIP歷史包。下一最安全任務：iPhone16Plus在Safari／Chrome點第五項核對步驟，再手動加入主畫面確認App式開啟及原存檔備份／延續；不清存檔。回退整套0.11.1與cache版本。
+
 ## 0.12.0 · 五項主選單與加入主畫面指引完成，準備發布
 
 使用者最新修正已取代原生安裝提案：主頁在設定／支持作者間加「加到主頁面」，點擊只顯示子視窗。按Safari／Chrome及iOS／Android偵測顯示對應步驟，亦可自行切換；未知／內嵌提供手動選擇，已standalone提示無需加入，file包可開網頁版。沒有呼叫原生安裝／分享，不建立／改動Game或存檔。

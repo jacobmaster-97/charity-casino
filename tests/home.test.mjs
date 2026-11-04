@@ -59,3 +59,9 @@ test('Android, standalone and local-file instructions remain honest without invo
  const installed=homeDialogView({...args,kind:'install',installInfo:{installed:true}});assert.ok(installed.includes('無需再次加入'));assert.ok(!installed.includes('<ol'));
  const local=homeDialogView({...args,kind:'install',installInfo:{local:true}});assert.ok(local.includes('開啟網頁版'));assert.ok(!local.includes('beforeinstallprompt'));
 });
+
+test('start and settings expose only the five-minute challenge without mode or manual-save choices',()=>{
+ for(const kind of ['start','settings'])for(const oldMode of ['race','free']){
+  const html=homeDialogView({...args,kind,mode:oldMode});assert.ok(!html.includes('自由挑戰'));assert.ok(!html.includes('data-action="mode"'));assert.ok(!html.includes('data-mode='));assert.ok(!html.includes('手動保存'));assert.ok(html.includes('自動保存'));
+ }
+});

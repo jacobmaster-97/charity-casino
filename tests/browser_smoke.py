@@ -227,6 +227,8 @@ def main():
         act(page, 'close-overlay')
         expect(page.locator('[data-action=home-install]')).to_be_focused()
         act(page, 'home-settings')
+        expect(page.locator('[data-action=mode]')).to_have_count(0)
+        expect(page.get_by_text('自由挑戰', exact=True)).to_have_count(0)
         expect(page.locator('[data-action=sound-test]')).to_be_visible()
         act(page, 'sound-test')
         expect(page.locator('[data-action=sound]')).to_have_attribute('aria-pressed', 'true')
