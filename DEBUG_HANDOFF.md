@@ -1,5 +1,43 @@
 # DEBUG_HANDOFF
 
+## 最新：v3正式接入／分享資料與失敗路徑檢查通過
+
+已按使用者實裝至GitHub接入真正結果DOM與本機Canvas PNG。分享source為完成checkpoint的凍結複本，renderer不讀Game可變狀態，晚回呼sequence隔離；Native File在點按前準備、取消不下載、無canShare時下載PNG，拒絕提供明確fallback，產圖／10秒編碼逾時可重試。裝飾圖2.5秒超時用本機底圖繼續，不影響牌局或重新發獎。
+
+新Canvas字寬替身最初讓正常9字金額超285px而換行，PNG高1000及全文分兩次fillText使兩項斷言失敗；主數字可用區改292px（右緣316、分隔線317），同測試復綠，長數仍換行不截斷。最終340項（331＋3＋6）通過。
+
+沒有canvas／@napi-rs/canvas／skia-canvas本地模組，不安裝新依賴；沒有實際Canvas像素或真Safari分享驗證。browser_smoke增加PNG下載signature／尺寸、失敗／完成時間及modal捲動但僅Python編譯。不重試已知HTTP／Chromium IPC。原始12PNG不改，25runtime同步；準備同main／Pages發布，下一步核對SHA及run，結果另記收據。
+
+## 最新：挑戰記錄v3失敗介面優先顯示
+
+上輪最終回覆展示的是失敗分享PNG（純圖），使用者要求失敗卡也有返回／分享鍵。本輪明確分開：phone-bust是有兩鍵的紀錄頁，share-bust為純PNG輸出；預覽預設phone-bust，避免把純分享圖誤認成完整介面。失敗label改遊玩時間，完成的所有視圖均不顯示時間；只改預覽顯示，不改Game時間數據。
+
+六SVG／六PNG、失敗home／share操作及時間條件檢查通過，9項API替身仍通過。107正式檔、v2的23檔SHA不變；所有圖為Inkscape靜態、所有成績為示例，未驗Safari分享或真正DOM。沒有新規則／存檔變動、未發GitHub，HTTP／Chromium IPC仍不重試。下一步待確認後才正式接入及實機驗證。
+
+## 最新：挑戰記錄v2隔離分享與狀態檢查
+
+使用者確認第2點只刪底部淨贏取說明，五桌金額保留。六組v2預覽已通過刪字／30行／8操作框／分享卡零按鈕與PNG解碼檢查；未改正式0.9.4。107正式檔與v1的15檔SHA一致。
+
+分享試作避免點按後await產圖以保留使用者啟動狀態；狀態變更用sequence保護，準備新圖片及原生分享busy分開，避免分享中切換狀態讓按鈕提早開啟或分享舊檔。9項API替身檢查通過，含原生成功／不支援／非安全來源／取消／拒絕／canShare拋錯／快速切圖／busy與fallback。沒有實際打開手機分享選單，也不自動選收件App。
+
+本機file／不支援的瀏覽器可能只可下載；要用HTTPS Safari測真PNG分享。現在固定示例卡只供預覽，正式需按checkpoint動態繪圖。未重試HTTP／Chromium IPC、未串Game／改存檔／發布。下一步待外觀確認後驗證真機與動態出圖，不能把API替身或PNG靜態圖當作已完成iPhone分享。
+
+## 最新：挑戰記錄預覽v1的靜態輸出修正
+
+僅製作設計，不改正式0.9.4。Inkscape初次對nested SVG overflow未完整裁去籌碼atlas，顯示多顆並越界；改按原chipSprite方式加明確clipPath，目視正常。小橫向註解初次與footer分線相交，縮小row gap及調整註解baseline後分離；這些是預覽排版修正，沒有改PNG像素或正式CSS。
+
+Inkscape因profile／font cache目錄只讀發警告，但四張PNG皆匯出、可解碼、尺寸及目視通過。107正式檔SHA不改，四SVG／四PNG／8操作框／20統計列及示例帳式通過；未使用真瀏覽器，沒有再試已知HTTP／Chromium IPC。不得將靜態渲染當Safari／點按證據，或套用舊325項當預覽檢查。
+
+目前停在使用者明確先預覽的階段，正式及GitHub保持0.9.4。下一步等確認；如果批准，實裝前補長姓名／超大金額及真正viewport重排，保留0.9.4即入桌修正，不重新加入全圖門檻。
+
+## 0.9.4已部署，使用者確認慢在入桌（2026-11-03）
+
+補充回答為「點選遊戲後，等候進入牌桌」，與已證實的全圖門檻相符。原Promise永不完成會留lobby，修正後同一事件入桌；取消全局warm及強制decode，沒有載入完成導航狀態。325項通過，沒有Game／派彩或PNG改動。
+
+已承接前輪原倉庫發布授權更新main commit061601d3b6d73611bd2a7cc364caf7f298c495ae／tree 8d6b27eb53fdc078930fd43fdc495db25184c293，expected_sha且force:false成功；215檔SHA吻合、57變更、30PNG副本不改。Pages run41665773585 completed/success且head_sha核對。收據LOAD_RECOVERY_RELEASE.json及dist metadata同步，事後文件不另部署。
+
+仍未量測Safari真實冷暖耗時／頻寬／CPU／記憶體，移除門檻不代表PNG下載變小或已知快多少；冷圖仍可能逐步出現。HTTP／Chromium IPC不重試；瀏覽器smoke只Python編譯。下一最小驗證：iPhone16Plus開https://jacobmaster-97.github.io/charity-casino/?v=0.9.4點每桌，確認即入且原計時／派彩完整。不要再次加入全圖門檻或全局warm。
+
 ## 0.9.4根因驗證及修正通過（2026-11-03）
 
 0.9.3首頁warm9圖15,021,561 bytes，大小入桌必等8圖12,833,572 bytes及decode。以永不完成請求測試原版26過1失敗（lobby != table），證實入桌門檻。修正為同步入桌、無首頁warm、只意圖hint最多2圖／全清單3種，不呼叫decode，沒有下載回呼改Game。全325項通過，未改Game／規則／PNG。

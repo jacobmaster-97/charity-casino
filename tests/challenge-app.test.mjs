@@ -15,11 +15,12 @@ function boot({start=true,artCache=null,mobile=false}={}){
  class QuietPanels{dialog=null;selection='';beforeRender(){}release(){}mount(){}close(){}}
  class QuietFlights{pending={};flights=[];cancel(){}mount(){}pause(){}landAll(){}queue(){}}
  class QuietSqueeze{mount(){}paint(){}}
+ class QuietRecordShare{source=null;state='ready';message='';fallback=false;sync(profile){this.source=profile;}reset(){this.source=null;}share(){this.shared=(this.shared||0)+1;return Promise.resolve('shared');}downloadImage(){this.downloads=(this.downloads||0)+1;}}
  class QuietArtCache{prefetch(id){return artCache?artCache.prefetch(id):Promise.resolve(true);}}
- const context=vm.createContext({...bindings,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:fn=>{deferred.push(fn);return deferred.length;},clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
- const code=source.replace(/^import .*;\s*$/gm,'').replaceAll('import.meta.url',JSON.stringify(entry.href))+`;globalThis.subject={game,render,showRestored,openOverlay,closeOverlay};`;
+ const context=vm.createContext({...bindings,document,window,URL,Blob,structuredClone,performance:{now:()=>clock.now},matchMedia:()=>({matches:true}),setInterval:fn=>timers.push(fn),setTimeout:fn=>{deferred.push(fn);return deferred.length;},clearTimeout(){},requestAnimationFrame(){},fetch(){throw new Error('No network service may be called');},CasinoSound:QuietSound,RecordShare:QuietRecordShare,TableArtCache:QuietArtCache,TablePanels:QuietPanels,ChipFlights:QuietFlights,BaccaratSqueezeController:QuietSqueeze,updateGameViewport(){},mobileTableViewport:()=>mobile,mobilePokerViewport:()=>false,fitBaccaratSurface(){},fitBlackjackSurface(){},fitPokerSurface(){},fitRouletteSurface(){},fitLobbySurface(){}});
+ const code=source.replace(/^import .*;\s*$/gm,'').replaceAll('import.meta.url',JSON.stringify(entry.href))+`;globalThis.subject={game,render,showRestored,openOverlay,closeOverlay,recordShare};`;
  vm.runInContext(code,context);
- const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home','next','leave','finish','manual-save','pause'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
+ const act=(a,data={})=>{const target={disabled:false,dataset:{action:a,...data},tagName:'BUTTON',getAttribute:()=>null,closest:s=>s==='[data-action]'?target:s==='.modal'&&['resume','close-overlay','home','next','leave','finish','manual-save','pause','share-record','download-record','retry-record'].includes(a)?modal:null};events.click({target,preventDefault(){}});};
  if(start){events.input({target:{id:'player-name',value:'接線測試'}});act('enter');}
  return {subject:context.subject,app,elapsed,store,act,listeners,document,focused,nameInput,toast,runDeferred(){for(const fn of deferred.splice(0))fn();},hint(type,id,{disabled=false}={}){events[type]({target:{closest:()=>({dataset:{table:id},disabled})}});},setName(value){nameInput.value=value;events.input({target:nameInput});},submit(){events.submit({target:{id:'start-form'},preventDefault(){}});},elapse(ms){clock.now+=ms;},tick(ms){clock.now+=ms;timers[0]();}};
 }
@@ -33,7 +34,7 @@ test('manual pause freezes the active timer, then exact deadline opens the five-
  const t=boot();t.tick(2000);t.act('pause');t.tick(50000);assert.equal(t.subject.game.profile.elapsedMs,2000);t.act('resume');t.tick(298000);assert.equal(t.subject.game.profile.status,'finished');assert.ok(t.app.innerHTML.includes('challenge-result-modal'));assert.equal((t.app.innerHTML.match(/data-stat-table=/g)||[]).length,5);assert.ok(!t.app.innerHTML.includes('上傳排行榜'));assert.equal([...t.store.keys()].filter(k=>k.includes('five-minute-v2')).length,1);
 });
 test('deadline inside an informational panel replaces it with the result and does not reset the clock',()=>{
- const t=boot();t.act('saves');t.tick(300000);assert.equal(t.subject.game.remainingMs,0);assert.ok(t.app.innerHTML.includes('本次五款遊戲統計'));assert.equal(t.subject.game.profile.rounds,0);assert.equal(t.subject.game.profile.bank,10000);
+ const t=boot();t.act('saves');t.tick(300000);assert.equal(t.subject.game.remainingMs,0);assert.ok(t.app.innerHTML.includes('五桌戰績'));assert.equal(t.subject.game.profile.rounds,0);assert.equal(t.subject.game.profile.bank,10000);
 });
 test('home shows the approved four choices and does not create a challenge while browsing menus',()=>{
  const t=boot({start:false});assert.equal((t.app.innerHTML.match(/class="title-menu-button /g)||[]).length,4);assert.ok(t.app.innerHTML.includes('alt="五分鐘賭神"'));assert.ok(!t.app.innerHTML.includes('id="start-form"'));t.tick(20000);assert.equal(t.subject.game.profile,null);assert.equal(t.store.size,0);
@@ -136,4 +137,14 @@ test('all-in loss shows the settled payout before final results and offers no ne
 test('slow textures never block a table click behind an all-images loading gate',()=>{
  const art={ready:()=>false,load:()=>new Promise(()=>{}),prefetch:()=>new Promise(()=>{})};
  const t=boot({artCache:art});t.act('table',{table:'roulette'});assert.equal(t.subject.game.screen,'table');assert.equal(t.subject.game.activeTable,'roulette');assert.ok(!t.app.innerHTML.includes('table-loading-modal'));
+});
+
+test('final-record sharing binds the saved result and leaves bankroll, clocks, statistics and save untouched',async()=>{
+ const t=boot();t.tick(300000);const g=t.subject.game,record=t.subject.recordShare,before=JSON.stringify(g),saved=JSON.stringify([...t.store]);assert.equal(record.source,g.checkpoint.profile);assert.ok(t.app.innerHTML.includes('data-action="share-record"'));assert.ok(!t.app.innerHTML.includes('遊玩時間'));t.act('share-record');await Promise.resolve();assert.equal(record.shared,1);assert.equal(JSON.stringify(g),before);assert.equal(JSON.stringify([...t.store]),saved);
+});
+test('bust record keeps play time, home and PNG-share actions and clears prepared data on Home',()=>{
+ const t=boot(),g=t.subject.game;g.randomIndex=()=>0;t.act('table',{table:'roulette'});g.addBet('rou-black',10000);g.lock();g.tick(10000);t.subject.render();t.act('finish');assert.ok(t.app.innerHTML.includes('挑戰失敗'));assert.ok(t.app.innerHTML.includes('遊玩時間'));assert.ok(t.app.innerHTML.includes('分享挑戰紀錄'));const before=JSON.stringify(g.checkpoint);t.act('download-record');assert.equal(t.subject.recordShare.downloads,1);t.act('home');assert.equal(t.subject.recordShare.source,null);assert.equal(g.screen,'home');assert.equal(JSON.stringify(g.checkpoint),before);
+});
+test('image preparation errors keep a reachable retry action on the finished record',()=>{
+ const t=boot();t.tick(300000);const share=t.subject.recordShare;share.state='error';share.message='分享圖片準備失敗，請重新準備。';t.subject.render();assert.ok(t.app.innerHTML.includes('data-action="retry-record"'));t.act('retry-record');assert.equal(share.source,t.subject.game.checkpoint.profile);assert.ok(t.app.innerHTML.includes('返回主頁'));
 });

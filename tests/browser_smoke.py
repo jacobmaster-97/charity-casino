@@ -6,6 +6,7 @@ Requires existing Playwright Python and a Chromium installation. No browser inst
 import json
 import os
 import re
+import struct
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
@@ -573,15 +574,38 @@ def main():
             result_save=json.loads(json.dumps(snapshot))
             result_save['profile'].update({'elapsedMs':300000,'status':'finished','endReason':'timeout'})
             result_page=mobile.new_page()
+            result_page.add_init_script("Object.defineProperty(navigator,'canShare',{value:()=>false,configurable:true});")
             result_page.goto(URL)
             result_page.locator('#import-file').set_input_files({'name':'finished.json','mimeType':'application/json','buffer':json.dumps(result_save).encode()})
             expect(result_page.locator('.challenge-result-modal')).to_be_visible()
             expect(result_page.locator('[data-stat-table]')).to_have_count(5)
             overflow(result_page)
+            assert result_page.locator('.record-complete').count() == 1
+            assert '遊玩時間' not in result_page.locator('.challenge-result').inner_text()
             for action in result_page.locator('.challenge-result-actions button').all():
+                action.scroll_into_view_if_needed()
+                assert result_page.evaluate('window.scrollY') == 0
                 box=action.bounding_box()
                 assert box['height']>=43.9 and box['y']>=0 and box['y']+box['height']<=height+1
             result_page.screenshot(path=str(OUT / f'prototype-challenge-result-{width}.png'),full_page=True)
+            if (width,height) == (932,430):
+                share_button=result_page.locator('[data-action=share-record]')
+                expect(share_button).to_be_enabled(timeout=20000)
+                with result_page.expect_download() as record_download:
+                    share_button.click()
+                png=Path(record_download.value.path()).read_bytes()
+                assert png[:8] == b'\x89PNG\r\n\x1a\n'
+                image_width,image_height=struct.unpack('>II',png[16:24])
+                assert image_width == 1600 and image_height >= 900
+                bust=json.loads(json.dumps(result_save))
+                bank=int(bust['profile']['bank'])
+                bust['profile']['stats']['sicbo']['net']=int(bust['profile']['stats']['sicbo']['net'])-bank
+                bust['profile'].update({'bank':0,'elapsedMs':134000,'endReason':'bust'})
+                result_page.locator('#import-file').set_input_files({'name':'bust.json','mimeType':'application/json','buffer':json.dumps(bust).encode()})
+                expect(result_page.locator('.record-failed')).to_be_visible()
+                expect(result_page.locator('.record-metrics')).to_contain_text('遊玩時間')
+                expect(result_page.locator('[data-action=share-record]')).to_be_enabled(timeout=20000)
+                expect(result_page.locator('.challenge-result-actions [data-action=home]')).to_be_visible()
             mobile.close()
         assert errors == [], errors
         browser.close()

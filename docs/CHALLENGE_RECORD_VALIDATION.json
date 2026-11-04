@@ -1,0 +1,128 @@
+{
+  "version": "0.10.0",
+  "recorded_at_utc": "2026-11-04T04:05:08.486347+00:00",
+  "scope": "Authorized implementation and GitHub publication of approvedv3 challenge record and native PNG sharing",
+  "checks": {
+    "npm_run_verify": "PASS",
+    "unit_and_component": 331,
+    "new_record_share_tests": 12,
+    "new_app_integration_tests": 3,
+    "standalone_package": 3,
+    "npm_run_verify_pages": "PASS",
+    "pages": 6,
+    "total": 340,
+    "failed": 0,
+    "browser_smoke_python_compile": "PASS",
+    "browser_runtime": "NOT EXECUTED",
+    "canvas_checks": "Canvas command / text / layout doubles; no actual browser PNG pixel evidence",
+    "native_share_checks": "File / navigator / download / callback doubles only",
+    "mixed_five_minute_sessions_retained": 500,
+    "existing_simulated_rounds_retained": 10000
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29887474,
+    "sha256": "ebcd1e9c9de91221aaf12b2b0515650ecc34b070c3add34a84c602fb37973c55"
+  },
+  "runtime_files": {
+    "count": 25,
+    "source_matches_pages": true
+  },
+  "runtime_pngs": [
+    {
+      "path": "public/art/baccarat-b/cards.png",
+      "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd"
+    },
+    {
+      "path": "public/art/home-b/background.png",
+      "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5"
+    },
+    {
+      "path": "public/art/home-b/logo.png",
+      "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e"
+    },
+    {
+      "path": "public/art/prototype-b/dice.png",
+      "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b"
+    },
+    {
+      "path": "public/art/prototype-b/dome.png",
+      "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca"
+    },
+    {
+      "path": "public/art/prototype-b/props.png",
+      "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf"
+    },
+    {
+      "path": "public/art/prototype-b/table.png",
+      "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chip.png",
+      "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/chips-five.png",
+      "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0"
+    },
+    {
+      "path": "public/art/sicbo-board-b/dice.png",
+      "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d"
+    },
+    {
+      "path": "public/art/sicbo-board-b/felt.png",
+      "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9"
+    },
+    {
+      "path": "public/art/styles/b/lobby-populated-v4.png",
+      "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f"
+    }
+  ],
+  "all_12_runtime_pngs_unchanged_vs_094": true,
+  "state_contract": {
+    "source": "frozen completed checkpoint.profile snapshot",
+    "complete_shows_time": false,
+    "failure_time_label": "遊玩時間",
+    "both_actions": [
+      "返回主頁",
+      "分享挑戰紀錄"
+    ],
+    "stats_rows": 5,
+    "share_png_has_buttons": false,
+    "game_rules_saves_and_clocks_changed": false
+  },
+  "sharing": {
+    "format": "image/png",
+    "normal_size": [
+      1600,
+      900
+    ],
+    "long_content": "wrap all digits and grow height without Number coercion",
+    "max_height": 8192,
+    "optional_art_timeout_ms": 2500,
+    "png_encoding_timeout_ms": 10000,
+    "native": "File prepared before tap; synchronous share({files}) from tap after canShare check",
+    "fallback": "download same PNG; native rejection exposes an explicit download action",
+    "cancellation": "No download",
+    "server_or_leaderboard_upload": false,
+    "sample_cards_used": false
+  },
+  "native_canvas_module_available": false,
+  "unverified": [
+    "iPhone16Plus Safari share sheet / actual recipient App",
+    "Actual browser Canvas pixels / fonts / rendering",
+    "Actual DOM proportion / short viewport / safe-area / rotation / touch / screen reader / modal scrolling",
+    "Hardware audio",
+    "Direct public Pages HTTP"
+  ],
+  "not_executed": [
+    "Known blocked local HTTP / Chromium IPC retry",
+    "Cloud / leaderboard / payment"
+  ],
+  "last_published_release": {
+    "version": "0.9.4",
+    "commit": "061601d3b6d73611bd2a7cc364caf7f298c495ae"
+  },
+  "publication_results": "CHALLENGE_RECORD_RELEASE.json written after actual deployment",
+  "rollback": "Restore complete0.9.4 and corresponding cache queries; keep player saves"
+}

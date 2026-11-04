@@ -1,5 +1,51 @@
 # CODEX_HANDOFF
 
+## 最新：0.10.0 v3紀錄頁／PNG分享已完成，準備授權發布
+
+使用者「實裝至GitHub」已批准v3正式接入及原main／Pages發布。challenge.mjs用真DOM呈現原Logo／金箔深綠結果，完成不顯示時間、失敗顯示遊玩時間；保留五桌金額／返回／分享，指定次要文字刪除。record-share.mjs依真正完成checkpoint.profile凍結本機快照、Canvas動態PNG，不用示例圖、不截UI按鈕；File在點按前準備，原生canShare／share同步從點按觸發，不支援下載PNG，取消不下載，錯誤／逾時可重試。Game／派彩／計時／存檔及12PNG不改，不加全圖入桌門檻／排行榜／雲端。
+
+340項通過（331＋3＋6），新增record12及app3，保留500五分鐘與10,000局模擬。25runtime Pages鏡像一致，12PNG與0.9.4逐位元組不改。單檔29,887,474 bytes，SHA256 ebcd1e9c9de91221aaf12b2b0515650ecc34b070c3add34a84c602fb37973c55。詳CHALLENGE_RECORD_0100.md／CHALLENGE_RECORD_VALIDATION.json。
+
+基準061601d3b6d73611bd2a7cc364caf7f298c495ae已核對；下一步prepare快照、blob SHA核對及expected_sha／force:false更新main，確認Pages成功再記CHALLENGE_RECORD_RELEASE.json。事後收據／本地交接不另部署。Safari真DOM／PNG像素／原生分享及目標App、觸控／讀屏／旋轉／安全區／硬體音訊未驗；不重試HTTP／Chromium IPC，browser_smoke只Python編譯，Canvas/API替身不當成實機證據。
+
+## 最新：挑戰記錄v3時間條件與失敗操作，待確認
+
+使用者要求時間改名「遊玩時間」，成功紀錄不顯示時間，失敗也需返回主頁／分享功能鍵。已新增docs/previews/challenge-record-v3：所有完成介面／分享卡隱藏時間，完成局數改單張橫卡；失敗顯示遊玩時間與局數，失敗介面保留返回主頁／分享挑戰紀錄兩操作，預覽index預設打開失敗介面。分享出去的PNG維持純圖（無操作按鈕）。先預覽限制仍有效，不接正式Game、不升版／部署，線上保持0.9.4。
+
+沿用v2所有精簡要求、五桌金額及PNG原生分享試作；六SVG／PNG、時間條件、失敗兩操作、30行戰績、8操作框、示例帳式及JS語法通過；對v3新PNG重跑9項API替身通過。107正式檔與v2的23檔SHA不改。沒有重跑或引用正式325項，沒有HTTP／Chromium IPC重試。
+
+原生Safari分享、真DOM／觸控／旋轉／長姓名／大金額及真正checkpoint出圖仍未驗；所有資料是示例。詳v3 README／validation。下一最安全任務：等使用者確認v3，再以真DOM接入、按凍結checkpoint產PNG並驗原生分享；不改Game計時或刪存檔內時間，不把固定示例卡當真成績。
+
+## 最新：挑戰記錄v2與PNG分享試作，待確認
+
+使用者修改六項：刪起始／道具、本次增減、姓名旁五分鐘挑戰及底部淨贏取說明；補充明確「只刪底部說明，保留五桌金額」。按鈕改分享挑戰紀錄，需原生手機圖片分享，並提供失敗紀錄卡。本輪延續先預覽限制，只新增docs/previews/challenge-record-v2及文件，正式／GitHub保持0.9.4，不自行實裝／發布。
+
+v2提供手機完成／失敗、小橫向及電腦四介面SVG／PNG，另兩張1600×900純紀錄PNG分享卡（無操作按鈕），共六組；姓名、最終資金、時間／局數與五桌金額保留。失敗例為既有資金歸零，不新增時間到的金額門檻。所有成績為示例，v1的15檔保持原樣。
+
+預覽index.html加隔離分享試作share-preview.js：切狀態預備PNG File、點按同步檢查canShare並調navigator.share，讓系統選目的地；不支援／file限制提供PNG下載，取消不下載、不誤稱已傳送。9項API／File／回呼替身檢查通過，六SVG／六PNG／30行戰績／8按鈕及刪字、原圖SHA與示例帳式通過。107正式檔與v1的15檔SHA不改，沒有沿用舊325項作本輪驗證。詳preview README／validation／validate-share.mjs。
+
+原生分享未在iPhone16Plus Safari HTTPS或目標App驗證；本機file可能只可下載，PNG為Inkscape靜態輸出。正式Game未接、未由真正checkpoint動態繪PNG。下一安全任務：等使用者確認v2外觀，再接真DOM／PNG出圖與原生分享；不能直接用固定示例卡分享實際成績。保留其他存檔備份及0.9.4不阻擋入桌，勿新增排行榜／雲端。
+
+## 最新：挑戰記錄v1僅設計預覽，待確認
+
+使用者「重新設計挑戰記錄頁…先讓我預覽」。本輪以既有完場最終資金＋五桌統計為目標，僅新增docs/previews/challenge-record-v1/及交接，不改src／貼圖／版號／dist／Pages，不部署；正式仍0.9.4 commit061601d3b6d73611bd2a7cc364caf7f298c495ae。此明確先預覽條件優先於過往發布授權，不能自行接入或上傳。
+
+設計為電影感金箔切角框＋深綠戰績板，原Logo／賭場背景／籌碼三素材不改像素；左大金額與本次增減／時間／局數／道具，右五桌局數及淨贏取，保留返回主頁／匯出兩操作，沒有新增排行榜／成就。所有畫面都是示例，帳式與局數一致。提供932×430完成／歸零、667×375較小橫向、1920×1080電腦四組SVG／PNG，以及index.html切圖。
+
+已檢查四SVG XML、四PNG尺寸／解碼、20統計列及8操作框界內且44px以上、三原圖嵌入SHA、整數分示例帳式、builder與HTML script語法；107份正式來源／素材／發布檔SHA不改。目視輸出已確認。詳preview README／layout／samples／validation。沒有跑或挪用正式325項，未試HTTP／Chromium IPC；PNG是Inkscape靜態排版，不是Safari截圖。
+
+932×430的左右59／下21只是示意安全區。未驗六吋可讀性、真DOM／讀屏／鍵盤／觸控／旋轉、長16字姓名／超大BigInt／平板／直向。下一最安全任務：等使用者確認外觀；確認後以真DOM／CSS接既有challengeResultView，沿用Game／金額／存檔，不把整張PNG烤成正式UI，不自行做網絡榜。
+
+## 最新：0.9.4載入回歸修正已發布／Pages成功（2026-11-03）
+
+使用者在0.9.3發布後回報載入更慢，並補充「點選遊戲後，等候進入牌桌」。已移除全圖load／decode入桌門檻及首頁warm，五桌點擊同步入桌；只在指向／聚焦／觸碰某桌時低優先度hint1–2張主要圖，不強制decode，不await、不用晚回呼導航。保留名稱框／派彩modal／規則／存檔及PNG。
+
+沿用使用者上一輪「實裝到GitHub」的原main／Pages發布授權修復隨後回歸，沒有另開功能或等待新批准。以0.9.3 commit1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9為parent及expected_sha、force:false更新。新commit061601d3b6d73611bd2a7cc364caf7f298c495ae／tree 8d6b27eb53fdc078930fd43fdc495db25184c293，215份發布檔blob SHA全吻合，57檔變更、30PNG副本不改。Pages run41665773585 completed/success且head_sha吻合。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.9.4 ，提交 https://github.com/jacobmaster-97/charity-casino/commit/061601d3b6d73611bd2a7cc364caf7f298c495ae 。
+
+325項（316＋3＋6）通過，包括原版lobby != table紅燈、修正後同一直接入桌測試及五桌未完成hint即入桌。app29／table-layout25；12PNG不改、24runtime Pages鏡像一致。單檔29,866,314 bytes，SHA256 891cf19a7268b51672995d4a2ff0ea1cbec495fc6d1f0786a35ce05f673103b6。詳LOAD_RECOVERY_094.md／LOAD_RECOVERY_VALIDATION.json／LOAD_RECOVERY_RELEASE.json。dist/github-upload為215檔精確發布快照，事後收據／補充回答／本地交接不另部署，舊ZIP為歷史包。
+
+Safari實際冷暖秒數、頻寬／CPU／記憶體及冷圖逐步出現觀感仍未驗；不重試HTTP／Chromium IPC，未直接HTTP核對公開頁。沒有排行榜／Cloudflare／付款。回退093會恢復已知門檻，應優先測094。下一最安全任務：iPhone16Plus開?v=0.9.4點入五桌，驗證沒有準備視窗阻擋，觀察慢圖及背景停錶。
+
 ## 最新：0.9.4載入回歸修正已完成／待發布核對（2026-11-03）
 
 使用者回報剛發布0.9.3載入更慢，已確認全圖load／decode門檻導致入桌等待。移除首頁全圖warm與入桌Promise.all、pendingTable及準備視窗；點擊同步進原Game，指向／聚焦／觸碰某桌才低優先度hint1–2張主要圖，不強制decode、不await，晚到回呼不導航或改狀態。保留名稱框／派彩／規則／PNG。

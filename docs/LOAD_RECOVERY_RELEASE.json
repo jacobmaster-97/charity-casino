@@ -1,0 +1,59 @@
+{
+  "version": "0.9.4",
+  "date": "2026-11-03",
+  "scope": "Recover the just-published0.9.3 table-entry regression under the preceding same-repository release authorization",
+  "user_report": "點選遊戲後，等候進入牌桌",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "commit": "061601d3b6d73611bd2a7cc364caf7f298c495ae",
+  "parent_commit": "1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9",
+  "tree": "8d6b27eb53fdc078930fd43fdc495db25184c293",
+  "verified_files": 215,
+  "changed_files": 57,
+  "unchanged_png_copies": 30,
+  "all_prepared_git_blob_shas_match": true,
+  "ref_update": {
+    "force": false,
+    "expected_sha": "1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9",
+    "verified": true
+  },
+  "pages_run": {
+    "run_id": 41665773585,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "061601d3b6d73611bd2a7cc364caf7f298c495ae",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41665773585"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.9.4",
+  "play_url_http_verified": false,
+  "checks": {
+    "unit_component_and_app_doubles": 316,
+    "standalone": 3,
+    "pages": 6,
+    "total": 325,
+    "failed": 0
+  },
+  "regression_proof": {
+    "before": "Never-completing image promise kept lobby; direct-entry test failed",
+    "after": "All five table clicks enter synchronously with unresolved texture hints;325 checks passed",
+    "startup_table_cache_warmup": false,
+    "explicit_decode_calls": false,
+    "max_optional_hints_per_table": 2
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 29866314,
+    "sha256": "891cf19a7268b51672995d4a2ff0ea1cbec495fc6d1f0786a35ce05f673103b6"
+  },
+  "browser_smoke": "Python compile only; not executed in browser",
+  "unverified": [
+    "Real iPhone16Plus Safari entry speed, cold/warm network, CPU and memory",
+    "Progressive texture appearance without the old blocking gate",
+    "Safe-area, rotation, touch, no-page-scroll and hardware audio",
+    "Direct public Pages HTTP"
+  ],
+  "leaderboard_cloudflare_payment": "Not implemented or provisioned",
+  "rollback_commit": "1fb3a7bb6c8f4d79e0ab4fd74474158ef98dedb9",
+  "rollback_limit": "0.9.3 would restore the known full-texture loading gate",
+  "post_release_document_policy": "Receipt, user timing-location clarification and final local handoffs written after this commit; no second deployment. dist/github-upload remains the exact verified215-file snapshot."
+}

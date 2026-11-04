@@ -71,7 +71,7 @@ test('all five payout engines and poker odd cents conserve exact huge integer ce
  const players=Array.from({length:6},(_,i)=>({total:i<3?n:0,cards:[i+1,i+14],folded:i>=3}));const result=pokerPots(players,[0,9,10,11,12],0);assert.equal(result.total,n*3n);assert.equal(result.payouts.reduce((a,b)=>cashAdd(a,b),0),n*3n);
 });
 test('result view includes all five table counts and signed net winnings, with escaped name and no ranking upload',()=>{
- const {g}=setup('sicbo');g.profile.name='<測試>';g.addBet('small',100);g.lock();g.tick(900);g.tick(g.remainingMs);const before=plain(g),h=challengeResultView({game:g,button:(a,t)=>`<button data-action="${a}">${t}</button>`,escape:s=>s.replaceAll('<','&lt;').replaceAll('>','&gt;')});assert.equal((h.match(/data-stat-table=/g)||[]).length,5);assert.ok(h.includes('&lt;測試&gt;'));assert.ok(h.includes('+$1'));assert.ok(h.includes('道具購買支出'));assert.ok(!h.includes('上傳'));assert.equal(plain(g),before);
+ const {g}=setup('sicbo');g.profile.name='<測試>';g.addBet('small',100);g.lock();g.tick(900);g.tick(g.remainingMs);const before=plain(g),h=challengeResultView({game:g,button:(a,t)=>`<button data-action="${a}">${t}</button>`,escape:s=>s.replaceAll('<','&lt;').replaceAll('>','&gt;')});assert.equal((h.match(/data-stat-table=/g)||[]).length,5);assert.ok(h.includes('&lt;測試&gt;'));assert.ok(h.includes('+$1'));assert.ok(!h.includes('道具購買支出'));assert.ok(h.includes('分享挑戰紀錄'));assert.ok(!h.includes('遊玩時間'));assert.ok(!h.includes('上傳'));assert.equal(plain(g),before);
 });
 
 test('all five table views, chip layers and amount inputs render huge cents without Number coercion',async()=>{
