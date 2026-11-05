@@ -1,4 +1,4 @@
-import {cashParse} from './cash.mjs?v=0.13.0';
+import {cashParse} from './cash.mjs?v=0.13.1';
 const scoreIdPattern=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export const newScoreId=()=>{try{return globalThis.crypto?.randomUUID?.();}catch{return undefined;}};
 export function scorePayload(profile){
@@ -12,7 +12,7 @@ const apiErrors={rate_limited:'操作太頻繁，請稍後再試。',submission_
 export class Leaderboard {
  constructor({apiBase='',storage=null,fetcher=(...args)=>fetch(...args),onChange=()=>{},uuid=newScoreId,timeoutMs=10000}={}){
   this.api='';try{const u=new URL(apiBase);if(u.protocol==='https:'&&!u.username&&!u.password&&!u.search&&!u.hash&&u.pathname==='/')this.api=u.origin;}catch{}
-  Object.assign(this,{storage,fetcher,onChange,uuid,timeoutMs,source:null,entry:null,uploadState:'idle',uploadMessage:'',items:[],nextCursor:null,cursor:null,history:[],listState:'idle',listMessage:'',listToken:0});
+  Object.assign(this,{storage,fetcher,onChange,uuid,timeoutMs,source:null,entry:null,uploadState:'idle',uploadMessage:'',items:[],topThree:[],hasSnapshot:false,listRevision:0,nextCursor:null,cursor:null,history:[],listState:'idle',listMessage:'',listToken:0});
   this.key='five-minute-god-score-outbox-v1';this.saved=null;try{const e=JSON.parse(storage?.getItem(this.key)||'null');if(e&&scoreIdPattern.test(e.id)&&typeof e.source==='string'&&e.source.length<20000&&typeof e.name==='string'&&typeof e.finalAmount==='string'&&/^(0|[1-9][0-9]{0,125})\.[0-9]{2}$/.test(e.finalAmount))this.saved=e;}catch{}
  }
  get configured(){return Boolean(this.api);}
@@ -48,7 +48,7 @@ export class Leaderboard {
   const token=++this.listToken;this.listState='loading';this.listMessage='正在讀取排行榜…';this.onChange();
   try{const data=await this.request('/v1/leaderboard?limit=20'+(cursor?'&cursor='+encodeURIComponent(cursor):''));
    if(!Array.isArray(data.items)||data.items.length>20||!(data.nextCursor===null||typeof data.nextCursor==='string'&&data.nextCursor.length<=512)||data.items.some(r=>!r||typeof r.name!=='string'||[...r.name].length>16||typeof r.finalAmount!=='string'||!/^(0|[1-9][0-9]{0,125})\.[0-9]{2}$/.test(r.finalAmount)||!Number.isSafeInteger(r.rank)||r.rank<1))throw new Error('排行榜回應無效，請重試。');
-   if(token!==this.listToken)return;Object.assign(this,{items:data.items,nextCursor:data.nextCursor,cursor,history,listState:'ready',listMessage:data.items.length?'':'尚未有人上榜，來留下你的成績。'});
+   if(token!==this.listToken)return;Object.assign(this,{items:data.items,topThree:cursor?this.topThree:data.items.filter(row=>row.rank<=3),hasSnapshot:true,listRevision:this.listRevision+1,nextCursor:data.nextCursor,cursor,history,listState:'ready',listMessage:data.items.length?'':'尚未有人上榜，來留下你的成績。'});
   }catch(error){if(token!==this.listToken)return;this.listState='error';this.listMessage=error.name==='AbortError'?'連線逾時，請重試。':error.message||'排行榜暫時無法連線。';}this.onChange();
  }
 }
@@ -57,6 +57,7 @@ export function leaderboardUploadView({leaderboard:l,button,escape}){
  if(!l.configured)return '<p class="leaderboard-status">網絡排行榜尚未連接，本機紀錄已保留。</p>';
  return `<div class="leaderboard-upload">${button('upload-score',l.uploadState==='sent'?'已上傳排行榜':l.uploadState==='error'?'重試上傳排行榜':l.uploadState==='sending'?'正在上傳…':'上傳排行榜','outlined',['sending','sent','invalid'].includes(l.uploadState)?'disabled':'')}<p class="leaderboard-status" role="status" aria-live="polite">${escape(l.uploadMessage||'按上傳後，名稱及最終金額將公開顯示。每次挑戰各留一筆。')}</p></div>`;
 }
+// Compatibility for an entry module still cached from 0.13.0. New UI uses leaderboardDialogView.
 export function leaderboardListView({leaderboard:l,button,escape}){
  if(!l?.configured)return '<p class="home-info-status">排行榜尚未連接</p><p>你仍可完成本機挑戰及分享紀錄圖片。</p>';
  const busy=l.listState==='loading';

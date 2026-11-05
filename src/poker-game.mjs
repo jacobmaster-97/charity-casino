@@ -1,5 +1,5 @@
-import {cashAdd,cashSub,cashRatio,cashMin,cashMax,isCash,cashDollars} from './cash.mjs?v=0.13.0';
-import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.13.0';
+import {cashAdd,cashSub,cashRatio,cashMin,cashMax,isCash,cashDollars} from './cash.mjs?v=0.13.1';
+import {makePokerDeck,pokerBlinds,pokerDifficulty,pokerOptions,pokerAI} from './poker.mjs?v=0.13.1';
 // Methods run on the existing Game; it remains the only wallet, timer and checkpoint owner.
 export const pokerMethods={
  newPokerRound(){

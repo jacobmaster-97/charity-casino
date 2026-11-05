@@ -1,0 +1,14 @@
+{
+  "version": "0.13.1",
+  "date_hong_kong": "2026-11-05",
+  "status": "ready_to_publish",
+  "repository": "jacobmaster-97/charity-casino",
+  "branch": "main",
+  "expected_parent": "6800e38637fe4a7ea2c33af3f494ca145ac47305",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.13.1",
+  "tests_passed": 396,
+  "cloudflare_changed": false,
+  "d1_changed": false,
+  "public_verification": "pending",
+  "post_publish_receipt_policy": "Exact uploaded snapshot retained; local receipt is updated after publication without rebuilding snapshot."
+}

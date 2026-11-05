@@ -5,12 +5,15 @@ import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 const root=path.resolve(import.meta.dirname,'..');
 const site=path.join(root,'docs');
+test('approved leaderboard WebP is identical in root and Pages export',async()=>{
+ const ref='art/leaderboard-b/dragon-tiger-v1.webp';assert.deepEqual(await readFile(path.join(root,'public',ref)),await readFile(path.join(site,'play/public',ref)));
+});
 test('Pages entry references shipped runtime, without development server',async()=>{
   const html=await readFile(path.join(site,'index.html'),'utf8');
   assert.ok(html.includes('./play/src/app.mjs'));
   assert.ok(html.includes('./play/src/styles.css'));
   assert.ok(!html.includes('127.0.0.1'));
-  for(const file of ['leaderboard-config.mjs','leaderboard.mjs','home-view.mjs','cash.mjs','challenge.mjs','record-share.mjs','sicbo-view.mjs','app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
+  for(const file of ['leaderboard-config.mjs','leaderboard-view.mjs','leaderboard.mjs','home-view.mjs','cash.mjs','challenge.mjs','record-share.mjs','sicbo-view.mjs','app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
     assert.deepEqual(await readFile(path.join(site,'play/src',file)),await readFile(path.join(root,'src',file)));
   }
   assert.ok((await stat(path.join(site,'.nojekyll'))).isFile());
@@ -61,10 +64,10 @@ test('root and docs entry points version app and CSS without breaking relative p
 test('all entry-module dependencies share the release version to avoid stale export caches',async()=>{
   const version=JSON.parse(await readFile(path.join(root,'package.json'),'utf8')).version;
   for(const base of [root,path.join(site,'play')]){
-    for(const file of ['leaderboard-config.mjs','leaderboard.mjs','home-view.mjs','cash.mjs','challenge.mjs','record-share.mjs','sicbo-view.mjs','app.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat-squeeze.mjs','baccarat-view.mjs']){
+    for(const file of ['leaderboard-config.mjs','leaderboard-view.mjs','leaderboard.mjs','home-view.mjs','cash.mjs','challenge.mjs','record-share.mjs','sicbo-view.mjs','app.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat-squeeze.mjs','baccarat-view.mjs']){
       const source=await readFile(path.join(base,'src',file),'utf8');
       const imports=[...source.matchAll(/from '(\.\/[^']+)'/g)].map(m=>m[1]);
-      assert.ok(imports.length>0||['cash.mjs','home-view.mjs','leaderboard-config.mjs'].includes(file));
+      assert.ok(imports.length>0||['cash.mjs','home-view.mjs','leaderboard-config.mjs','leaderboard-view.mjs'].includes(file));
       for(const dependency of imports){
         assert.ok(dependency.endsWith(`?v=${version}`),`${file} has an unversioned dependency`);
         assert.ok((await stat(path.join(base,'src',dependency.split('?')[0]))).isFile());

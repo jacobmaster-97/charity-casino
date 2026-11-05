@@ -1,5 +1,39 @@
 # CODEX_HANDOFF
 
+## 0.13.1 · 已批准龍虎榜介面，完成實裝與測試，準備發布
+
+使用者最新「實裝」已確認leaderboard-v1並取代先預覽限制，沿既有GitHub Pages遊戲流程發布。深玉綠／切角金框／龍虎紋，左側真實三甲、右側第四名起榜單，刷新／上一頁／下一頁及空榜／錯誤／離線提示接現有Client。三甲只隨成功第一頁刷新，翻頁保留，失敗保留原快照；沒有示例補位或新增資料欄位。每頁20、同名各一筆與同次重試去重保持。
+
+排行榜用實際viewport／safe-area及內容局部捲動，44px控制、長名稱換行、超長金額保留全值可橫向閱讀；重繪保留焦點與捲動，新頁才重設。正式圖資為已批准原圖的1200×400 WebP（98,012 bytes），不等待load/decode、不新增首頁全圖預載。原12張遊戲PNG及44份舊PNG／ICO副本不變。保留0.13.0 legacy視圖匯出，避免部分舊快取破壞app匯入。
+
+396項通過＝381單元／組件＋6單檔＋9 Pages，含原500五分鐘／10,000局模擬。CSS以esbuild Safari16／Chrome110目標解析無警告；browser_smoke.py僅Python編譯，未執行真瀏覽器。Worker／migration／公開API設定3檔逐byte不變，13核心engine模組僅快取版本更新；未重部署Cloudflare或寫入D1。商店／道具仍關閉，計時、派彩、資金及存檔規則不改。
+
+發布前檢查及回退見docs/LEADERBOARD_UI_0131.md、LEADERBOARD_UI_VALIDATION.json、LEADERBOARD_UI_RELEASE.json。Safari／Chrome真機觸控、局部捲動、VoiceOver、安全區與各尺寸實際排版仍UNVERIFIED；不得把Node／CSS解析當成畫面驗證。下一步核對main／Pages及公網逐檔SHA，再請使用者於iPhone16Plus開榜驗收；不清資料、不重建D1、不開付費。
+
+## 最新 · 龍虎榜介面v1只做預覽，等待使用者確認
+
+使用者要求「設計龍虎榜的介面，需符合風格，先讓我確認」，覆蓋舊發布授權對本次新設計的適用；正式0.13.0及Cloudflare不變。已按gamestudio UI審閱流程建立docs/previews/leaderboard-v1：深玉綠／切角金框／酒紅榜首銘牌／image_gen原創金箔龍虎紋，左側前三名、右側第四名起榜單，返回／刷新／上下頁；沒有角色頭像。
+
+4橫向尺寸（956×440、667×375、1194×834、1440×900）×示例榜單／空榜／讀取失敗，共12SVG及12個2x PNG；index.html只切換本地PNG，所有數字明示示例，不fetch API或觸碰Game／保存。手機主要資料≥16px、操作≥44px；右側獨立捲動只是本輪靜態構圖意圖，未冒稱實裝觸控或Safari畫面。source image_gen原圖保留，來源／提示詞／SHA在art-source.json。
+
+12組XML／PNG尺寸／幾何、HTML腳本語法、4組主要平面文字對比4.85～10.95通過；407個正式source／素材／API設定／Pages及已發布快照SHA不變。未重跑／引用385項作本輪測試；未啟用HTTP／Chromium IPC、沒有API請求／雲端或GitHub寫入。第一次內嵌裝飾圖造成SVG>10MB靜態parser限制，已將圖資改共用defs去重，12組成功渲染，不涉及production修復。
+
+待確認後才可接正式DOM／CSS／API。需注意：三甲保留首個快照，翻頁不能把21–23名顯示成三甲；缺成績不可用示例補。每頁20／每次一筆規則不變，不新增日期篩選、帳號或本人最佳等未保存資料。真機安全區、VoiceOver／焦點、局部捲動、超長金額原值展示及輕量圖資輸出待實裝驗證。README／validation.json列出完整邊界。下一最安全任務：讓使用者看phone-populated.png及desktop／empty預覽後收修訂或確認；不自動實裝／升版／發布，不改Cloudflare。
+
+## 0.13.0 · Cloudflare排行榜與原GitHub Pages發布完成
+
+使用者授權代操作及device OAuth後完成：原D1建表／索引及0001遷移tracker，Worker API https://five-minute-god-leaderboard.jameshh998.workers.dev，正式版本82eb5c1f-d3b3-421f-8bbf-1e1647e31023。先前Mac空白遷移錯誤未重現，原SQL無修改，沒有重建D1；不杜撰根因。公開結果只存名稱／精確金額及必要ID／衍生欄位；遊戲流程全本機，不收集牌局／下注／暫停／派彩。沒有啟用付費方案，管理OAuth保留受限/tmp設定，不在HTML／GitHub。
+
+原main使用expected_sha1685d583b123bfaec159276127ebd5c430f68a40、force:false發布commit6800e38637fe4a7ea2c33af3f494ca145ac47305／treede7a2f28db0e8194f7833a872eaf2fd977397af6，276檔所有Git blob SHA核對、77個變更路徑、44份PNG／ICO副本不變、私有config未發布。Pages run42046610819 completed/success，head_sha及main一致。正式試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.13.0 。
+
+385項通過（372單元／組件＋5單檔＋8 Pages），原500五分鐘／10,000局回歸保留。公開HTML＋27runtime共28檔HTTP200且逐bytes SHA與已發布快照一致，配置真實API URL。公網上傳201、重試200且只一筆、衝突409、格式400、CORS／OPTIONS、分頁／快取Origin隔離及正式API429／Retry-After60皆通過；只按確定測試ID／名稱／0元刪除測試成績，D1及公網榜讀回0筆，沒有刪他人成績。
+
+限流注意：原生binding是最佳努力；早期小批壓測及固定key探針未見429，受控counter顯示請求分散至多isolate，不能宣稱嚴格全網10次。保留原生binding，加bounded isolate60秒突發計數，單元驗證過期後恢復；正式API22次有界無效請求後回429。臨時probe已還原移除，最終source及repo無調試碼／header，不新增IP或遊玩紀錄到D1；probe目錄清除。基本防護仍不能證明本機金額真實，冷啟動／跨位置限額不保證。
+
+手機Safari／Chrome真實觸控、原生PNG分享、實機完場至上傳尚未驗；Node／DOM／HTTP證據不是實機操作。browser_smoke只Python編譯，不重試既有HTTP／Chromium IPC限制。file:單檔停用排行榜請求但仍可本機遊玩／分享；商店／道具仍false，舊檔相容及餘秒保留。
+
+完整結果docs/LEADERBOARD_RELEASE.json、LEADERBOARD_VALIDATION.json及LEADERBOARD_0130.md；單檔dist/charity-casino-prototype.html、兩個Cloudflare ZIP。dist/github-upload保持276檔精確已發布快照，事後收據／交接更新不另部署，不再prepare覆蓋它。下一最安全任務：使用者用iPhone16Plus真實完成一場→上傳→另一裝置看榜，再測離線失敗恢復網絡重試；不清存檔、不重建DB／升付費。關閉功能只需公開API設定清空後重建發布，保留D1。
+
 ## 0.13.0 · D1／Worker已部署、公網防護驗證通過，準備發布原Pages
 
 使用者已授權代操作並完成本工作區device OAuth。原D1 five-minute-god-scores未換庫；初始只有system／migration表。原SQL EXPLAIN通過，直接執行原migration及tracker成功，scores／generated length／index讀回。先前Mac空白ERROR沒有具體D1原因，未重現，不能說已證明是schema或Wrangler bug。sqlite_version診斷被D1禁止，已換成合法schema讀取。

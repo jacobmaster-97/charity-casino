@@ -1,0 +1,16 @@
+{
+  "source": "Approved leaderboard-v1 image_gen artwork",
+  "source_sha256": "61dd25c9d70a0a7f09ada437f148288c99d1cb04f2f1eb696be3593b24d3084c",
+  "source_record": "docs/previews/leaderboard-v1/art-source.json",
+  "export": "Resample to 1200x400, WebP quality82; no creative changes",
+  "original_preserved": true,
+  "assets": [
+    {
+      "file": "dragon-tiger-v1.webp",
+      "width": 1200,
+      "height": 400,
+      "bytes": 98012,
+      "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3"
+    }
+  ]
+}

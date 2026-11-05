@@ -1,0 +1,33 @@
+{
+  "version": "0.13.1",
+  "date_hong_kong": "2026-11-05",
+  "status": "local_tests_passed_publish_pending",
+  "approval": "使用者：實裝",
+  "automated": {
+    "unit_component": 381,
+    "standalone_package": 6,
+    "pages": 9,
+    "total": 396,
+    "passed": true,
+    "css_safari16_chrome110_syntax": {
+      "passed": true,
+      "warnings": 0
+    },
+    "browser_smoke_python_compile": true
+  },
+  "assets": {
+    "new_webp_bytes": 98012,
+    "original_png_ico_copies_unchanged": 44,
+    "standalone_images": 13
+  },
+  "backend_changed": false,
+  "cloudflare_deployed_this_task": false,
+  "d1_writes_this_task": false,
+  "unverified": [
+    "real Safari/Chrome layout and touch",
+    "safe areas and rotation",
+    "VoiceOver",
+    "native share end-to-end",
+    "long amount touch scrolling"
+  ]
+}

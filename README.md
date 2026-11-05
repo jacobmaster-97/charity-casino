@@ -1,6 +1,6 @@
-# 五分鐘賭神 · 0.13.0
+# 五分鐘賭神 · 0.13.1
 
-本機版本：0.13.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
+本機版本：0.13.1，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
 已移除自由挑戰，開始／設定只提供五分鐘挑戰。舊自由模式存檔保留，原五桌／存檔規則／A圖示／加入主畫面指引維持，商店及道具仍關閉。本版加入完場手動上傳及主頁龍虎榜，遊玩過程維持本機。發布及限制見docs/LEADERBOARD_RELEASE.json。
 
@@ -29,6 +29,8 @@ npm run verify
 執行語法、規則／存檔、單檔打包與封裝校驗。npm run build可重新產生HTML。
 
 ## 功能
+
+- 0.13.1：已批准金箔龍虎介面、真實三甲與分頁榜單，空榜／失敗可重試，保留精確完整金額；[實裝與驗證](docs/LEADERBOARD_UI_0131.md)。
 
 - 0.13.0：精簡Cloudflare排行榜已連接公開Worker，完場手動上傳名稱及最終金額，每次挑戰各留一筆；建立與接線見 [部署指南](docs/CLOUDFLARE_LEADERBOARD.md)。發布狀態見docs/LEADERBOARD_RELEASE.json。
 - 0.12.1：移除自由模式玩家入口，保留舊資料，詳docs/SINGLE_CHALLENGE_0121.md。

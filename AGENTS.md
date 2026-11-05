@@ -63,3 +63,7 @@
 - 0.13.0使用者已回答本機驗收「是」及「每次完成各留一筆」，授權開始Cloudflare Workers＋D1排行榜，取代舊不開排行榜的階段限制。只在完場按鈕上傳名稱／最終金額＋必要提交UUID；每次挑戰獨立，同名不覆寫、同次重試去重，遊玩過程全部留本機。先完成Worker／migration／前端／測試，apiBase預設空字串停用。使用者已有免費帳戶、未建Worker／D1；未有登入授權／ID／公開網址，不自行升級付費或宣稱部署，不把管理金鑰放HTML／GitHub。詳docs/CLOUDFLARE_LEADERBOARD.md；商店／道具仍關閉。
 
 - 0.13.0後續使用者授權代操作，已透過本工作區device OAuth成功登入；原D1未換庫，原SQL直接執行及tracker成功、Worker已部署，原空白migration錯誤原因未重現不可杜撰。前端已填真實公開Worker URL，file:版停用網絡；需完成最後公網防護／發布核對後接原Pages。原生限流外另有bounded isolate突發計數，不收遊玩紀錄／IP到D1，不把OAuth設定放公開倉庫；具體證據見最新交接及LEADERBOARD_RELEASE.json。
+
+- 最新龍虎榜v1：使用者明確要求先確認；docs/previews/leaderboard-v1為隔離設計預覽，只有示例PNG／SVG／切換頁，不接正式前端、不升版、不發布GitHub／Cloudflare。先等使用者確認。橫向深玉綠金箔龍虎、左三甲右榜單；正式接入須保持每頁20、同次去重／每次各一筆，三甲快取與cursor同快照，空榜不得補假資料；不新增日期篩選／帳號欄位。
+
+- 0.13.1使用者最新「實裝」已確認龍虎榜v1正式接入，取代前述先預覽限制，沿現有GitHub Pages發布。新排行榜DOM／CSS、輕量WebP、三甲快照及分頁；Worker／D1／API資料規則及遊玩流程不改，不重建雲端或開付費。真實空榜不可補示例，完整金額不可縮略丟精度，實機未驗須明示。詳docs/LEADERBOARD_UI_0131.md及發布收據。

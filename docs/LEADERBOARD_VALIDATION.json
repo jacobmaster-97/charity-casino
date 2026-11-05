@@ -1,7 +1,7 @@
 {
   "version": "0.13.0",
   "date_hong_kong": "2026-11-05",
-  "status": "cloudflare_public_verified_ready_for_github_pages",
+  "status": "published_and_publicly_verified",
   "user_decisions": {
     "local_challenge_accepted": true,
     "retention": "one_entry_per_completed_challenge",
@@ -75,22 +75,30 @@
       "contains_credentials": false,
       "includes_user_database_binding": true,
       "excluded_from_public_github_upload": true
-    }
+    },
+    "published_snapshot_files": 276,
+    "published_snapshot_sha_verified": true,
+    "binary_copies_unchanged": 44
   },
   "deployment": {
     "cloudflare_resources_created": false,
     "d1_remote_migration": true,
     "worker_deployed": true,
-    "github_updated": false,
+    "github_updated": true,
     "public_validation": true,
-    "production_version": "0.12.1",
-    "production_commit": "1685d583b123bfaec159276127ebd5c430f68a40",
+    "production_version": "0.13.0",
+    "production_commit": "6800e38637fe4a7ea2c33af3f494ca145ac47305",
     "user_reported_d1_created": true,
     "worker_api": "https://five-minute-god-leaderboard.jameshh998.workers.dev",
     "cloudflare_resources_created_by_assistant": [
       "Worker five-minute-god-leaderboard"
     ],
-    "worker_version": "82eb5c1f-d3b3-421f-8bbf-1e1647e31023"
+    "worker_version": "82eb5c1f-d3b3-421f-8bbf-1e1647e31023",
+    "pages_verified": true,
+    "tree": "de7a2f28db0e8194f7833a872eaf2fd977397af6",
+    "pages_run_id": 42046610819,
+    "pages_run_conclusion": "success",
+    "game_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.13.0"
   },
   "untested": [
     "Actual iPhone16Plus Safari/Chrome landscape touch and native PNG sharing after update",
@@ -154,5 +162,12 @@
     "direct_original_sql_and_tracker_succeeded": true,
     "root_cause_of_prior_blank_migration_error": "not established; not reproduced after authorization",
     "unsupported_diagnostic_function": "sqlite_version() not authorized by D1; replaced with supported schema read"
+  },
+  "public_game_validation": {
+    "http_html_and_runtime_bytes_match": 28,
+    "actual_browser_rendering": false,
+    "live_api_config_verified": true,
+    "test_rows_removed": true,
+    "final_score_count_after_test_cleanup": 0
   }
 }

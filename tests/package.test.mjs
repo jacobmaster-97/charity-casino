@@ -25,9 +25,9 @@ test('embedded executable module parses after bundling',async()=>{
 });
 test('all twelve embedded PNGs exactly match the approved runtime textures',async()=>{
   const map=JSON.parse(html.match(/globalThis\.__CASINO_ART=(\{[^\n]+\});/)[1]);
-  assert.equal(Object.keys(map).length,12);assert.ok(!Object.keys(map).some(p=>p.endsWith('/hand.png')));
+  assert.equal(Object.keys(map).filter(p=>p.endsWith('.png')).length,12);assert.equal(Object.keys(map).length,13);assert.ok(!Object.keys(map).some(p=>p.endsWith('/hand.png')));
   for(const [ref,data] of Object.entries(map)){
-    assert.ok(data.startsWith('data:image/png;base64,'));
+    assert.ok(data.startsWith(ref.endsWith('.webp')?'data:image/webp;base64,':'data:image/png;base64,'));
     const embedded=Buffer.from(data.split(',')[1],'base64');
     const original=await readFile(path.join(root,'public',ref));
     assert.equal(createHash('sha256').update(embedded).digest('hex'),createHash('sha256').update(original).digest('hex'));
@@ -44,4 +44,7 @@ test('standalone embeds all bookmark icons without a separate file or high-resol
 });
 test('offline package keeps home-screen help but does not reference a hosted app manifest',()=>{
  assert.ok(!/<link rel="manifest"/.test(html));assert.ok(html.includes('加到主頁面'));assert.ok(html.includes('開啟網頁版'));assert.ok(!html.includes('beforeinstallprompt'));
+});
+test('standalone includes the approved leaderboard view and its WebP without external UI artwork requests',()=>{
+ assert.ok(html.includes('rank-dialog'));assert.ok(html.includes('rank-champion'));assert.ok(html.includes('data:image/webp;base64,'));assert.ok(!html.includes("url('../public/art/leaderboard-b/"));
 });

@@ -1,6 +1,6 @@
 {
   "version": "0.13.0",
-  "status": "cloudflare_deployed_pages_ready_to_publish",
+  "status": "published_and_publicly_verified",
   "date_hong_kong": "2026-11-05",
   "repository": "jacobmaster-97/charity-casino",
   "branch": "main",
@@ -21,12 +21,206 @@
   },
   "public_api_verified": true,
   "tests_total": 385,
-  "github_published": false,
-  "pages_verified": false,
+  "github_published": true,
+  "pages_verified": true,
   "device_verified": false,
   "limitations": [
     "Client-supplied money cannot be proven legitimate",
     "Rate limit approximate across locations/isolate restarts",
     "iPhone real-device and public game UI pending"
-  ]
+  ],
+  "commit": "6800e38637fe4a7ea2c33af3f494ca145ac47305",
+  "tree": "de7a2f28db0e8194f7833a872eaf2fd977397af6",
+  "pages_run_id": 42046610819,
+  "pages_run_status": "completed",
+  "pages_run_conclusion": "success",
+  "pages_run_url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/42046610819",
+  "game_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.13.0",
+  "published_files": 276,
+  "all_git_blob_shas_verified": true,
+  "unchanged_binary_copies": 44,
+  "public_html_and_runtime_files_verified": 28,
+  "test_rows_removed": true,
+  "score_count_after_test_cleanup": 0,
+  "post_release_receipt_updated_locally": true,
+  "published_snapshot": "dist/github-upload remains exact published source; post-release receipt updates are not separately deployed",
+  "public_pages_files": [
+    {
+      "path": "index.html",
+      "status": 200,
+      "sha256": "bff1f212b56a1fbe2ca3e98ce5061f32a5e310ca976e6b17a4f10dd1db309a11",
+      "bytes": 1334
+    },
+    {
+      "path": "src/app.mjs",
+      "status": 200,
+      "sha256": "7f50d28ae08ba5ad69ac5773736415db4ac89a838c6164e0b6c33782eb4110a6",
+      "bytes": 52493
+    },
+    {
+      "path": "src/baccarat-squeeze.mjs",
+      "status": 200,
+      "sha256": "f8ad57119ba3d03aeb6b21ca6dcfac0f2db27804f4ffb8ad12f783f0d49b1bcf",
+      "bytes": 7342
+    },
+    {
+      "path": "src/baccarat-view.mjs",
+      "status": 200,
+      "sha256": "a1f504d8fbcf458b2a2b0ada194ea5cfd1025ca639365b9ddb2696f653f8a4fe",
+      "bytes": 8722
+    },
+    {
+      "path": "src/baccarat.mjs",
+      "status": 200,
+      "sha256": "33f5bb31ce548d91937586659aaeeb78f9bd0e85cae74e9abb1960ff0b517173",
+      "bytes": 5792
+    },
+    {
+      "path": "src/blackjack-game.mjs",
+      "status": 200,
+      "sha256": "99d28ea107ad3a7c4a80c16066c6ad35f890015d185447284ab09599cd1d2963",
+      "bytes": 7251
+    },
+    {
+      "path": "src/blackjack-view.mjs",
+      "status": 200,
+      "sha256": "b7a8e7c1e6bf7f9ab015e6864edafd85860601246a7447cbca9034cbd12340d4",
+      "bytes": 12839
+    },
+    {
+      "path": "src/blackjack.mjs",
+      "status": 200,
+      "sha256": "23ff35730a9ee23891b0d03601a87d3e0668b799e838b66e57d7f89948150cbd",
+      "bytes": 4024
+    },
+    {
+      "path": "src/board.mjs",
+      "status": 200,
+      "sha256": "0927de0d46174fb1ac63053305905419bd69a24fc5f82315383b4b2effc373d1",
+      "bytes": 63380
+    },
+    {
+      "path": "src/cash.mjs",
+      "status": 200,
+      "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
+      "bytes": 2198
+    },
+    {
+      "path": "src/challenge.mjs",
+      "status": 200,
+      "sha256": "6100a96d67b082620eb2d1108d660cab598f0e72c102195f8f76d40461767977",
+      "bytes": 4472
+    },
+    {
+      "path": "src/game.mjs",
+      "status": 200,
+      "sha256": "63be29021d9f108e0e738e415d02136cc39342f11cfafe085bdbad2f07149035",
+      "bytes": 19040
+    },
+    {
+      "path": "src/home-view.mjs",
+      "status": 200,
+      "sha256": "dfb2072fe9f0af624041b7d132d9055d1d911b8005beee2a86e3c51cb3801485",
+      "bytes": 8699
+    },
+    {
+      "path": "src/leaderboard-config.mjs",
+      "status": 200,
+      "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
+      "bytes": 177
+    },
+    {
+      "path": "src/leaderboard.mjs",
+      "status": 200,
+      "sha256": "9271e5047d8d4c2b4a6486338f1fc45ad9639f12308783d496d0e67e29dd9bed",
+      "bytes": 8203
+    },
+    {
+      "path": "src/poker-game.mjs",
+      "status": 200,
+      "sha256": "0fb66f00da5c1c77aef2559b1eb9a8e8ec96d855c515855f71fa6586f1421257",
+      "bytes": 9953
+    },
+    {
+      "path": "src/poker-view.mjs",
+      "status": 200,
+      "sha256": "56db8440ca3e3321772eebbeca0f322470237ba4b26b7792745b92acb8fcb1e7",
+      "bytes": 15046
+    },
+    {
+      "path": "src/poker.mjs",
+      "status": 200,
+      "sha256": "fe46a4bcdc8ad64c169249a55f32715df176cad85f5d951df95e51f2de717077",
+      "bytes": 8068
+    },
+    {
+      "path": "src/record-share.mjs",
+      "status": 200,
+      "sha256": "e6c2803fb0ebebb5c720b5fb292a087952b7bccc0710ceb7c2521c1de6ac6fc1",
+      "bytes": 9675
+    },
+    {
+      "path": "src/roulette-game.mjs",
+      "status": 200,
+      "sha256": "3a96c1f6b7803f9219a71ca3dcd2d42c39304ff18ef8879013c5615ed71ebd25",
+      "bytes": 2535
+    },
+    {
+      "path": "src/roulette-view.mjs",
+      "status": 200,
+      "sha256": "ddabdb20087178040518f31b4a5ff51da6cc21f13a864d925ec566a107300893",
+      "bytes": 14107
+    },
+    {
+      "path": "src/roulette.mjs",
+      "status": 200,
+      "sha256": "7fcedd10313af1849ae9f0a822a88c5cb61dc9c8c5f2452847d55f9345d088fb",
+      "bytes": 4553
+    },
+    {
+      "path": "src/rules.mjs",
+      "status": 200,
+      "sha256": "738c6cde4c57a04a3d7b7f6fa37776b8bd287eb44690e58fd3ad06dd7a4bf72c",
+      "bytes": 4819
+    },
+    {
+      "path": "src/sicbo-view.mjs",
+      "status": 200,
+      "sha256": "b30262aaf286d1781cdbdbdf1e70341ecf7a68bd968cccadc1bcfd651adc6ac6",
+      "bytes": 8323
+    },
+    {
+      "path": "src/sound.mjs",
+      "status": 200,
+      "sha256": "b1d3e1b8527255b77ce711107e23ad16f84a12605e7c8e5137d43ea27e7ffd96",
+      "bytes": 8670
+    },
+    {
+      "path": "src/storage.mjs",
+      "status": 200,
+      "sha256": "1f3e2c2c5527b9e311c52dcb9f02972270492d0945d28aee73fbca7c369f30e5",
+      "bytes": 5601
+    },
+    {
+      "path": "src/styles.css",
+      "status": 200,
+      "sha256": "bb6c948ef1391f9003b98dd3fc2fd24ff42482cac2a8b20b0a26bdac08941112",
+      "bytes": 151370
+    },
+    {
+      "path": "src/table-layout.mjs",
+      "status": 200,
+      "sha256": "38cae278d335eafe8b102ebed7a3340b0dfdfe9a6be0b34e08d2e0213cea37b9",
+      "bytes": 11700
+    }
+  ],
+  "rate_limit": {
+    "configured_native_write_per_minute": 10,
+    "configured_native_read_per_minute": 60,
+    "per_isolate_burst_guard": true,
+    "public_429_observed": true,
+    "retry_after_seconds": 60,
+    "requests_in_successful_probe": 22,
+    "strict_global_cap": false
+  }
 }

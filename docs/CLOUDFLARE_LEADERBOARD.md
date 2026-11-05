@@ -1,6 +1,6 @@
 # Cloudflare Workers＋D1 排行榜部署與接線
 
-日期：2026-11-05（香港）。程式版 0.13.0；D1及Worker已實際部署，GitHub Pages發布狀態另見LEADERBOARD_RELEASE.json。使用者已確認本機驗收及「每次完成各留一筆」。不改為每人最佳、不建立帳號、不開啟商店／道具。
+日期：2026-11-05（香港）。程式版 0.13.0；D1及Worker、GitHub Pages均已實際發布並完成公網程式／API核對，詳LEADERBOARD_RELEASE.json。使用者已確認本機驗收及「每次完成各留一筆」。不改為每人最佳、不建立帳號、不開啟商店／道具。
 
 目前公開API：`https://five-minute-god-leaderboard.jameshh998.workers.dev`。原D1已建立scores／索引及0001遷移記錄，沒有更換資料庫；之前空白ERROR在直接執行原SQL時未重現，原因仍未確立。以下保留新環境設定步驟，已有資源毋須重新建立。
 
