@@ -1,9 +1,9 @@
-import {CHALLENGE_MS,CHALLENGE_RULESET,CHALLENGE_TABLES} from './challenge.mjs?v=0.12.1';
-import {cashParse,cashEncode,cashAdd,cashSub} from './cash.mjs?v=0.12.1';
-import {validatePokerTable} from './poker.mjs?v=0.12.1';
-import {validateBlackjackShoe} from './blackjack.mjs?v=0.12.1';
-import {validateBaccaratShoe} from './baccarat.mjs?v=0.12.1';
-import {GOAL,ITEM_IDS} from './rules.mjs?v=0.12.1';
+import {CHALLENGE_MS,CHALLENGE_RULESET,CHALLENGE_TABLES} from './challenge.mjs?v=0.13.0';
+import {cashParse,cashEncode,cashAdd,cashSub} from './cash.mjs?v=0.13.0';
+import {validatePokerTable} from './poker.mjs?v=0.13.0';
+import {validateBlackjackShoe} from './blackjack.mjs?v=0.13.0';
+import {validateBaccaratShoe} from './baccarat.mjs?v=0.13.0';
+import {GOAL,ITEM_IDS} from './rules.mjs?v=0.13.0';
 const PREFIX='charity-casino-prototype-v1';
 export function validateSave(input){
   if(input?.schema===2)return validateChallengeSave(input);
@@ -30,6 +30,7 @@ export class Saves{
 export function validateChallengeSave(input){
  if(input.game!=='charity-casino'||!input.profile)throw new Error('不支援的挑戰存檔');
  const p=input.profile;
+ if(p.submissionId!==undefined&&(typeof p.submissionId!=='string'||!/^([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$/i.test(p.submissionId)))throw new Error('挑戰提交編號無效');
  if(p.ruleset!==CHALLENGE_RULESET||typeof p.name!=='string'||!p.name.trim()||[...p.name.trim()].length>16||!['race','free'].includes(p.mode))throw new Error('挑戰玩家資料無效');
  if(!Number.isFinite(p.elapsedMs)||p.elapsedMs<0||p.elapsedMs>CHALLENGE_MS||!Number.isSafeInteger(p.rounds)||p.rounds<0||p.rounds>1e8)throw new Error('挑戰時間或局數無效');
  const bank=cashParse(p.bank),itemsSpent=cashParse(p.itemsSpent);if(bank<0||itemsSpent<0)throw new Error('挑戰資金無效');
@@ -39,5 +40,5 @@ export function validateChallengeSave(input){
  if(rounds!==p.rounds||cashSub(cashAdd(10000,net),itemsSpent)!==bank)throw new Error('挑戰資金與統計不一致');
  if(!p.inventory||ITEM_IDS.some(id=>!Number.isSafeInteger(p.inventory[id])||p.inventory[id]<0||p.inventory[id]>100000))throw new Error('道具資料無效');
  let pokerTable;if(input.pokerTable!==undefined){const t=input.pokerTable;if(!Array.isArray(t?.seats))throw new Error('德州桌資料無效');pokerTable=validatePokerTable({...t,seats:t.seats.map(seat=>({...seat,stack:cashParse(seat.stack)}))},{extended:true});}
- return {schema:2,game:'charity-casino',profile:{name:p.name.trim(),mode:p.mode,ruleset:p.ruleset,bank,elapsedMs:p.elapsedMs,rounds:p.rounds,status:p.status,endReason:p.endReason,itemsSpent,stats,inventory:Object.fromEntries(ITEM_IDS.map(id=>[id,p.inventory[id]]))},...(input.baccaratShoe===undefined?{}:{baccaratShoe:validateBaccaratShoe(input.baccaratShoe)}),...(input.blackjackShoe===undefined?{}:{blackjackShoe:validateBlackjackShoe(input.blackjackShoe)}),...(pokerTable?{pokerTable}:{})};
+ return {schema:2,game:'charity-casino',profile:{...(p.submissionId?{submissionId:p.submissionId}:{}),name:p.name.trim(),mode:p.mode,ruleset:p.ruleset,bank,elapsedMs:p.elapsedMs,rounds:p.rounds,status:p.status,endReason:p.endReason,itemsSpent,stats,inventory:Object.fromEntries(ITEM_IDS.map(id=>[id,p.inventory[id]]))},...(input.baccaratShoe===undefined?{}:{baccaratShoe:validateBaccaratShoe(input.baccaratShoe)}),...(input.blackjackShoe===undefined?{}:{blackjackShoe:validateBlackjackShoe(input.blackjackShoe)}),...(pokerTable?{pokerTable}:{})};
 }

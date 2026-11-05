@@ -1,0 +1,158 @@
+{
+  "version": "0.13.0",
+  "date_hong_kong": "2026-11-05",
+  "status": "cloudflare_public_verified_ready_for_github_pages",
+  "user_decisions": {
+    "local_challenge_accepted": true,
+    "retention": "one_entry_per_completed_challenge",
+    "cloudflare_account": "free_account_and_D1_reported_created_by_user_worker_pending"
+  },
+  "automated": {
+    "npm_run_verify": {
+      "passed": true,
+      "unit_component": 372,
+      "package": 5
+    },
+    "npm_run_verify_pages": {
+      "passed": true,
+      "tests": 8
+    },
+    "total": 385,
+    "leaderboard_worker_real_sql_tests": 8,
+    "leaderboard_client_tests": 6,
+    "additional_app_tests": 3,
+    "browser_smoke": "python_compile_only_not_run"
+  },
+  "wrangler": {
+    "version": "4.157.0",
+    "dry_run": true,
+    "actual_deploy": true,
+    "bindings": [
+      "DB",
+      "WRITE_LIMITER",
+      "READ_LIMITER",
+      "ALLOWED_ORIGINS"
+    ],
+    "paid_plan_enabled": false,
+    "deployed_version": "82eb5c1f-d3b3-421f-8bbf-1e1647e31023",
+    "api": "https://five-minute-god-leaderboard.jameshh998.workers.dev"
+  },
+  "network": {
+    "frontend_api": "https://five-minute-god-leaderboard.jameshh998.workers.dev",
+    "post_fields": [
+      "name",
+      "finalAmount"
+    ],
+    "technical_header": "Idempotency-Key UUIDv4",
+    "public_remote_requests_tested": true,
+    "offline_file_requests": "disabled"
+  },
+  "artifacts": {
+    "standalone": {
+      "path": "dist/charity-casino-prototype.html",
+      "bytes": 30013203,
+      "sha256": "8bed407fa254a2a823c7c51a29626f0163548f3a3b7b657608eb6813abb4cb97"
+    },
+    "runtime_files": 27,
+    "old_published_snapshot_files_verified": 259,
+    "old_published_snapshot_modified": false,
+    "cloudflare_server_zip": {
+      "path": "dist/cloudflare-leaderboard-server-0.13.0.zip",
+      "bytes": 12660,
+      "sha256": "6204de221ab6bd2d08b0c9a6fa723ed975aca826270e6650857246188b07c289",
+      "files": [
+        "cloudflare/worker.mjs",
+        "cloudflare/migrations/0001_scores.sql",
+        "cloudflare/wrangler.example.jsonc",
+        "docs/CLOUDFLARE_LEADERBOARD.md",
+        "scripts/smoke-leaderboard.mjs"
+      ]
+    },
+    "ready_server_zip": {
+      "path": "dist/cloudflare-leaderboard-ready-0.13.0.zip",
+      "bytes": 15402,
+      "sha256": "7aae63ec574661c0c8b7f9de76a49dbf04eec9769618c4d8c1fedb886d9d22bf",
+      "contains_credentials": false,
+      "includes_user_database_binding": true,
+      "excluded_from_public_github_upload": true
+    }
+  },
+  "deployment": {
+    "cloudflare_resources_created": false,
+    "d1_remote_migration": true,
+    "worker_deployed": true,
+    "github_updated": false,
+    "public_validation": true,
+    "production_version": "0.12.1",
+    "production_commit": "1685d583b123bfaec159276127ebd5c430f68a40",
+    "user_reported_d1_created": true,
+    "worker_api": "https://five-minute-god-leaderboard.jameshh998.workers.dev",
+    "cloudflare_resources_created_by_assistant": [
+      "Worker five-minute-god-leaderboard"
+    ],
+    "worker_version": "82eb5c1f-d3b3-421f-8bbf-1e1647e31023"
+  },
+  "untested": [
+    "Actual iPhone16Plus Safari/Chrome landscape touch and native PNG sharing after update",
+    "Strict cross-location global rate cap (not promised); cold isolate resets memory counters",
+    "Real-device five-minute completion to upload (engine and DOM wiring covered locally)"
+  ],
+  "limitations": [
+    "Client-supplied results are not authoritative anti-cheat",
+    "Rate limits approximate per Cloudflare edge location",
+    "128 decimal digits of cents online; local result kept if exceeded",
+    "Clearing local storage can lose submission ID/outbox"
+  ],
+  "cloudflare_setup": {
+    "database_name": "five-minute-god-scores",
+    "database_id_received": true,
+    "local_config_filled": true,
+    "configured_database_dry_run_passed": true,
+    "remote_database_verified": true,
+    "workplace_login": "device OAuth authorized; credentials outside project",
+    "worker_deployed": true,
+    "user_mac_errors": [
+      "OAuth request_forbidden: no CSRF session cookie",
+      "ENOENT config resolved under home directory"
+    ],
+    "oauth_recovery_verified": "User reported successful login after manual fresh browser flow; no local account credentials shared",
+    "user_mac_login_reported_success": true,
+    "remote_migration_reported_result": "Original SQL plus d1_migrations marker succeeded via JSON query; schema and index read back; original blank CLI failure not reproduced",
+    "active_user_environment": "Mac; delegated operation from managed workspace, browser device authorization pending",
+    "codespaces_login": "not needed; assistant operates managed workspace",
+    "device_flag_verified": "Wrangler4.157.0 login --help confirms --device; remote user login untested",
+    "migration_log_review": "Generic Wrangler migration wrapper at cli.js:241059; actual D1 error still absent"
+  },
+  "rate_limit_validation": {
+    "native_binding_deployed": true,
+    "native_only_429_observed": false,
+    "controlled_native_only_probe_429_observed": false,
+    "per_isolate_burst_guard_added": true,
+    "burst_unit_test_passed": true,
+    "public_final_guard_validation": "observed 429 and Retry-After:60 after 22 bounded invalid requests across isolates",
+    "limits": "Approximate per-IP/per-location; memory guard resets on isolate restart",
+    "public_429_observed": true,
+    "probe_in_final_worker": false
+  },
+  "public_checks": [
+    "GET+CORS",
+    "OPTIONS preflight",
+    "untrusted origin 403",
+    "numeric amount 400",
+    "extra gameplay fields 400",
+    "POST 201",
+    "same-ID retry 200 with one entry",
+    "same-ID conflict 409",
+    "cursor pagination and fixed snapshot",
+    "cache origin isolation",
+    "rate limit 429 with Retry-After:60"
+  ],
+  "migration_diagnosis": {
+    "original_sql_modified": false,
+    "initial_remote_scores_table_present": false,
+    "explain_original_create_passed": true,
+    "direct_original_sql_and_tracker_succeeded": true,
+    "root_cause_of_prior_blank_migration_error": "not established; not reproduced after authorization",
+    "unsupported_diagnostic_function": "sqlite_version() not authorized by D1; replaced with supported schema read"
+  }
+}

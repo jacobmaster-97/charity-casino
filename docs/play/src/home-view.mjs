@@ -33,14 +33,14 @@ export function homeInstallInfo({userAgent='',platform='',maxTouchPoints=0,stand
  const safari=!embedded&&!chrome&&!/Edg|OPR|FxiOS|Android/i.test(userAgent)&&/Safari/i.test(userAgent);
  return {browser:chrome?'chrome':safari?'safari':null,device:ios?'ios':android?'android':'other',installed:standalone===true||displayStandalone===true,local:protocol==='file:'};
 }
-export function homeDialogView({kind,name,save,legacy,warning,button,escape,money,soundControls,installInfo={},installBrowser=null}){
+export function homeDialogView({kind,name,save,legacy,warning,button,escape,money,soundControls,installInfo={},installBrowser=null,rankContent=null}){
  const close=button('close-overlay','返回主頁','outlined home-dialog-close');let title,content;
  if(kind==='start'){
   title='開始遊戲';content=`<h2 id="home-dialog-title">${title}</h2><form id="start-form"><label for="player-name">參賽者姓名</label><input id="player-name" name="playerName" autocomplete="nickname" maxlength="32" placeholder="怎樣稱呼你？" value="${escape(name)}" required><p class="field-note">完成局自動保存。新挑戰由 $100 開始，限時五分鐘。</p><button type="submit" class="primary start-button">開始新挑戰 <span aria-hidden="true">↗</span></button></form>${save?button('continue',`繼續上次挑戰 · ${money(save.profile.bank)}`,'outlined home-continue'):''}${close}`;
  }else if(kind==='settings'){
   title='設定';content=`<h2 id="home-dialog-title">${title}</h2><section class="home-settings-section" aria-label="聲效設定"><h3>音效</h3>${soundControls()}</section><section class="home-settings-section" aria-label="存檔管理"><h3>存檔與備份</h3><p class="field-note">只接受五分鐘挑戰存檔。完成局自動保存，載入保留原有餘秒。</p><div class="home-save-actions">${save?button('continue',`繼續上次挑戰 · ${money(save.profile.bank)}`,'outlined'):''}${button('import','匯入挑戰存檔','outlined')}${legacy?button('export-legacy','匯出保留的舊版存檔','outlined'):''}</div></section>${close}`;
  }else if(kind==='rank'){
-  title='賭神龍虎榜';content=`<h2 id="home-dialog-title">${title}</h2><p class="home-info-status">排行榜尚未開放</p><p>網絡排行榜正在規劃中，目前不會上傳任何成績。</p><p>完成挑戰後，仍可查看本機結果及匯出挑戰紀錄。</p>${close}`;
+  title='賭神龍虎榜';content=`<h2 id="home-dialog-title">${title}</h2>${rankContent??'<p class="home-info-status">排行榜尚未開放</p><p>未連接伺服器，不會上傳成績；本機挑戰及分享功能仍可使用。</p>'}${close}`;
  }else if(kind==='install'){
   title='加到主頁面';const browser=['safari','chrome'].includes(installBrowser)?installBrowser:installInfo.browser||'safari';
   const steps=browser==='safari'?['點選「分享」按鈕。','選擇「加入主畫面」。','點「加入」，之後便可從主畫面的圖示全螢幕開啟遊戲。']:installInfo.device==='android'?['點選右上角「⋮」選單。','選擇「加至主畫面」或「安裝應用程式」。','依瀏覽器提示點「新增」或「安裝」。','之後便可從主畫面的圖示全螢幕開啟遊戲。']:['點選右上角「分享」按鈕。','向下拉，選擇「加至主畫面」。','點右下角「新增」。','之後便可從主畫面的圖示全螢幕開啟遊戲。'];

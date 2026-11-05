@@ -1,0 +1,30 @@
+{
+  "recorded_at_utc": "2026-11-04T14:40:27.696137+00:00",
+  "phase": "PRECONDITIONS_PENDING_USER_CONFIRMATION",
+  "production_version": "0.12.1",
+  "production_commit": "1685d583b123bfaec159276127ebd5c430f68a40",
+  "local_checks": {
+    "npm_run_verify": "PASS",
+    "unit_component": 355,
+    "standalone": 5,
+    "npm_run_verify_pages": "PASS",
+    "pages": 8,
+    "total": 368,
+    "artifact_matches_release": true,
+    "published_snapshot_sha_unchanged": 259
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 30002580,
+    "sha256": "c1c6a33a8dca5b0a8cfce6373160e82280c761ba8d574462a55b3a223948721a"
+  },
+  "device_acceptance": "NOT RECORDED; user confirmation requested",
+  "required_decisions": [
+    "Confirm local five-minute challenge has been accepted before leaderboard implementation",
+    "Retain every completed result or only best result per anonymous player"
+  ],
+  "leaderboard_worker_d1_frontend_started": false,
+  "cloudflare_resources_created": false,
+  "github_updated": false,
+  "credentials_requested": false
+}

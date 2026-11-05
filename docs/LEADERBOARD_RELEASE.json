@@ -1,0 +1,32 @@
+{
+  "version": "0.13.0",
+  "status": "cloudflare_deployed_pages_ready_to_publish",
+  "date_hong_kong": "2026-11-05",
+  "repository": "jacobmaster-97/charity-casino",
+  "branch": "main",
+  "expected_parent": "1685d583b123bfaec159276127ebd5c430f68a40",
+  "worker": {
+    "url": "https://five-minute-god-leaderboard.jameshh998.workers.dev",
+    "version_id": "82eb5c1f-d3b3-421f-8bbf-1e1647e31023",
+    "deployed": true,
+    "normal_source_sha256": "a26286382cca6982605153c7b62c3aac90f7b0752c5b0269bf3d13b284777436",
+    "temporary_probe_removed": true
+  },
+  "d1": {
+    "name": "five-minute-god-scores",
+    "migration": "0001_scores.sql",
+    "applied": true,
+    "original_sql_sha256": "ece2a31160fbfe849558bea49ebf94bf8c0652448a2fd0ba4a74c632aa5d68d2",
+    "sql_changed": false
+  },
+  "public_api_verified": true,
+  "tests_total": 385,
+  "github_published": false,
+  "pages_verified": false,
+  "device_verified": false,
+  "limitations": [
+    "Client-supplied money cannot be proven legitimate",
+    "Rate limit approximate across locations/isolate restarts",
+    "iPhone real-device and public game UI pending"
+  ]
+}

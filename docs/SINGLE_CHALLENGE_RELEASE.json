@@ -1,0 +1,49 @@
+{
+  "version": "0.12.1",
+  "repository": "https://github.com/jacobmaster-97/charity-casino",
+  "branch": "main",
+  "authorization": "User requested removal of free challenge mode; applied within the established GitHub game workflow",
+  "base_commit": "f445c77df6b91e5ba70e31f66ffe4560e6fc2110",
+  "commit": "1685d583b123bfaec159276127ebd5c430f68a40",
+  "tree": "b3730b8046b36abd55a8572175d7a6a2a8cda12f",
+  "expected_sha": "f445c77df6b91e5ba70e31f66ffe4560e6fc2110",
+  "force": false,
+  "ref_update": {
+    "success": true
+  },
+  "verified_files": 259,
+  "changed_files": 59,
+  "image_copies_unchanged": 44,
+  "all_blob_sha_match": true,
+  "tests": {
+    "unit_and_component": 355,
+    "standalone": 5,
+    "pages": 8,
+    "total": 368
+  },
+  "behavior": {
+    "only_playable_mode": "race",
+    "free_saves": "Preserved and excluded from imports/restores/continuation",
+    "legacy_decoders": "Retained for compatibility"
+  },
+  "artifact": {
+    "path": "dist/charity-casino-prototype.html",
+    "bytes": 30002580,
+    "sha256": "c1c6a33a8dca5b0a8cfce6373160e82280c761ba8d574462a55b3a223948721a"
+  },
+  "pages_run": {
+    "run_id": 41801878218,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "1685d583b123bfaec159276127ebd5c430f68a40",
+    "url": "https://github.com/jacobmaster-97/charity-casino/actions/runs/41801878218"
+  },
+  "play_url": "https://jacobmaster-97.github.io/charity-casino/?v=0.12.1",
+  "public_url_http_verified": false,
+  "unverified": [
+    "Physical Safari start/settings layout and file import/download"
+  ],
+  "snapshot_note": "dist/github-upload is the exact259-file published snapshot; post-release receipt and local handoffs are not separately deployed",
+  "rollback": "Restore complete0.12.0 f445c77df6b91e5ba70e31f66ffe4560e6fc2110 and its cache versions; saves stay untouched. That version restores free mode selection.",
+  "recorded_at_utc": "2026-11-04T08:46:39.614887+00:00"
+}

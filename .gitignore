@@ -23,3 +23,9 @@ public/art/styles/c/
 public/art/styles/*/lobby-populated-v3.png
 
 # docs/index.html and docs/play/ are intentionally tracked for GitHub Pages.
+
+# Cloudflare local credentials, cache and account-specific configuration
+.wrangler/
+.dev.vars*
+cloudflare/wrangler.jsonc
+cloudflare/.dev.vars*

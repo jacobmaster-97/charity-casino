@@ -1,8 +1,8 @@
-# 五分鐘賭神 · 原型0.12.1
+# 五分鐘賭神 · 0.13.0
 
-目前版本：0.12.1，開啟dist/charity-casino-prototype.html即可離線遊玩。
+本機版本：0.13.0，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
-已移除自由挑戰，開始／設定只提供五分鐘挑戰。舊自由模式存檔保留，原五桌／存檔規則／A圖示／加入主畫面指引維持，商店及道具仍關閉。實際發布結果見docs/SINGLE_CHALLENGE_RELEASE.json。
+已移除自由挑戰，開始／設定只提供五分鐘挑戰。舊自由模式存檔保留，原五桌／存檔規則／A圖示／加入主畫面指引維持，商店及道具仍關閉。本版加入完場手動上傳及主頁龍虎榜，遊玩過程維持本機。發布及限制見docs/LEADERBOARD_RELEASE.json。
 
 B港式賭片卡通的大廳＋大小／百家樂／21點／德州撲克／美式輪盤，五桌原型現已開放。
 
@@ -30,6 +30,7 @@ npm run verify
 
 ## 功能
 
+- 0.13.0：精簡Cloudflare排行榜已連接公開Worker，完場手動上傳名稱及最終金額，每次挑戰各留一筆；建立與接線見 [部署指南](docs/CLOUDFLARE_LEADERBOARD.md)。發布狀態見docs/LEADERBOARD_RELEASE.json。
 - 0.12.1：移除自由模式玩家入口，保留舊資料，詳docs/SINGLE_CHALLENGE_0121.md。
 - 0.12.0：五選項主頁及平台加入指引，詳docs/HOME_INSTALL_0120.md。
 - 0.11.1：A款favicon及iPhone書籤圖示，詳docs/BOOKMARK_ICON_0111.md。

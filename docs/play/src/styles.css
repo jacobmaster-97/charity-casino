@@ -815,3 +815,14 @@
 .install-note a{display:block;margin-top:6px;color:#f2d490}
 @media(orientation:portrait){.home-title-screen .title-menu{bottom:24px;gap:8px}.home-title-screen .title-menu-button{height:clamp(44px,7vh,60px);min-height:44px;font-size:21px}.home-title-screen .title-menu-lead{display:none}}
 @media(orientation:portrait) and (max-height:620px){.title-orientation{display:none}.home-title-screen .title-logo{top:14px;height:23%}}
+
+/* Optional online results: context-only, no extra game HUD. */
+.leaderboard-upload{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:12px 0 0;padding:10px 16px;border-top:1px solid #c3a56655}
+.leaderboard-upload button,.leaderboard-pages button{min-height:44px;min-width:88px;font-size:18px}
+.leaderboard-status{font-size:16px;line-height:1.5;color:#e5d3a8;margin:8px 0;overflow-wrap:anywhere}
+.leaderboard-scroll{max-height:45dvh;overflow:auto;border:1px solid #c3a56655;border-radius:10px;background:#10271e}
+.leaderboard-table{width:100%;border-collapse:collapse;font-size:16px;table-layout:fixed}
+.leaderboard-table th,.leaderboard-table td{padding:12px 10px;text-align:left;border-bottom:1px solid #c3a56633;overflow-wrap:anywhere}
+.leaderboard-table th:first-child,.leaderboard-table td:first-child{width:64px}.leaderboard-table td:last-child{text-align:right;color:#f1d28e}
+.leaderboard-table thead{background:#26392b;color:#f1d28e;position:sticky;top:0}.leaderboard-pages{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:12px 0}
+@media(orientation:landscape) and (max-height:500px){.leaderboard-scroll{max-height:38dvh}.leaderboard-upload{margin-top:6px;padding:6px 12px}.leaderboard-upload .leaderboard-status{flex:1;min-width:220px}.home-dialog-rank{max-width:820px!important}}

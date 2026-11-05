@@ -59,3 +59,7 @@
 - 0.12.0依使用者最新追加，主頁五項按開始／龍虎榜／設定／加到主頁面／支持作者排列。點新項只顯平台對應步驟子視窗，取代原生安裝提示提案；Safari3步、iPhone Chrome4步，Android用實際⋮選單，未知可切換。補最小standalone manifest與A192／512，無SW或原生安裝／分享API。詳docs/HOME_INSTALL_0120.md；沿原GitHub遊戲流程實裝發布，商店／道具維持關閉，不開排行榜／Cloudflare。
 
 - 0.12.1使用者要求刪除自由挑戰：正式app只提供race五分鐘，移除開始／設定模式選擇及自由模式手動存讀入口，拒絕free匯入／restore且不回落到free自動檔。原free鍵／舊檔不刪不改，底層legacy解碼及歷史測試保留，不能當作重新開放模式。詳docs/SINGLE_CHALLENGE_0121.md；沿原GitHub流程發布，商店／道具仍關閉。
+
+- 0.13.0使用者已回答本機驗收「是」及「每次完成各留一筆」，授權開始Cloudflare Workers＋D1排行榜，取代舊不開排行榜的階段限制。只在完場按鈕上傳名稱／最終金額＋必要提交UUID；每次挑戰獨立，同名不覆寫、同次重試去重，遊玩過程全部留本機。先完成Worker／migration／前端／測試，apiBase預設空字串停用。使用者已有免費帳戶、未建Worker／D1；未有登入授權／ID／公開網址，不自行升級付費或宣稱部署，不把管理金鑰放HTML／GitHub。詳docs/CLOUDFLARE_LEADERBOARD.md；商店／道具仍關閉。
+
+- 0.13.0後續使用者授權代操作，已透過本工作區device OAuth成功登入；原D1未換庫，原SQL直接執行及tracker成功、Worker已部署，原空白migration錯誤原因未重現不可杜撰。前端已填真實公開Worker URL，file:版停用網絡；需完成最後公網防護／發布核對後接原Pages。原生限流外另有bounded isolate突發計數，不收遊玩紀錄／IP到D1，不把OAuth設定放公開倉庫；具體證據見最新交接及LEADERBOARD_RELEASE.json。

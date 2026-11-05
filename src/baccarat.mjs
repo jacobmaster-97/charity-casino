@@ -1,4 +1,4 @@
-import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.12.1';
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.13.0';
 // Cards are unique IDs 0..415 (eight decks); a round never reshuffles revealed information.
 export const BACCARAT_ENABLED=true;
 export const BACCARAT_DEAL_MS=400/.7;

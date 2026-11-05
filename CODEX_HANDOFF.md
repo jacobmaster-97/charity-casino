@@ -1,5 +1,83 @@
 # CODEX_HANDOFF
 
+## 0.13.0 · D1／Worker已部署、公網防護驗證通過，準備發布原Pages
+
+使用者已授權代操作並完成本工作區device OAuth。原D1 five-minute-god-scores未換庫；初始只有system／migration表。原SQL EXPLAIN通過，直接執行原migration及tracker成功，scores／generated length／index讀回。先前Mac空白ERROR沒有具體D1原因，未重現，不能說已證明是schema或Wrangler bug。sqlite_version診斷被D1禁止，已換成合法schema讀取。
+
+正式Worker https://five-minute-god-leaderboard.jameshh998.workers.dev，版本82eb5c1f-d3b3-421f-8bbf-1e1647e31023，D1綁定及原生10寫／60讀限流已部署；另加bounded isolate60秒突發計數。native-only短時壓測未觀察429；受控檢查證實同一位置的多isolate分配，不能保證嚴格全球10次。新增突發單元測試及正式API22個有界無效請求後觀察429／Retry-After60；臨時probe只在/tmp準備、已移除並恢復正式source，不在公開repo或最終Worker保留。沒有保存額外IP／遊玩紀錄到D1，沒啟用付費。
+
+公網GET／POST／重試去重／衝突409／格式400／預檢／CORS／cursor分頁／快取Origin隔離已通過。測試成績按確定ID／名稱／0元選擇性清除；idempotent INSERT造成自增ID間隙，不能假設測試row一定連號。前端已填公開URL，file:明確停用API，本機遊戲／PNG分享保留。
+
+385項（372單元／組件＋5封裝＋8 Pages）通過，新增17項對照0.12.1；27runtime／原12遊戲PNG及A圖示保持，browser_smoke僅Python編譯，不重試已知HTTP／Chromium IPC。詳LEADERBOARD_0130.md／VALIDATION／RELEASE.json。原259檔已發布快照SHA先核對，準備新snapshot；main尚1685d583b123bfaec159276127ebd5c430f68a40。下一步prepare／SHA／秘密排除核對、expected_sha／force:false發布原main，核對Pages及公開config/API。手機真機觸控、原生分享／實際完場上傳未驗，基本防護不能杜絕作弊。
+
+## 代操作接線 · 使用者改回Mac，裝置授權待完成
+
+使用者要求代為操作，最新已改回Mac；可直接以Mac瀏覽器完成本工作區裝置授權，不再要求其手動上傳至Codespace。已核對可用工具：GitHub可管理檔案，但沒有Codespace終端機／瀏覽器控制；本工作區Cloudflare尚未登入。因此改由本工作區wrangler login --device --browser=false，使用者只須在iPad到Cloudflare官方驗證頁完成一次授權，即可在這裡直接查D1／處理部署。不得索取管理Token／密碼、使用臨時預覽帳戶或改成Sites承載。前一裝置程序結束且whoami仍未登入，已重新啟動新程序；只使用最新碼，驗證碼不寫交接或公開檔。
+
+使用者補充migration log，仍只含Wrangler cli.js:241059 generic UserError及空白ERROR。已對照4.157.0同段原始碼，該處是包裝migration錯誤，不是SQL解析位置；不能據此判定schema錯誤。授權成功後先讀取D1 schema／migration狀態及版本，再取得實際D1錯誤；在原因清楚前不重複apply、不刪表／另建資料庫。仍未部署Cloudflare或更新GitHub，遊戲／SQL未改，未新增測試。
+
+下一步：使用者在官方device verify頁授權後，先用本工作區最新登入程序取得結果，再whoami確認並開始只讀診斷。
+
+## iPad接續 · Codespace已建立，待上傳部署包／裝置登入
+
+使用者現在只有iPad，已完成原GitHub倉庫Code→Codespaces→Create codespace on main。遠端main仍0.12.1，不含候選Cloudflare檔案，不能直接假設可讀本工作區；需下載ready ZIP到iPad，再Upload到Codespace根目錄、unzip -n並ls設定。保留既有D1，不重頭建庫。Mac登入成功不等於Codespace登入成功，改用wrangler4.157.0 login --device；本輪CLI help已核對該旗標，真實裝置登入仍待驗。
+
+已補docs/CLOUDFLARE_LEADERBOARD.md及ZIP內START_HERE的iPad說明，ZIP完整性、D1設定及Worker／SQL原樣核對通過；只改說明及狀態，沒有改SQL／遊戲或重跑383項測試。原migration仍失敗原因未明，不能先deploy或重複apply。下步取得使用者檔案上傳／設定讀取／device登入結果，再做只讀D1診斷取代讀Mac本地log。
+
+## D1遠端遷移失敗 · 等待具體錯誤
+
+使用者已回報Mac登入成功，之後在正確目錄執行remote migrations apply，選擇yes，輸出目標DB ID正確但0001_scores.sql狀態❌。所貼內容最後只有空白ERROR，沒有SQLite／D1錯誤文字或code。不能把本機SQLite／dry-run通過視為這次遠端遷移成功；不能猜測為generated column、權限、既有表或Wrangler錯誤而改SQL。
+
+下一最小證據：使用者開啟Mac ~/Library/Preferences/.wrangler/logs，依修改時間找這次migration的log，只提供ERROR／D1錯誤附近訊息，不索取Token、OAuth code或整份登入記錄。取得原因後才決定修正及重試；先不deploy、不重複migration、不刪表／重建DB。此工作區仍未登入使用者帳戶，不能直接讀取其Mac或遠端D1。
+
+本輪只更新交接／驗證狀態，無SQL、Worker、遊戲或部署包修改，未重跑383項測試，也無新的本機測試宣稱。原GitHub Pages維持0.12.1。
+
+## Mac部署排查 · OAuth CSRF及錯誤工作目錄
+
+使用者Mac回報OAuth request_forbidden／No CSRF value available in the session cookie，隨後migration及deploy在個人主目錄尋找cloudflare/wrangler.jsonc而ENOENT。OAuth未成功、遠端migration／deploy未執行；不是npm版本或D1ID錯誤的證據。cookie/session遺失的具體瀏覽器原因未證實，不能宣稱已修好。
+
+最小下一驗證：Finder拖真正的解壓資料夾到cd，先ls cloudflare/wrangler.jsonc；一般瀏覽器同一Mac登入dash，wrangler login --browser=false取得全新連結直接貼到同一瀏覽器，成功後whoami，再逐項migration／deploy。4.157.0 login --help已核實--browser旗標；用戶Mac登入流程待驗。若同錯誤持續先收新證據，不重複後續部署、不改猜測中的scope／callback或叫使用者公開Token。
+
+已更新docs/CLOUDFLARE_LEADERBOARD.md及ready ZIP內START_HERE.md／指南，ZIP解壓與DB設定核對通過；LEADERBOARD_VALIDATION.json同步hash／未驗狀態。只修部署說明，沒有改遊戲／Worker，也沒有重跑383項遊戲測試或發佈GitHub。
+
+## Cloudflare接線進度 · 已收到D1 ID及名稱
+
+使用者提供同一組database_id兩次，確認資料庫名稱five-minute-god-scores。已以提供的ID建立本機cloudflare/wrangler.jsonc（gitignore且prepare不會收集）；示例config仍保留佔位，前端LEADERBOARD_API仍空字串。Wrangler4.157.0使用已填ID的config deploy --dry-run exit0，正確辨識DB與兩個限流綁定；不代表ID已在遠端核對成功。使用者已建D1是使用者回報，尚未remote migration／部署／公網驗證或更新GitHub。
+
+本工作區沒有Cloudflare登入授權，whoami顯示未登入；不可只靠database_id管理資源，亦不向使用者索取Token。dist/cloudflare-leaderboard-ready-0.13.0.zip含已填ID的config、Worker、migration、指南及START_HERE.md三行登入／遷移／部署指令，ZIP解壓核對通過，無管理憑證。此包供使用者在自己的電腦登入後部署，不加入公開GitHub。只改部署設定與交接，遊戲及測試程式不變，未重跑之前383項遊戲測試。
+
+下一最安全任務：使用者解壓ready ZIP，在該資料夾執行wrangler login、d1 migrations apply DB --remote、deploy，回傳公開workers.dev網址；如果多帳戶選擇持有D1者，勿另建同名資料庫／啟用付費。取得真實URL後才接線遊戲／公網驗證。
+
+## 0.13.0 · 精簡排行榜本機候選完成，等待免費帳戶資源建立
+
+使用者已明確確認本機五分鐘驗收（「1 是」）、每次完成各留一筆；已有免費Cloudflare帳戶，但Worker／D1尚未建立。前置等待已解除，取代下方舊等待紀錄。此次按gamestudio工程／UI流程完成可檢查實作，尚未登入／建立雲端資源、啟用付費或發布GitHub；正式仍0.12.1 commit1685d583b123bfaec159276127ebd5c430f68a40。
+
+新增cloudflare/worker.mjs、0001_scores.sql與安全示例設定；POST只接名稱／精確金額＋UUID標頭，參數SQL／1024bytes／安全文字／CORS／原生限流綁定、同次重試去重、同名多筆、keyset快照分頁及15秒讀取快取。D1無IP／牌局／下注／計時／暫停／派彩紀錄，無管理密鑰入前端。每次新挑戰可選submissionId隨schema2保存，舊檔兼容；完場按上傳才出網，失敗／逾時保留結算與outbox。首頁龍虎榜真接列表／上下頁／刷新，API預設空字串停用，五桌玩法／貼圖／動畫／音效保留，商店／道具仍false。
+
+383項通過（370單元／元件＋5封裝＋8 Pages），新增15項：7 Worker實際SQLite、6 client及2 app接線；含伺服器commit後回應遺失→重載→重試只一筆、同名多筆、巨額排序、格式／限流、DOM安全顯示、逾時及離線、無自動上傳。Wrangler4.157.0 deploy --dry-run成功辨識D1／10次寫／60次讀限流；不是遠端執行證據。27 runtime／Pages一致，12遊戲PNG及圖示原樣；舊259檔dist/github-upload SHA全吻合，保持精確已發布快照，未執行prepare覆蓋。browser_smoke僅Python編譯，未重試已知HTTP／Chromium IPC。
+
+單檔30013106 bytes，SHA256 36ba911c31c1b8250585bbe4ad1450e9835298041d9b38f91a3b4397fd53c65c。完整接線／資源建立／遷移／部署／停用回退見docs/CLOUDFLARE_LEADERBOARD.md；機器結果LEADERBOARD_VALIDATION.json。腳本scripts/smoke-leaderboard.mjs預設只讀，--write-test-score才在公網留下1筆明示的驗證成績，未執行公網腳本。
+
+未驗：真實D1 migration／Worker deploy／公網POST與限流快取、GitHub新版本及iPhone Safari／Chrome橫向觸控／弱網。基本防護不能驗證本機金額真偽，線上上限128位分、清除本機資料可能失去去重ID；不改為全程伺服器驗證。下一最安全任務：由使用者在自己的環境wrangler login／建立D1，填本機config的database_id，remote migration及deploy取得公開HTTPS網址，再設LEADERBOARD_API，公網測試後發布原Pages。不要索取／公開API Token或自行升級付費。
+
+## 最新：排行榜前置核對完成，等待兩項使用者答案
+
+使用者新授權Cloudflare Workers＋D1精簡排行榜，但明確先確認本機五分鐘已完成及驗收，且第9點要求先選每次成績／每人最佳再實作資料規則。已用非同步問題請使用者確認驗收與保留規則，目前沒有答案；不得將等待或舊發布授權當成這兩項已定案。
+
+本輪只重新核對0.12.1本機：npm run verify＋verify:pages共368（355＋5＋8）通過，離線HTML SHA與已發布收據一致，259檔已發布快照SHA不變。實機驗收仍未有紀錄，沒有重試HTTP／Chromium IPC。未開始Worker／D1／排行榜前端，未建立雲端資源／詢問金鑰／啟用付費／修改GitHub。詳docs/LEADERBOARD_PREREQUISITES.md／LEADERBOARD_PREREQUISITES_VALIDATION.json。
+
+下一最安全任務：等本機驗收與保留規則兩項答案；確認後才開始排行榜，僅上傳名稱／最終金額及必要去重技術ID，本機牌局／計時／暫停／下注／派彩不出網、不保存過程，同名不覆寫、基本防護不宣稱杜絕作弊。先做可檢查實作／測試，再詢問缺少的Cloudflare必要設定；管理金鑰不得入HTML或GitHub。正式仍0.12.1 commit1685d583b123bfaec159276127ebd5c430f68a40，商店／道具維持關閉。
+
+## 0.12.1 · 自由挑戰移除已發布，Pages成功
+
+使用者刪除自由挑戰已完成：開始／設定無模式選擇，正式app固定race、100元／300秒；舊mode與manual存讀事件忽略，續玩只讀race-auto，free匯入／直接restore拒絕。原free auto／manual及舊schema1資料原樣保留，不遷移／搬資產；底層free格式僅留相容／歷史回歸，正式玩家無入口。五分鐘存檔仍按餘秒續玩。
+
+以f445c77df6b91e5ba70e31f66ffe4560e6fc2110作parent／expected_sha、force:false更新原main成功。commit 1685d583b123bfaec159276127ebd5c430f68a40／tree b3730b8046b36abd55a8572175d7a6a2a8cda12f，259檔全blob SHA吻合、59改動，44PNG／ICO副本不變。Pages run41801878218 completed/success，head_sha與main核對。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.12.1 。詳docs/SINGLE_CHALLENGE_0121.md／SINGLE_CHALLENGE_VALIDATION.json／SINGLE_CHALLENGE_RELEASE.json。
+
+368項（355＋5＋8）通過，新增3項：無模式／手動選擇、free檔與原局完整保留／拒絕、race續玩不回填時間。25runtime／Pages一致，原500五分鐘／10,000局回歸保留。單檔30,002,580 bytes，SHA256 c1c6a33a8dca5b0a8cfce6373160e82280c761ba8d574462a55b3a223948721a。browser_smoke僅Python編譯，未重試HTTP／Chromium IPC，未直接HTTP核對公開頁；真Safari開始／設定版面與檔案匯入下載未驗。
+
+主頁五項／加入主畫面指引／A圖示／五桌／計時與保存規則維持，商店與道具仍關閉，無排行榜／Cloudflare。dist/github-upload為259檔精確已發布快照，事後收據／交接不另部署，舊ZIP歷史包。下一最安全任務：iPhone確認開始／設定無自由模式，race續玩保持餘秒；不清存檔。回退整套0.12.0會恢復自由選擇。
+
 ## 0.12.1 · 自由挑戰入口已移除，準備發布
 
 依使用者刪除自由挑戰：開始／設定去掉模式選擇，正式app固定race，100元／300秒。續玩／讀檔只讀race-auto；free匯入及直接restore拒絕，舊mode／manual-save／load-manual事件忽略，玩家看不到自由模式／手動保存入口。free的auto／manual及舊schema1資料逐位元組保留，不遷移或合併；底層解碼及歷史回歸格式保留。
