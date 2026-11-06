@@ -1,5 +1,45 @@
 # CODEX_HANDOFF
 
+## 最新 · 0.13.2文案修訂已獲發布授權，準備更新原Pages
+
+使用者於33項文案本機完成後說「實裝」，授權將0.13.2發布原jacobmaster-97/charity-casino main／GitHub Pages。取代前輪只本機限制；不增加之前僅提議的設定功能，不重部署Worker／遷移D1、清存檔或開付費。原文案33項（12刪除）驗證與396測試結果沿用；發布前只重建／驗Pages及檔案清單，沒有無端重跑全部規則測試。
+
+已讀回main 8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e及tree031be6689fbfa6f45f9fdfbaebe23aae9e8f88d4，原285檔。prepare只新增公開修訂對照／JSON與收據，不包含Word／Excel／完整編輯清單、管理憑證或私有wrangler config。必須逐blob驗tree、expected_sha且force:false更新，再核對Pages與公網逐檔SHA。詳docs/TEXT_REVISIONS_RELEASE.json；實際結果待後續收據，不得把準備狀態當已部署。
+
+## 最新 · 0.13.2使用者文案修改完成（2026-11-06，本機未發布）
+
+使用者回傳0.13.1 Word並要求「修改文本」。核對1,086列ID／原文完整，33項修改、12項刪除，沒有tracked changes／comments或原文欄改寫。已按ID局部套用：序章／暫停簡化、指定存讀標題、設定移除匯入／舊版匯出及說明、ARIA調整、德州去「牌型：」而保留牌型、榜首／排名／賭神名稱欄及少量榜單提示刪除。未增加前次僅建議的設定功能。
+
+刪除按鈕移除DOM，不留空按鍵；設定無存檔時不留空白備份區，有存檔可繼續。大廳圖片只改空alt，圖片與五個入座按鈕保留。原新舊存檔／大廳匯入匯出／五分鐘倒數／派彩／金額精度／雲端API均不改；商店／道具仍false。只有app／home-view／poker-view／leaderboard-view4模組文案差異，其他src只更新快取至0.13.2；34個root素材／後端／設定檔與已發布SHA不變。
+
+396項通過（381單元組件＋6單檔＋9 Pages），含既有500五分鐘／10,000局；設定測試按新行為驗入口移除、空區與續玩／資料不變，德州測試仍驗真牌型不改Game。另33/33 ID逐項對應來源核對，實際模板驗設定與榜單。沒有重試已知HTTP／Chromium IPC；Safari／Chrome真機排版／觸控／VoiceOver未驗證。
+
+本機dist/charity-casino-prototype.html及docs/play已重建。docs/TEXT_REVISIONS_0132.md有33項前後對照，docs/text/revisions/TEXT_REVISIONS_0132.json保留輸入檔SHA與逐項證據。既有docs/text輸出的0.13.1清單是修訂基準，不覆寫；後續照ID及修訂對照處理。dist/github-upload285檔SHA逐一仍吻合0.13.1已發布快照，不重新prepare覆蓋。
+
+本輪未GitHub／Cloudflare寫入，正式仍0.13.1／commit8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e。使用者本次只要求套用文本，沒有自行發佈。下一最安全任務：確認本機修訂畫面；若使用者要求更新GitHub，再從既有main核對後prepare與發布0.13.2，不需要重建D1或部署Worker。
+
+## 最新 · 遊戲全部文本修改文件（2026-11-06，僅文件）
+
+使用者要求以文件列出遊戲所有文本，方便修改；已沿gamestudio維護流程整理0.13.1內建文案。docs/text內有可編輯Word及Excel、Markdown、來源索引JSON與VALIDATION.json，共1,086項／16類。涵蓋主頁、加入主畫面、五桌玩法與操作、派彩／紀錄／分享、排行榜／上傳、錯誤／存檔、輔助閱讀；商店／道具與舊版另標保留，並補動態詞彙、下載檔名及圖片內已知Logo文字。
+
+以27個src模組AST＋HTML／manifest／CSS，共30來源檔，912個文字字串／模板候選全部有索引；同類重複合併，不包含註解／測試示例／真實玩家資料。保留編號與原文，修改欄留白。Excel主表C＝修改後文字、D＝備註，分類頁為查閱副本；回傳修訂後才套入程式，不能把JSON當執行期字典或用全專案取代規則詞彙。
+
+已驗Word17表／1,086行、Excel18工作表／主表1,086行及分類行數、所有原文／ID與來源吻合、修改欄全空、ZIP／XML可讀、Excel無公式；150個正式source／素材／Pages／封裝檔SHA與發布快照一致。僅文件未改遊戲，未重跑／引用396項作本輪測試；未GitHub／Cloudflare寫入或部署，版本仍0.13.1，dist/github-upload保持精確已發布快照。
+
+限制：未經真Word／Pages／Numbers／Excel檢視分頁與操作；未做全部美術逐像素OCR，平台原生視窗／瀏覽器自生錯誤及玩家名稱／數值非固定文案。模板已去HTML並合併空白，部分以片段及【動態內容】呈現，套用時須查原情境。詳docs/text/README.md及VALIDATION.json。下一最安全任務：使用者填修改欄並回傳，按ID逐項審閱後才改正式遊戲；不自行發布文案修改。
+
+## 最新 · 0.13.1龍虎榜介面已實裝並發布
+
+使用者「實裝」已批准先前leaderboard-v1；正式接入金箔龍虎／深玉綠／酒紅榜首、左真實三甲右榜單與刷新分頁，具空榜／錯誤／離線狀態。三甲只隨成功首頁更新，翻頁保留，失敗／過期回應不能覆寫快照。原每次完成一筆、同次重試去重、每頁20保持。完整精確金額可局部橫向閱讀，44px按鍵，重繪保留焦點／捲動；短屏先收裝飾。沒有預覽假成績進runtime。
+
+原main使用expected_sha 6800e38637fe4a7ea2c33af3f494ca145ac47305及force:false更新至8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e，tree031be6689fbfa6f45f9fdfbaebe23aae9e8f88d4。285檔Git blob逐一吻合（72變更），44份舊PNG／ICO不變。Pages run42060077594 completed/success，head_sha及main核對一致。試玩 https://jacobmaster-97.github.io/charity-casino/?v=0.13.1 。公網首頁＋28runtime＋WebP＋manifest共31檔HTTP200、逐bytes SHA吻合已發布快照；既有API只讀GET200／CORS正確，不記錄或顯示讀回玩家名稱。
+
+396項通過＝381單元／組件＋6單檔＋9 Pages；原500五分鐘／10,000局回歸保留。CSS Safari16／Chrome110目標解析無警告，browser_smoke.py僅Python編譯。正式龍虎WebP98,012 bytes，不等待載圖、不全圖預載；原大圖保留預覽目錄而不公開。舊client List／home rank fallback保留以兼容部分舊模組快取。Worker／migration／API設定與0.13.0逐byte不變，13核心engine只更新快取版本；沒有Cloudflare部署、D1寫入／遷移、憑證上傳或付費設定。商店／道具仍關閉，本機規則／存檔不改。
+
+Safari／Chrome真實觸控、橫向安全區、VoiceOver、長金額滑動及實際排版未驗證，不把Node／CSS／HTTP證據當成實機驗收。不重試已知HTTP／Chromium IPC阻擋。詳docs/LEADERBOARD_UI_0131.md、LEADERBOARD_UI_VALIDATION.json、LEADERBOARD_UI_RELEASE.json。dist/github-upload保持285檔精確已發布快照，事後收據／交接只更新本機，不再prepare覆蓋快照。
+
+下一最安全任務：使用者在iPhone16Plus橫向開主頁→龍虎榜，核對真實空／少量榜單、返回與長名／金額可讀性；有足夠真實紀錄後驗分頁。不要為展示補假資料，不清存檔或重建D1。回退參考0.13.0前端快照並保留後端。
+
 ## 0.13.1 · 已批准龍虎榜介面，完成實裝與測試，準備發布
 
 使用者最新「實裝」已確認leaderboard-v1並取代先預覽限制，沿既有GitHub Pages遊戲流程發布。深玉綠／切角金框／龍虎紋，左側真實三甲、右側第四名起榜單，刷新／上一頁／下一頁及空榜／錯誤／離線提示接現有Client。三甲只隨成功第一頁刷新，翻頁保留，失敗保留原快照；沒有示例補位或新增資料欄位。每頁20、同名各一筆與同次重試去重保持。

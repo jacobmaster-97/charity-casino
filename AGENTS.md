@@ -67,3 +67,5 @@
 - 最新龍虎榜v1：使用者明確要求先確認；docs/previews/leaderboard-v1為隔離設計預覽，只有示例PNG／SVG／切換頁，不接正式前端、不升版、不發布GitHub／Cloudflare。先等使用者確認。橫向深玉綠金箔龍虎、左三甲右榜單；正式接入須保持每頁20、同次去重／每次各一筆，三甲快取與cursor同快照，空榜不得補假資料；不新增日期篩選／帳號欄位。
 
 - 0.13.1使用者最新「實裝」已確認龍虎榜v1正式接入，取代前述先預覽限制，沿現有GitHub Pages發布。新排行榜DOM／CSS、輕量WebP、三甲快照及分頁；Worker／D1／API資料規則及遊玩流程不改，不重建雲端或開付費。真實空榜不可補示例，完整金額不可縮略丟精度，實機未驗須明示。詳docs/LEADERBOARD_UI_0131.md及發布收據。
+
+- 0.13.2使用者在33項Word文案已完成後說「實裝」，授權發布本次修訂到原main／GitHub Pages，取代上一輪只本機限制。不新增尚未確認的設定功能，不改Cloudflare／D1或五分鐘規則；保留存檔。只公開修訂對照，Word及完整編輯文件保留本機。詳docs/TEXT_REVISIONS_0132.md及TEXT_REVISIONS_RELEASE.json。

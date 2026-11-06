@@ -58,7 +58,7 @@ test('mobile settlement marks only actual winning opponents, excluding refunds, 
 
 test('landscape hand hint shows the own best rank and pending or folded states without exposing opponents',()=>{
  const {g}=fixture();turn(g);assert.ok(view(g).includes('class="pk-hand-hint" aria-live="polite">等待公共牌'));
- g.round.players[0].cards=[28,32];g.round.board=[30,0,6,2,34];const before=JSON.stringify(g),h=view(g);assert.ok(h.includes('class="pk-hand-hint" aria-live="polite">牌型：兩對'));assert.ok(h.includes('class="pk-board-caption">公共牌 · '));assert.equal(JSON.stringify(g),before);
+ g.round.players[0].cards=[28,32];g.round.board=[30,0,6,2,34];const before=JSON.stringify(g),h=view(g);assert.ok(h.includes('class="pk-hand-hint" aria-live="polite">兩對'));assert.ok(h.includes('class="pk-board-caption">公共牌 · '));assert.equal(JSON.stringify(g),before);
  g.round.players[0].folded=true;assert.ok(view(g).includes('class="pk-hand-hint" aria-live="polite">已棄牌'));
 });
 test('community placement moves upward inside the free band without touching opponents or own cards',()=>{

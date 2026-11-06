@@ -1,7 +1,7 @@
 {
   "version": "0.13.1",
   "date_hong_kong": "2026-11-05",
-  "status": "ready_to_publish",
+  "status": "published_and_publicly_verified",
   "repository": "jacobmaster-97/charity-casino",
   "branch": "main",
   "expected_parent": "6800e38637fe4a7ea2c33af3f494ca145ac47305",
@@ -9,6 +9,251 @@
   "tests_passed": 396,
   "cloudflare_changed": false,
   "d1_changed": false,
-  "public_verification": "pending",
-  "post_publish_receipt_policy": "Exact uploaded snapshot retained; local receipt is updated after publication without rebuilding snapshot."
+  "public_verification": {
+    "version": "0.13.1",
+    "files_checked": 31,
+    "runtime_files": 28,
+    "all_exact": true,
+    "results": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "bytes": 1334,
+        "sha256": "519a620180da1501c3201af9afaca8afe1119f463c5df05efaf5e9b24dacdd53",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/app.mjs",
+        "status": 200,
+        "bytes": 53266,
+        "sha256": "554f6d48514de998a504e860549b8649fc005f0acc6e9f2ededa1d0408fc3c6e",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat-squeeze.mjs",
+        "status": 200,
+        "bytes": 7342,
+        "sha256": "e6e1f6576fc4de048c1b9d7196f3de245d5ce430270590e6a6f266059899b943",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat-view.mjs",
+        "status": 200,
+        "bytes": 8722,
+        "sha256": "1e50a90f72fe7b944c62be622502083b27ffae497990de1c7e5e78566b530f79",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat.mjs",
+        "status": 200,
+        "bytes": 5792,
+        "sha256": "f9be005e53ae54e9662f2c869eaafd6b74ccf2f8cf329bca3ad9b4c5560a75af",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack-game.mjs",
+        "status": 200,
+        "bytes": 7251,
+        "sha256": "ed5fc4596832a1986392a0c5d44b469efad172f9c50bbb9ada60825147459bb9",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack-view.mjs",
+        "status": 200,
+        "bytes": 12839,
+        "sha256": "4dc1f19c48a82602e3756a2973067039f9dab5091d2aa920b2f24d4b9a20c3e3",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack.mjs",
+        "status": 200,
+        "bytes": 4024,
+        "sha256": "d3afe11e18aafdf9733709abf4b4f246c8752b5b60fbde3399d7ed934454f27f",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/board.mjs",
+        "status": 200,
+        "bytes": 63380,
+        "sha256": "83d6f3c3aa382c11ab4c547899edb8daffef078fc846e1206e5b82b0f17e2136",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/cash.mjs",
+        "status": 200,
+        "bytes": 2198,
+        "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/challenge.mjs",
+        "status": 200,
+        "bytes": 4472,
+        "sha256": "1539bcdea165c9f07c29fea939c5cce3a9aff985f5d743897500d24e179fcf18",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/game.mjs",
+        "status": 200,
+        "bytes": 19040,
+        "sha256": "ae6f5d24e70eab7c975eb082a116654db3e13e95ff2dc666e86be85e6f9e4d52",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/home-view.mjs",
+        "status": 200,
+        "bytes": 8699,
+        "sha256": "dfb2072fe9f0af624041b7d132d9055d1d911b8005beee2a86e3c51cb3801485",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard-config.mjs",
+        "status": 200,
+        "bytes": 177,
+        "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard-view.mjs",
+        "status": 200,
+        "bytes": 6867,
+        "sha256": "aa290200bdce6bb578fde45ef238866b8a0c20798a251fedf943e6e43fa59eb8",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard.mjs",
+        "status": 200,
+        "bytes": 8462,
+        "sha256": "f01932b4a178de1d01478326cc10b6e53ccb82bbf25d46baa63a2dd87185de0b",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker-game.mjs",
+        "status": 200,
+        "bytes": 9953,
+        "sha256": "412878fd5d0e1c6deee6966af85f077ea4292ff30131237f235d67411742d5c8",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker-view.mjs",
+        "status": 200,
+        "bytes": 15046,
+        "sha256": "c7f2bcbf7c9268b627f83faabc7dd614bc85261c05eb4fa7f101cfb9e2e760d3",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker.mjs",
+        "status": 200,
+        "bytes": 8068,
+        "sha256": "a12a79122897858702c9a9195d837fdcd536f3664870a0bb766933d3e4d14da6",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/record-share.mjs",
+        "status": 200,
+        "bytes": 9675,
+        "sha256": "fd8d53a0120ddf73cabd7c77de5cd3792990ea9573bb757d5499b7200ce11e3e",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette-game.mjs",
+        "status": 200,
+        "bytes": 2535,
+        "sha256": "7ec2927346ec8ae557a93a180f0486640954343303c746721ca0aca7183412ba",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette-view.mjs",
+        "status": 200,
+        "bytes": 14107,
+        "sha256": "e8563117dc20b6c5ef3c4c7bb4c98a46f6c7f39d31588c1074ee04ea10a7e4fa",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette.mjs",
+        "status": 200,
+        "bytes": 4553,
+        "sha256": "000f2216eb7c31ae844b3691594f9bdea497512284b33dfece024f28432a084e",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/rules.mjs",
+        "status": 200,
+        "bytes": 4819,
+        "sha256": "ac987af5d921b4fca2a062de53e1cfadecacff15e5a9be6c27f05d9282098e44",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/sicbo-view.mjs",
+        "status": 200,
+        "bytes": 8323,
+        "sha256": "b0d295a3de5a81bc608b839926da710470ab34ac4f55a2d5b0c5b700d4937608",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/sound.mjs",
+        "status": 200,
+        "bytes": 8670,
+        "sha256": "b1d3e1b8527255b77ce711107e23ad16f84a12605e7c8e5137d43ea27e7ffd96",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/storage.mjs",
+        "status": 200,
+        "bytes": 5601,
+        "sha256": "8d39689076d01c51bfa8a6129f039f03b37df6c1f7257b24279a3ba84017376b",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/styles.css",
+        "status": 200,
+        "bytes": 166686,
+        "sha256": "12b71c7bbfe807bdffcbae0242ba4fb5e2f9584a0d899c8990a25912b1d8b6cd",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/table-layout.mjs",
+        "status": 200,
+        "bytes": 11700,
+        "sha256": "343d09b393af6fa76a159d99ba38324cc81c7f741aed50c94efa81360f4c4b88",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "status": 200,
+        "bytes": 98012,
+        "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "manifest.webmanifest",
+        "status": 200,
+        "bytes": 619,
+        "sha256": "b75612f663dd8ae1aad4e453cfc7b52778927e3414f22d23f199eb27d8501152",
+        "matches_published_snapshot": true
+      }
+    ],
+    "api_read_only": {
+      "status": 200,
+      "items": 1,
+      "cors": "https://jacobmaster-97.github.io"
+    }
+  },
+  "post_publish_receipt_policy": "Exact uploaded snapshot retained; local receipt is updated after publication without rebuilding snapshot.",
+  "commit": "8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e",
+  "tree": "031be6689fbfa6f45f9fdfbaebe23aae9e8f88d4",
+  "files": 285,
+  "changed_paths": 72,
+  "all_git_blob_shas_match": true,
+  "unchanged_legacy_png_ico_copies": 44,
+  "ref_update": {
+    "expected_sha": "6800e38637fe4a7ea2c33af3f494ca145ac47305",
+    "force": false
+  },
+  "pages": {
+    "run_id": 42060077594,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e"
+  }
 }

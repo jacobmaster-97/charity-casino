@@ -1,0 +1,31 @@
+{
+  "version": "0.13.2",
+  "date_hong_kong": "2026-11-06",
+  "status": "ready_to_publish",
+  "user_authorization": "實裝",
+  "repository": "jacobmaster-97/charity-casino",
+  "branch": "main",
+  "expected_parent": "8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.13.2",
+  "changes": {
+    "edits": 33,
+    "deletions": 12
+  },
+  "tests": {
+    "implementation_phase": {
+      "unit_component": 381,
+      "package": 6,
+      "pages": 9,
+      "total": 396,
+      "passed": true
+    },
+    "release_pages_checks": "pending"
+  },
+  "cloudflare_changed": false,
+  "d1_changed": false,
+  "public_verification": "pending",
+  "unverified": [
+    "Safari/Chrome real-device visual layout, touch and VoiceOver"
+  ],
+  "snapshot_policy": "After publication keep dist/github-upload exact; final receipts update locally without rebuilding snapshot."
+}

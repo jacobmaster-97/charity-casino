@@ -1,7 +1,7 @@
 {
   "version": "0.13.1",
   "date_hong_kong": "2026-11-05",
-  "status": "local_tests_passed_publish_pending",
+  "status": "published_and_publicly_verified",
   "approval": "使用者：實裝",
   "automated": {
     "unit_component": 381,
@@ -29,5 +29,17 @@
     "VoiceOver",
     "native share end-to-end",
     "long amount touch scrolling"
-  ]
+  ],
+  "public": {
+    "files_checked": 31,
+    "runtime_files": 28,
+    "all_http_200_and_exact_sha": true,
+    "api_read_only_status": 200,
+    "cors_correct": true
+  },
+  "github": {
+    "commit": "8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e",
+    "verified_files": 285,
+    "pages_success": true
+  }
 }

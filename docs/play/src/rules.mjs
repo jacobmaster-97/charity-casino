@@ -1,4 +1,4 @@
-import {cashAdd,cashSub,cashRatio,isCash,cashShortRatio,cashMoney} from './cash.mjs?v=0.13.1';
+import {cashAdd,cashSub,cashRatio,isCash,cashShortRatio,cashMoney} from './cash.mjs?v=0.13.2';
 // Temporary product switches. Existing saves keep their inventory; re-enable deliberately.
 export const GAME_FEATURES=Object.freeze({shop:false,items:false});
 export const GOAL = 2_500_000_000; // cents; $25,000,000

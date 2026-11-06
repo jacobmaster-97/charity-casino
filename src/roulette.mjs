@@ -1,5 +1,5 @@
-import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.13.1';
-import {randomBelow} from './baccarat.mjs?v=0.13.1';
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.13.2';
+import {randomBelow} from './baccarat.mjs?v=0.13.2';
 export const ROULETTE_ENABLED=true;
 export const ROULETTE_SPIN_MS=4800;
 export const ROULETTE_POCKETS=['0','00',...Array.from({length:36},(_,i)=>String(i+1))];

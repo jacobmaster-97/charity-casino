@@ -1,0 +1,510 @@
+{
+  "filename": "1-五分鐘賭神_全部遊戲文本_修改稿_v0.13.1.docx",
+  "sha256": "5b9d88a80962e2304ad0eafb8540660bffe4fa250163077ae36961008ae41be7",
+  "entries_checked": 1086,
+  "edits": [
+    {
+      "id": "HOME-009",
+      "old": "五分鐘賭神：由一百元開始，在五分鐘內贏取最高資金。港式賭片風格網頁遊戲原型。",
+      "new": "由一百元開始，在五分鐘內贏取最多錢。",
+      "source": [
+        "index.html"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "index.html",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-001",
+      "old": "序章 · 入局",
+      "new": "刪除",
+      "source": [
+        "src/app.mjs:65"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-002",
+      "old": "♠",
+      "new": "刪除",
+      "source": [
+        "src/app.mjs:65"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-004",
+      "old": "賭場已準備就緒。",
+      "new": "賭局已準備就緒",
+      "source": [
+        "src/app.mjs:65"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-005",
+      "old": "你的起始資金只有",
+      "new": "你的賭本只有",
+      "source": [
+        "src/app.mjs:65"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-007",
+      "old": "在不同賭桌作出選擇，將手上總資金",
+      "new": "在不同賭桌間遊走，將手上賭本",
+      "source": [
+        "src/app.mjs:65"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-010",
+      "old": "內推向最高金額。",
+      "new": "內推至最高。",
+      "source": [
+        "src/app.mjs:65"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-011",
+      "old": "資金歸零，這次挑戰便告結束。",
+      "new": "賭本歸零，遊戲就會結束。",
+      "source": [
+        "src/app.mjs:65"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-015",
+      "old": "完成一局，再留下紀錄。",
+      "new": "每完成一局皆會保存",
+      "source": [
+        "src/app.mjs:84"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-017",
+      "old": "匯出上次完成存檔",
+      "new": "匯出存檔",
+      "source": [
+        "src/app.mjs:84"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-018",
+      "old": "讀取上次自動存檔",
+      "new": "讀取存檔",
+      "source": [
+        "src/app.mjs:84"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-024",
+      "old": "大廳更多選項",
+      "new": "更多",
+      "source": [
+        "src/app.mjs:85"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-036",
+      "old": "只接受五分鐘挑戰存檔。完成局自動保存，載入保留原有餘秒。",
+      "new": "刪除",
+      "source": [
+        "src/home-view.mjs:41"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/home-view.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-037",
+      "old": "匯入挑戰存檔",
+      "new": "刪除",
+      "source": [
+        "src/home-view.mjs:41"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/home-view.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "START-038",
+      "old": "匯出保留的舊版存檔",
+      "new": "刪除",
+      "source": [
+        "src/home-view.mjs:41"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/home-view.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "COMMON-055",
+      "old": "可用資金 【金額】",
+      "new": "賭本 【金額】",
+      "source": [
+        "src/app.mjs:63"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "COMMON-056",
+      "old": "【名稱】，挑戰剩餘時間",
+      "new": "剩餘時間",
+      "source": [
+        "src/app.mjs:63"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "COMMON-057",
+      "old": "暫停遊戲",
+      "new": "暫停",
+      "source": [
+        "src/app.mjs:63"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "COMMON-058",
+      "old": "挑戰剩餘時間",
+      "new": "剩餘時間",
+      "source": [
+        "src/app.mjs:63"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "COMMON-060",
+      "old": "賭場地圖，點選賭桌入座",
+      "new": "點選賭桌入座",
+      "source": [
+        "src/app.mjs:67"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "COMMON-061",
+      "old": "港式卡通賭場，中央為豪華樓梯，五張賭桌各有荷官及賭客",
+      "new": "刪除",
+      "source": [
+        "src/app.mjs:67"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "PAUSE-001",
+      "old": "TAKE YOUR TIME",
+      "new": "刪除",
+      "source": [
+        "src/app.mjs:76"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "PAUSE-002",
+      "old": "牌桌已遮住，稍歇一會。",
+      "new": "賭局已暫停",
+      "source": [
+        "src/app.mjs:76"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "PAUSE-003",
+      "old": "挑戰計時與行動倒數已停止。",
+      "new": "刪除",
+      "source": [
+        "src/app.mjs:76"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "PAUSE-004",
+      "old": "按「繼續」恢復原本的牌局與剩餘秒數。",
+      "new": "刪除",
+      "source": [
+        "src/app.mjs:76"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "PAUSE-010",
+      "old": "如未聽到，可再按一次試聽。",
+      "new": "刪除",
+      "source": [
+        "src/app.mjs:106"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "PAUSE-011",
+      "old": "啟動並試聽",
+      "new": "試聽",
+      "source": [
+        "src/app.mjs:106"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "POKER-068",
+      "old": "牌型：",
+      "new": "刪除",
+      "source": [
+        "src/poker-view.mjs:24"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/poker-view.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "RECORD-014",
+      "old": "本次挑戰已結束",
+      "new": "遊戲結束",
+      "source": [
+        "src/app.mjs:72"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/app.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "RANK-001",
+      "old": "龍虎榜首",
+      "new": "榜首",
+      "source": [
+        "src/leaderboard-view.mjs:14"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/leaderboard-view.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "RANK-002",
+      "old": "名次",
+      "new": "排名",
+      "source": [
+        "src/leaderboard-view.mjs:19"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/leaderboard-view.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "RANK-003",
+      "old": "參賽者",
+      "new": "賭神名稱",
+      "source": [
+        "src/leaderboard-view.mjs:19"
+      ],
+      "delete": false,
+      "applied": true,
+      "verification": {
+        "file": "src/leaderboard-view.mjs",
+        "passed": true
+      }
+    },
+    {
+      "id": "RANK-006",
+      "old": "目前只有這些登榜紀錄",
+      "new": "刪除",
+      "source": [
+        "src/leaderboard-view.mjs:19"
+      ],
+      "delete": true,
+      "applied": true,
+      "verification": {
+        "file": "src/leaderboard-view.mjs",
+        "passed": true
+      }
+    }
+  ],
+  "original_column_changes": [],
+  "tracked": {
+    "ins": 0,
+    "del": 0,
+    "commentRangeStart": 0
+  },
+  "target_version": "0.13.2",
+  "status": "applied_locally_tests_passed",
+  "files_before_sha256": {
+    "src/app.mjs": "554f6d48514de998a504e860549b8649fc005f0acc6e9f2ededa1d0408fc3c6e",
+    "src/home-view.mjs": "dfb2072fe9f0af624041b7d132d9055d1d911b8005beee2a86e3c51cb3801485",
+    "src/poker-view.mjs": "c7f2bcbf7c9268b627f83faabc7dd614bc85261c05eb4fa7f101cfb9e2e760d3",
+    "src/leaderboard-view.mjs": "aa290200bdce6bb578fde45ef238866b8a0c20798a251fedf943e6e43fa59eb8",
+    "index.html": "519a620180da1501c3201af9afaca8afe1119f463c5df05efaf5e9b24dacdd53"
+  },
+  "local_only": true,
+  "github_deployed": false,
+  "cloudflare_changed": false,
+  "notes": [
+    "刪除視為移除對應元素；大廳圖的替代文字改空字串，保留圖片。",
+    "設定無可續玩存檔時不顯示空白存檔區；有存檔仍可繼續。原存檔、底層匯入／匯出及大廳存檔入口保留。",
+    "德州只移除牌型前綴，牌型本身、原局與倒數保持。",
+    "未修改的文件列維持；不新增上一輪提出但未批准的設定功能。"
+  ],
+  "tests": {
+    "unit_component": 381,
+    "standalone": 6,
+    "pages": 9,
+    "total": 396,
+    "passed": true
+  },
+  "behaviour_checks": {
+    "all_33_ids_verified": true,
+    "no_blank_settings_controls": true,
+    "saved_continuation_preserved": true,
+    "poker_hand_rank_preserved": true,
+    "empty_podium_no_fake_entries": true
+  },
+  "unverified": [
+    "Real iPhone/iPad/desktop visual layout, touch and VoiceOver"
+  ]
+}
