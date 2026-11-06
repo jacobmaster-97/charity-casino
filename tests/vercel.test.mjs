@@ -15,7 +15,7 @@ test('Vercel metadata uses a validated explicit or actual platform URL without g
 });
 test('Vercel exports only game runtime with unchanged assets and keeps the GitHub entry intact',async()=>{
  const source=await readFile(path.join(root,'index.html'));
- report=await buildVercel({SITE_URL:url});assert.equal(report.siteURL,url);assert.equal(report.files.filter(f=>f.path.startsWith('play/src/')).length,28);
+ report=await buildVercel({SITE_URL:url});assert.equal(report.siteURL,url);assert.equal(report.files.filter(f=>f.path.startsWith('play/src/')).length,30);
  assert.deepEqual(await readFile(path.join(root,'index.html')),source);
  assert.ok(!report.files.some(f=>/cloudflare|wrangler|AGENTS|HANDOFF|tests|previews|\.env|server\.mjs|vercel\.json/.test(f.path)));
  for(const f of report.files){const bytes=await readFile(path.join(root,'dist/vercel',f.path));assert.equal(createHash('sha256').update(bytes).digest('hex'),f.sha256);if(f.path.startsWith('play/'))assert.deepEqual(bytes,await readFile(path.join(root,'docs',f.path)));}

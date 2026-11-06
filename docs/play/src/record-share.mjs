@@ -1,4 +1,4 @@
-import {challengeRecord,recordCash,recordSigned,recordTime} from './challenge.mjs?v=0.13.4';
+import {challengeRecord,recordCash,recordSigned,recordTime} from './challenge.mjs?v=0.14.0';
 
 export function wrapRecordText(ctx,text,width){
  const lines=[];let line='';for(const char of String(text)){if(line&&ctx.measureText(line+char).width>width){lines.push(line);line=char;}else line+=char;}if(line)lines.push(line);return lines;

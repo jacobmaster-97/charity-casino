@@ -1,3 +1,4 @@
+import {settingsDialogView} from './settings-view.mjs?v=0.14.0';
 // Approved home artwork remains separate from real, accessible DOM controls.
 export const HOME_ART={background:'/art/home-b/background.png',logo:'/art/home-b/logo.png'};
 const homeIcons={
@@ -38,7 +39,7 @@ export function homeDialogView({kind,name,save,legacy,warning,button,escape,mone
  if(kind==='start'){
   title='開始遊戲';content=`<h2 id="home-dialog-title">${title}</h2><form id="start-form"><label for="player-name">參賽者姓名</label><input id="player-name" name="playerName" autocomplete="nickname" maxlength="32" placeholder="怎樣稱呼你？" value="${escape(name)}" required><p class="field-note">完成局自動保存。新挑戰由 $100 開始，限時五分鐘。</p><button type="submit" class="primary start-button">開始新挑戰 <span aria-hidden="true">↗</span></button></form>${save?button('continue',`繼續上次挑戰 · ${money(save.profile.bank)}`,'outlined home-continue'):''}${close}`;
  }else if(kind==='settings'){
-  title='設定';content=`<h2 id="home-dialog-title">${title}</h2><section class="home-settings-section" aria-label="聲效設定"><h3>音效</h3>${soundControls()}</section>${save?`<section class="home-settings-section" aria-label="存檔管理"><h3>存檔與備份</h3><div class="home-save-actions">${button('continue',`繼續上次挑戰 · ${money(save.profile.bank)}`,'outlined')}</div></section>`:''}${close}`;
+  return settingsDialogView({save,button,escape,warning,canExport:Boolean(save)});
  }else if(kind==='rank'){
   title='賭神龍虎榜';content=`<h2 id="home-dialog-title">${title}</h2>${rankContent??'<p class="home-info-status">排行榜尚未開放</p><p>未連接伺服器，不會上傳成績；本機挑戰及分享功能仍可使用。</p>'}${close}`;
  }else if(kind==='install'){

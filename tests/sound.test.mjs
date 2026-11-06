@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {CasinoSound,SOUND_SPECS,SOUND_PREF_KEY,makeSoundSamples} from '../src/sound.mjs';
+import {CasinoSound,SOUND_SPECS,SOUND_PREF_KEY,SOUND_VOLUME_KEY,makeSoundSamples} from '../src/sound.mjs';
 import {Game} from '../src/game.mjs';
 import {baccaratInitial} from '../src/baccarat.mjs';
 import {BLACKJACK_DEAL_MS} from '../src/blackjack.mjs';
@@ -91,4 +91,15 @@ test('chip landings sound once, reduced motion still sounds, cancellations and l
  let lands=0;const instant=new ChipFlights({art:p=>p,onChange:()=>{},onLand:()=>lands++,reduced:()=>true});instant.queue('rou-number-0',100);assert.equal(lands,1);assert.equal(instant.flights.length,0);
  const previous=globalThis.document;let animation;globalThis.document={querySelector:()=>({getBoundingClientRect:()=>({x:0,y:0,width:30,height:30})}),body:{append(){}},createElement:()=>({style:{},setAttribute(){},remove(){},animate(){animation={cancel(){}};return animation;}})};
  try{const fx=new ChipFlights({art:p=>p,onChange:()=>{},onLand:()=>lands++});fx.queue('rou-number-0',100);fx.mount();animation.onfinish();assert.equal(lands,2);animation.onfinish();assert.equal(lands,2);fx.queue('rou-number-1',100);fx.mount();const canceled=animation;fx.cancel();canceled.onfinish();assert.equal(lands,2);fx.queue('rou-number-2',100);fx.mount();const early=animation;fx.landAll();assert.equal(lands,3);early.onfinish();assert.equal(lands,3);}finally{globalThis.document=previous;}
+});
+
+test('volume is applied live, persisted separately and survives mute/unmute without touching gameplay',async()=>{
+ const data=new Map(),storage={getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)},c=new FakeContext(),s=new CasinoSound({storage,createContext:()=>c}),g=visualGame();s.sync(g);await s.unlock();const before=JSON.stringify(g);s.setVolume(40);assert.ok(Math.abs(s.master.gain.value-.22)<1e-12);assert.equal(data.get(SOUND_VOLUME_KEY),'40');s.setMuted(true);assert.equal(s.master.gain.value,0);s.setMuted(false);assert.ok(Math.abs(s.master.gain.value-.22)<1e-12);assert.equal(s.volume,40);assert.equal(JSON.stringify(g),before);assert.equal(new CasinoSound({storage}).volume,40);assert.equal(data.size,2);
+});
+test('invalid stored volume falls back safely and silent/muted tests do not change the chosen preference',async()=>{
+ for(const value of ['NaN','-1','101','oops',''])assert.equal(new CasinoSound({storage:{getItem:k=>k===SOUND_VOLUME_KEY?value:null}}).volume,100);
+ const c=new FakeContext(),s=new CasinoSound({createContext:()=>c});s.setVolume(0);assert.equal(await s.test(),false);assert.equal(s.context,null);s.setVolume(60);s.setMuted(true);assert.equal(await s.test(),false);assert.equal(s.muted,true);assert.equal(s.volume,60);assert.equal(s.setVolume(NaN),60);assert.equal(s.setVolume(200),100);assert.equal(s.setVolume(-1),0);
+});
+test('volume storage failure remains usable and reports session-only preference',async()=>{
+ const c=new FakeContext(),s=new CasinoSound({storage:{getItem(){return null;},setItem(){throw new Error('quota');}},createContext:()=>c});s.sync(visualGame());await s.unlock();assert.equal(s.setVolume(25),25);assert.equal(s.master.gain.value,.55*.25);assert.match(s.preferenceWarning,/本次調整/);
 });

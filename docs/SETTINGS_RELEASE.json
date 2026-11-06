@@ -1,0 +1,29 @@
+{
+  "version": "0.14.0",
+  "date_hong_kong": "2026-11-06",
+  "status": "ready_to_publish",
+  "repository": "jacobmaster-97/charity-casino",
+  "branch": "main",
+  "expected_parent": "3f9fe780666fd7c81ad098d04b53050ca5887acb",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.14.0",
+  "tests": {
+    "unit_component": 399,
+    "package": 6,
+    "pages": 10,
+    "vercel_build": 4,
+    "total": 419,
+    "passed": true,
+    "css_safari16_chrome110_syntax": true
+  },
+  "cloudflare_changed": false,
+  "d1_changed": false,
+  "issues_created_or_messages_sent": false,
+  "vercel_actual_deployment": "still_pending_authentication",
+  "public_verification": "pending",
+  "unverified": [
+    "Real-device layout, touch, slider, audio and VoiceOver",
+    "Actual OS file picker, download and clipboard permission",
+    "Actual GitHub issue submission"
+  ],
+  "snapshot_policy": "Keep exact published snapshot, update final receipts locally only."
+}

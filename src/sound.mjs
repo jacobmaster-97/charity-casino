@@ -1,5 +1,6 @@
 // Original procedural foley. No recordings, network requests or gameplay RNG.
 export const SOUND_ENABLED=true;
+export const SOUND_VOLUME_KEY='charity-casino-sound-volume-v1';
 export const SOUND_PREF_KEY='charity-casino-sound-muted-v1';
 export const SOUND_SPECS={card:{seconds:.16,seed:311},chip:{seconds:.23,seed:701},'dice-shake':{seconds:.9,seed:1019},'dice-open':{seconds:.32,seed:1601},'roulette-spin':{seconds:4.8,seed:2003}};
 export function makeSoundSamples(name,sampleRate=44100){
@@ -23,8 +24,8 @@ export function makeSoundSamples(name,sampleRate=44100){
 }
 export class CasinoSound{
  constructor({storage=null,getAudioSession=()=>globalThis.navigator?.audioSession,createContext=()=>{const Context=globalThis.AudioContext||globalThis.webkitAudioContext;return Context?new Context():null;}}={}){
-   this.storage=storage;this.createContext=createContext;this.getAudioSession=getAudioSession;this.context=null;this.master=null;this.buffers=new Map();this.voices=new Set();this.lastPlayed=new Map();this.loop=null;this.game=null;this.paused=true;this.pending=null;this.muted=false;this.primer=null;this.previewSerial=0;this.screen=null;
-   try{this.muted=storage?.getItem(SOUND_PREF_KEY)==='1';}catch{}
+   this.storage=storage;this.createContext=createContext;this.getAudioSession=getAudioSession;this.context=null;this.master=null;this.buffers=new Map();this.voices=new Set();this.lastPlayed=new Map();this.loop=null;this.game=null;this.paused=true;this.pending=null;this.muted=false;this.primer=null;this.previewSerial=0;this.screen=null;this.volume=100;this.preferenceWarning='';
+   try{this.muted=storage?.getItem(SOUND_PREF_KEY)==='1';const stored=storage?.getItem(SOUND_VOLUME_KEY);if(typeof stored==='string'&&/^(100|[0-9]{1,2})$/.test(stored))this.volume=Number(stored);}catch{}
  }
  get enabled(){return SOUND_ENABLED&&!this.muted;}
  _prime(){
@@ -34,7 +35,7 @@ export class CasinoSound{
  _prepareBuffers(){for(const name of Object.keys(SOUND_SPECS)){if(this.buffers.has(name))continue;const c=this.context,pcm=makeSoundSamples(name,c.sampleRate),buffer=c.createBuffer(1,pcm.length,c.sampleRate);buffer.getChannelData(0).set(pcm);this.buffers.set(name,buffer);}}
  unlock(force=false){
    if(!this.enabled)return Promise.resolve(false);
-   try{if(!this.context){const c=this.createContext();if(!c)return Promise.resolve(false);this.context=c;this.master=c.createGain();this.master.gain.value=.55;this.master.connect(c.destination);c.addEventListener?.('statechange',()=>{if(c.state!=='running')this.stopAll({cancelPreview:false});else if(this.game)this.sync(this.game);});}
+   try{if(!this.context){const c=this.createContext();if(!c)return Promise.resolve(false);this.context=c;this.master=c.createGain();this.master.gain.value=this.enabled ? .55*this.volume/100 : 0;this.master.connect(c.destination);c.addEventListener?.('statechange',()=>{if(c.state!=='running')this.stopAll({cancelPreview:false});else if(this.game)this.sync(this.game);});}
      // Feature-detected iPad media playback category; settings refusal is non-fatal.
      try{const session=this.getAudioSession();if(session&&session.type!=='playback')session.type='playback';}catch{}
      const c=this.context;let resumed;
@@ -47,10 +48,12 @@ export class CasinoSound{
    }catch{this.stopAll();return Promise.resolve(false);}
  }
  test(allowed=()=>true){
-   this.setMuted(false);const serial=++this.previewSerial;
+   if(!this.enabled||this.volume===0)return Promise.resolve(false);const serial=++this.previewSerial;
    return this.unlock(true).then(ready=>{if(!ready||!this.enabled||serial!==this.previewSerial||!allowed())return false;for(const voice of [...this.voices])if(voice.preview)this._stop(voice);return Boolean(this._start('chip',0,false,true));});
  }
- setMuted(muted){this.muted=Boolean(muted);try{this.storage?.setItem(SOUND_PREF_KEY,this.muted?'1':'0');}catch{}if(this.master){this.master.gain.value=this.enabled ? .55 : 0;}if(!this.enabled)this.stopAll();else if(this.game)this.sync(this.game);return this.enabled;}
+ _savePreference(key,value){try{if(!this.storage)throw new Error('storage unavailable');this.storage.setItem(key,value);this.preferenceWarning='';}catch{this.preferenceWarning='無法保存聲音偏好，本次調整只在這次開啟有效。';}}
+ setVolume(value){if(typeof value!=='number'||!Number.isFinite(value))return this.volume;this.volume=Math.round(Math.max(0,Math.min(100,value)));this._savePreference(SOUND_VOLUME_KEY,String(this.volume));if(this.master)this.master.gain.value=this.enabled ? .55*this.volume/100 : 0;return this.volume;}
+ setMuted(muted){this.muted=Boolean(muted);this._savePreference(SOUND_PREF_KEY,this.muted?'1':'0');if(this.master){this.master.gain.value=this.enabled ? .55*this.volume/100 : 0;}if(!this.enabled)this.stopAll();else if(this.game)this.sync(this.game);return this.enabled;}
  _cleanup(voice){if(voice.cleaned)return;voice.cleaned=true;this.voices.delete(voice);try{voice.source.disconnect();voice.gain.disconnect();}catch{}}
  _stop(voice){if(!voice||voice.stopped)return;voice.stopped=true;this.voices.delete(voice);try{if(this.context.state!=='running'){voice.source.stop();this._cleanup(voice);return;}const now=this.context.currentTime;voice.gain.gain.cancelScheduledValues(now);voice.gain.gain.setValueAtTime(voice.gain.gain.value,now);voice.gain.gain.linearRampToValueAtTime(0,now+.008);voice.source.stop(now+.010);}catch{this._cleanup(voice);}}
  stopAll({cancelPreview=true}={}){if(cancelPreview){this.previewSerial++;this._stopPrimer();}for(const voice of [...this.voices])this._stop(voice);this.loop=null;this.lastPlayed.clear();}

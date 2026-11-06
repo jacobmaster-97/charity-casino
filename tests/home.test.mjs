@@ -22,11 +22,8 @@ test('real home fitting writes the measured available area and reacts to orienta
 test('start dialog safely escapes names and storage warnings and offers only real saved continuation',()=>{
  let html=homeDialogView({...args,name:'"><script>',warning:'<error>'});assert.ok(html.includes('&quot;&gt;&lt;script&gt;'));assert.ok(html.includes('&lt;error&gt;'));assert.ok(!html.includes('<script>'));assert.ok(!html.includes('data-action="continue"'));html=homeDialogView({...args,save:{profile:{bank:10000}}});assert.ok(html.includes('data-action="continue"'));assert.ok(html.includes('aria-labelledby="home-dialog-title"'));
 });
-test('revised settings hides removed backup entries without changing saved data or losing continuation',()=>{
- for(const legacy of [null,{profile:{name:'舊玩家'}}]){
-  const before=JSON.stringify(legacy),html=homeDialogView({...args,kind:'settings',legacy});assert.ok(html.includes('data-action="sound"'));assert.ok(!html.includes('data-action="import"'));assert.ok(!html.includes('export-legacy'));assert.ok(!html.includes('home-save-actions'));assert.ok(!html.includes('存檔與備份'));assert.equal(JSON.stringify(legacy),before);
- }
- const save={profile:{name:'保存玩家',bank:10500}},before=JSON.stringify(save),html=homeDialogView({...args,kind:'settings',save});assert.ok(html.includes('data-action="continue"'));assert.ok(html.includes('存檔與備份'));assert.equal(JSON.stringify(save),before);assert.ok(!html.includes('data-action="import"'));
+test('settings exposes three categories and sound without starting or changing a saved challenge',()=>{
+ const save={profile:{name:'保存玩家',bank:10500,elapsedMs:1200,rounds:1}},before=JSON.stringify(save),html=homeDialogView({...args,kind:'settings',save});assert.ok(html.includes('data-tab="sound"'));assert.ok(html.includes('data-tab="data"'));assert.ok(html.includes('data-tab="about"'));assert.ok(html.includes('id="sound-volume"'));assert.equal(JSON.stringify(save),before);
 });
 test('leaderboard and support entrances disclose unavailability without fake scores, payments or links',()=>{
  const rank=homeDialogView({...args,kind:'rank'}),support=homeDialogView({...args,kind:'support'});assert.ok(rank.includes('尚未開放')&&rank.includes('不會上傳'));assert.ok(support.includes('連結尚未開放'));assert.ok(!/href=|https:|<table|<form|付款|data-action="enter"/.test(rank+support));assert.equal(homeDialogView({...args,kind:'unknown'}),'');

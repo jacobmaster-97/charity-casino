@@ -1,5 +1,29 @@
 # CODEX_HANDOFF
 
+## 最新 · 0.14.0三類設定實作及測試完成，準備更新原Pages
+
+使用者要求聲音／存檔與資料／說明與關於，並追加回報問題；新指示批准設定內備份匯入匯出，取代0.13.2舊入口刪除規格。已接首頁／暫停／大廳更多設定，橫向左右分類、直向頂部分類，只有內容局部捲動。音量0–100獨立偏好、靜音及試聽；已保存時間／完成局備份、確認匯入；共用原五桌規則教學；問題描述／可選裝置資料、複製／TXT與玩家自行送出GitHub問題（倉庫issues已啟用）。沒有自動傳送問題或診斷。
+
+Saves可選頂層savedAt記實際成功寫入的時間，不改schema/profile或金額。舊檔不補假時間，失敗顯上次成功保存；匯入先驗／預覽／確認，先成功持久化再restore，取消／quota／無效檔不改原賭本／餘秒，保留原主存檔-backup。沒有補時／重派，提交ID保留。聲音偏好不進存檔／排行，0音量或靜音不能試聽，不擅自開聲。
+
+419項通過（399單元組件＋6單檔＋10 Pages＋4 Vercel），新增8設定＋3音量＋7app接線；核心500五分鐘／10,000局保留。CSS Safari16／Chrome110解析無警告。10核心遊戲模組除快取版本不變，36既有root素材／後端／設定檔SHA不變，Worker／D1／CORS無操作。新增instructions／settings-view2模組，Pages與Vercel30runtime，單檔仍13遊戲圖。原newtests曾修正測試期望（圍骰令大小輸／音量float用容差），沒有為過測試改遊戲金額或規則。
+
+從暫停進設定一直停錶、返回仍需繼續；大廳進設定照計時且到時結算，背景也停，檔案選擇器造成背景時不誤恢復。回報僅版本與手輸描述，可選UA及尺寸，不附姓名／賭本／牌局／存檔／提交ID；文字跳脫、Clipboard失敗可下載TXT。不增加未要求的高對比／全押確認／商店等功能。
+
+詳docs/SETTINGS_0140.md及SETTINGS_RELEASE.json；真裝置排版、觸控、滑桿、音質、VoiceOver、系統選檔／下載／剪貼簿及實際送出Issue未驗。沿既有流程發布原main／Pages，待核tree、Pages與公網；Vercel仍待使用者官方登入授權，沒有重新發登入流程或宣稱已部署。下一步完成0.14.0發布／公網核對，保留Vercel待辦。
+
+## 最新 · 0.13.4部署設定已發布GitHub，Vercel等待官方登入授權
+
+使用者要求部署Vercel，已確認有帳戶未建專案。完成vercel.json／.vercelignore／隔離靜態建置及四項Vercel驗證，401項通過（381單元組件＋6單檔＋10 Pages＋4 Vercel）。只輸出遊戲runtime、素材、入口與manifest；真實站址從SITE_URL或Vercel系統變數取得，建置測試game-deployment.example不是正式網址。原GitHub頁面保持，玩法／資金／存檔／素材未改，只有快取版本更新及部署工具。
+
+原main已發布commit3f9fe780666fd7c81ad098d04b53050ca5887acb／tree944cbb720f0da978da15b986df59edb8484576f4；expected_sha父320274cdc74ce044fb08d7ec2973460a1daeeca9、force:false。300檔所有Git blob SHA吻合、61變更，原PNG／ICO／WebP及Worker／D1 schema／API設定不變。Pages run42183823608 completed/success、head_sha正確；35個公網檔案HTTP200且逐bytes SHA吻合、原圖／OG保持。GitHub遊戲可用 https://jacobmaster-97.github.io/charity-casino/?v=0.13.4 。dist/github-upload保持300檔精確已發布快照，最終收據只更新本機，不重新prepare覆蓋。
+
+Vercel **尚未建立專案／部署**。已安裝CLI65.12.1並啟動官方device login，登入process session99010仍等待；使用者需在對話中的官方Vercel授權連結完成登入。短期登入碼不寫入文件。私有登入選擇目錄XDG_DATA_HOME=/tmp/web-game-vercel-private（700），VERCEL_TELEMETRY_DISABLED=1，npx cache=/tmp/web-game-vercel-npm-cache；無Vercel注入身分或既有auth，未讀印Token或放進專案。.vercel/已忽略。若裝置登入碼已過期，重新執行官方vercel login取新碼，不要求貼管理Token。此等待是實際缺少帳戶登入，不是技能要求額外批准，也不是自動審查拒絕。
+
+下一步先poll登入或詢問使用者完成官方授權；成功後用正常CLI whoami確認帳戶，查看CLI deploy/help並於使用者個人帳戶建立／部署原專案，不默認付費團隊／升方案。有真實正式域名後才追加Worker精確ALLOWED_ORIGINS並保留https://jacobmaster-97.github.io，禁止*.vercel.app；現在未改CORS／部署Cloudflare或D1操作。Worker現有私有授權需屆時核對，不能因有舊路徑就假定有效。
+
+docs/VERCEL.md及VERCEL_RELEASE.json分清本機、GitHub已部署與Vercel未部署。新域名的本機存檔不自動讀舊origin，舊檔保留，可用原完成局匯出／匯入轉移；排行榜仍共用D1。待Vercel建立後驗CORS OPTIONS／GET及必要去重測試、公網metadata／runtime／原圖，清楚標未驗真機。沒有登入授權不得假裝已部署，也不可因經過時間視作授權。
+
 ## 最新 · 0.13.4 Vercel部署準備完成，等待帳戶授權
 
 使用者要求「想將遊戲上架到Vercel」，確認已有帳戶、尚未建專案。已加vercel.json（Other、npm run build:vercel、dist/vercel）、.vercelignore及.vercel/忽略，scripts/vercel.mjs只輸出遊戲runtime與素材，排除開發／後端／憑證。自真實SITE_URL或Vercel系統網址改輸出metadata，原GitHub入口保持，未猜正式域名。版本快取0.13.4，不改玩法／錢包／保存。
