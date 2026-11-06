@@ -3,8 +3,29 @@ import assert from 'node:assert/strict';
 import {readFile,stat} from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
+import {createHash} from 'node:crypto';
 const root=path.resolve(import.meta.dirname,'..');
 const site=path.join(root,'docs');
+test('social metadata points to the approved public thumbnail in both Pages entry layouts',async()=>{
+ const canonical='https://jacobmaster-97.github.io/charity-casino/',relative='public/social/thumbnail-v4.png',url=canonical+relative;
+ const meta=JSON.parse(await readFile(path.join(root,'public/social/assets.json'),'utf8'));
+ const bytes=await readFile(path.join(root,relative));
+ assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+ assert.equal(bytes.readUInt32BE(16),1672);assert.equal(bytes.readUInt32BE(20),941);assert.ok(bytes.length<5*1024*1024);
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),meta.source_sha256);assert.equal(meta.pixel_changes,false);assert.equal(meta.characters,0);
+ assert.deepEqual(bytes,await readFile(path.join(site,'play',relative)));
+ for(const entry of ['index.html','docs/index.html']){
+  const html=await readFile(path.join(root,entry),'utf8');
+  const tags=[...html.matchAll(/<meta (?:property|name)="([^"]+)" content="([^"]*)"\s*\/?\s*>/g)];
+  const get=key=>{const found=tags.filter(m=>m[1]===key);assert.equal(found.length,1,`${entry} ${key}`);return found[0][2];};
+  assert.equal(get('og:type'),'website');assert.equal(get('og:locale'),'zh_HK');assert.equal(get('og:url'),canonical);
+  assert.equal(get('og:image'),url);assert.equal(get('twitter:image'),url);assert.equal(get('og:image:type'),'image/png');
+  assert.equal(get('og:image:width'),'1672');assert.equal(get('og:image:height'),'941');assert.equal(get('twitter:card'),'summary_large_image');
+  for(const prefix of ['og:','twitter:']){assert.equal(get(prefix+'title'),'五分鐘賭神');assert.equal(get(prefix+'description'),'五分鐘 賭出我天地');assert.equal(get(prefix+'image:alt'),'五分鐘賭神，五分鐘 賭出我天地');}
+  assert.ok(html.includes(`<link rel="canonical" href="${canonical}">`));
+  assert.ok(!/<img[^>]+src="[^"]*social\//.test(html)); // Social art is metadata, not a new gameplay loading dependency.
+ }
+});
 test('approved leaderboard WebP is identical in root and Pages export',async()=>{
  const ref='art/leaderboard-b/dragon-tiger-v1.webp';assert.deepEqual(await readFile(path.join(root,'public',ref)),await readFile(path.join(site,'play/public',ref)));
 });

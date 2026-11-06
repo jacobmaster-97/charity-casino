@@ -69,3 +69,11 @@
 - 0.13.1使用者最新「實裝」已確認龍虎榜v1正式接入，取代前述先預覽限制，沿現有GitHub Pages發布。新排行榜DOM／CSS、輕量WebP、三甲快照及分頁；Worker／D1／API資料規則及遊玩流程不改，不重建雲端或開付費。真實空榜不可補示例，完整金額不可縮略丟精度，實機未驗須明示。詳docs/LEADERBOARD_UI_0131.md及發布收據。
 
 - 0.13.2使用者在33項Word文案已完成後說「實裝」，授權發布本次修訂到原main／GitHub Pages，取代上一輪只本機限制。不新增尚未確認的設定功能，不改Cloudflare／D1或五分鐘規則；保留存檔。只公開修訂對照，Word及完整編輯文件保留本機。詳docs/TEXT_REVISIONS_0132.md及TEXT_REVISIONS_RELEASE.json。
+
+- 最新thumbnail-v1：使用者明確先確認，只做標題＋簡短宣傳文字預覽。圖在docs/previews/thumbnail-v1；宣傳句「五分鐘，搏出你的傳奇」是未確認提案，不接正式metadata／圖示或發布，正式維持0.13.2。等待新確認，不能沿用前輪發布授權。
+
+- Thumbnail最新v3：使用者要求加入人物並指定「五分鐘 賭出我天地」，取代v1無人物及舊宣傳句。docs/previews/thumbnail-v3為當前設計；仍遵守先確認才實裝，不發布或改metadata，正式維持0.13.2。
+
+- Thumbnail最新v4：使用者要求刪除人物，取代v2／v3的雙人構圖。只保留標題「五分鐘賭神」及「五分鐘 賭出我天地」，docs/previews/thumbnail-v4是當前待確認版；仍未實裝／部署，正式0.13.2不變。
+
+- 0.13.3使用者最新「實裝」批准thumbnail-v4無人物版本，取代此前待確認限制；正式接入OG／Twitter分享metadata並發布原GitHub Pages。原圖逐byte複製，不改主頁／圖示／玩法／Cloudflare；主標五分鐘賭神、宣傳句五分鐘 賭出我天地。詳docs/THUMBNAIL_0133.md及THUMBNAIL_RELEASE.json。

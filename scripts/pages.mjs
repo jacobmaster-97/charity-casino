@@ -16,6 +16,9 @@ for(const file of images){
   await mkdir(path.dirname(output),{recursive:true});
   await copyFile(path.join(root,'public',file),output);
 }
+const socialDir='social';
+await mkdir(path.join(runtime,'public',socialDir),{recursive:true});
+for(const file of await readdir(path.join(root,'public',socialDir)))await copyFile(path.join(root,'public',socialDir,file),path.join(runtime,'public',socialDir,file));
 const iconDir='icons/a-gold-seal-v1';
 await mkdir(path.join(runtime,'public',iconDir),{recursive:true});
 for(const file of await readdir(path.join(root,'public',iconDir)))await copyFile(path.join(root,'public',iconDir,file),path.join(runtime,'public',iconDir,file));

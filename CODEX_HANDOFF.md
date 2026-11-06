@@ -1,5 +1,49 @@
 # CODEX_HANDOFF
 
+## 最新 · 0.13.3已批准無人物v4縮圖接線，準備發布
+
+使用者最新「實裝」批准thumbnail-v4，取代待確認限制。正式圖public/social/thumbnail-v4.png與確認圖逐byte一致，1672×941／1,753,061 bytes，只有主標「五分鐘賭神」及「五分鐘 賭出我天地」，沒有角色或牌。新增靜態OG／Twitter metadata、canonical及絕對HTTPS圖片URL；root／docs入口同步，Pages／prepare複製正式social素材。沒有新增遊戲內圖片／預載等待或改主頁、A圖示及manifest。
+
+397項通過（381單元組件＋6單檔＋10 Pages），含新分享metadata／URL／PNG尺寸及來源SHA測試。src去除快取0.13.3差異後與0.13.2逐byte一致；34個既有root素材／後端／設定檔不變，Worker／D1無操作。已讀回main cc0d0da95cb43ddeee2e9abd5510bd938703802e及tree4c63952003736d5ecec641aaf253decc6927fbbd（288檔）。待完成tree SHA、expected_sha更新、Pages及公網圖片／runtime核對，不把準備狀態當成部署完成。
+
+來源及限制docs/THUMBNAIL_0133.md／THUMBNAIL_RELEASE.json。社交App抓圖／快取／裁切與真實分享卡片未驗證；正確metadata不是App已刷新證據。不重新生成圖、不改遊戲或雲端；下一步發布同一Pages並驗HTTP圖址。
+
+## 最新 · Thumbnail v4刪除人物，仍先確認（2026-11-06）
+
+使用者最新「刪除人物圖像」覆蓋v2／v3的人物要求。已用image_gen於v3移除兩側人物及手持撲克牌，保留深綠金邊／酒紅角飾，置中主標「五分鐘賭神」與指定宣傳句「五分鐘 賭出我天地」。當前待確認圖為docs/previews/thumbnail-v4/thumbnail.png；v1至v3保留歷史，不再以雙人圖作最新方案。
+
+原始生成圖generated_images/exec-f943045b-d68f-4b85-a578-07b7132c2435.png保留，preview逐byte複製，未程式改像素。來源／prompt／尺寸／hash及PNG可讀／目視無人物／文案核對已記錄，35正式源檔及288檔發布快照SHA不變。沒有重跑遊戲測試或引用舊396項作本輪驗證。
+
+原「確認後才實裝」保持有效。未改主頁、OG／Twitter metadata、manifest、圖示或遊戲；未升版、未GitHub／Cloudflare操作，正式仍0.13.2。分享平台抓圖裁切／快取與手機實際效果未驗。下一最安全任務：收使用者對無人物v4的確認或修訂，確認後才接入與發布。
+
+## 最新 · Thumbnail v3：五分鐘 賭出我天地，仍待確認（2026-11-06）
+
+使用者先要求「傳奇改成傳說，並加入人物圖像」，已用image_gen完成v2原創成年男女雙人港式漫畫；隨後明確改宣傳文字為「五分鐘 賭出我天地」。已用image_gen在v2上只修此句，主標五分鐘賭神及雙人／金綠酒紅構圖保留於docs/previews/thumbnail-v3/thumbnail.png，已目視核對文字順序正確。v2一併保存於thumbnail-v2，v1／v2只是歷史，不再用傳奇／傳說句。
+
+原圖generated_images/exec-fc360c80-806f-4b90-80f8-a9a4acb87d9c.png保留，preview為逐byte複製，沒有程式改像素。prompt／來源／SHA／PNG尺寸及純本地對照頁均記錄。35個正式源檔與288檔已發布快照hash不變；未重跑遊戲測試或引用前版396項作本輪證據。
+
+使用者原本「確認後才實裝」仍有效，本次是文字／人物修訂，不代表批准部署。未改正式主頁／OG／Twitter metadata／favicon／manifest，未升版、未GitHub／Cloudflare操作，正式保持0.13.2。平台抓圖裁切、快取及手機分享縮圖未驗。下一最安全任務：等使用者確認v3整體圖像或修訂，確認後才接入網站。
+
+## 最新 · Thumbnail v1只做預覽，等待確認（2026-11-06）
+
+使用者要求重新設計thumbnail，並補充「標題及簡單宣傳文字」，明確確認後才實裝。已在docs/previews/thumbnail-v1建立image_gen原創橫向圖：參考本專案已批准Logo，深玉綠金邊／酒紅角飾，只放五分鐘賭神及助理提案「五分鐘，搏出你的傳奇」，沒有角色、道具或其他文案。宣傳句未經用戶確認，不可寫成已批准；先前骰子／撲克牌構想被使用者本次澄清取代。
+
+原圖generated_images/exec-bb0f7595-6f12-4b32-ab28-dd24204dc732.png保留，thumbnail.png逐byte複製，未用程式改像素。prompt.txt、art-source.json、validation.json及純本地index.html保留來源／尺寸／hash與320px對照；圖文已人工目視核對，PNG可讀。正式src／HTML／manifest／Logo／package不變，288檔發布快照SHA不變；未重跑遊戲測試，不冒稱396項為本輪證據。
+
+沒有替換正式thumbnail／OG／Twitter metadata／favicon或接入遊戲，未升版、未GitHub／Cloudflare操作，正式仍0.13.2。社交平台抓圖／裁切／快取與手機實際分享縮圖尚未驗證。下一最安全任務：收使用者對圖與宣傳句的確認或修訂，確認後才輸出分享尺寸及實裝，不沿用舊發布授權自動上線。
+
+## 最新 · 0.13.2文案已實裝GitHub／Pages（2026-11-06）
+
+使用者「實裝」批准將33項文案修訂（12項刪除）由本機發布原GitHub Pages，取代前輪只本機限制。已發布main commit cc0d0da95cb43ddeee2e9abd5510bd938703802e／tree4c63952003736d5ecec641aaf253decc6927fbbd；父commit8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e，expected_sha相同且force:false。288檔所有Git blob SHA吻合、65變更路徑，46份PNG／ICO／WebP副本不變。未上傳Word／Excel／完整編輯清單、私有config或憑證，只公開33項修改報告與必要文件。
+
+Pages run42154750013 completed/success、head_sha及main一致。正式網址 https://jacobmaster-97.github.io/charity-casino/?v=0.13.2 。公網首頁＋28runtime＋WebP＋manifest共31檔HTTP200且逐byte SHA與發布快照一致，已驗新文案包含「賭局已暫停」「你的賭本只有」「榜首／排名／賭神名稱」，指定設定入口／牌型前綴與少量榜單提示已刪。既有排行榜僅GET200／CORS正確，不保存或列出玩家資料。
+
+套用階段396項已通過（381單元組件＋6單檔＋9 Pages）；本輪無前端功能再變更，發布前另重建／通過9 Pages檢查、prepare腳本語法及288檔封裝SHA。未無端重跑全規則／模擬，沒有把重複9項當新增測試。原五分鐘計時／金額精度／派彩／存檔、雲端API及素材不改，商店／道具仍false，未加入尚未確認的進階設定。沒有Worker部署／D1寫入、遷移或付費操作。
+
+Safari／Chrome真實裝置排版、觸控及VoiceOver未驗證；未重試既有Chromium IPC限制。實際發布結果見docs/TEXT_REVISIONS_RELEASE.json；33項前後對照見docs/TEXT_REVISIONS_0132.md，修訂JSON的local_only是先前套用階段證據，最新發布狀態以RELEASE為準。
+
+dist/github-upload及manifest保持288檔精確已發布快照；事後RELEASE／交接收據只更新本機，不再prepare覆蓋它。回退以0.13.1前端快照8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e為基準，保留存檔及D1。下一最安全任務：使用者於iPhone16Plus橫向重開?v=0.13.2驗序章、暫停、設定及榜單新欄名，不清儲存空間或重建資料庫。
+
 ## 最新 · 0.13.2文案修訂已獲發布授權，準備更新原Pages
 
 使用者於33項文案本機完成後說「實裝」，授權將0.13.2發布原jacobmaster-97/charity-casino main／GitHub Pages。取代前輪只本機限制；不增加之前僅提議的設定功能，不重部署Worker／遷移D1、清存檔或開付費。原文案33項（12刪除）驗證與396測試結果沿用；發布前只重建／驗Pages及檔案清單，沒有無端重跑全部規則測試。

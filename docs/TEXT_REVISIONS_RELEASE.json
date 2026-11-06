@@ -1,7 +1,7 @@
 {
   "version": "0.13.2",
   "date_hong_kong": "2026-11-06",
-  "status": "ready_to_publish",
+  "status": "published_and_publicly_verified",
   "user_authorization": "實裝",
   "repository": "jacobmaster-97/charity-casino",
   "branch": "main",
@@ -19,13 +19,262 @@
       "total": 396,
       "passed": true
     },
-    "release_pages_checks": "pending"
+    "release_pages_checks": {
+      "passed": true,
+      "tests": 9,
+      "script_syntax_passed": true
+    }
   },
   "cloudflare_changed": false,
   "d1_changed": false,
-  "public_verification": "pending",
+  "public_verification": {
+    "version": "0.13.2",
+    "files_checked": 31,
+    "runtime_files": 28,
+    "all_exact": true,
+    "results": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "bytes": 1274,
+        "sha256": "de7b1687eefc629bfa4e3f21ee73c4e283979d6f28b96847b1828a134f43c8ea",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/app.mjs",
+        "status": 200,
+        "bytes": 52722,
+        "sha256": "247d2cd1248a0ad8a59339f065449208bf50f533719bc7119a5b393b3dacff1a",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat-squeeze.mjs",
+        "status": 200,
+        "bytes": 7342,
+        "sha256": "d8902dbebfc0afdb00a92a261c4b9260e2fc3435009334f7bb5f4ab3de5a08fc",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat-view.mjs",
+        "status": 200,
+        "bytes": 8722,
+        "sha256": "b15579617b1657651ab3c98487d9524556139eed915daafd842babc518951f51",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat.mjs",
+        "status": 200,
+        "bytes": 5792,
+        "sha256": "253ce45067d3649c89277a87e1de11f1b44d0d66e956e3b91c74cc5c03d42842",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack-game.mjs",
+        "status": 200,
+        "bytes": 7251,
+        "sha256": "6ccc5d310647104c41fcf4aa7e8b653c5f6e9568bef9e80073e5342a03976c43",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack-view.mjs",
+        "status": 200,
+        "bytes": 12839,
+        "sha256": "06d6c52984cf8ad3c97d665f786128f86a0322521b180b4454a8a7ab01238f06",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack.mjs",
+        "status": 200,
+        "bytes": 4024,
+        "sha256": "42da342b7582d64a2f2e832b2933e68774c948ec15eef5d891902de2d624e89f",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/board.mjs",
+        "status": 200,
+        "bytes": 63380,
+        "sha256": "0b67e80a5382acc14371805f27669b94bbd2d27e77759174417c1b493b6ce819",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/cash.mjs",
+        "status": 200,
+        "bytes": 2198,
+        "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/challenge.mjs",
+        "status": 200,
+        "bytes": 4472,
+        "sha256": "fbff2c0f274d064e2208629090564650220314dc41eaf6cd6b61850c7f02b1a3",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/game.mjs",
+        "status": 200,
+        "bytes": 19040,
+        "sha256": "4cefdd8793da80a7b571fdddc696e406611dd1a2ee6058ee723a15212c32e54d",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/home-view.mjs",
+        "status": 200,
+        "bytes": 8466,
+        "sha256": "afabad5498601f5c9991a6aba35c75c18c7e7c57503e3e25df8b5610b7320560",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard-config.mjs",
+        "status": 200,
+        "bytes": 177,
+        "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard-view.mjs",
+        "status": 200,
+        "bytes": 6765,
+        "sha256": "87da1a3918783d0ad702c41928489cd5a3be098dd6170a26cfac9e0521552977",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard.mjs",
+        "status": 200,
+        "bytes": 8462,
+        "sha256": "bbedb69438ce2d1e01d5a5a0875392fe319bee3ac141b1ddc4e5c1dea146c683",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker-game.mjs",
+        "status": 200,
+        "bytes": 9953,
+        "sha256": "1718631eb853fde9f81f89a960e045db4ed16ee8dd880de3a7cd47245fbe76a6",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker-view.mjs",
+        "status": 200,
+        "bytes": 15022,
+        "sha256": "8c506a534b6cc5ecfc3d5eb7e7ae58e41a361901b5a4a70d7cee3d4e60fd3d6e",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker.mjs",
+        "status": 200,
+        "bytes": 8068,
+        "sha256": "2e31973eae8a74570f99a56c43e27e49b62b3a8ebf8aaf031922b1da480625e6",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/record-share.mjs",
+        "status": 200,
+        "bytes": 9675,
+        "sha256": "4a7afd7343c3c0f53da629318f7fab2f61fdb91a7cfd82e4636de271f9a1a432",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette-game.mjs",
+        "status": 200,
+        "bytes": 2535,
+        "sha256": "25e51adbad35a9d9c0ee9360baa366d695887a521fca03df4219c394e08b2133",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette-view.mjs",
+        "status": 200,
+        "bytes": 14107,
+        "sha256": "ad83c936dbd191925d5c0ae6f42ed00cd48f2dd51afafcfdf01cf115e54a0174",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette.mjs",
+        "status": 200,
+        "bytes": 4553,
+        "sha256": "dc8d2cf9f8102317433bdf155b1a2b4f99d106ebc7572cd5ce30dd8e5d483719",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/rules.mjs",
+        "status": 200,
+        "bytes": 4819,
+        "sha256": "ff9f8754b6c093f7bb7452d973d84829cfe87849b47ba11c2fd58b14645ca6d4",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/sicbo-view.mjs",
+        "status": 200,
+        "bytes": 8323,
+        "sha256": "7e9ab8e5cc3a6c17e1b2b97112b9fd0a2b8a46e56947d4d9377535fc3bbc3c88",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/sound.mjs",
+        "status": 200,
+        "bytes": 8670,
+        "sha256": "b1d3e1b8527255b77ce711107e23ad16f84a12605e7c8e5137d43ea27e7ffd96",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/storage.mjs",
+        "status": 200,
+        "bytes": 5601,
+        "sha256": "74495095b3fe9895f7b25d0bfd5449deec0efaddb0f7c379f607b914a7620afb",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/styles.css",
+        "status": 200,
+        "bytes": 166686,
+        "sha256": "12b71c7bbfe807bdffcbae0242ba4fb5e2f9584a0d899c8990a25912b1d8b6cd",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/table-layout.mjs",
+        "status": 200,
+        "bytes": 11700,
+        "sha256": "01ee83e5990bacdd38c04a7a3c0040b5a924d88ab83b02bdc0c7d245ef094183",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "status": 200,
+        "bytes": 98012,
+        "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "manifest.webmanifest",
+        "status": 200,
+        "bytes": 619,
+        "sha256": "b75612f663dd8ae1aad4e453cfc7b52778927e3414f22d23f199eb27d8501152",
+        "matches_published_snapshot": true
+      }
+    ],
+    "api_read_only": {
+      "status": 200,
+      "items": 1,
+      "cors": "https://jacobmaster-97.github.io"
+    }
+  },
   "unverified": [
     "Safari/Chrome real-device visual layout, touch and VoiceOver"
   ],
-  "snapshot_policy": "After publication keep dist/github-upload exact; final receipts update locally without rebuilding snapshot."
+  "snapshot_policy": "After publication keep dist/github-upload exact; final receipts update locally without rebuilding snapshot.",
+  "commit": "cc0d0da95cb43ddeee2e9abd5510bd938703802e",
+  "tree": "4c63952003736d5ecec641aaf253decc6927fbbd",
+  "files": 288,
+  "changed_paths": 65,
+  "all_git_blob_shas_match": true,
+  "unchanged_binary_paths": 46,
+  "ref_update": {
+    "expected_sha": "8acdf52c7e8e790b26c8a02cb7e36caad7fb2c5e",
+    "force": false
+  },
+  "pages": {
+    "run_id": 42154750013,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "cc0d0da95cb43ddeee2e9abd5510bd938703802e"
+  }
 }

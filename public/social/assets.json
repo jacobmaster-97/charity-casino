@@ -1,0 +1,22 @@
+{
+  "version": "0.13.3",
+  "date_hong_kong": "2026-11-06",
+  "status": "approved_for_integration",
+  "user_approval": "實裝",
+  "source": "OpenAI image_gen original project artwork; approved thumbnail-v4",
+  "source_record": "docs/previews/thumbnail-v4/art-source.json",
+  "source_sha256": "d6dcd0b9f20ef6f854031fed1cf12069d79cdf52472e4c099b997e68c022a215",
+  "pixel_changes": false,
+  "title": "五分鐘賭神",
+  "tagline": "五分鐘 賭出我天地",
+  "characters": 0,
+  "assets": [
+    {
+      "file": "thumbnail-v4.png",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1753061,
+      "sha256": "d6dcd0b9f20ef6f854031fed1cf12069d79cdf52472e4c099b997e68c022a215"
+    }
+  ]
+}

@@ -219,3 +219,7 @@
 依回傳Word修改欄套用33項（12項刪除），縮短序章／暫停、刪指定設定入口、保留德州牌型但去前綴，調整龍虎榜欄名及指定輔助閱讀文字。沒有加入尚未確認的設定新功能，原規則／保存／資金／API保持。詳TEXT_REVISIONS_0132.md；本輪未發布GitHub或Cloudflare。
 
 使用者後續「實裝」已批准0.13.2文案發布原GitHub Pages，取代本機未發布界線。33項內容沿用已驗證版本，不增加新設定功能；Cloudflare及遊戲資料規則不變，結果見TEXT_REVISIONS_RELEASE.json。
+
+## 分享縮圖0.13.3（已批准v4實裝）
+
+使用者確認無人物v4並要求實裝。分享圖只放「五分鐘賭神」及「五分鐘 賭出我天地」，深綠金邊，移除角色與手持牌。接入原GitHub Pages的OG／Twitter metadata，圖片原像素及比例保留；首頁Logo、A書籤圖示與玩法不改。實作及發布狀態見THUMBNAIL_0133.md／THUMBNAIL_RELEASE.json，平台快取及實際App抓圖另驗。

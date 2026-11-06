@@ -12,7 +12,7 @@ async function gather(directory){
     if(entry.isDirectory())await gather(relative);else if(entry.isFile())files.push(relative);
   }
 }
-for(const dir of ['src','scripts','tests','.agents/skills/gamestudio','public/icons/a-gold-seal-v1','public/art/home-b','public/art/leaderboard-b','public/art/prototype-b','public/art/sicbo-board-b','public/art/baccarat-b','docs/play'])await gather(dir);
+for(const dir of ['src','scripts','tests','.agents/skills/gamestudio','public/icons/a-gold-seal-v1','public/social','public/art/home-b','public/art/leaderboard-b','public/art/prototype-b','public/art/sicbo-board-b','public/art/baccarat-b','docs/play'])await gather(dir);
 files.push('docs/manifest.webmanifest','docs/index.html','docs/.nojekyll','public/art/styles/b/lobby-populated-v4.png','public/art/styles/b/lobby-background.png','public/art/styles/b/asset.json');
 for(const entry of await readdir(path.join(root,'docs'),{withFileTypes:true}))if(entry.isFile()&&(entry.name.endsWith('.md')||entry.name.endsWith('_RELEASE.json')||['skill-installation.json','GITHUB_UPLOAD.json','LOCAL_FIVE_MINUTE_VALIDATION.json','HOME_SCREEN_VALIDATION.json','LOBBY_VIEW_VALIDATION.json','LOBBY_WIDE_VALIDATION.json','UI_POLISH_VALIDATION.json','LOAD_RECOVERY_VALIDATION.json','CHALLENGE_RECORD_VALIDATION.json','BLACKJACK_LANDSCAPE_VALIDATION.json','FEATURES_PAUSED_VALIDATION.json','BLACKJACK_OVAL_VALIDATION.json','BOOKMARK_ICON_VALIDATION.json','HOME_INSTALL_VALIDATION.json','SINGLE_CHALLENGE_VALIDATION.json','LEADERBOARD_PREREQUISITES_VALIDATION.json','LEADERBOARD_VALIDATION.json','LEADERBOARD_UI_VALIDATION.json'].includes(entry.name)))files.push(path.join('docs',entry.name));
 const manifest=[];
