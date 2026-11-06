@@ -1,0 +1,29 @@
+{
+  "version": "0.13.4",
+  "date_hong_kong": "2026-11-06",
+  "status": "prepared_vercel_authentication_pending",
+  "user_vercel_status": "account_exists_project_not_created",
+  "github_repository": "jacobmaster-97/charity-casino",
+  "github_pages_preserved": true,
+  "vercel_project": null,
+  "vercel_url": null,
+  "tests": {
+    "unit_component": 381,
+    "package": 6,
+    "pages": 10,
+    "vercel_build": 4,
+    "total": 401,
+    "passed": true
+  },
+  "cloudflare_origin_update": "pending_actual_vercel_origin",
+  "cloudflare_deployed_this_phase": false,
+  "d1_changed": false,
+  "public_verification": "pending",
+  "authentication": "Official device login initiated; no token stored in project or public source.",
+  "unverified": [
+    "Vercel actual production deployment",
+    "CORS for actual Vercel origin",
+    "Public runtime and thumbnail checks",
+    "Mobile layout/share and save transfer"
+  ]
+}

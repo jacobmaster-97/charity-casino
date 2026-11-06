@@ -1,6 +1,6 @@
-# 五分鐘賭神 · 0.13.3
+# 五分鐘賭神 · 0.13.4
 
-本機版本：0.13.3，開啟dist/charity-casino-prototype.html即可離線遊玩。
+本機版本：0.13.4，開啟dist/charity-casino-prototype.html即可離線遊玩。
 
 已移除自由挑戰，開始／設定只提供五分鐘挑戰。舊自由模式存檔保留，原五桌／存檔規則／A圖示／加入主畫面指引維持，商店及道具仍關閉。本版加入完場手動上傳及主頁龍虎榜，遊玩過程維持本機。發布及限制見docs/LEADERBOARD_RELEASE.json。
 
@@ -29,6 +29,8 @@ npm run verify
 執行語法、規則／存檔、單檔打包與封裝校驗。npm run build可重新產生HTML。
 
 ## 功能
+
+- 0.13.4：加入Vercel獨立靜態部署設定，GitHub Pages保留；帳戶、網址與排行榜CORS接線狀態見docs/VERCEL_RELEASE.json，[部署指南](docs/VERCEL.md)。
 
 - 0.13.3：已批准無人物v4分享縮圖，主標「五分鐘賭神」及「五分鐘 賭出我天地」，加入Open Graph／社交平台metadata；[實裝說明](docs/THUMBNAIL_0133.md)，發布狀態見docs/THUMBNAIL_RELEASE.json。
 

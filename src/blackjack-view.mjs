@@ -1,8 +1,8 @@
-import {cashSub,cashMin,cashRatio,cashAbs,cashDollars} from './cash.mjs?v=0.13.3';
-import {blackjackValue,blackjackHandNatural,blackjackOptions,BLACKJACK_DEAL_MS} from './blackjack.mjs?v=0.13.3';
-import {baccaratCard} from './baccarat-view.mjs?v=0.13.3';
-import {chipFace,chipColorIndex} from './board.mjs?v=0.13.3';
-import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.13.3';
+import {cashSub,cashMin,cashRatio,cashAbs,cashDollars} from './cash.mjs?v=0.13.4';
+import {blackjackValue,blackjackHandNatural,blackjackOptions,BLACKJACK_DEAL_MS} from './blackjack.mjs?v=0.13.4';
+import {baccaratCard} from './baccarat-view.mjs?v=0.13.4';
+import {chipFace,chipColorIndex} from './board.mjs?v=0.13.4';
+import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.13.4';
 const blackjackEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const blackjackScore=cards=>{const v=blackjackValue(cards);return v.bust?'爆牌':`${v.soft?'軟 ':''}${v.total} 點`;};
 const blackjackOutcome={win:'勝出',loss:'輸',push:'和局',bust:'爆牌',surrender:'已投降',blackjack:'Blackjack',stood:'已停牌',playing:'等候'};

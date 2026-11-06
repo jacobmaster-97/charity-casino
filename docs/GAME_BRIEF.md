@@ -223,3 +223,7 @@
 ## 分享縮圖0.13.3（已批准v4實裝）
 
 使用者確認無人物v4並要求實裝。分享圖只放「五分鐘賭神」及「五分鐘 賭出我天地」，深綠金邊，移除角色與手持牌。接入原GitHub Pages的OG／Twitter metadata，圖片原像素及比例保留；首頁Logo、A書籤圖示與玩法不改。實作及發布狀態見THUMBNAIL_0133.md／THUMBNAIL_RELEASE.json，平台快取及實際App抓圖另驗。
+
+## Vercel部署0.13.4（2026-11-06）
+
+使用者要求將遊戲部署Vercel，已有帳戶但未建專案。保留原GitHub Pages；遊戲、D1及排行榜共用原服務。只部署遊戲靜態輸出，不發布開發資料。新站metadata使用真實Vercel網址；Worker CORS須追加該正式origin，保留GitHub，禁止*.vercel.app。跨網址本機存檔不能自動共用，原檔保留，可透過既有完成局匯出／匯入轉移。部署及驗證進度見VERCEL_RELEASE.json。

@@ -1,0 +1,14 @@
+.git/
+.agents/
+.vercel/
+.wrangler/
+cloudflare/
+docs/previews/
+docs/text/
+dist/
+node_modules/
+*.log
+.env
+.env.*
+*.pem
+*.key

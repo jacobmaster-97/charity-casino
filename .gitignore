@@ -29,3 +29,6 @@ public/art/styles/*/lobby-populated-v3.png
 .dev.vars*
 cloudflare/wrangler.jsonc
 cloudflare/.dev.vars*
+
+# Vercel project link and local authentication must remain private
+.vercel/

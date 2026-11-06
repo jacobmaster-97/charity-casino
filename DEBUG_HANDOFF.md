@@ -1,5 +1,29 @@
 # DEBUG_HANDOFF
 
+## 最新 · 0.13.4 Vercel部署準備完成，等待帳戶授權
+
+使用者要求「想將遊戲上架到Vercel」，確認已有帳戶、尚未建專案。已加vercel.json（Other、npm run build:vercel、dist/vercel）、.vercelignore及.vercel/忽略，scripts/vercel.mjs只輸出遊戲runtime與素材，排除開發／後端／憑證。自真實SITE_URL或Vercel系統網址改輸出metadata，原GitHub入口保持，未猜正式域名。版本快取0.13.4，不改玩法／錢包／保存。
+
+401項通過（381單元組件＋6單檔＋10 Pages＋4 Vercel）；測試URL game-deployment.example不是正式站。新增程式已可檢查，Vercel CLI65.12.1可用。環境metadata顯示沒有Vercel憑證，已啟動官方device login，使用者需完成登入；私有登入位置/tmp/web-game-vercel-private不在專案，不讀印Token。登入碼是短期互動資訊，不寫入交接或公開文件。
+
+Vercel尚未部署／未建立專案，不宣稱公網通過。Worker現在只允許原GitHub origin；取得真實Vercel正式網址後，必須追加精確origin並保留GitHub，不放寬*.vercel.app、不重建D1。現有Cloudflare授權可用性需當時核對，若無授權則由使用者在Dashboard改公開ALLOWED_ORIGINS。跨origin本機存檔不自動共用，舊檔保留，可由原完成局匯出／匯入轉移。
+
+部署指引docs/VERCEL.md及VERCEL_RELEASE.json。下一步檢查官方登入是否完成；成功後選使用者帳戶、建立／部署專案，取得域名→CORS→公網runtime及metadata。保留原GitHub Pages，不升付費，不將Token或.vercel私有資料提交。若使用者未完成授權，不可因等待時間而視為已授權。
+
+## 最新 · 0.13.3分享縮圖已實裝GitHub／Pages（2026-11-06）
+
+使用者「實裝」批准無人物thumbnail-v4，後續「繼續工作」要求完成原任務。已發布main commit320274cdc74ce044fb08d7ec2973460a1daeeca9／treeb009240e71e4e4ce300b132a04ca36a6ce5d9d4e；expected_sha父commitcc0d0da95cb43ddeee2e9abd5510bd938703802e、force:false。294檔Git blob逐一吻合、62變更路徑、46個舊PNG／ICO／WebP副本不變。未上傳預覽、來源Word／完整編輯文件、私有config或憑證。
+
+Pages run42181091967 completed/success、head_sha及main核對一致。正式網址 https://jacobmaster-97.github.io/charity-casino/?v=0.13.3 。新分享圖 https://jacobmaster-97.github.io/charity-casino/public/social/thumbnail-v4.png ，與已批准無人物v4逐byte一致，1672×941 RGB PNG／1,753,061 bytes，主標五分鐘賭神、宣傳句五分鐘 賭出我天地。未裁切縮放或改像素；原圖及所有預覽保留。
+
+公網root／docs入口＋28runtime＋manifest／WebP／新PNG共33個唯一檔案HTTP200且SHA吻合，兩個HTML直接解析驗OG／Twitter描述、絕對圖址、尺寸與canonical。PNG回image/png且SHA吻合原圖；另以不帶版本參數的真正分享主網址及圖址GET200逐byte驗證，確保不是只驗cache-bust URL。這是公開metadata／HTTP可抓圖證據，不代表各社交App已刷新卡片。
+
+397項通過（381單元組件＋6單檔＋10 Pages），新增分享路徑／metadata／PNG來源及尺寸回歸；prepare另再通過10 Pages，不把重複檢查計作新增。原500五分鐘／10,000局保留。src去除0.13.3快取版本差異後與0.13.2一致，34個既有root素材／後端／設定檔不變。主頁Logo／A圖示／manifest及一般description保持，分享圖不加入遊戲DOM／預載或離線圖資，因此不增加入桌等待。沒有Cloudflare部署／D1讀寫、遷移或付費操作，遊戲規則／存檔保持。
+
+詳docs/THUMBNAIL_0133.md、THUMBNAIL_RELEASE.json、public/social/assets.json。WhatsApp／Facebook／LINE／iMessage／X真實卡片、快取刷新及裁切尚未驗證；真Safari／Chrome觸控／VoiceOver未驗，不重試既有Chromium IPC阻擋。dist/github-upload與manifest保持294檔精確已發布快照，最終RELEASE／交接收據只更新本機，不重新prepare覆蓋它。
+
+下一最安全任務：使用者用新版本網址實際分享，核對無人物縮圖及宣傳句；若舊分享仍顯舊圖，先區分平台快取與公網metadata，不清遊戲存檔或重建雲端。回退參考0.13.2前端commitcc0d0da95cb43ddeee2e9abd5510bd938703802e，保留D1與存檔。
+
 ## 最新 · 0.13.3已批准無人物v4縮圖接線，準備發布
 
 使用者最新「實裝」批准thumbnail-v4，取代待確認限制。正式圖public/social/thumbnail-v4.png與確認圖逐byte一致，1672×941／1,753,061 bytes，只有主標「五分鐘賭神」及「五分鐘 賭出我天地」，沒有角色或牌。新增靜態OG／Twitter metadata、canonical及絕對HTTPS圖片URL；root／docs入口同步，Pages／prepare複製正式social素材。沒有新增遊戲內圖片／預載等待或改主頁、A圖示及manifest。

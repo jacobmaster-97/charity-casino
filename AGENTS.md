@@ -77,3 +77,5 @@
 - Thumbnail最新v4：使用者要求刪除人物，取代v2／v3的雙人構圖。只保留標題「五分鐘賭神」及「五分鐘 賭出我天地」，docs/previews/thumbnail-v4是當前待確認版；仍未實裝／部署，正式0.13.2不變。
 
 - 0.13.3使用者最新「實裝」批准thumbnail-v4無人物版本，取代此前待確認限制；正式接入OG／Twitter分享metadata並發布原GitHub Pages。原圖逐byte複製，不改主頁／圖示／玩法／Cloudflare；主標五分鐘賭神、宣傳句五分鐘 賭出我天地。詳docs/THUMBNAIL_0133.md及THUMBNAIL_RELEASE.json。
+
+- 0.13.4使用者要求部署Vercel，已有帳戶未建專案。授權準備／建立Vercel遊戲專案，保留GitHub Pages及原Cloudflare／D1，不升付費。vercel.json輸出dist/vercel僅遊戲與素材；取得真實網址才加入Worker精確origin，禁止放寬全部vercel.app。Vercel憑證及.vercel/保持專案外／忽略。狀態見docs/VERCEL.md及VERCEL_RELEASE.json。
