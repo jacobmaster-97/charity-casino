@@ -7,7 +7,7 @@ const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const button=(action,label,cls='',extra='')=>`<button type="button" data-action="${action}" class="${cls}" ${extra}>${label}</button>`;
 const args={kind:'start',name:'玩家',mode:'race',save:null,legacy:null,warning:'',button,escape,money:v=>'$'+v,soundControls:()=>'<button data-action="sound">音效</button>'};
 test('approved home uses five named choices including the direct support link, separate artwork and no removed footer or inline form',()=>{
- const html=homeView({art:p=>p});assert.deepEqual([...html.matchAll(/data-action="(home-[^"]+)"/g)].map(m=>m[1]),['home-start','home-rank','home-settings','home-install']);for(const name of ['開始遊戲','賭神龍虎榜','設定','加到主頁面','支持作者'])assert.ok(html.includes(name));assert.ok(html.includes('alt="五分鐘賭神"'));assert.ok(!/\$100|五分鐘決勝|賭王|慈善大賽|start-form|<canvas|<iframe/.test(html));assert.ok(html.includes(HOME_ART.background)&&html.includes(HOME_ART.logo));assert.ok(html.includes('href="https://buymeacoffee.com/studios_16" target="_blank" rel="noopener noreferrer"'));assert.ok(!html.includes('data-action="home-support"'));
+ const html=homeView({art:p=>p});assert.deepEqual([...html.matchAll(/data-action="(home-[^"]+)"/g)].map(m=>m[1]),['home-start','home-rank','home-settings','home-install']);for(const name of ['開始遊戲','賭神龍虎榜','設定','加到主頁面','支持作者'])assert.ok(html.includes(name));assert.ok(html.includes('alt="五分鐘賭神"'));assert.ok(!/\$100|五分鐘決勝|賭王|慈善大賽|start-form|<canvas|<iframe/.test(html));assert.ok(html.includes(HOME_ART.background)&&html.includes(HOME_ART.logo));assert.ok(html.includes('href="https://buymeacoffee.com/studios_16" target="_blank" rel="noopener noreferrer"'));assert.ok(!html.includes('data-action="home-support"'));assert.equal((html.match(/class="title-author"/g)||[]).length,1);assert.ok(html.includes('作者：studios_16'));
 });
 test('wide title composition keeps its aspect and fits desktop, phone and tablet without cropping the logical canvas',()=>{
  for(const [w,h] of [[568,320],[667,375],[844,390],[915,412],[1024,768],[1366,768],[1920,1080]]){const l=homeLayout(w,h);assert.ok(l.width<=w+1e-6&&l.height<=h+1e-6);assert.ok(l.left>=-1e-6&&l.top>=-1e-6);assert.ok(Math.abs(l.width/l.height-l.viewWidth/1080)<1e-6);assert.ok(l.viewWidth>=1920);if(w/h>=16/9)assert.ok(Math.abs(l.height-h)<1e-6);else assert.ok(Math.abs(l.width-w)<1e-6);}
@@ -38,7 +38,7 @@ test('five landscape menu rows fit measured phone safe areas with 44px targets',
  for(const [width,height] of [[568,299],[667,320],[740,300],[814,354],[814,409],[932,430],[1920,1080]]){
   const styles={},scene={dataset:{},style:{setProperty:(k,v)=>styles[k]=v}},root={querySelector:s=>s==='.home-safe-area'?{clientWidth:width,clientHeight:height}:scene};fitHomeSurface(root);
   const top=parseFloat(styles['--home-menu-top']),button=parseFloat(styles['--home-menu-button-height']),gap=parseFloat(styles['--home-menu-gap']),sceneHeight=parseFloat(styles['--home-height']);
-  assert.ok(button>=44);assert.ok(gap>=4);assert.ok(top>=0&&top+5*button+4*gap+6<=sceneHeight);
+  assert.ok(button>=44);assert.ok(gap>=4);assert.ok(top>=0&&top+5*button+4*gap+6<=sceneHeight);assert.ok(parseFloat(styles['--home-top'])+top+5*button+4*gap<=height-24-8+1e-6,'menu must leave room above the author credit');
  }
 });
 test('home-screen guide detects Safari, Chrome, iPad desktop UA and unknown embedded browsers',()=>{

@@ -1,5 +1,15 @@
 # CODEX_HANDOFF
 
+## 最新 · 0.14.2作者連結／署名及回報移除完成，準備發布
+
+前一0.14.1已發布commita0411caa03e02aba772c6c6d1166ee8944135d82／treecb6533535710c5a926647d844411fa7731d3519c，Pages42228617507成功、37公網檔案一致，SUPPORT_LINK_RELEASE.json已補完成收據。使用者接續要求刪回報、設定加「關於作者」Threads、主頁底部署名；現已實作0.14.2，Buy Me a Coffee支持作者仍保留原生直連。
+
+已刪回報UI／草稿／裝置旗標／Clipboard／TXT／GitHub Issue入口及方法，保留JSON備份。每個設定分類固定footer有關於作者原生a，href https://www.threads.com/@studios_16_（末尾底線須保留），另開分頁且noopener noreferrer，不走data-action。主頁安全區底部「作者：studios_16」，12px字／24px行高，fit依實際高度預留間距，五入口44px維持。
+
+419項通過（399單元組件＋6單檔＋10 Pages＋4 Vercel），重用原回報測試驗功能移除與舊動作無效，原手機幾何測試加署名間距；CSS Safari16／Chrome110解析無警告。沒有改玩法／保存／音量／教學／原圖、Cloudflare或D1。真手機署名、安全區及外站跳轉／流程未實測，沒有自動開外站或送訊息。詳docs/AUTHOR_LINK_0142.md及AUTHOR_LINK_RELEASE.json。
+
+沿原Pages流程發布，待tree／head／公網核對；Vercel仍待使用者官方帳戶授權。下一步完成本版發布，確認公網無回報字樣、有Threads及署名，保留既有支持作者連結。
+
 ## 最新 · 0.14.1支持作者直連已完成，準備發布
 
 使用者指定主頁支持作者一點即進https://buymeacoffee.com/studios_16。已改同樣式原生a／另開分頁／noopener noreferrer，沒有data-action，所以不會被全域click代理擋住或先開提示視窗；原位置、圖案、名稱及五選項布局保持。輔助名稱明示另開分頁，舊support降級視窗也改真實連結。

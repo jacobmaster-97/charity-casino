@@ -83,3 +83,5 @@
 - 0.14.0使用者要求按聲音／存檔與資料／說明與關於框架實作設定，並追加回報問題；此新指示批准恢復設定內的備份匯入匯出，取代0.13.2刪除入口的舊要求。橫向分類、音量偏好獨立存、保存時間可選metadata、匯入先確認，問題回報只本機整理並由玩家自行送出。保留暫停／背景及五分鐘規則。沿既有遊戲發布流程更新原GitHub Pages；Vercel仍待帳戶授權，不自行放寬CORS或升付費。詳docs/SETTINGS_0140.md及SETTINGS_RELEASE.json。
 
 - 0.14.1使用者指定主頁「支持作者」點擊直接進入https://buymeacoffee.com/studios_16；以原生HTTPS連結另開分頁，保留原遊戲，主選單不經data-action或中間彈窗。更新原GitHub Pages；不嵌入第三方付款SDK或自動操作付款，不影響Vercel待辦。
+
+- 0.14.2使用者要求刪除回報問題，取代0.14.0該功能規格；已移除UI、草稿／裝置狀態、Clipboard／TXT及GitHub Issue入口。設定固定footer新增原生「關於作者」https://www.threads.com/@studios_16_（保留末尾底線），主頁安全區底部細行「作者：studios_16」，menu依實際署名高度預留間距。Buy Me a Coffee支持作者維持原址。發布原Pages；Vercel仍待授權。

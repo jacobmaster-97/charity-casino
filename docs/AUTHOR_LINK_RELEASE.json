@@ -1,0 +1,31 @@
+{
+  "version": "0.14.2",
+  "date_hong_kong": "2026-11-06",
+  "status": "ready_to_publish",
+  "repository": "jacobmaster-97/charity-casino",
+  "branch": "main",
+  "expected_parent": "a0411caa03e02aba772c6c6d1166ee8944135d82",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.14.2",
+  "author_url": "https://www.threads.com/@studios_16_",
+  "support_url": "https://buymeacoffee.com/studios_16",
+  "credit": "作者：studios_16",
+  "reporting_feature_removed": true,
+  "tests": {
+    "unit_component": 399,
+    "package": 6,
+    "pages": 10,
+    "vercel_build": 4,
+    "total": 419,
+    "passed": true,
+    "css_safari16_chrome110_syntax": true
+  },
+  "cloudflare_changed": false,
+  "d1_changed": false,
+  "vercel_deployment": "still_pending_authentication",
+  "public_verification": "pending",
+  "unverified": [
+    "Real mobile author-credit readability and safe areas",
+    "Actual Threads link click and browser switching"
+  ],
+  "snapshot_policy": "Keep uploaded snapshot exact; final receipts remain local."
+}

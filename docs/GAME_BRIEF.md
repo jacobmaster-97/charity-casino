@@ -235,3 +235,7 @@
 ## 支持作者0.14.1
 
 使用者指定Buy Me a Coffee網址https://buymeacoffee.com/studios_16，主頁按鈕直接另開該頁，取消中間提示視窗；保留原位置／樣式與遊戲狀態，不加入付款SDK。詳SUPPORT_LINK_0141.md及SUPPORT_LINK_RELEASE.json。
+
+## 作者資訊0.14.2
+
+使用者刪除回報問題功能，設定新增「關於作者」原生按鍵，連到https://www.threads.com/@studios_16_，首頁最底細行顯示「作者：studios_16」。取代0.14.0的回報規格，聲音／保存／教學保留，支持作者仍連Buy Me a Coffee。詳AUTHOR_LINK_0142.md及AUTHOR_LINK_RELEASE.json。

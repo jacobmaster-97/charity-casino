@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {Saves,validateSave} from '../src/storage.mjs';
 import {Game} from '../src/game.mjs';
-import {settingsDialogView,settingsSavedTime,problemReport,SETTINGS_VERSION} from '../src/settings-view.mjs';
+import {settingsDialogView,settingsSavedTime,SETTINGS_VERSION,AUTHOR_URL} from '../src/settings-view.mjs';
 import {readFile} from 'node:fs/promises';
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const button=(a,t,c='',extra='')=>`<button data-action="${a}" class="${c}" ${extra}>${t}</button>`;
@@ -40,8 +40,7 @@ test('about contains all five accurate game guides and current challenge timing,
  const html=view({tab:'about'});assert.equal((html.match(/<details /g)||[]).length,6);for(const word of ['大小教學','百家樂教學','21點教學','德州撲克教學','輪盤教學','0.95:1','3:2','35:1','圍骰','六人無限注','五分鐘到時','只有手動暫停或切到背景'])assert.ok(html.includes(word),word);
  assert.ok(!html.includes('本局道具'));assert.ok(!html.includes(' · 計時繼續'));assert.equal(SETTINGS_VERSION,JSON.parse(await readFile(new URL('../package.json',import.meta.url))).version);
 });
-test('problem reports require deliberate description and never attach player or game data',()=>{
- assert.throws(()=>problemReport({description:'  '}),/描述/);const report=problemReport({description:'發牌畫面停住',name:'私人姓名',bank:'123.45',cards:'As',userAgent:'private-UA'});assert.ok(report.includes('發牌畫面停住'));assert.ok(!report.includes('private-UA'));assert.ok(!report.includes('私人姓名'));assert.ok(!report.includes('123.45'));
- const opted=problemReport({description:'問題',includeDevice:true,userAgent:'Safari',width:956,height:440});assert.ok(opted.includes('Safari'));assert.ok(opted.includes('956 × 440'));
- const html=view({tab:'about',reportText:'</textarea><script>alert(1)</script>'});assert.ok(!html.includes('<script>'));assert.ok(html.includes('&lt;/textarea&gt;'));assert.ok(html.includes('rel="noopener noreferrer"'));assert.ok(html.includes('github.com/jacobmaster-97/charity-casino/issues/new'));
+test('every settings category provides the author link and exposes no problem-report controls',()=>{
+ assert.equal(AUTHOR_URL,'https://www.threads.com/@studios_16_');
+ for(const tab of ['sound','data','about']){const html=view({tab});assert.ok(html.includes('href="https://www.threads.com/@studios_16_"'));assert.ok(html.includes('>關於作者</a>'));assert.ok(html.includes('target="_blank" rel="noopener noreferrer"'));for(const text of ['回報問題','settings-report','report-copy','report-download','issues/new','textarea'])assert.ok(!html.includes(text),text);}
 });

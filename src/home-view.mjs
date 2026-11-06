@@ -1,4 +1,4 @@
-import {settingsDialogView} from './settings-view.mjs?v=0.14.1';
+import {settingsDialogView} from './settings-view.mjs?v=0.14.2';
 // Approved home artwork remains separate from real, accessible DOM controls.
 export const SUPPORT_URL='https://buymeacoffee.com/studios_16';
 export const HOME_ART={background:'/art/home-b/background.png',logo:'/art/home-b/logo.png'};
@@ -11,7 +11,7 @@ const homeIcons={
 };
 export function homeView({art}){
  const menu=[['start','開始遊戲'],['rank','賭神龍虎榜'],['settings','設定'],['install','加到主頁面'],['support','支持作者']];
- return `<main class="home home-title-screen" aria-label="五分鐘賭神主頁"><div class="home-safe-area"><div class="home-scene"><img class="title-art" src="${art(HOME_ART.background)}" alt="" width="1672" height="941" draggable="false"><div class="title-top-shade" aria-hidden="true"></div><div class="title-menu-shade" aria-hidden="true"></div><div class="title-frame" aria-hidden="true"></div><h1 class="title-logo"><img src="${art(HOME_ART.logo)}" alt="五分鐘賭神" width="2172" height="724" draggable="false"></h1><p class="title-orientation">橫向遊玩，體驗更佳</p><nav class="title-menu" aria-label="主選單"><p class="title-menu-lead">傳奇，由你開局</p>${menu.map(([id,label])=>{const tag=id==='support'?'a':'button',attributes=id==='support'?`href="${SUPPORT_URL}" target="_blank" rel="noopener noreferrer" aria-label="支持作者（另開分頁）"`:`type="button" data-action="home-${id}"`;return `<${tag} class="title-menu-button title-menu-${id}" ${attributes}><span class="title-menu-icon" aria-hidden="true"><svg viewBox="-44 -44 88 88" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">${homeIcons[id]}</svg></span><span class="title-menu-label">${label}</span><span class="title-menu-arrow" aria-hidden="true">›</span></${tag}>`;}).join('')}</nav></div></div></main>`;
+ return `<main class="home home-title-screen" aria-label="五分鐘賭神主頁"><div class="home-safe-area"><div class="home-scene"><img class="title-art" src="${art(HOME_ART.background)}" alt="" width="1672" height="941" draggable="false"><div class="title-top-shade" aria-hidden="true"></div><div class="title-menu-shade" aria-hidden="true"></div><div class="title-frame" aria-hidden="true"></div><h1 class="title-logo"><img src="${art(HOME_ART.logo)}" alt="五分鐘賭神" width="2172" height="724" draggable="false"></h1><p class="title-orientation">橫向遊玩，體驗更佳</p><nav class="title-menu" aria-label="主選單"><p class="title-menu-lead">傳奇，由你開局</p>${menu.map(([id,label])=>{const tag=id==='support'?'a':'button',attributes=id==='support'?`href="${SUPPORT_URL}" target="_blank" rel="noopener noreferrer" aria-label="支持作者（另開分頁）"`:`type="button" data-action="home-${id}"`;return `<${tag} class="title-menu-button title-menu-${id}" ${attributes}><span class="title-menu-icon" aria-hidden="true"><svg viewBox="-44 -44 88 88" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">${homeIcons[id]}</svg></span><span class="title-menu-label">${label}</span><span class="title-menu-arrow" aria-hidden="true">›</span></${tag}>`;}).join('')}</nav></div><p class="title-author">作者：studios_16</p></div></main>`;
 }
 export function homeLayout(width,height){
  if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)return null;
@@ -24,7 +24,9 @@ export function fitHomeSurface(root=globalThis.document){
  const layout=homeLayout(safe.clientWidth,safe.clientHeight);if(!layout)return false;
  for(const [key,value] of Object.entries(layout))scene.style.setProperty('--home-'+key,String(value)+(key==='viewWidth'?'':'px'));
  const gap=Math.max(4,Math.min(12,20*layout.unit)),buttonHeight=Math.max(44,128*layout.unit),menuHeight=5*buttonHeight+4*gap;
- const menuTop=Math.max(8,Math.min(240*layout.unit,layout.height-menuHeight-12));
+ const creditHeight=root.querySelector?.('.title-author')?.getBoundingClientRect?.().height||24;
+ const footerLimit=safe.clientHeight-layout.top-creditHeight-8;
+ const menuTop=Math.max(8,Math.min(240*layout.unit,layout.height-menuHeight-12,footerLimit-menuHeight));
  for(const [key,value] of Object.entries({'menu-top':menuTop,'menu-button-height':buttonHeight,'menu-gap':gap}))scene.style.setProperty('--home-'+key,value+'px');
  if(scene.dataset)scene.dataset.menuCompact=String(menuTop<45||layout.height<300);
  return true;

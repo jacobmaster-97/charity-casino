@@ -1,8 +1,8 @@
-import {cashAbs,cashDollars} from './cash.mjs?v=0.14.1';
-import {squeezePanel} from './baccarat-squeeze.mjs?v=0.14.1';
-import {BACCARAT_DEAL_MS,BACCARAT_BETS,BACCARAT_BET_MAP,baccaratPoints,cardRank} from './baccarat.mjs?v=0.14.1';
-import {money,getChipDenominations,chipLabel,ITEMS} from './rules.mjs?v=0.14.1';
-import {baccaratBoardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.14.1';
+import {cashAbs,cashDollars} from './cash.mjs?v=0.14.2';
+import {squeezePanel} from './baccarat-squeeze.mjs?v=0.14.2';
+import {BACCARAT_DEAL_MS,BACCARAT_BETS,BACCARAT_BET_MAP,baccaratPoints,cardRank} from './baccarat.mjs?v=0.14.2';
+import {money,getChipDenominations,chipLabel,ITEMS} from './rules.mjs?v=0.14.2';
+import {baccaratBoardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.14.2';
 const baccaratEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let cardClipSerial=0;
 export function baccaratCard(id,hidden,art,{action='',index=0,fresh=false,delay=0,paused=false}={}){

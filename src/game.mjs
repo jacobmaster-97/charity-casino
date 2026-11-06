@@ -1,13 +1,13 @@
-import {CHALLENGE_MS,CHALLENGE_RULESET,challengeStats} from './challenge.mjs?v=0.14.1';
-import {cashAdd,cashSub,cashRatio,cashMax,isCash} from './cash.mjs?v=0.14.1';
-import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.14.1';
-import {rouletteMethods} from './roulette-game.mjs?v=0.14.1';
-import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.14.1';
-import {pokerMethods} from './poker-game.mjs?v=0.14.1';
-import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.14.1';
-import {blackjackMethods} from './blackjack-game.mjs?v=0.14.1';
-import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.14.1';
-import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.14.1';
+import {CHALLENGE_MS,CHALLENGE_RULESET,challengeStats} from './challenge.mjs?v=0.14.2';
+import {cashAdd,cashSub,cashRatio,cashMax,isCash} from './cash.mjs?v=0.14.2';
+import {ROULETTE_ENABLED,settleRouletteRound} from './roulette.mjs?v=0.14.2';
+import {rouletteMethods} from './roulette-game.mjs?v=0.14.2';
+import {POKER_ENABLED,settlePokerRound} from './poker.mjs?v=0.14.2';
+import {pokerMethods} from './poker-game.mjs?v=0.14.2';
+import {BLACKJACK_ENABLED,settleBlackjackRound} from './blackjack.mjs?v=0.14.2';
+import {blackjackMethods} from './blackjack-game.mjs?v=0.14.2';
+import {BACCARAT_ENABLED,BACCARAT_DEAL_MS,BACCARAT_UNFOLD_MS,BACCARAT_RETURN_MS,BACCARAT_BETS,BACCARAT_BET_MAP,randomBelow,makeBaccaratShoe,baccaratInitial,completeBaccaratHand,settleBaccaratRound,cardValue} from './baccarat.mjs?v=0.14.2';
+import {GOAL, BET_MAP, ITEM_IDS, settleBets, randomDie} from './rules.mjs?v=0.14.2';
 // The web entry opts into the new rules; the default also supports schema-1 legacy regression fixtures.
 export class Game {
   constructor({roll=randomDie,onComplete=()=>{},onCue=()=>{},randomIndex=randomBelow,challenge=false,features={shop:true,items:true}}={}) { this.features=Object.freeze({shop:features.shop!==false,items:features.items!==false});this.challenge=challenge;this.closing=false;this._resolving=false;this.roll=roll;this.onComplete=onComplete;this.onCue=onCue;this.screen='home';this.profile=null;this.round=null;this.paused=false;this.checkpoint=null;this.activeTable='sicbo';this.baccaratShoe=null;this.blackjackShoe=null;this.pokerTable=null;this.randomIndex=randomIndex; }
