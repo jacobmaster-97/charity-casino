@@ -1,5 +1,6 @@
-import {settingsDialogView} from './settings-view.mjs?v=0.14.0';
+import {settingsDialogView} from './settings-view.mjs?v=0.14.1';
 // Approved home artwork remains separate from real, accessible DOM controls.
+export const SUPPORT_URL='https://buymeacoffee.com/studios_16';
 export const HOME_ART={background:'/art/home-b/background.png',logo:'/art/home-b/logo.png'};
 const homeIcons={
  start:'<path d="M-13-23 24 0-13 23Z" fill="currentColor" stroke="none"/>',
@@ -10,7 +11,7 @@ const homeIcons={
 };
 export function homeView({art}){
  const menu=[['start','開始遊戲'],['rank','賭神龍虎榜'],['settings','設定'],['install','加到主頁面'],['support','支持作者']];
- return `<main class="home home-title-screen" aria-label="五分鐘賭神主頁"><div class="home-safe-area"><div class="home-scene"><img class="title-art" src="${art(HOME_ART.background)}" alt="" width="1672" height="941" draggable="false"><div class="title-top-shade" aria-hidden="true"></div><div class="title-menu-shade" aria-hidden="true"></div><div class="title-frame" aria-hidden="true"></div><h1 class="title-logo"><img src="${art(HOME_ART.logo)}" alt="五分鐘賭神" width="2172" height="724" draggable="false"></h1><p class="title-orientation">橫向遊玩，體驗更佳</p><nav class="title-menu" aria-label="主選單"><p class="title-menu-lead">傳奇，由你開局</p>${menu.map(([id,label])=>`<button type="button" class="title-menu-button title-menu-${id}" data-action="home-${id}"><span class="title-menu-icon" aria-hidden="true"><svg viewBox="-44 -44 88 88" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">${homeIcons[id]}</svg></span><span class="title-menu-label">${label}</span><span class="title-menu-arrow" aria-hidden="true">›</span></button>`).join('')}</nav></div></div></main>`;
+ return `<main class="home home-title-screen" aria-label="五分鐘賭神主頁"><div class="home-safe-area"><div class="home-scene"><img class="title-art" src="${art(HOME_ART.background)}" alt="" width="1672" height="941" draggable="false"><div class="title-top-shade" aria-hidden="true"></div><div class="title-menu-shade" aria-hidden="true"></div><div class="title-frame" aria-hidden="true"></div><h1 class="title-logo"><img src="${art(HOME_ART.logo)}" alt="五分鐘賭神" width="2172" height="724" draggable="false"></h1><p class="title-orientation">橫向遊玩，體驗更佳</p><nav class="title-menu" aria-label="主選單"><p class="title-menu-lead">傳奇，由你開局</p>${menu.map(([id,label])=>{const tag=id==='support'?'a':'button',attributes=id==='support'?`href="${SUPPORT_URL}" target="_blank" rel="noopener noreferrer" aria-label="支持作者（另開分頁）"`:`type="button" data-action="home-${id}"`;return `<${tag} class="title-menu-button title-menu-${id}" ${attributes}><span class="title-menu-icon" aria-hidden="true"><svg viewBox="-44 -44 88 88" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">${homeIcons[id]}</svg></span><span class="title-menu-label">${label}</span><span class="title-menu-arrow" aria-hidden="true">›</span></${tag}>`;}).join('')}</nav></div></div></main>`;
 }
 export function homeLayout(width,height){
  if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)return null;
@@ -48,7 +49,7 @@ export function homeDialogView({kind,name,save,legacy,warning,button,escape,mone
   const caption=installInfo.device==='ios'?'iPhone／iPad':installInfo.device==='android'?'Android':'手機瀏覽器';
   content=`<h2 id="home-dialog-title">${title}</h2>${installInfo.installed?'<p class="home-info-status">你已從主畫面開啟遊戲，無需再次加入。</p>':`<p>將《五分鐘賭神》放到手機主畫面，下次一按即可開啟。</p>${installInfo.local?'<p class="install-note">請先用手機瀏覽器開啟網頁版，再依以下步驟加入。<a href="https://jacobmaster-97.github.io/charity-casino/" target="_blank" rel="noopener">開啟網頁版</a></p>':''}<div class="install-browser-picker" role="group" aria-label="選擇瀏覽器">${button('install-browser','SAFARI','outlined',`data-browser="safari" aria-pressed="${browser==='safari'}"`)}${button('install-browser','CHROME','outlined',`data-browser="chrome" aria-pressed="${browser==='chrome'}"`)}</div><p class="install-platform">${caption} · ${browser==='safari'?'SAFARI':'CHROME'}${installInfo.browser?'':'（可自行選擇）'}</p><ol class="install-steps">${steps.map(step=>'<li>'+step+'</li>').join('')}</ol>${installInfo.device==='ios'?'<p class="install-note">如出現「開啟為網頁 App」，請保持開啟。</p>':installInfo.device==='other'?'<p class="install-note">請用手機開啟本網站，再依所用瀏覽器的步驟操作。</p>':''}`}${close}`;
  }else if(kind==='support'){
-  title='支持作者';content=`<h2 id="home-dialog-title">${title}</h2><p class="home-info-status">感謝你遊玩《五分鐘賭神》。</p><p>你的試玩與意見，就是對這款遊戲的支持。</p><p>支持連結尚未開放。</p>${close}`;
+  title='支持作者';content=`<h2 id="home-dialog-title">${title}</h2><p class="home-info-status">感謝你遊玩《五分鐘賭神》。</p><p>你的試玩與意見，就是對這款遊戲的支持。</p><a class="outlined settings-link" href="${SUPPORT_URL}" target="_blank" rel="noopener noreferrer">前往支持作者頁面</a>${close}`;
  }else return '';
  return `<div class="modal-backdrop home-modal-backdrop"><section class="modal home-menu-dialog home-dialog-${kind}" role="dialog" aria-modal="true" aria-labelledby="home-dialog-title" tabindex="-1">${content}${warning?`<p class="warning" role="status">${escape(warning)}</p>`:''}</section></div>`;
 }

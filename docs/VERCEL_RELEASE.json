@@ -336,5 +336,7 @@
   },
   "vercel_public_verification": "pending_authentication_and_deployment",
   "latest_game_version_prepared": "0.14.0",
-  "vercel_actual_deployment": "still_pending_authentication"
+  "vercel_actual_deployment": "still_pending_authentication",
+  "latest_game_version_available": "0.14.0",
+  "latest_game_github_commit": "2fc48037123854235d51066108d95e3440ac2b29"
 }

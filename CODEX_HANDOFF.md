@@ -1,5 +1,27 @@
 # CODEX_HANDOFF
 
+## 最新 · 0.14.1支持作者直連已完成，準備發布
+
+使用者指定主頁支持作者一點即進https://buymeacoffee.com/studios_16。已改同樣式原生a／另開分頁／noopener noreferrer，沒有data-action，所以不會被全域click代理擋住或先開提示視窗；原位置、圖案、名稱及五選項布局保持。輔助名稱明示另開分頁，舊support降級視窗也改真實連結。
+
+419項通過（399單元組件＋6單檔＋10 Pages＋4 Vercel），既有首頁及app測試按新原生連結修正，沒有新增重複低影響測試。只有home-view的連結改動，其他runtime為快取版本0.14.1及設定回報版本更新；原遊戲／存檔／素材／Cloudflare及D1保持。沒有嵌入第三方SDK、自動外送資料、付款或訊息。Vercel仍待授權。
+
+發布同一GitHub main／Pages，實際結果見docs/SUPPORT_LINK_RELEASE.json，細節SUPPORT_LINK_0141.md。手機實際點擊與瀏覽器切換、外站流程未驗證。下一步核tree SHA、Pages與公網home-view的正確href後交付。
+
+## 最新 · 0.14.0三類設定已實裝GitHub／Pages
+
+使用者要求聲音／存檔與資料／說明與關於並追加回報問題，已完成並發布原GitHub Pages。main commit2fc48037123854235d51066108d95e3440ac2b29／tree2d034c4000ff9da046e04b05d531b2cd9c681fcb，expected_sha父3f9fe780666fd7c81ad098d04b53050ca5887acb且force:false；307檔Git blob SHA全部吻合、73變更。Pages run42190371275 completed/success，head_sha及main核對一致。正式 https://jacobmaster-97.github.io/charity-casino/?v=0.14.0 。公網37檔（30runtime、root／docs入口、manifest／原圖等與部署設定）HTTP200且SHA逐byte一致，新設定／教學／音量／保存時間源檔內容已核對。
+
+設定可從首頁、暫停選單及大廳更多進入。左分類右內容、直向頂部分類、固定header／返回鍵及內容局部捲動。聲效開關、0–100音量與試聽，音量獨立偏好key、原100%增益不變、靜音／0不擅自試聽；儲存受限顯示本次有效。資料頁保存時間及完成局備份匯出／確認匯入；舊檔未知時間如實標示，新schema2可選savedAt不改profile／精度／規則。先寫入成功再restore，原主檔-backup；取消、無效檔、quota、重複或過期回呼不改舊賭本／餘秒、不重派。失敗自動保存仍可匯出記憶體完成局。
+
+說明共用instructions.mjs原五桌規則，避免維護兩份賠率。問題描述及可選UA／尺寸僅本機整理、可複製或TXT下載，GitHub公開問題由玩家登入／貼上／自行送出；已確認repo issues啟用。沒有自動Issue／訊息／診斷傳送，不加入姓名／賭本／牌局／存檔／提交ID。這輪新需求已取代0.13.2移除設定備份入口的舊要求，但沒有重開自由模式、商店或道具，也沒有加未要求的進階畫面設定。
+
+419項通過（399單元組件＋6單檔＋10 Pages＋4 Vercel），新增8設定／保存／回報＋3聲音＋7app測試；原500五分鐘／10,000局保持。CSS Safari16／Chrome110解析無警告。10核心遊戲模組僅快取版本改、36個既有root素材／後端／設定檔SHA不變。從暫停進設定維持兩倒數停止，退出仍需繼續；從大廳進設定照計時，截止結算；背景／檔案選擇器導致停表時不誤恢復。沒有Worker／D1／CORS操作。單檔仍內嵌13張原遊戲圖，不增加入桌圖片等待。
+
+來源／驗證／限制見docs/SETTINGS_0140.md與SETTINGS_RELEASE.json。真iPhone／iPad／桌面排版、滑桿、觸控、音質、VoiceOver、系統檔案選擇器／下載／剪貼簿權限及實際GitHub送出未驗；不以原碼／Node／HTTP當實機證據，不重試已知Chromium IPC限制。一次傳送讀取失敗後完整重讀148片段並驗307檔SHA，沒有遺失或未驗發布。
+
+dist/github-upload／manifest保留307檔精確已發布快照；最終收據及交接只更新本機，不再prepare覆蓋。回退參照0.13.4父commit，保留新舊存檔／音量偏好／D1；可選savedAt舊版可忽略。Vercel原任務仍待官方帳戶登入，尚未建站、未獲正式域名，也未放寬Cloudflare origins；本輪沒有再要求登入或把時間視為授權。下一最安全任務：使用者iPhone橫向驗設定三類與原生檔案／音訊；有Vercel授權後再完成原部署待辦。
+
 ## 最新 · 0.14.0三類設定實作及測試完成，準備更新原Pages
 
 使用者要求聲音／存檔與資料／說明與關於，並追加回報問題；新指示批准設定內備份匯入匯出，取代0.13.2舊入口刪除規格。已接首頁／暫停／大廳更多設定，橫向左右分類、直向頂部分類，只有內容局部捲動。音量0–100獨立偏好、靜音及試聽；已保存時間／完成局備份、確認匯入；共用原五桌規則教學；問題描述／可選裝置資料、複製／TXT與玩家自行送出GitHub問題（倉庫issues已啟用）。沒有自動傳送問題或診斷。

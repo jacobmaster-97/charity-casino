@@ -1,7 +1,7 @@
-import {tableRulesView,GUIDE_TABLES} from './instructions.mjs?v=0.14.0';
-import {money,duration} from './rules.mjs?v=0.14.0';
+import {tableRulesView,GUIDE_TABLES} from './instructions.mjs?v=0.14.1';
+import {money,duration} from './rules.mjs?v=0.14.1';
 
-export const SETTINGS_VERSION='0.14.0';
+export const SETTINGS_VERSION='0.14.1';
 export const SETTINGS_TABS={sound:'聲音',data:'存檔與資料',about:'說明與關於'};
 export function settingsSavedTime(save){
  if(!save)return '尚未有保存記錄';

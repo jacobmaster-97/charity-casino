@@ -1,0 +1,30 @@
+{
+  "version": "0.14.1",
+  "date_hong_kong": "2026-11-06",
+  "status": "ready_to_publish",
+  "repository": "jacobmaster-97/charity-casino",
+  "branch": "main",
+  "expected_parent": "2fc48037123854235d51066108d95e3440ac2b29",
+  "url": "https://jacobmaster-97.github.io/charity-casino/?v=0.14.1",
+  "support_url": "https://buymeacoffee.com/studios_16",
+  "native_link": true,
+  "new_tab": true,
+  "intermediate_dialog": false,
+  "tests": {
+    "unit_component": 399,
+    "package": 6,
+    "pages": 10,
+    "vercel_build": 4,
+    "total": 419,
+    "passed": true
+  },
+  "cloudflare_changed": false,
+  "d1_changed": false,
+  "vercel_deployment": "still_pending_authentication",
+  "public_verification": "pending",
+  "unverified": [
+    "Actual mobile external link click and browser switching",
+    "Third-party website workflow"
+  ],
+  "snapshot_policy": "Keep exact uploaded snapshot; final receipts updated locally."
+}

@@ -1,5 +1,5 @@
-import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.14.0';
-import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.14.0';
+import {cashAdd,cashSub,cashRatio,isCash} from './cash.mjs?v=0.14.1';
+import {BLACKJACK_CUT,BLACKJACK_DEAL_MS,makeBlackjackShoe,blackjackCardValue,blackjackValue,blackjackNatural,blackjackHandNatural,blackjackOptions} from './blackjack.mjs?v=0.14.1';
 const blackjackHand=(id,bet,cards=[],fromSplit=false,splitA=false)=>({id,bet,cards,fromSplit,splitA,swapped:false,actions:0,doubled:false,status:'playing'});
 // These methods run on Game: one owner for funds, timers, items and checkpoints.
 export const blackjackMethods={

@@ -1,7 +1,7 @@
 {
   "version": "0.14.0",
   "date_hong_kong": "2026-11-06",
-  "status": "ready_to_publish",
+  "status": "published_and_publicly_verified",
   "repository": "jacobmaster-97/charity-casino",
   "branch": "main",
   "expected_parent": "3f9fe780666fd7c81ad098d04b53050ca5887acb",
@@ -19,11 +19,337 @@
   "d1_changed": false,
   "issues_created_or_messages_sent": false,
   "vercel_actual_deployment": "still_pending_authentication",
-  "public_verification": "pending",
+  "public_verification": {
+    "version": "0.14.0",
+    "files_checked": 37,
+    "runtime_files": 30,
+    "all_exact": true,
+    "root_and_docs_metadata_valid": true,
+    "approved_image_pixels_unchanged": true,
+    "image_dimensions": [
+      1672,
+      941
+    ],
+    "image_content_type": "image/png",
+    "results": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "content_type": "text/html",
+        "bytes": 2471,
+        "sha256": "d546e7dffecd3519df526641c5120c433ffcb86cdb5e610c97456a4348ef2923",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "docs/index.html",
+        "status": 200,
+        "content_type": "text/html",
+        "bytes": 2501,
+        "sha256": "977ce8e04b396e81545092b9ee3850984f3b81e1d0b73748bd18d6f1cdec4817",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/app.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 51365,
+        "sha256": "147cee8c4c9f0f46784e1c8164c38a27f18da913dd05d5bfb58e88815669e914",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat-squeeze.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 7342,
+        "sha256": "3a52c1c3a768dcc935b2b26781c4c424bb33435a29e5a72c3d06138f999e24e2",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 8722,
+        "sha256": "a0f92efd7ae460c87cf374b92d1f8c6c7a7a3c0cbbddd38cb324bc4593ec12c1",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/baccarat.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 5792,
+        "sha256": "16effb8ebbd5502b220df311d968d2d6c77019457c03a73ad0344ef6c709cc09",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack-game.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 7251,
+        "sha256": "0c436c632c43513952289b024a71a38b97d5e248e6d04b0d119974f08055019a",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 12839,
+        "sha256": "75ff734077037a2a6716674d8d76db74e1280f66f369f3f4c8fba942076cd524",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/blackjack.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 4024,
+        "sha256": "7a57e66d56daeccc0279a3bb96f168ec4e64a60fd29d56c9ea294cb3ac1ec921",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/board.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 63380,
+        "sha256": "4cdc78d7f396ee94865eab26e5607232a591540e6c3fafa9ae3e09e8d6c63423",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/cash.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 2198,
+        "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/challenge.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 4472,
+        "sha256": "fa9ec227cf0d767d34c3e9f0e9667430cfdf1e41e254a95b551782716443b13b",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/game.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 19040,
+        "sha256": "6bb3505abe2e9b6a549e0039315eae0f85a7d01cec21b634ce75321a82f55c93",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/home-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 8196,
+        "sha256": "750d9d1d4fef8ef83ea12b4576f6d0f4a92949c21271a8cbff983ef1dfe63fc7",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/instructions.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 8179,
+        "sha256": "4e1b344686ae512f3a3062b50cf8abd8ff0d5c1b2eb27e250069ca73f04c19d6",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard-config.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 177,
+        "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 6765,
+        "sha256": "87da1a3918783d0ad702c41928489cd5a3be098dd6170a26cfac9e0521552977",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/leaderboard.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 8462,
+        "sha256": "ec5fe90d6cd3bbc3459494ac6d8f6d31bdc80e07b3abc6af1864a8448b9b549c",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker-game.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 9953,
+        "sha256": "f23b5d0f6cb01d53e929b402830afc8be517c5253ee540792a56be1983e001d0",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 15022,
+        "sha256": "fb727566ab3a3ebd6ccc6051edd2ee23569541592a3ffdca08c9a0a4a0b7e144",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/poker.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 8068,
+        "sha256": "9806c87977afcfd594022be0b95a1b9454151d5a38e2621abd7ee2c83cf47e8a",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/record-share.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 9675,
+        "sha256": "5fb2f9c7cd1ea38e5cfdf35e1ec36f10285d2874c5b0e982daa104d6061c1fef",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette-game.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 2535,
+        "sha256": "b405e3e537687eddbdec383cc2e2621b3dee31a2a92f7272605ab258b4d39cc8",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 14107,
+        "sha256": "7b766812c4d0e84aa7d03e465781f0113a04ccc4ffb84350a6b28f882e36a8a2",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/roulette.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 4553,
+        "sha256": "b0d8934978fab7325419eea7f0cdf4daa1ba7bf0a872ba020864ee79012f2ceb",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/rules.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 4819,
+        "sha256": "bd66d8a29589ce6ef939ec5bee2b5ffb8ede67b8cd9e2e80fccec210d484a305",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/settings-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 9173,
+        "sha256": "1f70f921fb0726bac511c145010b22c704380ab4170b5d4a57a2494b08119553",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/sicbo-view.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 8323,
+        "sha256": "d9cddd8c5483210dbffb8948b388b42189f01079a301ce4f249d732592bd1a36",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/sound.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 9545,
+        "sha256": "4c8a694a9048c0e7735b8bd17af79a44fc213a0c8cbd50287827bde657ed39d4",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/storage.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 5923,
+        "sha256": "7939e34f3c7077e595b76d1313365af5a19be21a43baa7ae4e80cdb5d83fd986",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/styles.css",
+        "status": 200,
+        "content_type": "text/css",
+        "bytes": 173695,
+        "sha256": "b836ffe2184ff77d917c05d7c31247a14c6cb742afcac335affbc28b86ededa4",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "src/table-layout.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 11700,
+        "sha256": "94d1cbc33bbc7239449be96b7e545b29554dd5d923208695059f65759e3973c0",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "status": 200,
+        "content_type": "image/webp",
+        "bytes": 98012,
+        "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "manifest.webmanifest",
+        "status": 200,
+        "content_type": "application/manifest+json",
+        "bytes": 619,
+        "sha256": "b75612f663dd8ae1aad4e453cfc7b52778927e3414f22d23f199eb27d8501152",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "public/social/thumbnail-v4.png",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1753061,
+        "sha256": "d6dcd0b9f20ef6f854031fed1cf12069d79cdf52472e4c099b997e68c022a215",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "vercel.json",
+        "status": 200,
+        "content_type": "application/json",
+        "bytes": 288,
+        "sha256": "20578e2cc50d7ab0f779b1b17e5414cc019f7aca74eceb06a7a7248dd674851c",
+        "matches_published_snapshot": true
+      },
+      {
+        "path": "scripts/vercel.mjs",
+        "status": 200,
+        "content_type": "text/javascript",
+        "bytes": 2996,
+        "sha256": "662684af1b23e10557a3b8d469a2765cf8d1b5bde806d72c205be3b9db6dbc60",
+        "matches_published_snapshot": true
+      }
+    ],
+    "social_app_card_and_cache": "UNVERIFIED"
+  },
   "unverified": [
     "Real-device layout, touch, slider, audio and VoiceOver",
     "Actual OS file picker, download and clipboard permission",
     "Actual GitHub issue submission"
   ],
-  "snapshot_policy": "Keep exact published snapshot, update final receipts locally only."
+  "snapshot_policy": "Keep exact published snapshot, update final receipts locally only.",
+  "commit": "2fc48037123854235d51066108d95e3440ac2b29",
+  "tree": "2d034c4000ff9da046e04b05d531b2cd9c681fcb",
+  "files": 307,
+  "changed_paths": 73,
+  "all_git_blob_shas_match": true,
+  "ref_update": {
+    "expected_sha": "3f9fe780666fd7c81ad098d04b53050ca5887acb",
+    "force": false
+  },
+  "pages": {
+    "run_id": 42190371275,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "2fc48037123854235d51066108d95e3440ac2b29"
+  }
 }

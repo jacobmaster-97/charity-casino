@@ -6,8 +6,8 @@ import {HOME_ART,homeView,homeLayout,fitHomeSurface,homeDialogView,homeInstallIn
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const button=(action,label,cls='',extra='')=>`<button type="button" data-action="${action}" class="${cls}" ${extra}>${label}</button>`;
 const args={kind:'start',name:'玩家',mode:'race',save:null,legacy:null,warning:'',button,escape,money:v=>'$'+v,soundControls:()=>'<button data-action="sound">音效</button>'};
-test('approved home uses five actual named buttons, separate artwork and no removed footer or inline form',()=>{
- const html=homeView({art:p=>p});assert.deepEqual([...html.matchAll(/data-action="(home-[^"]+)"/g)].map(m=>m[1]),['home-start','home-rank','home-settings','home-install','home-support']);for(const name of ['開始遊戲','賭神龍虎榜','設定','加到主頁面','支持作者'])assert.ok(html.includes(name));assert.ok(html.includes('alt="五分鐘賭神"'));assert.ok(!/\$100|五分鐘決勝|賭王|慈善大賽|start-form|<canvas|<iframe/.test(html));assert.ok(html.includes(HOME_ART.background)&&html.includes(HOME_ART.logo));
+test('approved home uses five named choices including the direct support link, separate artwork and no removed footer or inline form',()=>{
+ const html=homeView({art:p=>p});assert.deepEqual([...html.matchAll(/data-action="(home-[^"]+)"/g)].map(m=>m[1]),['home-start','home-rank','home-settings','home-install']);for(const name of ['開始遊戲','賭神龍虎榜','設定','加到主頁面','支持作者'])assert.ok(html.includes(name));assert.ok(html.includes('alt="五分鐘賭神"'));assert.ok(!/\$100|五分鐘決勝|賭王|慈善大賽|start-form|<canvas|<iframe/.test(html));assert.ok(html.includes(HOME_ART.background)&&html.includes(HOME_ART.logo));assert.ok(html.includes('href="https://buymeacoffee.com/studios_16" target="_blank" rel="noopener noreferrer"'));assert.ok(!html.includes('data-action="home-support"'));
 });
 test('wide title composition keeps its aspect and fits desktop, phone and tablet without cropping the logical canvas',()=>{
  for(const [w,h] of [[568,320],[667,375],[844,390],[915,412],[1024,768],[1366,768],[1920,1080]]){const l=homeLayout(w,h);assert.ok(l.width<=w+1e-6&&l.height<=h+1e-6);assert.ok(l.left>=-1e-6&&l.top>=-1e-6);assert.ok(Math.abs(l.width/l.height-l.viewWidth/1080)<1e-6);assert.ok(l.viewWidth>=1920);if(w/h>=16/9)assert.ok(Math.abs(l.height-h)<1e-6);else assert.ok(Math.abs(l.width-w)<1e-6);}
@@ -25,8 +25,8 @@ test('start dialog safely escapes names and storage warnings and offers only rea
 test('settings exposes three categories and sound without starting or changing a saved challenge',()=>{
  const save={profile:{name:'保存玩家',bank:10500,elapsedMs:1200,rounds:1}},before=JSON.stringify(save),html=homeDialogView({...args,kind:'settings',save});assert.ok(html.includes('data-tab="sound"'));assert.ok(html.includes('data-tab="data"'));assert.ok(html.includes('data-tab="about"'));assert.ok(html.includes('id="sound-volume"'));assert.equal(JSON.stringify(save),before);
 });
-test('leaderboard and support entrances disclose unavailability without fake scores, payments or links',()=>{
- const rank=homeDialogView({...args,kind:'rank'}),support=homeDialogView({...args,kind:'support'});assert.ok(rank.includes('尚未開放')&&rank.includes('不會上傳'));assert.ok(support.includes('連結尚未開放'));assert.ok(!/href=|https:|<table|<form|付款|data-action="enter"/.test(rank+support));assert.equal(homeDialogView({...args,kind:'unknown'}),'');
+test('legacy rank remains honest and fallback support links to the user-provided page',()=>{
+ const rank=homeDialogView({...args,kind:'rank'}),support=homeDialogView({...args,kind:'support'});assert.ok(rank.includes('尚未開放')&&rank.includes('不會上傳'));assert.ok(support.includes('href="https://buymeacoffee.com/studios_16"'));assert.ok(!support.includes('連結尚未開放'));assert.ok(!/href=|https:|<table|<form|付款|data-action="enter"/.test(rank));assert.equal(homeDialogView({...args,kind:'unknown'}),'');
 });
 test('production title artwork matches the recorded approved SHA without requiring preview files',async()=>{
  const approved=JSON.parse(await readFile(new URL('../public/art/home-b/assets.json',import.meta.url),'utf8'));

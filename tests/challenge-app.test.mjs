@@ -50,7 +50,7 @@ test('deadline inside an informational panel replaces it with the result and doe
 });
 test('home shows the approved five choices and does not create a challenge while browsing menus',()=>{
  const t=boot({start:false});assert.equal((t.app.innerHTML.match(/class="title-menu-button /g)||[]).length,5);assert.ok(t.app.innerHTML.includes('alt="五分鐘賭神"'));assert.ok(!t.app.innerHTML.includes('id="start-form"'));t.tick(20000);assert.equal(t.subject.game.profile,null);assert.equal(t.store.size,0);
- for(const a of ['home-rank','home-support']){t.act(a);assert.ok(t.app.innerHTML.includes('aria-modal="true"'));assert.equal(t.subject.game.profile,null);t.act('close-overlay');}
+ assert.ok(t.app.innerHTML.includes('href="https://buymeacoffee.com/studios_16"'));assert.ok(!t.app.innerHTML.includes('data-action="home-support"'));for(const a of ['home-rank']){t.act(a);assert.ok(t.app.innerHTML.includes('aria-modal="true"'));assert.equal(t.subject.game.profile,null);t.act('close-overlay');}
 });
 test('home start validates the name, passes through the story, then starts exactly $100 and five minutes',()=>{
  const t=boot({start:false});t.act('home-start');assert.ok(t.app.innerHTML.includes('id="start-form"'));assert.equal(t.focused.at(-1),'player-name');t.setName('');t.submit();assert.ok(t.app.innerHTML.includes('home-dialog-start'));assert.ok(t.toast.textContent.includes('1–16'));t.setName('新賭神');t.submit();assert.ok(t.app.innerHTML.includes('class="story-page"'));assert.ok(!t.app.innerHTML.includes('aria-modal="true"'));t.tick(9000);assert.equal(t.subject.game.profile,null);t.act('enter');assert.equal(t.subject.game.profile.name,'新賭神');assert.equal(t.subject.game.profile.bank,10000);assert.equal(t.subject.game.remainingMs,300000);

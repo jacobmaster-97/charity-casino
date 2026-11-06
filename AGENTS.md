@@ -81,3 +81,5 @@
 - 0.13.4使用者要求部署Vercel，已有帳戶未建專案。授權準備／建立Vercel遊戲專案，保留GitHub Pages及原Cloudflare／D1，不升付費。vercel.json輸出dist/vercel僅遊戲與素材；取得真實網址才加入Worker精確origin，禁止放寬全部vercel.app。Vercel憑證及.vercel/保持專案外／忽略。狀態見docs/VERCEL.md及VERCEL_RELEASE.json。
 
 - 0.14.0使用者要求按聲音／存檔與資料／說明與關於框架實作設定，並追加回報問題；此新指示批准恢復設定內的備份匯入匯出，取代0.13.2刪除入口的舊要求。橫向分類、音量偏好獨立存、保存時間可選metadata、匯入先確認，問題回報只本機整理並由玩家自行送出。保留暫停／背景及五分鐘規則。沿既有遊戲發布流程更新原GitHub Pages；Vercel仍待帳戶授權，不自行放寬CORS或升付費。詳docs/SETTINGS_0140.md及SETTINGS_RELEASE.json。
+
+- 0.14.1使用者指定主頁「支持作者」點擊直接進入https://buymeacoffee.com/studios_16；以原生HTTPS連結另開分頁，保留原遊戲，主選單不經data-action或中間彈窗。更新原GitHub Pages；不嵌入第三方付款SDK或自動操作付款，不影響Vercel待辦。
