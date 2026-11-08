@@ -1,3 +1,7 @@
+# 0.15.0新增背景音樂
+
+使用者提供Brass Command - usesuno.com.mp3並指定加入遊戲。原五種程序聲效保持，背景音樂為獨立串流MediaElement＋Web Audio音量，預設35%，循環、首次手勢才載入，不等待音樂才入桌。來源／SHA及轉碼記於public/audio/assets.json；完整行為與驗證見[MUSIC_LANDSCAPE_0150.md](MUSIC_LANDSCAPE_0150.md)。
+
 # 遊戲聲效0.5.0
 
 使用者要求：發牌、籌碼投注、骰盅轉動／開盅、輪盤轉動。此為五桌既有原型的聲效接入，沒有新增玩法或背景音樂。

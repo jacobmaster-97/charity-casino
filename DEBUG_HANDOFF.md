@@ -1,5 +1,27 @@
 # DEBUG_HANDOFF
 
+## 最新 · 0.15.0背景音樂及手機／平板橫向完成本機驗證，準備原Pages發布
+
+使用者指定上載Brass Command及手機／平板固定橫向，已實作獨立循環音樂、預設35%與設定開關／音量。MP3 3,312,369 bytes、206.95秒，原檔／轉碼SHA及來源見public/audio/assets.json。首次手勢才載入、不等待音樂進桌，Web Audio獨立gain處理iOS媒體volume限制；失敗不阻塞牌局。暫停／背景／直向停止並保留播放位置。
+
+行動裝置直向遮罩＋inert，優先實際orientation而非鍵盤visual viewport。轉直向保留牌局／籌碼／道具及兩個倒數，回橫向需明按繼續；設定返回暫停。manifest宣告landscape，原生lock只盡力、不強制fullscreen、不聲稱Safari能被網頁強制旋轉；桌面窄窗不限制。未改Game／存檔／派彩／原圖／Cloudflare或D1。
+
+438項通過（416單元組件＋7單檔＋11 Pages＋4 Vercel建置）。本次環境已成功本地server＋Chromium，實際解碼播放／loop／暫停恢復、手機touch模擬轉向、平板尺寸、206 MP3、無整頁捲動通過；docs/qa/0150留本機證據。舊IPC限制不再用作本次未驗理由；模擬不是真iOS。發現原TableArtCache的Window timer錯誤this，改預設wrapper並測console零錯誤。資料與原圖保持，未開全圖預載／入桌等待。
+
+詳docs/MUSIC_LANDSCAPE_0150.md與MUSIC_LANDSCAPE_RELEASE.json。準備發布到原main／Pages，尚未聲稱公網完成；父75a809bdae04381dd19c2a91cc5c1a52fbb0783f、tree2f369a332edaf0393ce567df49f277d3f2a88e31已讀回。Vercel待授權仍未建站。未驗真iPhone16Plus／iPad音量及靜音／原生鎖向／VoiceOver與長時耗電。下一最安全任務：完成Git tree逐檔SHA與Pages／公網音檔核對，再交使用者實機測試。
+
+## 最新 · 0.14.2作者資訊／回報移除已發布GitHub Pages
+
+使用者要求刪回報問題、設定加「關於作者」Threads，主頁底部細行「作者：studios_16」。已完成並發布main commit75a809bdae04381dd19c2a91cc5c1a52fbb0783f／tree2f369a332edaf0393ce567df49f277d3f2a88e31，expected_sha父a0411caa03e02aba772c6c6d1166ee8944135d82且force:false。311檔Git blob SHA逐一吻合、64變更；原PNG／ICO／WebP、Worker／schema／API及manifest不變。Pages run42230632839 completed/success、head_sha及main一致。正式 https://jacobmaster-97.github.io/charity-casino/?v=0.14.2 。公網37檔HTTP200且SHA逐byte吻合，Threads／署名及report移除源檔核對通過。
+
+設定footer每分類均有關於作者原生a，直接另開 https://www.threads.com/@studios_16_ ，保留www／@及末尾底線，noopener noreferrer，沒有data-action防止全域click代理擋跳轉。首頁作者署名是安全區最底的12px細字、24px行高、有深色襯底；fitHomeSurface按實際高度預留8px間距，仍五個入口及44px目標，不把署名做第六個主入口。
+
+回報UI、textarea／裝置同意／草稿、純文字組裝、Clipboard／TXT下載及GitHub Issue入口完整移除，舊回報事件無下載／剪貼簿副作用。JSON完成局備份、聲音、五桌教學及原玩法保持，沒有刪存檔或偏好資料。主頁支持作者仍為 https://buymeacoffee.com/studios_16 ，原生另開且無中間彈窗；前一0.14.1已發布並補完成SUPPORT_LINK_RELEASE收據。未請求外部作者／付款網站，未送訊息或Issue。
+
+419項通過（399單元組件＋6單檔＋10 Pages＋4 Vercel），原回報測試改驗刪除與作者連結，首頁現有手機幾何測試驗署名不壓五選項。CSS Safari16／Chrome110解析無警告。真手機署名可讀性、安全區、Threads外站及新分頁操作未驗，HTTP／原碼證據不是實機點擊；未重試既有Chromium IPC限制。
+
+細節docs/AUTHOR_LINK_0142.md／AUTHOR_LINK_RELEASE.json。dist/github-upload及manifest保留311檔精確已發布快照，最終收據及交接只更新本機，不重新prepare覆蓋。回退參照父0.14.1 commit，保留存檔及D1。Vercel仍未建站、待帳戶授權，沒有改Cloudflare origins／部署Worker或操作D1。下一最安全任務：使用者iPhone橫向看主頁署名與設定footer作者連結，確認後續外站行為；原Vercel待辦保留。
+
 ## 最新 · 0.14.2作者連結／署名及回報移除完成，準備發布
 
 前一0.14.1已發布commita0411caa03e02aba772c6c6d1166ee8944135d82／treecb6533535710c5a926647d844411fa7731d3519c，Pages42228617507成功、37公網檔案一致，SUPPORT_LINK_RELEASE.json已補完成收據。使用者接續要求刪回報、設定加「關於作者」Threads、主頁底部署名；現已實作0.14.2，Buy Me a Coffee支持作者仍保留原生直連。

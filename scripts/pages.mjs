@@ -7,7 +7,7 @@ const destination=path.join(root,'docs');
 const runtime=path.join(destination,'play');
 await mkdir(path.join(runtime,'src'),{recursive:true});
 await rm(path.join(runtime,'public/art/baccarat-b/hand.png'),{force:true});
-for(const file of ['instructions.mjs','settings-view.mjs','leaderboard-config.mjs','leaderboard-view.mjs','leaderboard.mjs','home-view.mjs','cash.mjs','challenge.mjs','record-share.mjs','sicbo-view.mjs','app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
+for(const file of ['music.mjs','landscape.mjs','instructions.mjs','settings-view.mjs','leaderboard-config.mjs','leaderboard-view.mjs','leaderboard.mjs','home-view.mjs','cash.mjs','challenge.mjs','record-share.mjs','sicbo-view.mjs','app.mjs','sound.mjs','roulette.mjs','roulette-game.mjs','roulette-view.mjs','poker.mjs','poker-game.mjs','poker-view.mjs','blackjack.mjs','blackjack-game.mjs','blackjack-view.mjs','game.mjs','rules.mjs','storage.mjs','board.mjs','table-layout.mjs','baccarat.mjs','baccarat-squeeze.mjs','baccarat-view.mjs','styles.css']){
   await copyFile(path.join(root,'src',file),path.join(runtime,'src',file));
 }
 const images=[...Object.values(HOME_ART).map(ref=>ref.slice(1)),...Object.values(LEADERBOARD_ART).map(ref=>ref.slice(1)),'art/styles/b/lobby-populated-v4.png',...['table','dice','props','dome'].map(id=>`art/prototype-b/${id}.png`),...['felt','dice','chip','chips-five'].map(id=>`art/sicbo-board-b/${id}.png`),'art/baccarat-b/cards.png'];
@@ -16,6 +16,8 @@ for(const file of images){
   await mkdir(path.dirname(output),{recursive:true});
   await copyFile(path.join(root,'public',file),output);
 }
+await mkdir(path.join(runtime,'public/audio'),{recursive:true});
+for(const file of await readdir(path.join(root,'public/audio')))await copyFile(path.join(root,'public/audio',file),path.join(runtime,'public/audio',file));
 const socialDir='social';
 await mkdir(path.join(runtime,'public',socialDir),{recursive:true});
 for(const file of await readdir(path.join(root,'public',socialDir)))await copyFile(path.join(root,'public',socialDir,file),path.join(runtime,'public',socialDir,file));
@@ -31,4 +33,4 @@ for(const icon of manifest.icons)icon.src=icon.src.replace('./public/','./play/p
 await writeFile(path.join(destination,'manifest.webmanifest'),JSON.stringify(manifest,null,2)+'\n');
 await writeFile(path.join(destination,'index.html'),html);
 await writeFile(path.join(destination,'.nojekyll'),'');
-console.log('GitHub Pages ready: docs/index.html + docs/play/ (twelve game PNGs, thirty runtime files, approved A bookmark icons).');
+console.log('GitHub Pages ready: docs/index.html + docs/play/ (twelve game PNGs, thirty-two runtime files, approved A bookmark icons).');

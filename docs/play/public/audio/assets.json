@@ -1,0 +1,13 @@
+{
+  "title": "Brass Command",
+  "source": "使用者於2026-11-08上載 Brass Command - usesuno.com.mp3，指定加入背景音樂",
+  "source_file": "Brass Command - usesuno.com.mp3",
+  "source_bytes": 4985206,
+  "source_sha256": "52a8da3e4fa453af531d015ce2dae4539f89e59eae92aabf9afc6ed89967714d",
+  "runtime": "brass-command-v1.mp3",
+  "runtime_bytes": 3312369,
+  "runtime_sha256": "f38d31eb81154191e4e5816a5d67bb10cceb30068ce16a19e5966441aff080cf",
+  "encoding": "MP3 stereo 128kbps 44.1kHz；移除封面及內嵌metadata，未剪輯樂曲內容",
+  "duration_seconds": 206.95,
+  "rights": "使用者提供並指示使用；未推定額外第三方授權條款"
+}

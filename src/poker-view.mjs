@@ -1,8 +1,8 @@
-import {cashAdd,cashSub,cashMin,cashMax,cashAbs,cashParse,cashDollars} from './cash.mjs?v=0.14.2';
-import {POKER_NAMES,POKER_STYLES,pokerOptions,pokerBest,pokerPotLayers} from './poker.mjs?v=0.14.2';
-import {baccaratCard} from './baccarat-view.mjs?v=0.14.2';
-import {chipFace,chipColorIndex} from './board.mjs?v=0.14.2';
-import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.14.2';
+import {cashAdd,cashSub,cashMin,cashMax,cashAbs,cashParse,cashDollars} from './cash.mjs?v=0.15.0';
+import {POKER_NAMES,POKER_STYLES,pokerOptions,pokerBest,pokerPotLayers} from './poker.mjs?v=0.15.0';
+import {baccaratCard} from './baccarat-view.mjs?v=0.15.0';
+import {chipFace,chipColorIndex} from './board.mjs?v=0.15.0';
+import {money,chipLabel,getChipDenominations,ITEMS} from './rules.mjs?v=0.15.0';
 const pokerEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const pokerSeatName=(r,i)=>i===0?'你':POKER_NAMES[(r.players[i].id-1)%POKER_NAMES.length];
 const pokerCardText=id=>['A','2','3','4','5','6','7','8','9','10','J','Q','K'][id%13]+['♠','♥','♣','♦'][Math.floor(id/13)];

@@ -26,7 +26,7 @@ export async function buildVercel(env=process.env){
    if(entry.isSymbolicLink())throw new Error('Refusing deployment symlink: '+name);
    if(entry.isDirectory())await copyTree(name);
    else if(entry.isFile()){
-    if(!/\.(?:mjs|css|png|ico|webp|json)$/.test(name))throw new Error('Unexpected runtime asset: '+name);
+    if(!/\.(?:mjs|css|png|ico|webp|json|mp3)$/.test(name))throw new Error('Unexpected runtime asset: '+name);
     await mkdir(path.dirname(path.join(output,name)),{recursive:true});
     await copyFile(path.join(root,'docs',name),path.join(output,name));files.push(name);
    }

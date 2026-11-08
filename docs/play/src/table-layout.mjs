@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.14.2';
+import {baccaratBoardMarkup} from './board.mjs?v=0.15.0';
 // Best-effort hints only for the table the player points at; never gate navigation.
 export const TABLE_TEXTURES={
  sicbo:['/art/sicbo-board-b/felt.png'],
@@ -8,7 +8,7 @@ export const TABLE_TEXTURES={
  roulette:['/art/sicbo-board-b/felt.png']
 };
 export class TableArtCache{
- constructor({url,ImageClass=globalThis.Image,schedule=setTimeout,cancel=clearTimeout,timeout=15000}){this.url=url;this.ImageClass=ImageClass;this.schedule=schedule;this.cancel=cancel;this.timeout=timeout;this.entries=new Map();}
+ constructor({url,ImageClass=globalThis.Image,schedule=(fn,ms)=>setTimeout(fn,ms),cancel=id=>clearTimeout(id),timeout=15000}){this.url=url;this.ImageClass=ImageClass;this.schedule=schedule;this.cancel=cancel;this.timeout=timeout;this.entries=new Map();}
  image(ref){
   if(this.entries.has(ref))return this.entries.get(ref).promise;
   const entry={image:null,promise:null};this.entries.set(ref,entry);

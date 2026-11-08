@@ -1,3 +1,5 @@
+> 0.15.0：加入使用者提供的Brass Command循環背景音樂（設定可獨立調音量），手機／平板橫向遊玩；直向提示並保留暫停狀態。見[實作與驗證](docs/MUSIC_LANDSCAPE_0150.md)。
+
 # 五分鐘賭神 · 0.14.2
 
 本機版本：0.14.2，開啟dist/charity-casino-prototype.html即可離線遊玩。

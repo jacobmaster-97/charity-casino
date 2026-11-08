@@ -85,3 +85,5 @@
 - 0.14.1使用者指定主頁「支持作者」點擊直接進入https://buymeacoffee.com/studios_16；以原生HTTPS連結另開分頁，保留原遊戲，主選單不經data-action或中間彈窗。更新原GitHub Pages；不嵌入第三方付款SDK或自動操作付款，不影響Vercel待辦。
 
 - 0.14.2使用者要求刪除回報問題，取代0.14.0該功能規格；已移除UI、草稿／裝置狀態、Clipboard／TXT及GitHub Issue入口。設定固定footer新增原生「關於作者」https://www.threads.com/@studios_16_（保留末尾底線），主頁安全區底部細行「作者：studios_16」，menu依實際署名高度預留間距。Buy Me a Coffee支持作者維持原址。發布原Pages；Vercel仍待授權。
+
+- 0.15.0依使用者加入上載Brass Command背景音樂及手機／平板固定橫向；音樂獨立偏好、循環、手勢解鎖，不能阻塞入桌。直向阻擋並暫停兩倒數保留原局，回橫向需繼續；iOS不支援強制旋轉時保留提示，桌面不受限。manifest橫向、離線包內嵌音樂，原素材／規則／存檔／Cloudflare不改，沿既有原Pages發布流程。詳MUSIC_LANDSCAPE_0150.md及MUSIC_LANDSCAPE_RELEASE.json；本環境此次已成功啟動本地server及Chromium，舊IPC限制不可再當成當前未驗理由，但模擬不是iOS真機。

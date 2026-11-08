@@ -121,3 +121,7 @@ test('home-screen manifests use stable scoped starts, standalone mode and approv
   }
  }
 });
+
+test('Pages exports exact background music and landscape manifest for root and project paths',async()=>{
+ assert.deepEqual(await readFile(path.join(root,'public/audio/brass-command-v1.mp3')),await readFile(path.join(site,'play/public/audio/brass-command-v1.mp3')));for(const file of ['manifest.webmanifest','docs/manifest.webmanifest'])assert.equal(JSON.parse(await readFile(path.join(root,file))).orientation,'landscape');for(const file of ['music.mjs','landscape.mjs'])assert.deepEqual(await readFile(path.join(root,'src',file)),await readFile(path.join(site,'play/src',file)));
+});

@@ -10,7 +10,7 @@ let html=await readFile(path.join(root,'index.html'),'utf8');
 html=html.replace(/\s*<link rel="manifest"[^>]*>/,'');
 let css=await readFile(path.join(root,'src/styles.css'),'utf8');
 let js='';
-for(const file of ['instructions','settings-view','leaderboard-config','leaderboard-view','leaderboard','home-view','cash','rules','challenge','record-share','sound','baccarat','blackjack','blackjack-game','poker','poker-game','roulette','roulette-game','game','storage','board','table-layout','baccarat-squeeze','baccarat-view','blackjack-view','poker-view','roulette-view','sicbo-view','app']){
+for(const file of ['instructions','settings-view','leaderboard-config','leaderboard-view','leaderboard','home-view','cash','rules','challenge','record-share','music','landscape','sound','baccarat','blackjack','blackjack-game','poker','poker-game','roulette','roulette-game','game','storage','board','table-layout','baccarat-squeeze','baccarat-view','blackjack-view','poker-view','roulette-view','sicbo-view','app']){
   const source=await readFile(path.join(root,`src/${file}.mjs`),'utf8');
   js+=source.replace(/^import .*;\s*$/gm,'').replace(/^export /gm,'')+'\n';
 }
@@ -23,6 +23,7 @@ for(const [index,ref] of references.entries()){
   css=css.replaceAll(`url('../public${ref}')`,`var(--bundled-art-${index})`);
   bootstrap+=`document.documentElement.style.setProperty('--bundled-art-${index}', 'url("'+globalThis.__CASINO_ART[${JSON.stringify(ref)}]+'")');\n`;
 }
+bootstrap=`globalThis.__CASINO_MUSIC=${JSON.stringify('data:audio/mpeg;base64,'+(await readFile(path.join(root,'public/audio/brass-command-v1.mp3'))).toString('base64'))};\n`+bootstrap;
 bootstrap=`globalThis.__CASINO_ART=${JSON.stringify(assetMap)};\n`+bootstrap;
 // Inline only the small browser icons; the full approved source is never fetched at startup.
 for(const match of [...html.matchAll(/href="(\.\/public\/icons\/[^"?]+)(?:\?[^" ]*)?"/g)]){

@@ -1,0 +1,22 @@
+{
+  "version": "0.15.0",
+  "status": "local_verified_release_prepared",
+  "source_parent_commit": "75a809bdae04381dd19c2a91cc5c1a52fbb0783f",
+  "source_parent_tree": "2f369a332edaf0393ce567df49f277d3f2a88e31",
+  "tests": {
+    "unit_component": 416,
+    "standalone": 7,
+    "pages": 11,
+    "vercel_build": 4,
+    "total": 438,
+    "browser": "Chromium phone/tablet emulation, real MP3 decoding/playback; docs/qa/0150/browser.json"
+  },
+  "published": false,
+  "github_commit": null,
+  "pages_run": null,
+  "public_verification": null,
+  "vercel_deployed": false,
+  "real_ios_verified": false,
+  "real_android_verified": false,
+  "cloudflare_changes": false
+}

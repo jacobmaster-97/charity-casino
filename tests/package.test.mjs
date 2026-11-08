@@ -48,3 +48,7 @@ test('offline package keeps home-screen help but does not reference a hosted app
 test('standalone includes the approved leaderboard view and its WebP without external UI artwork requests',()=>{
  assert.ok(html.includes('rank-dialog'));assert.ok(html.includes('rank-champion'));assert.ok(html.includes('data:image/webp;base64,'));assert.ok(!html.includes("url('../public/art/leaderboard-b/"));
 });
+
+test('offline music is the exact shipped MP3 and portrait guard is bundled',async()=>{
+ const data=html.match(/globalThis\.__CASINO_MUSIC="data:audio\/mpeg;base64,([^"\n]+)";/);assert.ok(data);assert.deepEqual(Buffer.from(data[1],'base64'),await readFile(path.join(root,'public/audio/brass-command-v1.mp3')));assert.ok(html.includes('landscape-cover'));assert.ok(html.includes('music-volume'));
+});

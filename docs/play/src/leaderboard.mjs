@@ -1,4 +1,4 @@
-import {cashParse} from './cash.mjs?v=0.14.2';
+import {cashParse} from './cash.mjs?v=0.15.0';
 const scoreIdPattern=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export const newScoreId=()=>{try{return globalThis.crypto?.randomUUID?.();}catch{return undefined;}};
 export function scorePayload(profile){

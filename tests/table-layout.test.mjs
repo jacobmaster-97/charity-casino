@@ -129,3 +129,10 @@ test('blackjack landscape breakpoint includes iPhone landscape and excludes port
  for(const [w,h] of [[568,320],[667,375],[844,390],[932,430],[932,354],[1100,600]])assert.equal(mobileBlackjackViewport(w,h),true);
  for(const [w,h] of [[430,932],[768,1024],[1024,768],[1280,720],[932,0],[NaN,430],[932,Infinity]])assert.equal(mobileBlackjackViewport(w,h),false);
 });
+
+test('browser timer defaults never bind Window timers to TableArtCache',async()=>{
+ const schedule=globalThis.setTimeout,cancel=globalThis.clearTimeout;let scheduled=0,cancelled=0;
+ globalThis.setTimeout=function(){assert.ok(!(this instanceof TableArtCache));scheduled++;return 42;};globalThis.clearTimeout=function(id){assert.ok(!(this instanceof TableArtCache));assert.equal(id,42);cancelled++;};
+ class ReadyImage{complete=true;naturalWidth=1;}
+ try{const cache=new TableArtCache({url:x=>x,ImageClass:ReadyImage});assert.equal(await cache.prefetch('sicbo'),true);assert.equal(scheduled,1);assert.equal(cancelled,1);}finally{globalThis.setTimeout=schedule;globalThis.clearTimeout=cancel;}
+});

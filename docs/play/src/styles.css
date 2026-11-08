@@ -952,3 +952,10 @@
 .home-title-screen .title-author{position:absolute;left:0;right:0;bottom:0;z-index:3;height:24px;margin:0;padding:0 10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:400;line-height:1.4;letter-spacing:.04em;color:#d7c295;background:#071d17eb;text-align:center;pointer-events:none}
 .settings-footer{gap:10px;flex-wrap:wrap}.settings-footer .author-link{margin-right:auto;min-height:44px;font-size:17px}
 @media(max-width:560px){.settings-footer{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.settings-footer .author-link,.settings-footer button{width:100%;min-width:0;padding:8px;font-size:16px;line-height:1.5}}
+
+/* Landscape-only mobile play; fixed scrim also covers settings and external panels. */
+.landscape-cover{position:fixed;inset:0;z-index:100000;display:grid;place-items:center;padding:max(24px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));background:radial-gradient(ellipse at 50% 25%,#214a39,#0b1713 80%);color:#f5e6b9;text-align:center;overflow:auto;outline:none}
+.landscape-card{width:min(100%,420px);padding:28px 20px;border:1px solid #b99755;border-radius:20px;box-shadow:0 0 0 5px #182d23,0 16px 50px #0008}
+.landscape-seal{display:inline-grid;place-items:center;width:54px;height:54px;border:2px solid #d9b76f;border-radius:50%;font-size:36px;color:#e7c581}
+.rotate-device{font-size:72px;line-height:1.2;color:#e5bf74}.landscape-card h1{font-size:24px;line-height:1.5}.landscape-card p{font-size:17px;line-height:1.7}.landscape-card small{display:block;font-size:16px;line-height:1.7;color:#c9d3c4}
+.settings-music{margin-top:20px;padding-top:20px;border-top:1px solid #9a82464d}#music-volume{width:100%;min-height:44px;accent-color:#dbb66e;cursor:pointer}
