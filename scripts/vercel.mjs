@@ -36,6 +36,15 @@ export async function buildVercel(env=process.env){
  let html=await readFile(path.join(root,'docs/index.html'),'utf8');
  const oldSite=html.match(/<link rel="canonical" href="([^"]+)"/)[1];
  html=html.replaceAll(oldSite+'public/social/',siteURL+'play/public/social/').replaceAll(oldSite,siteURL);
+ // Browser-ready official SDK; only Vercel output includes analytics, independent of the game.
+ const analyticsEntry=fileURLToPath(import.meta.resolve('@vercel/analytics'));
+ const analyticsRoot=path.resolve(path.dirname(analyticsEntry),'..');
+ const analyticsPackage=JSON.parse(await readFile(path.join(analyticsRoot,'package.json'),'utf8'));
+ const sdk=(await readFile(analyticsEntry,'utf8')).replace(/^\/\/# sourceMappingURL=.*$/gm,'');
+ const analytics=`/* @vercel/analytics ${analyticsPackage.version}, MIT; see analytics-LICENSE.txt */\n${sdk}\nif(window.location.origin===${JSON.stringify(new URL(siteURL).origin)})inject({mode:'production'});\n`;
+ await writeFile(path.join(output,'analytics.mjs'),analytics);files.push('analytics.mjs');
+ await copyFile(path.join(analyticsRoot,'LICENSE'),path.join(output,'analytics-LICENSE.txt'));files.push('analytics-LICENSE.txt');
+ html=html.replace('</head>',`<script type="module" async src="./analytics.mjs?v=${analyticsPackage.version}"></script>\n</head>`);
  await writeFile(path.join(output,'index.html'),html);files.push('index.html');
  await copyFile(path.join(root,'docs/manifest.webmanifest'),path.join(output,'manifest.webmanifest'));files.push('manifest.webmanifest');
  const manifest=[];
@@ -43,7 +52,7 @@ export async function buildVercel(env=process.env){
   const bytes=await readFile(path.join(output,file));
   manifest.push({path:file,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')});
  }
- const report={siteURL,outputDirectory:'dist/vercel',files:manifest};
+ const report={siteURL,outputDirectory:'dist/vercel',analytics:{package:analyticsPackage.name,version:analyticsPackage.version,officialOrigin:new URL(siteURL).origin,customEvents:false},files:manifest};
  await writeFile(path.join(root,'dist/vercel-build.json'),JSON.stringify(report,null,2)+'\n');
  console.log(`Vercel static output: ${manifest.length} files; public metadata origin ${siteURL}`);
  return report;

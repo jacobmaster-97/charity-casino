@@ -15,5 +15,8 @@
     "test:leaderboard": "node tests/leaderboard-worker.test.mjs && node tests/leaderboard.test.mjs",
     "build:vercel": "node scripts/vercel.mjs",
     "verify:vercel": "node tests/vercel.test.mjs"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
   }
 }

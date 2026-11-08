@@ -12,9 +12,9 @@
 - GitHub `jacobmaster-97/charity-casino` 已連接，Production Branch為 `main`。
 - 正式網域已加到專案、verified，跟隨production部署，不是一次性的deployment alias。
 - 初次命名後更正前產生的 `5mins-gambers.vercel.app` 已設308轉址至最終網址。
-- 沒有升級付費方案、新增資料庫、Functions、Cron、Analytics或付費建置機。
+- 沒有升級付費方案、增加資料庫、Functions、Cron或付費建置機；Web Analytics依使用者後續要求啟用基本功能。
 
-初次CLI部署 `dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ` 已READY；後續GitHub觸發及完整收據以 `VERCEL_RELEASE.json` 為準，不能只憑已連接就宣稱自動部署驗證完成。
+初次CLI部署 `dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ` 已READY；已再以實際main commit `e691a84cb8abafe5f7d5795d96e3511f7fc6e58b` 驗證GitHub自動部署，產生production部署 `dpl_HC5kcSjSpG3astU91nkbesxwRMzf` READY，正式網域已切換，gitSource SHA／main分支均吻合。原Pages run42494257917亦completed/success。完整收據以 `VERCEL_RELEASE.json` 為準。
 
 ## 固定設定
 
@@ -29,7 +29,7 @@
 
 `SITE_URL` 是公開網址，不是管理金鑰。建置也支援Vercel系統環境變數，但這個正式專案明確固定正確網址，避免更名前的域名出現在canonical及分享圖。Preview網址不自動加入排行榜允許清單。
 
-`vercel.json`、`.vercelignore`及`scripts/vercel.mjs`已在原倉庫。建置只輸出遊戲入口、manifest與play/src、play/public共64檔；不發布後端設定、交接、測試、預覽或登入憑證。單檔離線包仍是另一個產物，不拿來當Vercel網站入口。
+`vercel.json`、`.vercelignore`及`scripts/vercel.mjs`已在原倉庫。建置只輸出遊戲入口、manifest與play/src、play/public及Web Analytics SDK／License共66檔；不發布後端設定、交接、測試、預覽或登入憑證。單檔離線包仍是另一個產物，不拿來當Vercel網站入口。
 
 ## 日後更新
 
@@ -72,3 +72,9 @@ Cloudflare授權以官方device流程完成；首次最小scope欠Worker scripts
 ## 回退
 
 Vercel可將production回到已驗證的部署；不刪專案／資料庫。Worker可回先前 `82eb5c1f-d3b3-421f-8bbf-1e1647e31023`，但會失去Vercel跨域允許，GitHub origin保持。更安全的CORS回退是保留同一Worker及D1，只移除新增Vercel origin；任何回退都保留玩家資料。
+
+最終收據／交接在本機補上實際部署結果；dist/github-upload及manifest保持322檔精確已上傳快照，不以補收據再重建覆蓋。
+
+## Web Analytics
+
+使用者指定安裝@vercel/analytics，2.0.1已接官方inject()，僅正式Vercel origin初始化，沒有遊戲自訂事件。見[ANALYTICS.md](ANALYTICS.md)及ANALYTICS_RELEASE.json；本次由64變66輸出檔。

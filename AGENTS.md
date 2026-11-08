@@ -89,3 +89,5 @@
 - 0.15.0依使用者加入上載Brass Command背景音樂及手機／平板固定橫向；音樂獨立偏好、循環、手勢解鎖，不能阻塞入桌。直向阻擋並暫停兩倒數保留原局，回橫向需繼續；iOS不支援強制旋轉時保留提示，桌面不受限。manifest橫向、離線包內嵌音樂，原素材／規則／存檔／Cloudflare不改，沿既有原Pages發布流程。詳MUSIC_LANDSCAPE_0150.md及MUSIC_LANDSCAPE_RELEASE.json；本環境此次已成功啟動本地server及Chromium，舊IPC限制不可再當成當前未驗理由，但模擬不是iOS真機。
 
 - 2026-11-08使用者再次要求接入Vercel並更正最終專案名5mins-gamber；已官方device登入、在Hobby jerseyprice建立專案／公開正式域名https://5mins-gamber.vercel.app，連原GitHub main。原Pages保留，原Worker僅追加精確origin、D1不改，不升付費；憑證專案外、CLI生成的OIDC .env.local已移除，.vercel忽略。詳VERCEL.md／VERCEL_RELEASE.json；待以實際GitHub推送驗證自動部署，不能只看Connected即宣稱已驗。
+
+- 使用者指定npm i @vercel/analytics：已安裝2.0.1及lock，Vercel正式origin以官方inject()非同步接網站瀏覽統計，專案基本Web Analytics已啟用，不升付費。不新增姓名／賭本／牌局等自訂事件，不放進GitHub Pages或離線版，原遊戲及Cloudflare／D1不改。詳ANALYTICS.md／ANALYTICS_RELEASE.json。

@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 const root=path.resolve(import.meta.dirname,'..');
 const destination=path.join(root,'dist/github-upload');
 await rm(destination,{recursive:true,force:true});
-const files=['vercel.json','.vercelignore','.gitignore','.nojekyll','index.html','manifest.webmanifest','package.json','README.md','AGENTS.md','CODEX_HANDOFF.md','DEBUG_HANDOFF.md','cloudflare/worker.mjs','cloudflare/wrangler.example.jsonc','cloudflare/migrations/0001_scores.sql','docs/text/revisions/TEXT_REVISIONS_0132.json'];
+const files=['vercel.json','.vercelignore','.gitignore','.nojekyll','index.html','manifest.webmanifest','package.json','package-lock.json','README.md','AGENTS.md','CODEX_HANDOFF.md','DEBUG_HANDOFF.md','cloudflare/worker.mjs','cloudflare/wrangler.example.jsonc','cloudflare/migrations/0001_scores.sql','docs/text/revisions/TEXT_REVISIONS_0132.json'];
 async function gather(directory){
   for(const entry of await readdir(path.join(root,directory),{withFileTypes:true})){
     const relative=path.join(directory,entry.name);

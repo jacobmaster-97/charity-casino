@@ -1,5 +1,27 @@
 # CODEX_HANDOFF
 
+## 最新 · Vercel Web Analytics安裝／接入完成，準備發布
+
+使用者指定npm i @vercel/analytics，已安裝2.0.1（MIT）及package-lock，prepare白名單納入lock。純JS使用官方inject()，Vercel builder從套件讀取瀏覽器SDK、附MIT License，HTML以module async獨立載入；只在正式SITE_URL origin初始化。沒有將統計放進Game／倒數／存檔或原GitHub／file單檔，也沒有呼叫自訂track或傳姓名／賭本／下注／派彩等資料。
+
+Vercel專案5mins-gamber基本Web Analytics已由CLI回enabled:true，保持Hobby／未啟用付費升級。Vercel輸出64→66檔（SDK＋License），原runtime32檔不變。6項Vercel檢查通過，包含正式origin邊界、重複初始化、SDK失敗不throw、官方程式／License及lock相符；prepare將另驗11 Pages。套件或統計網絡不阻塞遊戲。
+
+詳docs/ANALYTICS.md、ANALYTICS_RELEASE.json。下一步發布原GitHub main，讓Vercel自動部署，核對66檔及/_vercel/insights/script.js；不手動塞假瀏覽事件，不宣稱Analytics報表數字已驗。真機／公開瀏覽器互動及報表入帳未驗，既有Chromium CA阻擋不繞過。原Cloudflare／D1、原圖／音樂及全部遊玩規則保持。
+
+## 最新 · Vercel 5mins-gamber已公開，GitHub自動部署與原Pages完成驗證
+
+正式網址 https://5mins-gamber.vercel.app/ （遊戲0.15.0）。使用者最終指定名稱5mins-gamber；Vercel Project prj_RtqkZuZlAHpunRfqecoMw8elmSn2、jerseyprice Hobby免費團隊、Other／Node24／npm run build:vercel／dist/vercel，公開SITE_URL固定正確正式站。沒有升付費、新資料庫、Functions、Cron或付費addon。原GitHub Pages https://jacobmaster-97.github.io/charity-casino/ 保留。
+
+已發布原GitHub main e691a84cb8abafe5f7d5795d96e3511f7fc6e58b／tree6f2a7103b7cd720f85ada178bc1931d4be1a9036，expected_sha父93165d7fcdd689a0490be1d5612b059da9d01867、force:false；322檔tree SHA全符、12個部署文件／example／ignore變更，全部runtime、圖片、MP3及Worker源碼保持原byte。Pages run42494257917 completed/success。GitHub Vercel status success，真實main push觸發production dpl_HC5kcSjSpG3astU91nkbesxwRMzf READY，API gitSource.sha及ref=main吻合；正式domain已在alias內且是verified project domain，跟隨後續production。初次CLI部署dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ保留；更正前5mins-gambers.vercel.app已308到最終網址，不是另建第二專案。
+
+最終GitHub自動部署後重驗64公網檔案HTTP200／SHA逐byte全符、入口確是遊戲非認證頁、canonical／OG新站正確，MP3 Range206／100 bytes；4個敏感設定／交接路徑404。29項針對檢查（8 Worker＋6排行榜客戶端＋4 Vercel＋11 Pages）全過，0.15.0舊完整438項紀錄保留，不把重複prepare另計。公開Chromium曾實際嘗試，ERR_CERT_AUTHORITY_INVALID阻擋，沒有停TLS；正常CA HTTP、前輪本地Chromium、真機證據清楚分層。
+
+原Cloudflare Worker URL／D1保持。API權限欠scripts時未更新，補官方device Workers scripts/routes scope後成功，只改ALLOWED_ORIGINS為https://jacobmaster-97.github.io,https://5mins-gamber.vercel.app，版本9d82e4fc-7768-4ef7-9abf-a754bbaf41a3。Worker source SHA a26286382cca6982605153c7b62c3aac90f7b0752c5b0269bf3d13b284777436不變，DB／ratelimit binding保持，沒有D1遷移／成績插入或假資料。兩origin OPTIONS204／GET200，新origin錯資料POST400帶CORS，陌生origin403，六項通過；合法新增／重試有單元覆蓋，本次未向公開榜塞測試成績。預設Python UA被邊緣1010拒，瀏覽器相容UA通過，未改弱安全設定。
+
+登入憑證只在/tmp/web-game-vercel-private與/tmp/web-game-xdg私有目錄，不在HTML或GitHub。CLI link生成的OIDC .env.local已移除、沒讀值；.vercel忽略。docs/VERCEL.md及VERCEL_RELEASE.json已補最終公網／autodeploy證據；dist/github-upload及manifest保留322檔精確已上傳快照，最終收據／交接只補本機，不重prepare覆蓋。
+
+目前Vercel已完成，不再把本任務標成待帳戶授權。新origin不能自動讀舊localStorage，原存檔保留，從設定→存檔與資料匯出／匯入完成局轉移。真iPhone／iPad Safari及Android、真實完場上傳／重試、跨站備份實作操作及社交App快取仍未驗；下一最安全任務：使用者以新正式網址橫向完成一局並手動上傳，按需由舊站轉移備份。回退保留資料庫及原站，Worker可回82eb前版但會失去Vercel origin。
+
 ## 最新 · Vercel 5mins-gamber正式部署／CORS完成，準備GitHub自動部署驗證
 
 使用者要求接入Vercel並將最終名稱更正5mins-gamber。已在使用者jerseyprice Hobby帳戶建立Project prj_RtqkZuZlAHpunRfqecoMw8elmSn2，Other／Node24／npm run build:vercel／dist/vercel，production SITE_URL=https://5mins-gamber.vercel.app。官方device登入成功，憑證在專案外，CLI產生的.env.local OIDC檔已刪且未讀值；.vercel已忽略。原GitHub main連接已由API確認，原Pages保持。更名前臨時名稱域名5mins-gambers.vercel.app已308到最終網址，正式domain是project domain而非一次性alias。

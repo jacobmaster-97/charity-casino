@@ -1,0 +1,20 @@
+{
+  "game_version": "0.15.0",
+  "analytics_package": "@vercel/analytics",
+  "analytics_package_version": "2.0.1",
+  "date": "2026-11-08",
+  "status": "local_verified_project_enabled_deployment_pending",
+  "project": "5mins-gamber",
+  "site": "https://5mins-gamber.vercel.app/",
+  "enabled": true,
+  "paid_plan_enabled": false,
+  "custom_game_events": false,
+  "github_pages_and_offline_injected": false,
+  "tests": {
+    "vercel": 6,
+    "pages": 11
+  },
+  "output_files": 66,
+  "report_counts_verified": false,
+  "public_verification": null
+}

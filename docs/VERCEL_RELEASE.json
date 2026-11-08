@@ -1,7 +1,7 @@
 {
   "version": "0.15.0",
   "date_hong_kong": "2026-11-08",
-  "status": "vercel_deployed_github_connected_awaiting_push_verification",
+  "status": "deployed_and_git_push_verified",
   "github_repository": "jacobmaster-97/charity-casino",
   "github_pages_preserved": true,
   "github_pages_url": "https://jacobmaster-97.github.io/charity-casino/",
@@ -27,14 +27,29 @@
   "vercel_plan": "hobby",
   "vercel_url": "https://5mins-gamber.vercel.app/",
   "vercel_deployment": {
-    "id": "dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ",
+    "id": "dpl_HC5kcSjSpG3astU91nkbesxwRMzf",
+    "name": "5mins-gamber",
+    "url": "5mins-gamber-435sxahqu-jerseyprice.vercel.app",
     "readyState": "READY",
-    "url": "https://5mins-gamber-dhw7wa5t2-jerseyprice.vercel.app",
     "target": "production",
-    "source": "CLI"
+    "alias": [
+      "5mins-gamber.vercel.app",
+      "5mins-gambers.vercel.app",
+      "5mins-gamber-jerseyprice.vercel.app",
+      "5mins-gamber-git-main-jerseyprice.vercel.app"
+    ],
+    "githubCommitSha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
+    "githubCommitRef": "main",
+    "gitSource": {
+      "ref": "main",
+      "repoId": 1438512980,
+      "sha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
+      "type": "github",
+      "prId": null
+    }
   },
   "site_url_config": "https://5mins-gamber.vercel.app",
-  "git_push_deployment_verified": false,
+  "git_push_deployment_verified": true,
   "old_name_alias": {
     "url": "https://5mins-gambers.vercel.app/",
     "redirect_status": 308,
@@ -683,5 +698,22 @@
     "actual_deployment_was_pending": true
   },
   "latest_game_github_commit": "93165d7fcdd689a0490be1d5612b059da9d01867",
-  "checked_at": "2026-11-08T15:18:30.029814+00:00"
+  "checked_at": "2026-11-08T15:22:36.389287+00:00",
+  "initial_cli_deployment": {
+    "id": "dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ",
+    "readyState": "READY",
+    "url": "https://5mins-gamber-dhw7wa5t2-jerseyprice.vercel.app",
+    "target": "production",
+    "source": "CLI"
+  },
+  "github_commit": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
+  "github_tree": "6f2a7103b7cd720f85ada178bc1931d4be1a9036",
+  "github_published_files": 322,
+  "github_changed_paths": 12,
+  "github_pages_run": {
+    "id": 42494257917,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b"
+  }
 }
