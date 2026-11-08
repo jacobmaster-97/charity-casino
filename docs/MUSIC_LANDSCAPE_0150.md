@@ -33,9 +33,11 @@
 - 轉向測試包括手機、平板桌面UA、鍵盤、桌面不限制、原生lock拒絕、直向擋開始、投注後保留兩倒數／籌碼、手動繼續及設定返回路徑。
 - Chromium實際MP3解碼／播放、接近曲尾循環、前後currentTime、觸控模擬932×430→430×932→橫向、1024×768及1366×1024設定、無整頁捲動、MP3 Range 206、音樂失敗仍進21點。詳細原始證據及截圖在本機 `docs/qa/0150/`，不當成真iOS測試。
 - 本次新環境已成功啟動本地server及Chromium；此前交接的IPC限制已非本次阻擋。沒有以舊限制跳過實測。
-- 發布／公網結果分開記於 `MUSIC_LANDSCAPE_RELEASE.json`，只有實際完成才標示published。
+- 發布已完成：main `93165d7fcdd689a0490be1d5612b059da9d01867`，Pages run42491603508 completed/success。322檔tree SHA全符、84變更，48舊PNG／ICO／WebP路徑不變。54公網檔案HTTP200且SHA逐byte一致，兩處MP3 MIME為audio/mp3，Range回206／100 bytes。正式 https://jacobmaster-97.github.io/charity-casino/?v=0.15.0 。詳細分層證據見 `MUSIC_LANDSCAPE_RELEASE.json`。
 
 ## 未驗與回退
+
+額外瀏覽器檢查的明確限制：Chromium開file單檔被策略ERR_BLOCKED_BY_ADMINISTRATOR阻擋，公網導覽被ERR_CERT_AUTHORITY_INVALID阻擋；沒有停用TLS或重試繞過策略。公網以正常CA信任HTTP/SHA與Pages成功核對，本地HTTP Chromium已實播通過；單檔為解析／內嵌逐byte通過，不宣稱file瀏覽器播放成功。
 
 未驗iPhone16 Plus／實體iPad Safari、Android Chrome原生orientation lock與主畫面安裝、裝置靜音開關及藍牙／耳機中斷、VoiceOver、真機長時溫度／耗電、實際聽感。模擬及HTTP不代表上述通過。Vercel仍待帳戶授權，沒有新部署或更改Cloudflare／D1。
 

@@ -1,342 +1,687 @@
 {
-  "version": "0.13.4",
-  "date_hong_kong": "2026-11-06",
-  "status": "github_configuration_published_vercel_authentication_pending",
-  "user_vercel_status": "account_exists_project_not_created",
+  "version": "0.15.0",
+  "date_hong_kong": "2026-11-08",
+  "status": "vercel_deployed_github_connected_awaiting_push_verification",
   "github_repository": "jacobmaster-97/charity-casino",
   "github_pages_preserved": true,
-  "vercel_project": null,
-  "vercel_url": null,
-  "tests": {
-    "unit_component": 381,
-    "package": 6,
-    "pages": 10,
-    "vercel_build": 4,
-    "total": 401,
-    "passed": true
-  },
-  "cloudflare_origin_update": "pending_actual_vercel_origin",
-  "cloudflare_deployed_this_phase": false,
-  "d1_changed": false,
-  "public_verification": "pending",
-  "authentication": "Official device login initiated; no token stored in project or public source.",
-  "unverified": [
-    "Vercel actual production deployment",
-    "CORS for actual Vercel origin",
-    "Public runtime and thumbnail checks",
-    "Mobile layout/share and save transfer"
-  ],
-  "github": {
-    "commit": "3f9fe780666fd7c81ad098d04b53050ca5887acb",
-    "tree": "944cbb720f0da978da15b986df59edb8484576f4",
-    "files": 300,
-    "changed_paths": 61,
-    "all_blob_shas_match": true,
-    "expected_parent": "320274cdc74ce044fb08d7ec2973460a1daeeca9",
-    "force": false,
-    "pages_run": 42183823608,
-    "pages_status": "completed",
-    "pages_conclusion": "success",
-    "public_verification": {
-      "version": "0.13.4",
-      "files_checked": 35,
-      "runtime_files": 28,
-      "all_exact": true,
-      "root_and_docs_metadata_valid": true,
-      "approved_image_pixels_unchanged": true,
-      "image_dimensions": [
-        1672,
-        941
-      ],
-      "image_content_type": "image/png",
-      "results": [
-        {
-          "path": "index.html",
-          "status": 200,
-          "content_type": "text/html",
-          "bytes": 2471,
-          "sha256": "dcc077acb26b71a10282c3ab212144f3ac74f6896b00c27624d9409d283ca23b",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "docs/index.html",
-          "status": 200,
-          "content_type": "text/html",
-          "bytes": 2501,
-          "sha256": "8448b3370c88d0bbc0184d3f9270e44d2fa7ebaaa30db5d6c76f160085d30aea",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/app.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 52722,
-          "sha256": "88fd2d31bddc4f193e9d6c3fb70f6263731e07ddd4c5d926f9145b87a648f3f3",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/baccarat-squeeze.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 7342,
-          "sha256": "564725ec4d4841a487dd47763e9e16a87ae206c88bb09001b41a61cd72c97078",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/baccarat-view.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 8722,
-          "sha256": "7b4fff0a76108945a6e036198bb1a6a25a3b37e40eb71c19508cc035bccdf227",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/baccarat.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 5792,
-          "sha256": "5f34f2d53a17ff2f2c5e1ad002232553d37e6f3d71e2481e01a8c1e2431a34a6",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/blackjack-game.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 7251,
-          "sha256": "2263731a42f81009353e3c4112888ad9e68894e26cc6c130a6a5b0533f4eb079",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/blackjack-view.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 12839,
-          "sha256": "181f88366b7814ba0d499705d3de64aa9126073e7a713b2704a5640c7c6c8872",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/blackjack.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 4024,
-          "sha256": "e8798ca51cc4dd4d2559251a7808c7676e8167ee47c41acba6ed5cd1c89f0b79",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/board.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 63380,
-          "sha256": "68bb310ba086c9a794b7fcda107e9267d7e5a6ac5b53d3ac8f04667d022a1b7a",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/cash.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 2198,
-          "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/challenge.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 4472,
-          "sha256": "bcab7681861779987825f99bc73601fb5de6adc313ccec06fd1049f860a3bab1",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/game.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 19040,
-          "sha256": "e3e98df4570437e5a49ffcbcf8b5a07bc6c65ecc14f5940a4ac0176b388130b2",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/home-view.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 8466,
-          "sha256": "afabad5498601f5c9991a6aba35c75c18c7e7c57503e3e25df8b5610b7320560",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/leaderboard-config.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 177,
-          "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/leaderboard-view.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 6765,
-          "sha256": "87da1a3918783d0ad702c41928489cd5a3be098dd6170a26cfac9e0521552977",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/leaderboard.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 8462,
-          "sha256": "07d3fb2f290567d4b5f7b4ffbd95e24b833a3f82b1d534b8eeb001ce2e4df30c",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/poker-game.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 9953,
-          "sha256": "e5b6214e87da02340b3a468c92f2f964f13e817238469af67c64c3f0114af2ad",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/poker-view.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 15022,
-          "sha256": "ebbc15d15dfe4c01d078319aa48a362e16df1a8efe5eaa997e93280531f82dff",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/poker.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 8068,
-          "sha256": "e93e36962c759d2aa2f58f47263a00fa87f45ac744b3c1f2abd861a026fb8ecb",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/record-share.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 9675,
-          "sha256": "fc5c782cb5f6998ba56faf2667d8952c9a0c8b811e534fbc45a898e2b8ae2ef9",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/roulette-game.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 2535,
-          "sha256": "da365687e01eedb5b79c4d10af0a244273f101f7d2e546118145f59e2c3e12af",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/roulette-view.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 14107,
-          "sha256": "dfbf4c546029b1e66f54660f2c111ce98de97c274a0a97abcb58a2c47949941e",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/roulette.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 4553,
-          "sha256": "ac7232acb45760c266355d4436c24dfa1fa0ae8f10b18a1267841eafebbe07ff",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/rules.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 4819,
-          "sha256": "c46e8676f8feae94d47395c305fb3a6c7e4f79772e8659cdacf6980ff65ff685",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/sicbo-view.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 8323,
-          "sha256": "d769063175709f90d40fe0157ac8f614c59a07f09d9d9b1f857a4afbefea97d3",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/sound.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 8670,
-          "sha256": "b1d3e1b8527255b77ce711107e23ad16f84a12605e7c8e5137d43ea27e7ffd96",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/storage.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 5601,
-          "sha256": "8cef300cadf0edf612d8630c45f230b2554089ea3c3193042a9e37070c020d52",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/styles.css",
-          "status": 200,
-          "content_type": "text/css",
-          "bytes": 166686,
-          "sha256": "12b71c7bbfe807bdffcbae0242ba4fb5e2f9584a0d899c8990a25912b1d8b6cd",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "src/table-layout.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 11700,
-          "sha256": "e54bd61d4dd02b4184a8a2f3620c05078609c2dc384145afb5dd6b1cac91aadb",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "public/art/leaderboard-b/dragon-tiger-v1.webp",
-          "status": 200,
-          "content_type": "image/webp",
-          "bytes": 98012,
-          "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "manifest.webmanifest",
-          "status": 200,
-          "content_type": "application/manifest+json",
-          "bytes": 619,
-          "sha256": "b75612f663dd8ae1aad4e453cfc7b52778927e3414f22d23f199eb27d8501152",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "public/social/thumbnail-v4.png",
-          "status": 200,
-          "content_type": "image/png",
-          "bytes": 1753061,
-          "sha256": "d6dcd0b9f20ef6f854031fed1cf12069d79cdf52472e4c099b997e68c022a215",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "vercel.json",
-          "status": 200,
-          "content_type": "application/json",
-          "bytes": 288,
-          "sha256": "20578e2cc50d7ab0f779b1b17e5414cc019f7aca74eceb06a7a7248dd674851c",
-          "matches_published_snapshot": true
-        },
-        {
-          "path": "scripts/vercel.mjs",
-          "status": 200,
-          "content_type": "text/javascript",
-          "bytes": 2996,
-          "sha256": "662684af1b23e10557a3b8d469a2765cf8d1b5bde806d72c205be3b9db6dbc60",
-          "matches_published_snapshot": true
-        }
-      ],
-      "social_app_card_and_cache": "UNVERIFIED"
+  "github_pages_url": "https://jacobmaster-97.github.io/charity-casino/",
+  "vercel_project": {
+    "id": "prj_RtqkZuZlAHpunRfqecoMw8elmSn2",
+    "name": "5mins-gamber",
+    "framework": null,
+    "nodeVersion": "24.x",
+    "buildCommand": "npm run build:vercel",
+    "outputDirectory": "dist/vercel",
+    "git": {
+      "type": "github",
+      "org": "jacobmaster-97",
+      "repo": "charity-casino",
+      "productionBranch": "main",
+      "repoId": 1438512980
+    },
+    "ssoProtection": {
+      "deploymentType": "all_except_custom_domains"
     }
   },
-  "vercel_public_verification": "pending_authentication_and_deployment",
-  "latest_game_version_prepared": "0.14.0",
-  "vercel_actual_deployment": "still_pending_authentication",
-  "latest_game_version_available": "0.14.2",
-  "latest_game_github_commit": "75a809bdae04381dd19c2a91cc5c1a52fbb0783f"
+  "vercel_scope": "jerseyprice",
+  "vercel_plan": "hobby",
+  "vercel_url": "https://5mins-gamber.vercel.app/",
+  "vercel_deployment": {
+    "id": "dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ",
+    "readyState": "READY",
+    "url": "https://5mins-gamber-dhw7wa5t2-jerseyprice.vercel.app",
+    "target": "production",
+    "source": "CLI"
+  },
+  "site_url_config": "https://5mins-gamber.vercel.app",
+  "git_push_deployment_verified": false,
+  "old_name_alias": {
+    "url": "https://5mins-gambers.vercel.app/",
+    "redirect_status": 308,
+    "redirect_to": "https://5mins-gamber.vercel.app/"
+  },
+  "tests": {
+    "worker": 8,
+    "leaderboard_client": 6,
+    "vercel_build": 4,
+    "pages": 11,
+    "total": 29,
+    "result": "passed",
+    "previous_full_game_suite": 438
+  },
+  "public_verification": {
+    "site_url": "https://5mins-gamber.vercel.app/",
+    "version": "0.15.0",
+    "files_verified": 64,
+    "files": [
+      {
+        "path": "index.html",
+        "bytes": 2447,
+        "sha256": "dc3aab3ce5f6139b3657791b273a23eee97329256943ebd4164c50af35ca66c9",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "manifest.webmanifest",
+        "bytes": 659,
+        "sha256": "f07e332f833d7bf32ecb2f87e03d3d6d6b92ca62d21ff68f14f236b9d8a88136",
+        "status": 200,
+        "content_type": "application/manifest+json; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/art/prototype-b/dice.png",
+        "bytes": 1587909,
+        "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/art/prototype-b/dome.png",
+        "bytes": 1291799,
+        "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/art/prototype-b/props.png",
+        "bytes": 1492795,
+        "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/art/prototype-b/table.png",
+        "bytes": 2237982,
+        "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/art/styles/b/lobby-populated-v4.png",
+        "bytes": 2429310,
+        "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/baccarat-b/cards.png",
+        "bytes": 2187989,
+        "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/home-b/background.png",
+        "bytes": 2287430,
+        "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/home-b/logo.png",
+        "bytes": 2358990,
+        "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "bytes": 98012,
+        "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
+        "status": 200,
+        "content_type": "image/webp",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/prototype-b/dice.png",
+        "bytes": 1587909,
+        "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/prototype-b/dome.png",
+        "bytes": 1291799,
+        "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/prototype-b/props.png",
+        "bytes": 1492795,
+        "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/prototype-b/table.png",
+        "bytes": 2237982,
+        "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/sicbo-board-b/chip.png",
+        "bytes": 1786628,
+        "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/sicbo-board-b/chips-five.png",
+        "bytes": 929177,
+        "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/sicbo-board-b/dice.png",
+        "bytes": 1310364,
+        "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/sicbo-board-b/felt.png",
+        "bytes": 2196918,
+        "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/art/styles/b/lobby-populated-v4.png",
+        "bytes": 2429310,
+        "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/audio/assets.json",
+        "bytes": 668,
+        "sha256": "6313426e06a1d39f59be467b7016116d12aa674869aeb37598612acf669997fd",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/public/audio/brass-command-v1.mp3",
+        "bytes": 3312369,
+        "sha256": "f38d31eb81154191e4e5816a5d67bb10cceb30068ce16a19e5966441aff080cf",
+        "status": 200,
+        "content_type": "audio/mpeg",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/apple-touch-icon.png",
+        "bytes": 53463,
+        "sha256": "f947de8e0b6adbf8660620bcbb34498c575e2c649c66bf8850a314bad0f56fe8",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/assets.json",
+        "bytes": 1706,
+        "sha256": "0fe1c5bd8cfd5fa7221928640f289c662e265cbd3650b46d300e191fac3fd655",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/favicon-16.png",
+        "bytes": 797,
+        "sha256": "153997931a8b9f67d1971283f2fa841e9f8b7191087f18e0f56c149deb1f6668",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/favicon-32.png",
+        "bytes": 2616,
+        "sha256": "59071f0dc759964d1b609cea580bc7f2b67e702aefafd7fbff6c7098544ff5ea",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/favicon.ico",
+        "bytes": 15086,
+        "sha256": "770a01192b72e7962afd50d5b486f6e2b36b64616546c5b91c983ec7a6709a13",
+        "status": 200,
+        "content_type": "image/vnd.microsoft.icon",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/install-192.png",
+        "bytes": 60225,
+        "sha256": "381b79bc936ac084442d031245592e0d1104178489d4bc328e335b2af5a3d107",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/install-512.png",
+        "bytes": 406728,
+        "sha256": "893a074344b9c9d967d8864cc4a3f7efa1f829481c970805ee32edd8374d85e0",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/icons/a-gold-seal-v1/source.png",
+        "bytes": 2626663,
+        "sha256": "399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/public/social/assets.json",
+        "bytes": 692,
+        "sha256": "594bac686f6d5c83baa78bd4856ce40b1cc79e96e48e8cfba29875c84b7ab6c7",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/public/social/thumbnail-v4.png",
+        "bytes": 1753061,
+        "sha256": "d6dcd0b9f20ef6f854031fed1cf12069d79cdf52472e4c099b997e68c022a215",
+        "status": 200,
+        "content_type": "image/png",
+        "verified": true
+      },
+      {
+        "path": "play/src/app.mjs",
+        "bytes": 51624,
+        "sha256": "29100b498540b027071f85c4ccca7dc9115071fa98fcc1a9c7107861823e5c25",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/baccarat-squeeze.mjs",
+        "bytes": 7342,
+        "sha256": "a432388d338459f8b23830e97198b14eeccf5551cc4b140f28554747f17479da",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/baccarat-view.mjs",
+        "bytes": 8722,
+        "sha256": "3294a721ae2c3df5790258c8ffb42eda6eae202cc9d7ac6bfd0253f26883e2bf",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/baccarat.mjs",
+        "bytes": 5792,
+        "sha256": "d8cf86e634d24e7fad93db84dfec0a8df489bbd4524ac3341b2c26acc06b9e91",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/blackjack-game.mjs",
+        "bytes": 7251,
+        "sha256": "a647e896084775339ef299d6c7e181b5de072336804dfd56b62161a0c4cd749c",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/blackjack-view.mjs",
+        "bytes": 12839,
+        "sha256": "54a56e82d9be7c830f0636658b725fbfb439823eeb80fcf8b7c1d56846191f6d",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/blackjack.mjs",
+        "bytes": 4024,
+        "sha256": "a51deb2a02cfbb0f1d535da6c5d22604c00db5ff15ba9668e2044ebe8a5a3299",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/board.mjs",
+        "bytes": 63380,
+        "sha256": "0d3a42d88589d888a88562a0f3e4e7ec6ad4a3f39f6ed448193808f5cac7225a",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/cash.mjs",
+        "bytes": 2198,
+        "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/challenge.mjs",
+        "bytes": 4472,
+        "sha256": "f7305a09bf8c10d55bea3c29fdf0ac6d15a53d4636ee6c96365a4086151a73d9",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/game.mjs",
+        "bytes": 19040,
+        "sha256": "be9bb98c8f5aab67daa351d760a11f9b12985f5768d44c489beb6dba39b6159a",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/home-view.mjs",
+        "bytes": 8783,
+        "sha256": "264a67c081d77f520fa93b123b32e33dab0ffc71ab0f12cd84961f004d19ea67",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/instructions.mjs",
+        "bytes": 8179,
+        "sha256": "4e1b344686ae512f3a3062b50cf8abd8ff0d5c1b2eb27e250069ca73f04c19d6",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/landscape.mjs",
+        "bytes": 1410,
+        "sha256": "b3b5a32274acbf0ae610f29e69226f126138b93cd1a25bcc2d6e5119c1b05deb",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/leaderboard-config.mjs",
+        "bytes": 177,
+        "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/leaderboard-view.mjs",
+        "bytes": 6765,
+        "sha256": "87da1a3918783d0ad702c41928489cd5a3be098dd6170a26cfac9e0521552977",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/leaderboard.mjs",
+        "bytes": 8462,
+        "sha256": "0c7ee1f06084ef086a789307ddc1878e511cdc2bbe13bf083837ffed018669e7",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/music.mjs",
+        "bytes": 2960,
+        "sha256": "1e479b55969c820df79c19650c666c3f1887a2b57c420c6271cdb1cd730f39aa",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/poker-game.mjs",
+        "bytes": 9953,
+        "sha256": "f6da5af00f43aafe68760947c040d8008b43f4f025f050db49285726b0c60586",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/poker-view.mjs",
+        "bytes": 15022,
+        "sha256": "c6e1bdc74b8c2ecdfbea268e6eb76aecd7b2164f8dfec9c807d20c9c488111b6",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/poker.mjs",
+        "bytes": 8068,
+        "sha256": "eb3b01b69695b09b655c0a88238022baa2e760cbd06185e19c5fdd531d0bf215",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/record-share.mjs",
+        "bytes": 9675,
+        "sha256": "477bab7ede94cfe64ea2ff3d7065a7a72028363c4b3169bb040288ed089a8f53",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/roulette-game.mjs",
+        "bytes": 2535,
+        "sha256": "94caa805c23d87d21143c492e0f2842e17f2c9bf69a1b3240619e8329e1b0f95",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/roulette-view.mjs",
+        "bytes": 14107,
+        "sha256": "781bfb10e8b3d3b9b9c82dbf51613c8a06d38161018e5cb180e67940f1846c33",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/roulette.mjs",
+        "bytes": 4553,
+        "sha256": "53b7ebc1c67e737325fdc82568a48159ffc43ca5515f1d9df6c2e79d56a3d8c4",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/rules.mjs",
+        "bytes": 4819,
+        "sha256": "d84c90891cffbfdebdac9495cc0ce1c145a0d11588b6412349d825cc09b5211b",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/settings-view.mjs",
+        "bytes": 8538,
+        "sha256": "5c23f0ed73ee8e7c54d0df1202f03860d569c9fec18c7b2c37e4c188711bdd92",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/sicbo-view.mjs",
+        "bytes": 8323,
+        "sha256": "2f52a0a3e23de693a983b577c90cda98b67245056ce7b4b58b99f5a73f4e345d",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/sound.mjs",
+        "bytes": 9545,
+        "sha256": "4c8a694a9048c0e7735b8bd17af79a44fc213a0c8cbd50287827bde657ed39d4",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/storage.mjs",
+        "bytes": 5923,
+        "sha256": "7e8b61d7071202644572fe90595aa39e9513569e620bd519f9d18f4865d08db2",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/styles.css",
+        "bytes": 174964,
+        "sha256": "4bf0651a0224336f8ed3a2ffdb4b846cf1f465fcd05502ef7a146ac811a6ae3b",
+        "status": 200,
+        "content_type": "text/css; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "play/src/table-layout.mjs",
+        "bytes": 11724,
+        "sha256": "3b8874314c221cf7ca9ce3d803467f008d281efdcc048cf8759a9b038223701e",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      }
+    ],
+    "audio_range": {
+      "status": 206,
+      "bytes": 100,
+      "content_range": "bytes 0-99/3312369"
+    },
+    "public_html_metadata": true,
+    "private_paths": [
+      {
+        "path": ".env.local",
+        "status": 404
+      },
+      {
+        "path": ".vercel/project.json",
+        "status": 404
+      },
+      {
+        "path": "cloudflare/wrangler.jsonc",
+        "status": 404
+      },
+      {
+        "path": "CODEX_HANDOFF.md",
+        "status": 404
+      }
+    ]
+  },
+  "cors_verification": {
+    "worker_url": "https://five-minute-god-leaderboard.jameshh998.workers.dev",
+    "allowed_origins": [
+      "https://5mins-gamber.vercel.app",
+      "https://jacobmaster-97.github.io"
+    ],
+    "results": [
+      {
+        "origin": "https://5mins-gamber.vercel.app",
+        "method": "OPTIONS",
+        "status": 204,
+        "allow_origin": "https://5mins-gamber.vercel.app",
+        "methods": "GET, POST, OPTIONS"
+      },
+      {
+        "origin": "https://5mins-gamber.vercel.app",
+        "method": "GET",
+        "status": 200,
+        "allow_origin": "https://5mins-gamber.vercel.app",
+        "items": 1,
+        "has_next_cursor": false,
+        "cache_control": "public, max-age=15"
+      },
+      {
+        "origin": "https://jacobmaster-97.github.io",
+        "method": "OPTIONS",
+        "status": 204,
+        "allow_origin": "https://jacobmaster-97.github.io",
+        "methods": "GET, POST, OPTIONS"
+      },
+      {
+        "origin": "https://jacobmaster-97.github.io",
+        "method": "GET",
+        "status": 200,
+        "allow_origin": "https://jacobmaster-97.github.io",
+        "items": 1,
+        "has_next_cursor": false,
+        "cache_control": "public, max-age=15"
+      },
+      {
+        "origin": "https://5mins-gamber.vercel.app",
+        "method": "POST",
+        "status": 400,
+        "error": "invalid_name",
+        "score_inserted": false
+      },
+      {
+        "origin": "https://untrusted.example",
+        "method": "GET",
+        "status": 403,
+        "error": "origin_not_allowed"
+      }
+    ],
+    "production_valid_score_inserted": false,
+    "valid_upload_and_retry": "unit tests passed; no fabricated production score created"
+  },
+  "browser_verification": {
+    "browser": "Chromium",
+    "public_url": "https://5mins-gamber.vercel.app/",
+    "result": "blocked",
+    "error": "page.goto: net::ERR_CERT_AUTHORITY_INVALID at https://5mins-gamber.vercel.app/",
+    "tls_verification_disabled": false
+  },
+  "cloudflare": {
+    "worker_url": "https://five-minute-god-leaderboard.jameshh998.workers.dev",
+    "version_id": "9d82e4fc-7768-4ef7-9abf-a754bbaf41a3",
+    "previous_version_id": "82eb5c1f-d3b3-421f-8bbf-1e1647e31023",
+    "source_sha256": "a26286382cca6982605153c7b62c3aac90f7b0752c5b0269bf3d13b284777436",
+    "source_changed": false,
+    "changed_configuration": "ALLOWED_ORIGINS only",
+    "allowed_origins": [
+      "https://jacobmaster-97.github.io",
+      "https://5mins-gamber.vercel.app"
+    ],
+    "d1_changed": false,
+    "d1_schema_changed": false,
+    "production_scores_added_by_tests": 0
+  },
+  "authentication": "Official Vercel and Cloudflare device login completed; credentials outside project; no management keys published. Generated local Vercel OIDC env removed without reading contents.",
+  "unverified": [
+    "real iPhone/iPad/Android",
+    "public-browser interaction blocked by executor CA trust; TLS verification kept enabled",
+    "real completed score upload/retry on new origin; no fabricated production score",
+    "cross-origin save transfer and social-app cache"
+  ],
+  "previous_preparation": {
+    "version": "0.13.4",
+    "status": "github_configuration_published_vercel_authentication_pending",
+    "actual_deployment_was_pending": true
+  },
+  "latest_game_github_commit": "93165d7fcdd689a0490be1d5612b059da9d01867",
+  "checked_at": "2026-11-08T15:18:30.029814+00:00"
 }

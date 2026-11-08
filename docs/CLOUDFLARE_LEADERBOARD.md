@@ -1,3 +1,5 @@
+> 2026-11-08：已新增Vercel正式origin https://5mins-gamber.vercel.app ，保留 https://jacobmaster-97.github.io 。只改原Worker ALLOWED_ORIGINS，D1結構／資料保持，未新增假成績。部署版本9d82e4fc-7768-4ef7-9abf-a754bbaf41a3；完整跨站證據見VERCEL_RELEASE.json／VERCEL.md。
+
 # Cloudflare Workers＋D1 排行榜部署與接線
 
 日期：2026-11-05（香港）。程式版 0.13.0；D1及Worker、GitHub Pages均已實際發布並完成公網程式／API核對，詳LEADERBOARD_RELEASE.json。使用者已確認本機驗收及「每次完成各留一筆」。不改為每人最佳、不建立帳號、不開啟商店／道具。

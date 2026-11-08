@@ -1,5 +1,27 @@
 # DEBUG_HANDOFF
 
+## 最新 · Vercel 5mins-gamber正式部署／CORS完成，準備GitHub自動部署驗證
+
+使用者要求接入Vercel並將最終名稱更正5mins-gamber。已在使用者jerseyprice Hobby帳戶建立Project prj_RtqkZuZlAHpunRfqecoMw8elmSn2，Other／Node24／npm run build:vercel／dist/vercel，production SITE_URL=https://5mins-gamber.vercel.app。官方device登入成功，憑證在專案外，CLI產生的.env.local OIDC檔已刪且未讀值；.vercel已忽略。原GitHub main連接已由API確認，原Pages保持。更名前臨時名稱域名5mins-gambers.vercel.app已308到最終網址，正式domain是project domain而非一次性alias。
+
+0.15.0 CLI deployment dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ READY、公網https://5mins-gamber.vercel.app/實際200遊戲入口。64檔HTTP200／SHA全符，OG/canonical正確、MP3 Range206，4個私有設定／交接路徑404。29項後端／前端／Vercel／Pages針對檢查通過（8＋6＋4＋11），之前完整遊戲438項保留。公網Chromium因ERR_CERT_AUTHORITY_INVALID被阻，沒停TLS，不冒稱互動E2E；正常CA HTTP及本地前輪瀏覽器實測分層交接。
+
+Cloudflare首次最小scope少Worker scripts權限被API拒，補workers_scripts／workers_routes官方device授權後已確認原82eb版本並成功部署9d82e4fc-7768-4ef7-9abf-a754bbaf41a3。Worker源碼SHA與原正式一致，配置只改ALLOWED_ORIGINS為GitHub＋https://5mins-gamber.vercel.app；原D1、ratelimit不變，不申請D1管理、不執行SQL／遷移或新增假成績。兩origin OPTIONS204／GET200、新origin錯資料POST400帶正確CORS、陌生origin403，共六項通過。Python預設UA被邊緣1010拒，瀏覽器相容UA驗證通過，沒有改弱WAF。
+
+docs/VERCEL.md／VERCEL_RELEASE.json已更新。下一步提交原GitHub部署文件與example允許清單，驗真實push能否觸發Vercel main自動部署，然後補最終receipt，不重新prepare覆蓋已上傳快照。真手機、合法完場上傳／重試、實際跨站備份轉移與社交卡片快取未驗。新origin存檔不自動共用，原檔保留，可從設定匯出／匯入。不得刪D1、改全程伺服器玩法或升付費。
+
+## 最新 · 0.15.0背景音樂及橫向遊玩已發布GitHub Pages（2026-11-08）
+
+已完成使用者兩項要求並發布原main commit93165d7fcdd689a0490be1d5612b059da9d01867／treea945c707ac060eb210702695f89be29207cda728；expected_sha父75a809bdae04381dd19c2a91cc5c1a52fbb0783f、force:false。322檔tree Git blob SHA全吻合、84變更，48個既有PNG／ICO／WebP路徑不變，沒有刪檔。Pages run42491603508 completed/success、head_sha及main重讀一致。正式 https://jacobmaster-97.github.io/charity-casino/?v=0.15.0 。54公網檔案HTTP200逐byte SHA吻合，兩處MP3為audio/mp3，Range206回100 bytes。歌曲不在首頁預載門檻，不等待音樂才進桌。
+
+Brass Command（使用者上載）206.95秒、遊戲MP3 3,312,369 bytes，循環、首次手勢才開始、獨立音樂開關／0–100%／預設35%，Web Audio gain處理iOS忽略media.volume；暫停／背景／直向停止，恢復接續。原五種聲效與偏好、原圖／Logo／A圖示、錢包／五分鐘／完成局存檔不改。手機／平板直向阻擋操作並保留兩倒數／籌碼／原局／道具；回橫向明按繼續。manifest landscape、ScreenOrientation只盡力，iOS不允許網頁強制旋轉時用遮罩，桌面窄窗不受限。
+
+438項通過（416單元組件＋7單檔＋11 Pages＋4 Vercel建置）。Chromium本地HTTP已實播音樂、真正曲尾loop、暫停恢復位置、音樂失敗仍進21點、手機touch模擬橫直轉向、平板設定比例及無整頁捲動；零pageerror。修正實測發現的既有TableArtCache Window計時器this錯誤，保留非阻塞hint。docs/qa/0150留本機截圖及原始證據。
+
+額外驗證限制如實記錄：file單檔瀏覽器導覽被ERR_BLOCKED_BY_ADMINISTRATOR阻擋；公網Chromium導覽因ERR_CERT_AUTHORITY_INVALID阻擋，未停TLS或繞過政策。單檔只有解析／內嵌逐byte驗證，公網為正常CA HTTP/SHA＋Pages結果，不冒稱以上兩個瀏覽器層通過。本次舊IPC限制已不適用，本地瀏覽器確有實測；模擬仍非真iOS。
+
+MUSIC_LANDSCAPE_RELEASE.json及MUSIC_LANDSCAPE_0150.md已補完整收據；dist/github-upload與manifest保留322檔精確已發布快照，最後收據／交接只更新本機，不再prepare覆蓋。Cloudflare／D1沒有部署或讀寫；Vercel仍未建立／部署、待帳戶授權。未驗實體iPhone16Plus／iPad Safari聲音、靜音／耳機／系統中斷、原生鎖向／主畫面安裝、VoiceOver及長時耗電。下一最安全任務：使用者在正式v0.15.0以iPhone及iPad點擊開聲、調音量、旋轉與暫停／繼續驗收。回退可用父0.14.2前端，保留本機存檔及D1。
+
 ## 最新 · 0.15.0背景音樂及手機／平板橫向完成本機驗證，準備原Pages發布
 
 使用者指定上載Brass Command及手機／平板固定橫向，已實作獨立循環音樂、預設35%與設定開關／音量。MP3 3,312,369 bytes、206.95秒，原檔／轉碼SHA及來源見public/audio/assets.json。首次手勢才載入、不等待音樂進桌，Web Audio獨立gain處理iOS媒體volume限制；失敗不阻塞牌局。暫停／背景／直向停止並保留播放位置。

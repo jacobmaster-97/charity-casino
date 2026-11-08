@@ -32,3 +32,5 @@ cloudflare/.dev.vars*
 
 # Vercel project link and local authentication must remain private
 .vercel/
+.vercel
+.env*

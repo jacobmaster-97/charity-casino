@@ -243,3 +243,7 @@
 ## 背景音樂及手機／平板橫向0.15.0
 
 使用者指定上載Brass Command作背景音樂，手機及平板固定橫向。背景音樂循環、獨立開關／音量、互動後播放，不加音樂載完門檻；暫停／背景／直向停止並保留播放位置。行動裝置直向顯示阻擋提示，原局／籌碼／道具／兩個倒數保留，回橫向後手動繼續；原五分鐘及結算規則不改。manifest宣告landscape、原生lock盡力使用；iOS瀏覽器不保證可由網頁強制旋轉，提示遮罩為相容後備。詳MUSIC_LANDSCAPE_0150.md。
+
+## Vercel正式託管（2026-11-08）
+
+使用者指定最終名稱5mins-gamber，已在其Hobby帳戶建立專案及https://5mins-gamber.vercel.app/，連接原GitHub main，原Pages保留。仍全本機玩法及原Cloudflare／D1，Worker只追加正式新origin；備份可由舊站匯出到新站匯入，origin存檔不自動共用。不升付費，細節見VERCEL.md及VERCEL_RELEASE.json。
