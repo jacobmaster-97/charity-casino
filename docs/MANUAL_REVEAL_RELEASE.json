@@ -1,0 +1,21 @@
+{
+  "version": "0.15.1",
+  "date_hong_kong": "2026-11-09",
+  "status": "local_verified_release_prepared",
+  "published": false,
+  "parent_commit": "94da3cc63ad4b679ad665ef6ce23f2461d36281c",
+  "changes": "Sic Bo and roulette require manual result confirmation before payout dialog",
+  "tests": {
+    "unit_component": 421,
+    "standalone": 7,
+    "pages": 11,
+    "vercel": 6,
+    "total": 445
+  },
+  "browser_scenarios": 10,
+  "real_device_verified": false,
+  "cloudflare_changed": false,
+  "d1_changed": false,
+  "art_changed": false,
+  "analytics_changed": false
+}

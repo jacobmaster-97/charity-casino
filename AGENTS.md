@@ -91,3 +91,5 @@
 - 2026-11-08使用者再次要求接入Vercel並更正最終專案名5mins-gamber；已官方device登入、在Hobby jerseyprice建立專案／公開正式域名https://5mins-gamber.vercel.app，連原GitHub main。原Pages保留，原Worker僅追加精確origin、D1不改，不升付費；憑證專案外、CLI生成的OIDC .env.local已移除，.vercel忽略。詳VERCEL.md／VERCEL_RELEASE.json；待以實際GitHub推送驗證自動部署，不能只看Connected即宣稱已驗。
 
 - 使用者指定npm i @vercel/analytics：已安裝2.0.1及lock，Vercel正式origin以官方inject()非同步接網站瀏覽統計，專案基本Web Analytics已啟用，不升付費。不新增姓名／賭本／牌局等自訂事件，不放進GitHub Pages或離線版，原遊戲及Cloudflare／D1不改。詳ANALYTICS.md／ANALYTICS_RELEASE.json。
+
+- 0.15.1使用者要求大小／輪盤顯示結果後手動確認才開派彩，取代舊1400ms自動關揭曉；1400ms只作抬盅動畫位置。手機揭曉視窗、平板／桌面結果區均需確認，時間到／破產亦保留結果後確認到派彩／最終結算。僅呈現，不能延後真正派彩或再保存／再派一次；其他三桌／倍率／計時／存檔不改。詳MANUAL_REVEAL_0151.md及MANUAL_REVEAL_RELEASE.json，沿原main→Vercel／Pages流程發布，不改Cloudflare或D1。

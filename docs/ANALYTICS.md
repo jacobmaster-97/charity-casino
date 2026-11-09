@@ -22,3 +22,7 @@ package.json及package-lock.json均納入原倉庫；不發布node_modules。Ver
 ## 停用
 
 在Vercel專案關閉Web Analytics，並移除Vercel建置的SDK注入即可；不需要清存檔或更動排行榜。回退前一部署亦可保留全部遊戲資料。
+
+## 已發布收據
+
+main commit94da3cc63ad4b679ad665ef6ce23f2461d36281c，325檔Git tree SHA全符、12變更，遊戲runtime／圖／MP3／Worker不改。Vercel自動production部署dpl_3d8nd8LyPD8NyFpR6uc5vDgofV6W READY，gitSource.main及SHA吻合；Pages run42495630071 completed/success。66個公開檔案HTTP200及SHA全符、HTML確有async SDK，/_vercel/insights/script.js為HTTP200 JavaScript（4522 bytes）。這是接入與載入證據，不是報表入帳證據。最後收據／交接只補本機，dist/github-upload保持精確已上傳快照。

@@ -1,14 +1,14 @@
-import {cashAbs,cashDollars} from './cash.mjs?v=0.15.0';
-import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.15.0';
-import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.15.0';
+import {cashAbs,cashDollars} from './cash.mjs?v=0.15.1';
+import {BETS,BET_MAP,ITEMS,money,getChipDenominations,chipLabel} from './rules.mjs?v=0.15.1';
+import {boardMarkup,chipFace,CHIP_COLORS} from './board.mjs?v=0.15.1';
 const sicboEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function die(value,index,selectable=false){const pos=`${(value-1)%2*100}% ${Math.floor((value-1)/2)*50}%`;return `<${selectable?'button':'div'} ${selectable?`type="button" data-action="reroll" data-index="${index}"`:''} class="die-wrap" aria-label="第 ${index+1} 顆骰子：${value} 點${selectable?'，點選重擲':''}"><span class="die-face" style="background-position:${pos}" aria-hidden="true"></span><span>${selectable?'重擲此骰':`${value} 點`}</span></${selectable?'button':'div'}>`;}
-export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,peekIndex,boardZoom,preciseBet,mobile=false,popup=false,popupElapsed=0}){
+export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,peekIndex,boardZoom,preciseBet,mobile=false,popup=false,popupElapsed=0,confirmationPending=false}){
   const itemsEnabled=game.features?.items!==false;
  const r=game.round,p=game.profile,betting=r.phase==='betting',visible=['reroll','settled'].includes(r.phase),result=r.result;
   const phaseText={betting:'請下注',revealing:'開骰中',reroll:'選擇重擲',settled:'本局完成'}[r.phase];
   const denominations=getChipDenominations(r.bankAtStart);
-  const stage=`<div style="--dice-motion-delay:-${Math.max(0,900-r.remaining)}ms;--dice-motion-state:${game.paused?'paused':'running'}" class="dice-stage ${r.phase==='revealing'?'shaking':''}">
+  const stage=`<div ${mobile&&r.phase==='settled'?'tabindex="0" role="region" aria-label="骰子結果"':''} style="--dice-motion-delay:-${Math.max(0,900-r.remaining)}ms;--dice-motion-state:${game.paused?'paused':'running'}" class="dice-stage ${r.phase==='revealing'?'shaking':''}">
       <div class="stage-topline"><span class="stage-status">${phaseText}</span><span ${mobile?'data-countdown':'id="countdown"'} class="countdown">${r.remaining?Math.ceil(r.remaining/1000)+' 秒':''}</span></div>
       <div class="dice-display">${mobile&&visible?`<img class="mobile-lift-dome" src="${art('/art/prototype-b/dome.png')}" alt="" aria-hidden="true" style="--lift-delay:-${r.phase==='reroll'?10000-r.remaining:popupElapsed}ms;--lift-state:${game.paused?'paused':'running'}">`:''}${visible?r.dice.map((v,i)=>die(v,i,r.phase==='reroll')).join(''):`<img class="dome" src="${art('/art/prototype-b/dome.png')}" alt="等待揭曉的骰盅">`}</div>
       <div class="stage-caption">${visible?`<strong>合計 ${r.dice.reduce((a,b)=>a+b,0)} 點</strong><span>${r.dice.every(v=>v===r.dice[0])?'圍骰 · 大小皆輸':r.dice.reduce((a,b)=>a+b,0)<=10?'小 · 4–10 點':'大 · 11–17 點'}</span>`:'<strong>三骰定勝負</strong><span>小 4–10 · 大 11–17 · 圍骰大小皆輸</span>'}</div>
@@ -16,13 +16,13 @@ export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,p
   const decision=r.phase==='reroll'?`<div class="result-box"><h2>改運，還是接受？</h2><p>點選上方一顆骰子重擲一次，或保留目前結果。兩種選擇及超時均消耗一張重擲券。</p>${button('accept','接受原結果','outlined')}</div>`:'';
 
   return `<section class="table-screen sicbo-screen presentation-separated">
-    <div class="table-nav">${button('leave','← 返回大廳','quiet',(!betting&&r.phase!=='settled'||game.stake>0&&r.phase!=='settled'||r.used&&r.phase!=='settled')?'disabled':'')}<div><span class="eyebrow">SIC BO</span><h1>大小</h1></div>${button('rules','玩法與賠率','quiet')}</div>
+    <div class="table-nav">${button('leave','← 返回大廳','quiet',(confirmationPending||!betting&&r.phase!=='settled'||game.stake>0&&r.phase!=='settled'||r.used&&r.phase!=='settled')?'disabled':'')}<div><span class="eyebrow">SIC BO</span><h1>大小</h1></div>${button('rules','玩法與賠率','quiet')}</div>
     <div class="mobile-table-background" ${mobile&&popup?'inert':''}>
     ${mobile?'':stage}
     ${r.peek?`<div class="insight">${icon('peek')}第 ${r.peek.index+1} 顆：<strong>${r.peek.range}</strong><span>本局結果已固定</span></div>`:''}
     ${!mobile?decision:''}
     ${mobile&&result?`<div class="mobile-sicbo-result" role="status" aria-live="polite">${r.dice.join(' ＋ ')} ＝ ${r.dice.reduce((a,b)=>a+b,0)} 點 · ${r.dice.every(v=>v===r.dice[0])?'圍骰':r.dice.reduce((a,b)=>a+b,0)<=10?'小':'大'}</div>`:''}
- ${result?button('round-result','查看派彩','outlined round-result-open','aria-haspopup="dialog"'):''}
+ ${result?button('round-result',confirmationPending?'確認結果・查看派彩':'查看派彩','outlined round-result-open','aria-haspopup="dialog"'):''}
     <div class="table-console">
       <div class="board-toolbar"><span id="board-help"><span class="board-wide-hint">選籌碼，再點枱面下注</span><span class="board-mobile-hint">完整總覽 · 細格可放大／精準選格</span></span></div>
       <div class="board-scroll ${boardZoom?'is-zoomed':''}" tabindex="0" role="region" aria-label="大小完整投注盤面" aria-describedby="board-help">${boardMarkup(art,betting)}</div>
@@ -42,6 +42,6 @@ export function sicboTableView({game,art,button,icon,chip,allIn,storageWarning,p
       </div>
     </div>
     </div>
-    ${mobile&&popup?`<div class="mobile-reveal-layer"><section class="mobile-reveal-dialog sicbo-reveal" role="dialog" aria-modal="true" aria-label="${r.phase==='revealing'?'搖骰中':r.phase==='reroll'?'選擇重擲':'揭盅結果'}" tabindex="-1">${stage}${decision}${r.phase==='settled'?button('close-round-popup','回到盤面','outlined'):''}</section></div>`:''}
+    ${mobile&&popup?`<div class="mobile-reveal-layer"><section class="mobile-reveal-dialog sicbo-reveal ${r.phase==='settled'?'awaiting-confirmation':''}" role="dialog" aria-modal="true" aria-label="${r.phase==='revealing'?'搖骰中':r.phase==='reroll'?'選擇重擲':'揭盅結果'}" tabindex="-1">${stage}${decision}${r.phase==='settled'?button('close-round-popup','確認結果・查看派彩','primary'):''}</section></div>`:''}
   </section>`;
 }

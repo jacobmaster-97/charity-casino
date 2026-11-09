@@ -1,5 +1,23 @@
 # DEBUG_HANDOFF
 
+## 最新 · 0.15.1大小／輪盤結果手動確認本機完成，準備發布
+
+使用者要求動畫顯示結果後手動確認才開派彩。MobileRoundReveal現按round保留confirmed，跨viewport亦不丟；1400ms只控制抬盅位置，不再auto-dismiss。app在待確認時不自動開派彩／finish；手機按「確認結果・查看派彩」，桌面／平板同名按鈕。時間到／破產也先結果→確認→派彩→挑戰結果，不能再開局。Game模型／派彩／完成局保存界線不改，確認不會改錢包、局數或保存；其他三桌保持。
+
+修正瀏覽器測出的既有骰盅stage min-height:310px溢出，確認區固定可見、短手機只有結果stage局部滑動，保留1.2倍子視窗與原美術。445項通過（421單元組件＋7單檔＋11 Pages＋6 Vercel），Chromium10情境通過（手機／平板／桌面兩桌、時間到／全押破產、568×299兩桌），真實動畫及等待>1.4秒驗無自動派彩；確認至少44px、沒有整頁捲動／pageerror。docs/qa/0151存本機原始截圖／證據，測試QA入口未進正式程式。
+
+版本0.15.1與src快取／settings／lock同步，@vercel/analytics仍2.0.1，原圖／音樂／Worker／D1不改，沒有假排行或Analytics事件。已讀回main94da3cc63ad4b679ad665ef6ce23f2461d36281c。下一步封裝、tree SHA／expected_sha發布，再驗Vercel及Pages與公網；不把準備當成已部署。真iPhone16Plus／iPad／Android、VoiceOver及安全區未驗。詳MANUAL_REVEAL_0151.md／MANUAL_REVEAL_RELEASE.json。
+
+## 最新 · @vercel/analytics 2.0.1已安裝並發布Vercel
+
+使用者指定npm i @vercel/analytics，已執行安裝，package.json與package-lock.json入庫，MIT授權及License保留。5mins-gamber基本Web Analytics已enabled，沒有Plus／付費升級；純JS以官方inject()，Vercel輸出獨立analytics.mjs及License，HTML module async、不等統計載完才跑遊戲，正式origin才初始化。GitHub Pages／file離線版沒有注入；沒有呼叫自訂track或送姓名／賭本／投注／牌局／派彩／暫停資料，原Cloudflare／D1／遊戲／存檔保持。
+
+main commit94da3cc63ad4b679ad665ef6ce23f2461d36281c／treeac4a4137dc3052d50cc60fd5781afed4d421d8f4；父e691a84cb8abafe5f7d5795d96e3511f7fc6e58b、expected_sha／force:false，325檔tree SHA全符、12變更，全部共享runtime、圖及音樂保持byte。Vercel自動production dpl_3d8nd8LyPD8NyFpR6uc5vDgofV6W READY，gitSource main／SHA吻合、正式https://5mins-gamber.vercel.app/ alias在內；Pages run42495630071 completed/success。
+
+6 Vercel＋11 Pages共17檢查通過，涵蓋origin邊界／重複SDK去重／失敗不throw／正式SDK與MIT一致／lock及原輸出隔離。66公網檔案HTTP200及SHA全符，HTML async loader、官方/_vercel/insights/script.js回200 JavaScript（4522 bytes），4個私有路徑仍404，MP3 Range206。沒有製造假瀏覽事件，報表數字未驗；真手機／廣告攔截／公開瀏覽器互動仍待驗，既有CA限制不繞過。
+
+docs/ANALYTICS.md、ANALYTICS_RELEASE.json及VERCEL_RELEASE.json已補最終實際部署結果。dist/github-upload／manifest保持325檔精確已發布快照，最後收據及本交接只補本機，不再prepare覆蓋。Vercel→5mins-gamber→Analytics可看真實訪客後的統計。下一最安全任務：使用者以正式網址實際進入後檢查Analytics是否收到瀏覽；不加遊玩自訂事件，沒有要求不用的管理金鑰或付費升級。
+
 ## 最新 · Vercel Web Analytics安裝／接入完成，準備發布
 
 使用者指定npm i @vercel/analytics，已安裝2.0.1（MIT）及package-lock，prepare白名單納入lock。純JS使用官方inject()，Vercel builder從套件讀取瀏覽器SDK、附MIT License，HTML以module async獨立載入；只在正式SITE_URL origin初始化。沒有將統計放進Game／倒數／存檔或原GitHub／file單檔，也沒有呼叫自訂track或傳姓名／賭本／下注／派彩等資料。

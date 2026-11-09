@@ -247,3 +247,7 @@
 ## Vercel正式託管（2026-11-08）
 
 使用者指定最終名稱5mins-gamber，已在其Hobby帳戶建立專案及https://5mins-gamber.vercel.app/，連接原GitHub main，原Pages保留。仍全本機玩法及原Cloudflare／D1，Worker只追加正式新origin；備份可由舊站匯出到新站匯入，origin存檔不自動共用。不升付費，細節見VERCEL.md及VERCEL_RELEASE.json。
+
+## 大小／輪盤手動確認0.15.1
+
+使用者要求搖骰、轉珠顯示結果後先手動確認，再進派彩視窗，取代舊1.4秒自動跳轉。手機／平板／電腦一致；時間到及破產亦先保留結果供確認，不能開新局。只改呈現，完成局仍立即保存／派彩一次，原五分鐘及暫停規則保持。詳MANUAL_REVEAL_0151.md。

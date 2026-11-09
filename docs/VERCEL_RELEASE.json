@@ -27,26 +27,18 @@
   "vercel_plan": "hobby",
   "vercel_url": "https://5mins-gamber.vercel.app/",
   "vercel_deployment": {
-    "id": "dpl_HC5kcSjSpG3astU91nkbesxwRMzf",
-    "name": "5mins-gamber",
-    "url": "5mins-gamber-435sxahqu-jerseyprice.vercel.app",
+    "id": "dpl_3d8nd8LyPD8NyFpR6uc5vDgofV6W",
     "readyState": "READY",
     "target": "production",
+    "url": "5mins-gamber-qmbm68ns1-jerseyprice.vercel.app",
     "alias": [
       "5mins-gamber.vercel.app",
       "5mins-gambers.vercel.app",
       "5mins-gamber-jerseyprice.vercel.app",
       "5mins-gamber-git-main-jerseyprice.vercel.app"
     ],
-    "githubCommitSha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
-    "githubCommitRef": "main",
-    "gitSource": {
-      "ref": "main",
-      "repoId": 1438512980,
-      "sha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
-      "type": "github",
-      "prId": null
-    }
+    "githubCommitSha": "94da3cc63ad4b679ad665ef6ce23f2461d36281c",
+    "githubCommitRef": "main"
   },
   "site_url_config": "https://5mins-gamber.vercel.app",
   "git_push_deployment_verified": true,
@@ -67,12 +59,28 @@
   "public_verification": {
     "site_url": "https://5mins-gamber.vercel.app/",
     "version": "0.15.0",
-    "files_verified": 64,
+    "files_verified": 66,
     "files": [
       {
+        "path": "analytics-LICENSE.txt",
+        "bytes": 1079,
+        "sha256": "592702a2a974fdaf3f43acb336275c4b8ab0a7cfcbeb248f897848f96954c5ed",
+        "status": 200,
+        "content_type": "text/plain; charset=utf-8",
+        "verified": true
+      },
+      {
+        "path": "analytics.mjs",
+        "bytes": 6392,
+        "sha256": "b11aae818cda67f1bddd7846714c336fbbe40357386273bfc3e5ef59ce7b7a4a",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "verified": true
+      },
+      {
         "path": "index.html",
-        "bytes": 2447,
-        "sha256": "dc3aab3ce5f6139b3657791b273a23eee97329256943ebd4164c50af35ca66c9",
+        "bytes": 2515,
+        "sha256": "b3458a32c5b7299a1b156323bc66b4355d438f5bec46c02342505c0fe90d6344",
         "status": 200,
         "content_type": "text/html; charset=utf-8",
         "verified": true
@@ -698,7 +706,7 @@
     "actual_deployment_was_pending": true
   },
   "latest_game_github_commit": "93165d7fcdd689a0490be1d5612b059da9d01867",
-  "checked_at": "2026-11-08T15:22:36.389287+00:00",
+  "checked_at": "2026-11-08T15:37:55.904926+00:00",
   "initial_cli_deployment": {
     "id": "dpl_4JscrnfGwpjjkSz4gnKMDP2FcVBJ",
     "readyState": "READY",
@@ -706,14 +714,45 @@
     "target": "production",
     "source": "CLI"
   },
-  "github_commit": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
-  "github_tree": "6f2a7103b7cd720f85ada178bc1931d4be1a9036",
-  "github_published_files": 322,
+  "github_commit": "94da3cc63ad4b679ad665ef6ce23f2461d36281c",
+  "github_tree": "ac4a4137dc3052d50cc60fd5781afed4d421d8f4",
+  "github_published_files": 325,
   "github_changed_paths": 12,
   "github_pages_run": {
-    "id": 42494257917,
+    "id": 42495630071,
     "status": "completed",
     "conclusion": "success",
-    "head_sha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b"
+    "head_sha": "94da3cc63ad4b679ad665ef6ce23f2461d36281c"
+  },
+  "previous_deployment_before_analytics": {
+    "id": "dpl_HC5kcSjSpG3astU91nkbesxwRMzf",
+    "name": "5mins-gamber",
+    "url": "5mins-gamber-435sxahqu-jerseyprice.vercel.app",
+    "readyState": "READY",
+    "target": "production",
+    "alias": [
+      "5mins-gamber.vercel.app",
+      "5mins-gambers.vercel.app",
+      "5mins-gamber-jerseyprice.vercel.app",
+      "5mins-gamber-git-main-jerseyprice.vercel.app"
+    ],
+    "githubCommitSha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
+    "githubCommitRef": "main",
+    "gitSource": {
+      "ref": "main",
+      "repoId": 1438512980,
+      "sha": "e691a84cb8abafe5f7d5795d96e3511f7fc6e58b",
+      "type": "github",
+      "prId": null
+    }
+  },
+  "analytics": {
+    "package": "@vercel/analytics",
+    "version": "2.0.1",
+    "enabled": true,
+    "paid_upgrade": false,
+    "custom_game_events": false,
+    "official_script_verified": true,
+    "report_counts_verified": false
   }
 }

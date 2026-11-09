@@ -959,3 +959,10 @@
 .landscape-seal{display:inline-grid;place-items:center;width:54px;height:54px;border:2px solid #d9b76f;border-radius:50%;font-size:36px;color:#e7c581}
 .rotate-device{font-size:72px;line-height:1.2;color:#e5bf74}.landscape-card h1{font-size:24px;line-height:1.5}.landscape-card p{font-size:17px;line-height:1.7}.landscape-card small{display:block;font-size:16px;line-height:1.7;color:#c9d3c4}
 .settings-music{margin-top:20px;padding-top:20px;border-top:1px solid #9a82464d}#music-volume{width:100%;min-height:44px;accent-color:#dbb66e;cursor:pointer}
+
+/* Keep manual result confirmation visible; only the result stage may scroll on short phones. */
+.mobile-reveal-dialog>.dice-stage{min-height:0}
+.mobile-reveal-dialog .stage-caption{flex-direction:row;flex-wrap:wrap;padding:4px 8px;gap:4px 12px}
+.mobile-reveal-dialog.awaiting-confirmation{display:flex;flex-direction:column;overflow:hidden}
+.mobile-reveal-dialog.awaiting-confirmation>:is(.dice-stage,.rou-stage){flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain}
+.mobile-reveal-dialog.awaiting-confirmation>[data-action="close-round-popup"]{flex:0 0 auto}

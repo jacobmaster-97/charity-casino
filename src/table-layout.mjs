@@ -1,4 +1,4 @@
-import {baccaratBoardMarkup} from './board.mjs?v=0.15.0';
+import {baccaratBoardMarkup} from './board.mjs?v=0.15.1';
 // Best-effort hints only for the table the player points at; never gate navigation.
 export const TABLE_TEXTURES={
  sicbo:['/art/sicbo-board-b/felt.png'],
@@ -77,20 +77,21 @@ export function mobilePokerViewport(width=globalThis.innerWidth,height=globalThi
 export function mobileBlackjackViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return Number.isFinite(width)&&Number.isFinite(height)&&height>0&&width>height&&width<=1100&&height<=600;}
 // Width/height of the layout viewport, not the software keyboard's visual viewport.
 export function mobileTableViewport(width=globalThis.innerWidth,height=globalThis.innerHeight){return MOBILE_TABLES_ENABLED&&Number.isFinite(width)&&Number.isFinite(height)&&(width<=679||width<=1100&&height<=600);}
-// Presentation-only result dwell. Never changes Game, outcomes, clocks or checkpoints.
+// Presentation-only result confirmation. Remaining time only positions the dome animation.
 export class MobileRoundReveal{
- constructor(){this.round=null;this.phase=null;this.remaining=0;this.visible=false;this.seen=false;}
+ constructor(){this.round=null;this.phase=null;this.remaining=0;this.visible=false;this.confirmed=false;}
+ get awaitingConfirmation(){return Boolean(this.round?.result&&this.phase==='settled'&&!this.confirmed);}
  sync(game,enabled){
-   const r=enabled&&game.screen==='table'&&['sicbo','roulette'].includes(game.activeTable)?game.round:null;
-   if(r!==this.round){this.round=r;this.phase=null;this.remaining=0;this.seen=false;}
-   if(!r){this.visible=false;return false;}
-   const previous=this.visible,active=['revealing','reroll','rou-spinning','rou-reroll'].includes(r.phase);
-   if(active){this.seen=true;this.remaining=0;}
-   if(r.phase==='settled'&&this.phase!=='settled'&&this.seen)this.remaining=1400;
-   this.phase=r.phase;this.visible=active||r.phase==='settled'&&this.remaining>0;return previous!==this.visible;
+   const previous=this.visible,r=game.screen==='table'&&['sicbo','roulette'].includes(game.activeTable)?game.round:null;
+   if(r!==this.round){this.round=r;this.phase=null;this.remaining=0;this.confirmed=false;}
+   if(!r){this.visible=false;return previous!==this.visible;}
+   const active=['revealing','reroll','rou-spinning','rou-reroll'].includes(r.phase);
+   if(active)this.remaining=0;
+   if(r.phase==='settled'&&this.phase!=='settled')this.remaining=1400;
+   this.phase=r.phase;this.visible=Boolean(enabled&&(active||this.awaitingConfirmation));return previous!==this.visible;
  }
  tick(ms,game,enabled){const wasSettled=this.phase==='settled';let changed=this.sync(game,enabled);if(!game.paused&&wasSettled&&this.phase==='settled'&&Number.isFinite(ms)&&ms>0&&this.remaining>0){this.remaining=Math.max(0,this.remaining-ms);changed=this.sync(game,enabled)||changed;}return changed;}
- close(game){if(this.round===game.round&&this.phase==='settled'){this.remaining=0;this.visible=false;return true;}return false;}
+ close(game){if(!game.paused&&this.round===game.round&&this.awaitingConfirmation){this.confirmed=true;this.remaining=0;this.visible=false;return true;}return false;}
 }
 export function updateGameViewport(viewport=globalThis.visualViewport,fallback=globalThis.innerHeight,style=document.documentElement.style){
  const height=viewport?.height||fallback;

@@ -1,9 +1,9 @@
-import {CHALLENGE_MS,CHALLENGE_RULESET,CHALLENGE_TABLES} from './challenge.mjs?v=0.15.0';
-import {cashParse,cashEncode,cashAdd,cashSub} from './cash.mjs?v=0.15.0';
-import {validatePokerTable} from './poker.mjs?v=0.15.0';
-import {validateBlackjackShoe} from './blackjack.mjs?v=0.15.0';
-import {validateBaccaratShoe} from './baccarat.mjs?v=0.15.0';
-import {GOAL,ITEM_IDS} from './rules.mjs?v=0.15.0';
+import {CHALLENGE_MS,CHALLENGE_RULESET,CHALLENGE_TABLES} from './challenge.mjs?v=0.15.1';
+import {cashParse,cashEncode,cashAdd,cashSub} from './cash.mjs?v=0.15.1';
+import {validatePokerTable} from './poker.mjs?v=0.15.1';
+import {validateBlackjackShoe} from './blackjack.mjs?v=0.15.1';
+import {validateBaccaratShoe} from './baccarat.mjs?v=0.15.1';
+import {GOAL,ITEM_IDS} from './rules.mjs?v=0.15.1';
 const PREFIX='charity-casino-prototype-v1';
 export function validateSave(input){
   if(input?.schema===2)return validateChallengeSave(input);

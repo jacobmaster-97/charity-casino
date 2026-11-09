@@ -90,11 +90,11 @@ test('Escape leaves lobby More, and Return Home remains reachable from the reloc
  const t=boot();t.act('lobby-more');t.elapse(75);let prevented=false;t.listeners.keydown({key:'Escape',target:{},preventDefault(){prevented=true;}});assert.equal(prevented,true);assert.equal(t.subject.game.profile.elapsedMs,75);assert.equal(t.focused.at(-1),'[data-action="lobby-more"]');assert.ok(!t.app.innerHTML.includes('id="lobby-menu-dialog"'));t.act('lobby-more');t.act('home');assert.equal(t.subject.game.screen,'home');assert.ok(t.app.innerHTML.includes('home-title-screen'));assert.ok(!t.app.innerHTML.includes('aria-modal="true"'));
 });
 
-function settledTable(t,id){
+function settledTable(t,id,{confirm=true}={}){
  const g=t.subject.game;g.randomIndex=()=>0;t.act('table',{table:id});
  if(id==='poker')g.startPoker();else{assert.ok(g.addBet(id==='sicbo'?'small':id==='roulette'?'rou-black':id==='baccarat'?'bac-player':'bj-main',100));g.lock();}
  for(let i=0;i<1500&&g.round.phase!=='settled';i++)g.tick(1000);
- assert.equal(g.round.phase,'settled');t.subject.render();return g;
+ assert.equal(g.round.phase,'settled');t.subject.render();if(confirm&&['sicbo','roulette'].includes(id))t.act('round-result');return g;
 }
 test('all five completed games show one compact payout dialog without changing settlement or rendering inline panels',()=>{
  for(const id of ['sicbo','baccarat','blackjack','poker','roulette']){
@@ -119,7 +119,7 @@ test('a payout open at the deadline disables another round and leads to the fina
 test('mobile roulette preserves the spinning reveal before the payout dialog',()=>{
  const t=boot({mobile:true});t.act('table',{table:'roulette'});const g=t.subject.game;g.randomIndex=()=>0;g.addBet('rou-black',100);g.lock();t.subject.render();assert.ok(t.app.innerHTML.includes('mobile-reveal-dialog'));
  for(let i=0;i<100&&g.round.phase!=='settled';i++)t.tick(100);
- assert.equal(g.round.phase,'settled');assert.ok(!t.app.innerHTML.includes('payout-modal'));t.tick(1400);assert.ok(t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('mobile-reveal-dialog'));
+ assert.equal(g.round.phase,'settled');assert.ok(!t.app.innerHTML.includes('payout-modal'));t.tick(14000);assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.ok(t.app.innerHTML.includes('mobile-reveal-dialog'));t.act('close-round-popup');assert.ok(t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('mobile-reveal-dialog'));
 });
 function delayedArt(){let resolve;const pending=new Promise(r=>resolve=r);return {calls:[],prefetch(id){this.calls.push(id);return pending;},complete(ok=true){resolve(ok);}};}
 test('each table opens synchronously while the selected texture hint is still pending',()=>{
@@ -143,7 +143,7 @@ test('Escape dismisses payout once and returns focus to View Payout',()=>{
  const t=boot();settledTable(t,'roulette');let prevented=false;t.listeners.keydown({key:'Escape',target:{},preventDefault(){prevented=true;}});assert.equal(prevented,true);assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.equal(t.focused.at(-1),'[data-action="round-result"]');t.subject.render();assert.ok(!t.app.innerHTML.includes('payout-modal'));
 });
 test('all-in loss shows the settled payout before final results and offers no new round',()=>{
- const t=boot(),g=t.subject.game;g.randomIndex=()=>0;t.act('table',{table:'roulette'});g.addBet('rou-black',10000);g.lock();for(let i=0;i<100&&g.round.phase!=='settled';i++)g.tick(1000);assert.equal(g.profile.status,'finished');assert.equal(g.profile.endReason,'bust');t.subject.render();assert.ok(t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('data-action="next"'));assert.equal(g.profile.rounds,1);t.act('finish');assert.ok(t.app.innerHTML.includes('challenge-result-modal'));assert.equal(g.profile.bank,0);assert.equal(g.profile.rounds,1);
+ const t=boot(),g=t.subject.game;g.randomIndex=()=>0;t.act('table',{table:'roulette'});g.addBet('rou-black',10000);g.lock();for(let i=0;i<100&&g.round.phase!=='settled';i++)g.tick(1000);assert.equal(g.profile.status,'finished');assert.equal(g.profile.endReason,'bust');t.subject.render();assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('challenge-result-modal'));t.act('round-result');assert.ok(t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('data-action="next"'));assert.equal(g.profile.rounds,1);t.act('finish');assert.ok(t.app.innerHTML.includes('challenge-result-modal'));assert.equal(g.profile.bank,0);assert.equal(g.profile.rounds,1);
 });
 
 
@@ -254,4 +254,23 @@ test('rotating while settings is open preserves the settings and pause return pa
 });
 test('music settings and save keys are independent of sound effects and progress',()=>{
  const t=boot({start:false});t.act('home-settings');assert.ok(t.app.innerHTML.includes('music-volume'));t.act('music');assert.equal(t.subject.music.enabled,false);assert.equal(t.subject.sounds.enabled,true);t.input('music-volume','62');assert.equal(t.subject.music.volume,62);assert.equal(t.subject.sounds.volume,100);assert.equal(t.subject.game.profile,null);assert.equal([...t.store.keys()].filter(k=>k.includes('five-minute-v2')).length,0);
+});
+
+test('both result screens wait for manual confirmation on desktop and mobile, with one payout and save only',()=>{
+ for(const mobile of [false,true])for(const id of ['sicbo','roulette']){
+  const t=boot({mobile}),g=settledTable(t,id,{confirm:false}),bank=g.profile.bank,rounds=g.profile.rounds,checkpoint=JSON.stringify(g.checkpoint),saved=t.store.get('charity-casino-five-minute-v2-race-auto'),elapsed=g.profile.elapsedMs;
+  assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('challenge-result-modal'));assert.ok(t.app.innerHTML.includes('確認結果・查看派彩'));if(mobile)assert.ok(t.app.innerHTML.includes('mobile-reveal-dialog'));
+  t.tick(15000);assert.equal(g.profile.elapsedMs,elapsed+15000);assert.ok(!t.app.innerHTML.includes('payout-modal'));t.act(mobile?'close-round-popup':'round-result');assert.ok(t.app.innerHTML.includes('payout-modal'));assert.equal(g.profile.bank,bank);assert.equal(g.profile.rounds,rounds);assert.equal(JSON.stringify(g.checkpoint),checkpoint);assert.equal(t.store.get('charity-casino-five-minute-v2-race-auto'),saved);
+  t.act('close-overlay');t.subject.render();t.tick(1000);assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('mobile-reveal-dialog'));t.act('round-result');assert.ok(t.app.innerHTML.includes('payout-modal'));t.act('next');assert.equal(g.round.phase,'betting');assert.equal(g.profile.bank,bank);assert.equal(g.profile.rounds,rounds);
+ }
+});
+test('waiting for result confirmation preserves the reveal through pause and challenge timeout',()=>{
+ for(const mobile of [false,true])for(const id of ['sicbo','roulette']){
+  const t=boot({mobile}),g=settledTable(t,id,{confirm:false}),bank=g.profile.bank,rounds=g.profile.rounds,elapsed=g.profile.elapsedMs;
+  t.act('pause');t.tick(5000);assert.equal(g.profile.elapsedMs,elapsed);t.act('resume');assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('challenge-result-modal'));t.tick(g.remainingMs);assert.equal(g.profile.status,'finished');assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('challenge-result-modal'));assert.ok(t.app.innerHTML.includes('確認結果・查看派彩'));
+  t.act(mobile?'close-round-popup':'round-result');assert.ok(t.app.innerHTML.includes('payout-modal'));assert.ok(!t.app.innerHTML.includes('data-action="next"'));assert.equal(g.profile.bank,bank);assert.equal(g.profile.rounds,rounds);t.act('finish');assert.ok(t.app.innerHTML.includes('challenge-result-modal'));assert.equal(g.profile.bank,bank);assert.equal(g.profile.rounds,rounds);
+ }
+});
+test('an already posted confirmation cannot reopen payout after it has been dismissed',()=>{
+ const t=boot({mobile:true}),g=settledTable(t,'sicbo',{confirm:false});t.act('close-round-popup');assert.ok(t.app.innerHTML.includes('payout-modal'));t.act('close-overlay');t.act('close-round-popup');assert.ok(!t.app.innerHTML.includes('payout-modal'));assert.equal(g.profile.rounds,1);
 });
