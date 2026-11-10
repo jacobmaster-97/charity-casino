@@ -3,6 +3,7 @@ import path from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
+import {optimizeVercelAssets} from './optimize-vercel-assets.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 export function vercelSiteURL(env){
@@ -32,10 +33,12 @@ export async function buildVercel(env=process.env){
    }
   }
  }
- await copyTree('play');
+ await copyTree('play/src');
+ const optimized=await optimizeVercelAssets(root,output,files);
  let html=await readFile(path.join(root,'docs/index.html'),'utf8');
  const oldSite=html.match(/<link rel="canonical" href="([^"]+)"/)[1];
  html=html.replaceAll(oldSite+'public/social/',siteURL+'play/public/social/').replaceAll(oldSite,siteURL);
+ html=html.replace('</head>',`<script data-casino-assets>globalThis.__CASINO_ART=${JSON.stringify(optimized.map)};</script>\n</head>`);
  // Browser-ready official SDK; only Vercel output includes analytics, independent of the game.
  const analyticsEntry=fileURLToPath(import.meta.resolve('@vercel/analytics'));
  const analyticsRoot=path.resolve(path.dirname(analyticsEntry),'..');
@@ -52,7 +55,7 @@ export async function buildVercel(env=process.env){
   const bytes=await readFile(path.join(output,file));
   manifest.push({path:file,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')});
  }
- const report={siteURL,outputDirectory:'dist/vercel',analytics:{package:analyticsPackage.name,version:analyticsPackage.version,officialOrigin:new URL(siteURL).origin,customEvents:false},files:manifest};
+ const report={siteURL,outputDirectory:'dist/vercel',optimization:optimized,analytics:{package:analyticsPackage.name,version:analyticsPackage.version,officialOrigin:new URL(siteURL).origin,customEvents:false},files:manifest};
  await writeFile(path.join(root,'dist/vercel-build.json'),JSON.stringify(report,null,2)+'\n');
  console.log(`Vercel static output: ${manifest.length} files; public metadata origin ${siteURL}`);
  return report;

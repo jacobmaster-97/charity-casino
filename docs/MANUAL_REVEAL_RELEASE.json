@@ -1,8 +1,8 @@
 {
   "version": "0.15.1",
   "date_hong_kong": "2026-11-09",
-  "status": "local_verified_release_prepared",
-  "published": false,
+  "status": "published_verified",
+  "published": true,
   "parent_commit": "94da3cc63ad4b679ad665ef6ce23f2461d36281c",
   "changes": "Sic Bo and roulette require manual result confirmation before payout dialog",
   "tests": {
@@ -17,5 +17,978 @@
   "cloudflare_changed": false,
   "d1_changed": false,
   "art_changed": false,
-  "analytics_changed": false
+  "analytics_changed": false,
+  "github_commit": "0f1fa5d6628156e5b8f9807f8e3a9178933de951",
+  "github_tree": "3705b817d12a1f93a6d916ea4c5b39db0ac8507e",
+  "published_files": 327,
+  "changed_paths": 65,
+  "unchanged_images": 48,
+  "unchanged_mp3_paths": 2,
+  "game_logic_unchanged_except_cache": true,
+  "vercel": {
+    "state": "success",
+    "description": "Deployment has completed",
+    "inspector_url": "https://vercel.com/jerseyprice/5mins-gamber/DN4ZCZnzuenJvBwNZmUiZsKExmg3"
+  },
+  "pages": {
+    "id": 42630326447,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "0f1fa5d6628156e5b8f9807f8e3a9178933de951"
+  },
+  "public_verification": {
+    "version": "0.15.1",
+    "files_verified": 105,
+    "vercel_files": 66,
+    "github_files": 39,
+    "results": [
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/analytics-LICENSE.txt",
+        "path": "analytics-LICENSE.txt",
+        "sha256": "592702a2a974fdaf3f43acb336275c4b8ab0a7cfcbeb248f897848f96954c5ed",
+        "status": 200,
+        "content_type": "text/plain; charset=utf-8",
+        "bytes": 1079
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/analytics.mjs",
+        "path": "analytics.mjs",
+        "sha256": "b11aae818cda67f1bddd7846714c336fbbe40357386273bfc3e5ef59ce7b7a4a",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 6392
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/index.html",
+        "path": "index.html",
+        "sha256": "f8b9724985f45a3e297fe995e231649aae539e8e53858e252acc03edae23bf44",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 2515
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/manifest.webmanifest",
+        "path": "manifest.webmanifest",
+        "sha256": "f07e332f833d7bf32ecb2f87e03d3d6d6b92ca62d21ff68f14f236b9d8a88136",
+        "status": 200,
+        "content_type": "application/manifest+json; charset=utf-8",
+        "bytes": 659
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/art/prototype-b/dice.png",
+        "path": "play/art/prototype-b/dice.png",
+        "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1587909
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/art/prototype-b/dome.png",
+        "path": "play/art/prototype-b/dome.png",
+        "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1291799
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/art/prototype-b/props.png",
+        "path": "play/art/prototype-b/props.png",
+        "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1492795
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/art/prototype-b/table.png",
+        "path": "play/art/prototype-b/table.png",
+        "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2237982
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/art/styles/b/lobby-populated-v4.png",
+        "path": "play/art/styles/b/lobby-populated-v4.png",
+        "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2429310
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/baccarat-b/cards.png",
+        "path": "play/public/art/baccarat-b/cards.png",
+        "sha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2187989
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/home-b/background.png",
+        "path": "play/public/art/home-b/background.png",
+        "sha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2287430
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/home-b/logo.png",
+        "path": "play/public/art/home-b/logo.png",
+        "sha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2358990
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "path": "play/public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
+        "status": 200,
+        "content_type": "image/webp",
+        "bytes": 98012
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/prototype-b/dice.png",
+        "path": "play/public/art/prototype-b/dice.png",
+        "sha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1587909
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/prototype-b/dome.png",
+        "path": "play/public/art/prototype-b/dome.png",
+        "sha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1291799
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/prototype-b/props.png",
+        "path": "play/public/art/prototype-b/props.png",
+        "sha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1492795
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/prototype-b/table.png",
+        "path": "play/public/art/prototype-b/table.png",
+        "sha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2237982
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/sicbo-board-b/chip.png",
+        "path": "play/public/art/sicbo-board-b/chip.png",
+        "sha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1786628
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/sicbo-board-b/chips-five.png",
+        "path": "play/public/art/sicbo-board-b/chips-five.png",
+        "sha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 929177
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/sicbo-board-b/dice.png",
+        "path": "play/public/art/sicbo-board-b/dice.png",
+        "sha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1310364
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/sicbo-board-b/felt.png",
+        "path": "play/public/art/sicbo-board-b/felt.png",
+        "sha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2196918
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/art/styles/b/lobby-populated-v4.png",
+        "path": "play/public/art/styles/b/lobby-populated-v4.png",
+        "sha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2429310
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/audio/assets.json",
+        "path": "play/public/audio/assets.json",
+        "sha256": "6313426e06a1d39f59be467b7016116d12aa674869aeb37598612acf669997fd",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "bytes": 668
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/audio/brass-command-v1.mp3",
+        "path": "play/public/audio/brass-command-v1.mp3",
+        "sha256": "f38d31eb81154191e4e5816a5d67bb10cceb30068ce16a19e5966441aff080cf",
+        "status": 200,
+        "content_type": "audio/mpeg",
+        "bytes": 3312369
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/apple-touch-icon.png",
+        "path": "play/public/icons/a-gold-seal-v1/apple-touch-icon.png",
+        "sha256": "f947de8e0b6adbf8660620bcbb34498c575e2c649c66bf8850a314bad0f56fe8",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 53463
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/assets.json",
+        "path": "play/public/icons/a-gold-seal-v1/assets.json",
+        "sha256": "0fe1c5bd8cfd5fa7221928640f289c662e265cbd3650b46d300e191fac3fd655",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "bytes": 1706
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/favicon-16.png",
+        "path": "play/public/icons/a-gold-seal-v1/favicon-16.png",
+        "sha256": "153997931a8b9f67d1971283f2fa841e9f8b7191087f18e0f56c149deb1f6668",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 797
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/favicon-32.png",
+        "path": "play/public/icons/a-gold-seal-v1/favicon-32.png",
+        "sha256": "59071f0dc759964d1b609cea580bc7f2b67e702aefafd7fbff6c7098544ff5ea",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2616
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/favicon.ico",
+        "path": "play/public/icons/a-gold-seal-v1/favicon.ico",
+        "sha256": "770a01192b72e7962afd50d5b486f6e2b36b64616546c5b91c983ec7a6709a13",
+        "status": 200,
+        "content_type": "image/vnd.microsoft.icon",
+        "bytes": 15086
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/install-192.png",
+        "path": "play/public/icons/a-gold-seal-v1/install-192.png",
+        "sha256": "381b79bc936ac084442d031245592e0d1104178489d4bc328e335b2af5a3d107",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 60225
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/install-512.png",
+        "path": "play/public/icons/a-gold-seal-v1/install-512.png",
+        "sha256": "893a074344b9c9d967d8864cc4a3f7efa1f829481c970805ee32edd8374d85e0",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 406728
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/icons/a-gold-seal-v1/source.png",
+        "path": "play/public/icons/a-gold-seal-v1/source.png",
+        "sha256": "399b38328c1748a5cd68e69e53364b8580db3c2e7c340b94ed4e1359c1d7ee09",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 2626663
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/social/assets.json",
+        "path": "play/public/social/assets.json",
+        "sha256": "594bac686f6d5c83baa78bd4856ce40b1cc79e96e48e8cfba29875c84b7ab6c7",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "bytes": 692
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/public/social/thumbnail-v4.png",
+        "path": "play/public/social/thumbnail-v4.png",
+        "sha256": "d6dcd0b9f20ef6f854031fed1cf12069d79cdf52472e4c099b997e68c022a215",
+        "status": 200,
+        "content_type": "image/png",
+        "bytes": 1753061
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/app.mjs",
+        "path": "play/src/app.mjs",
+        "sha256": "af92a6ad491d1b929e515ab719aa4ded946b14a274686f4387bbe7d06a046db3",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 51901
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/baccarat-squeeze.mjs",
+        "path": "play/src/baccarat-squeeze.mjs",
+        "sha256": "69a6ff7e9221c2b7fc1657afafbaec7069258019d3920660c14845c7753352ff",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 7342
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/baccarat-view.mjs",
+        "path": "play/src/baccarat-view.mjs",
+        "sha256": "90fb4e51f39b9787761baec5283b921feb15fb58ef9619279c1b31f5fcf90c38",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 8722
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/baccarat.mjs",
+        "path": "play/src/baccarat.mjs",
+        "sha256": "6d64505b935a1a550eaa56372b8e43d6e8bde68c07c51030994b6b24413033d8",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 5792
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/blackjack-game.mjs",
+        "path": "play/src/blackjack-game.mjs",
+        "sha256": "e556429d31f101a11257f5ce77e38e63d5179c22324f719dc1a73a9beaaeb7d2",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 7251
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/blackjack-view.mjs",
+        "path": "play/src/blackjack-view.mjs",
+        "sha256": "b498efd92507b65a60e66e8503dca59e3c82f43af4f74ef5b850d479fd99abe5",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 12839
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/blackjack.mjs",
+        "path": "play/src/blackjack.mjs",
+        "sha256": "f0c04e7ac0f9b4229751a0f26a4a9663ba886cd5c14bb172d04730a686e80194",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 4024
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/board.mjs",
+        "path": "play/src/board.mjs",
+        "sha256": "b0c27b45548ed9cfd5c0efd29370c578042fb675b2eaa7a2b7f3cca0a76fee36",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 63380
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/cash.mjs",
+        "path": "play/src/cash.mjs",
+        "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 2198
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/challenge.mjs",
+        "path": "play/src/challenge.mjs",
+        "sha256": "cd8cb5404c986a76fab6457794b559906cfcb508fd734c3127899b336be18c70",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 4472
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/game.mjs",
+        "path": "play/src/game.mjs",
+        "sha256": "d389df000b2cdc3c30fc1a3e75112694c0aa5c024befea3c9721136a610ff159",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 19040
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/home-view.mjs",
+        "path": "play/src/home-view.mjs",
+        "sha256": "5a9757c1a599adec4c231c4061601f3eecb60b09edf39a01b7c41d4b358190ab",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 8783
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/instructions.mjs",
+        "path": "play/src/instructions.mjs",
+        "sha256": "4e1b344686ae512f3a3062b50cf8abd8ff0d5c1b2eb27e250069ca73f04c19d6",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 8179
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/landscape.mjs",
+        "path": "play/src/landscape.mjs",
+        "sha256": "b3b5a32274acbf0ae610f29e69226f126138b93cd1a25bcc2d6e5119c1b05deb",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 1410
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/leaderboard-config.mjs",
+        "path": "play/src/leaderboard-config.mjs",
+        "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 177
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/leaderboard-view.mjs",
+        "path": "play/src/leaderboard-view.mjs",
+        "sha256": "87da1a3918783d0ad702c41928489cd5a3be098dd6170a26cfac9e0521552977",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 6765
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/leaderboard.mjs",
+        "path": "play/src/leaderboard.mjs",
+        "sha256": "0948394dafa2e8df0208bc8b0a233d0fc1964f769a709e3497023cabe3f50ff1",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 8462
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/music.mjs",
+        "path": "play/src/music.mjs",
+        "sha256": "1e479b55969c820df79c19650c666c3f1887a2b57c420c6271cdb1cd730f39aa",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 2960
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/poker-game.mjs",
+        "path": "play/src/poker-game.mjs",
+        "sha256": "8b3ea4832e34500b87513de2f1299a6007cd5d1281b4260a62c53752cdcae860",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 9953
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/poker-view.mjs",
+        "path": "play/src/poker-view.mjs",
+        "sha256": "d3415a82a2be33d07bd61901c84d0ea96a9cffa1ee52537a7521dde1662ff915",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 15022
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/poker.mjs",
+        "path": "play/src/poker.mjs",
+        "sha256": "03e914c016d82b35246dc133b060a41e755dbf9aded7d288b5ff667cb33aebde",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 8068
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/record-share.mjs",
+        "path": "play/src/record-share.mjs",
+        "sha256": "60b3c5c54128b6f784dd634f7aeb7791ae4fa43b1c864bb8fbee6928af3278d4",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 9675
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/roulette-game.mjs",
+        "path": "play/src/roulette-game.mjs",
+        "sha256": "ef554b47088b7a1995948cd5648bd17c5489129651eb4bfbf2a61dae960c35b9",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 2535
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/roulette-view.mjs",
+        "path": "play/src/roulette-view.mjs",
+        "sha256": "85121b8be625de276cae98e6c32ef8f5387b9f05ddad805ba567e04cdc9df703",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 14336
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/roulette.mjs",
+        "path": "play/src/roulette.mjs",
+        "sha256": "d4bedf5e49d769cce9b2f5698f5a7637c49281fb83f8f46543f2e4176d57daf5",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 4553
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/rules.mjs",
+        "path": "play/src/rules.mjs",
+        "sha256": "f083b355af4be56162bb847adcfd88315270a0bff1d32d0b31db9838aafbd2a5",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 4819
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/settings-view.mjs",
+        "path": "play/src/settings-view.mjs",
+        "sha256": "2d9269c37d2b12b602115241199ae7b3acac3cd37e15e83cf382404b60a11c7a",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 8538
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/sicbo-view.mjs",
+        "path": "play/src/sicbo-view.mjs",
+        "sha256": "8aa3ddb7bb90b4004f7897227f2648b94abf9b48af06be162559d6ce52aa230c",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 8573
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/sound.mjs",
+        "path": "play/src/sound.mjs",
+        "sha256": "4c8a694a9048c0e7735b8bd17af79a44fc213a0c8cbd50287827bde657ed39d4",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 9545
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/storage.mjs",
+        "path": "play/src/storage.mjs",
+        "sha256": "563a75a991f279bea102cbeea4bb1454c6988cac6ef04e6b358900d51cc1a7ae",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 5923
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/styles.css",
+        "path": "play/src/styles.css",
+        "sha256": "a51c6a82472c33f731145302ff80c50d2b83badef919e2bcfe96815735bc4a77",
+        "status": 200,
+        "content_type": "text/css; charset=utf-8",
+        "bytes": 175542
+      },
+      {
+        "site": "vercel",
+        "url": "https://5mins-gamber.vercel.app/play/src/table-layout.mjs",
+        "path": "play/src/table-layout.mjs",
+        "sha256": "9a746846427022b8a2c5f9b770a41a562b298d976c8bc35cdd493a6baa8d8794",
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "bytes": 11870
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/docs/index.html",
+        "path": "docs/index.html",
+        "sha256": "2c3808664cd8652737a9e475eb8f6c355a402cfcef6276ded341c65407d842f8",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 2501
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/docs/manifest.webmanifest",
+        "path": "docs/manifest.webmanifest",
+        "sha256": "f07e332f833d7bf32ecb2f87e03d3d6d6b92ca62d21ff68f14f236b9d8a88136",
+        "status": 200,
+        "content_type": "application/manifest+json; charset=utf-8",
+        "bytes": 659
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/index.html",
+        "path": "index.html",
+        "sha256": "40694609feca2a512dc17e247b2596b2631425819bcebf4cdd5f1c2cdfc72e68",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 2471
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/manifest.webmanifest",
+        "path": "manifest.webmanifest",
+        "sha256": "b74af76b2b228cb1daa347ab5df017578b63158f11dcd77944ee4aebdcafec56",
+        "status": 200,
+        "content_type": "application/manifest+json; charset=utf-8",
+        "bytes": 649
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/package.json",
+        "path": "package.json",
+        "sha256": "c7ff992fe5db973f1df005b776a7cf256c005f02842812b4718b8ae3d7df865a",
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "bytes": 2994
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/.gitkeep",
+        "path": "src/.gitkeep",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": 200,
+        "content_type": "application/octet-stream",
+        "bytes": 0
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/app.mjs",
+        "path": "src/app.mjs",
+        "sha256": "af92a6ad491d1b929e515ab719aa4ded946b14a274686f4387bbe7d06a046db3",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 51901
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/baccarat-squeeze.mjs",
+        "path": "src/baccarat-squeeze.mjs",
+        "sha256": "69a6ff7e9221c2b7fc1657afafbaec7069258019d3920660c14845c7753352ff",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 7342
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/baccarat-view.mjs",
+        "path": "src/baccarat-view.mjs",
+        "sha256": "90fb4e51f39b9787761baec5283b921feb15fb58ef9619279c1b31f5fcf90c38",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 8722
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/baccarat.mjs",
+        "path": "src/baccarat.mjs",
+        "sha256": "6d64505b935a1a550eaa56372b8e43d6e8bde68c07c51030994b6b24413033d8",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 5792
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/blackjack-game.mjs",
+        "path": "src/blackjack-game.mjs",
+        "sha256": "e556429d31f101a11257f5ce77e38e63d5179c22324f719dc1a73a9beaaeb7d2",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 7251
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/blackjack-view.mjs",
+        "path": "src/blackjack-view.mjs",
+        "sha256": "b498efd92507b65a60e66e8503dca59e3c82f43af4f74ef5b850d479fd99abe5",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 12839
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/blackjack.mjs",
+        "path": "src/blackjack.mjs",
+        "sha256": "f0c04e7ac0f9b4229751a0f26a4a9663ba886cd5c14bb172d04730a686e80194",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 4024
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/board.mjs",
+        "path": "src/board.mjs",
+        "sha256": "b0c27b45548ed9cfd5c0efd29370c578042fb675b2eaa7a2b7f3cca0a76fee36",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 63380
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/cash.mjs",
+        "path": "src/cash.mjs",
+        "sha256": "a21698c5356b18ace1cdc0a53573630fdfbe3077143dc2c2902ac01ae6be8515",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 2198
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/challenge.mjs",
+        "path": "src/challenge.mjs",
+        "sha256": "cd8cb5404c986a76fab6457794b559906cfcb508fd734c3127899b336be18c70",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 4472
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/game.mjs",
+        "path": "src/game.mjs",
+        "sha256": "d389df000b2cdc3c30fc1a3e75112694c0aa5c024befea3c9721136a610ff159",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 19040
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/home-view.mjs",
+        "path": "src/home-view.mjs",
+        "sha256": "5a9757c1a599adec4c231c4061601f3eecb60b09edf39a01b7c41d4b358190ab",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 8783
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/instructions.mjs",
+        "path": "src/instructions.mjs",
+        "sha256": "4e1b344686ae512f3a3062b50cf8abd8ff0d5c1b2eb27e250069ca73f04c19d6",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 8179
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/landscape.mjs",
+        "path": "src/landscape.mjs",
+        "sha256": "b3b5a32274acbf0ae610f29e69226f126138b93cd1a25bcc2d6e5119c1b05deb",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 1410
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/leaderboard-config.mjs",
+        "path": "src/leaderboard-config.mjs",
+        "sha256": "526a701b61601839dc8b99a0540cf63342c0e9e814d588512fb3b2bfcd9e1f06",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 177
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/leaderboard-view.mjs",
+        "path": "src/leaderboard-view.mjs",
+        "sha256": "87da1a3918783d0ad702c41928489cd5a3be098dd6170a26cfac9e0521552977",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 6765
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/leaderboard.mjs",
+        "path": "src/leaderboard.mjs",
+        "sha256": "0948394dafa2e8df0208bc8b0a233d0fc1964f769a709e3497023cabe3f50ff1",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 8462
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/music.mjs",
+        "path": "src/music.mjs",
+        "sha256": "1e479b55969c820df79c19650c666c3f1887a2b57c420c6271cdb1cd730f39aa",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 2960
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/poker-game.mjs",
+        "path": "src/poker-game.mjs",
+        "sha256": "8b3ea4832e34500b87513de2f1299a6007cd5d1281b4260a62c53752cdcae860",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 9953
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/poker-view.mjs",
+        "path": "src/poker-view.mjs",
+        "sha256": "d3415a82a2be33d07bd61901c84d0ea96a9cffa1ee52537a7521dde1662ff915",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 15022
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/poker.mjs",
+        "path": "src/poker.mjs",
+        "sha256": "03e914c016d82b35246dc133b060a41e755dbf9aded7d288b5ff667cb33aebde",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 8068
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/record-share.mjs",
+        "path": "src/record-share.mjs",
+        "sha256": "60b3c5c54128b6f784dd634f7aeb7791ae4fa43b1c864bb8fbee6928af3278d4",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 9675
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/roulette-game.mjs",
+        "path": "src/roulette-game.mjs",
+        "sha256": "ef554b47088b7a1995948cd5648bd17c5489129651eb4bfbf2a61dae960c35b9",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 2535
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/roulette-view.mjs",
+        "path": "src/roulette-view.mjs",
+        "sha256": "85121b8be625de276cae98e6c32ef8f5387b9f05ddad805ba567e04cdc9df703",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 14336
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/roulette.mjs",
+        "path": "src/roulette.mjs",
+        "sha256": "d4bedf5e49d769cce9b2f5698f5a7637c49281fb83f8f46543f2e4176d57daf5",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 4553
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/rules.mjs",
+        "path": "src/rules.mjs",
+        "sha256": "f083b355af4be56162bb847adcfd88315270a0bff1d32d0b31db9838aafbd2a5",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 4819
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/server.mjs",
+        "path": "src/server.mjs",
+        "sha256": "f029b684a69e4a44a995c6a8d3d11e721d77c589034c73d089ceaa3dfebd0c7e",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 2643
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/settings-view.mjs",
+        "path": "src/settings-view.mjs",
+        "sha256": "2d9269c37d2b12b602115241199ae7b3acac3cd37e15e83cf382404b60a11c7a",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 8538
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/sicbo-view.mjs",
+        "path": "src/sicbo-view.mjs",
+        "sha256": "8aa3ddb7bb90b4004f7897227f2648b94abf9b48af06be162559d6ce52aa230c",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 8573
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/sound.mjs",
+        "path": "src/sound.mjs",
+        "sha256": "4c8a694a9048c0e7735b8bd17af79a44fc213a0c8cbd50287827bde657ed39d4",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 9545
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/storage.mjs",
+        "path": "src/storage.mjs",
+        "sha256": "563a75a991f279bea102cbeea4bb1454c6988cac6ef04e6b358900d51cc1a7ae",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 5923
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/styles.css",
+        "path": "src/styles.css",
+        "sha256": "a51c6a82472c33f731145302ff80c50d2b83badef919e2bcfe96815735bc4a77",
+        "status": 200,
+        "content_type": "text/css; charset=utf-8",
+        "bytes": 175542
+      },
+      {
+        "site": "github",
+        "url": "https://jacobmaster-97.github.io/charity-casino/src/table-layout.mjs",
+        "path": "src/table-layout.mjs",
+        "sha256": "9a746846427022b8a2c5f9b770a41a562b298d976c8bc35cdd493a6baa8d8794",
+        "status": 200,
+        "content_type": "text/javascript; charset=utf-8",
+        "bytes": 11870
+      }
+    ]
+  },
+  "keyboard_confirmation_verified": true,
+  "checked_at": "2026-11-09T14:02:14.975590+00:00"
 }

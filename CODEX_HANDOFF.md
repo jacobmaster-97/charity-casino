@@ -1,5 +1,25 @@
 # CODEX_HANDOFF
 
+## 最新 · 0.15.2 Vercel傳輸優化本機完成，準備發布
+
+使用者要求壓縮遊戲減Fast Data Transfer。新增scripts/optimize-vercel-assets.mjs及sharp 0.35.5 devDependency，僅Vercel12 PNG→無損WebP，原有WebP保留；13圖22,195,303→14,948,568 B，減32.65%。每次build實際解碼比尺寸、alpha及可見RGB，不改原圖或縮圖。網址map及CSS指同一WebP+內容SHA query，音樂原byte也加SHA、保持原音質。媒體一年immutable，HTML／JS／CSS／manifest仍fresh；兩種舊PNG路徑靜態重寫，未加後端／付費Image Optimization。只輸出需用57檔，包39.99→21.08MB，但這部分不直接當玩家傳輸。
+
+447項全過（421單元組件＋7單檔＋11 Pages＋8 Vercel）。本機Chrome同路線／音樂關：冷首頁5,192,208→3,995,476 B（-23.05%），五桌／牌面17,127,367→11,582,656 B（-32.37%）；加整首原音樂推算-27.13%，不是帳單實測。再次首頁圖片0B／0網路驗證；已避免Playwright route會停用cache的量測錯誤，以私有HTML／JS副本測試，未入正式code。10對截圖最大RGB差1（Chrome取樣，非有損），動態結果文字另mask，零pageerror。docs/qa/0152留本機資料。
+
+版本0.15.2、lock／query／settings同步，手動確認大小輪盤保持；原音樂／PNG／圖示、Game、D1／Worker及Analytics資料規則不改。不送假成績／瀏覽事件。已讀回main0f1fa5d6628156e5b8f9807f8e3a9178933de951；下一步發布原main讓Vercel自動build，驗WebP MIME／Cache-Control／hash與舊PNG重寫，完成才標published。真手機、長時間cache及實際Vercel帳單未驗。詳TRANSFER_0152.md／TRANSFER_RELEASE.json。
+
+## 最新 · 0.15.1大小／輪盤手動確認已發布Vercel／Pages（2026-11-09）
+
+正式 https://5mins-gamber.vercel.app/?v=0.15.1 。main 0f1fa5d6628156e5b8f9807f8e3a9178933de951／tree3705b817d12a1f93a6d916ea4c5b39db0ac8507e，expected_sha父94da3cc63ad4b679ad665ef6ce23f2461d36281c、force:false；327檔tree SHA全符、65變更（含全模組cache bump）。Vercel commit status success（DN4ZCZnzuenJvBwNZmUiZsKExmg3），正式66檔HTTP200／SHA吻合；Pages run42630326447 completed/success，39個GitHub入口／runtime核對，合計105個公網檔案全吻合。未重問不需要的Vercel／Cloudflare授權；實際部署證據為commit status＋正式站，不冒稱重新讀取私有Vercel API。
+
+大小／輪盤動畫揭曉後不再1.4秒自動開派彩，手機結果popup、平板／電腦原結果區需按「確認結果・查看派彩」。確認才開一次派彩，關閉後可手動重開；跨viewport、暫停／背景不丟待確認狀態。時間到／破產亦先保留結果，確認後派彩→挑戰結算，不能新局。Game、倍率、派彩／完成局保存、計時邏輯去除cache版本後SHA與父版相同，確認只改呈現、不改資金／局數／存檔；其他三桌不變。
+
+MobileRoundReveal的1400ms僅抬盅動畫；按round保留confirmed。修正原骰盅stage min-height310造成的確認鈕溢出：結果區可局部滑動、按鈕固定可見，保留原1.2倍視窗／美術；結果區有鍵盤focus及Tab循環。445項全過（421單元組件＋7單檔＋11 Pages＋6 Vercel）。Chromium10情境含真實搖骰／轉輪、手機／平板／桌面、時間到／破產及568×299；等超過1.4秒仍待確認，按鈕約57.6px、無整頁捲動／pageerror；短手機Shift+Tab→結果區、Tab→確認、Enter派彩實測通過。證據docs/qa/0151留本機，QA入口未入正式code。
+
+48個PNG／ICO／WebP路徑及2個MP3副本byte不變，@vercel/analytics仍2.0.1，Worker／D1無變動，無假成績或Analytics事件。MANUAL_REVEAL_0151.md／MANUAL_REVEAL_RELEASE.json及VERCEL_RELEASE.json已補實際結果；dist/github-upload與manifest保持327檔精確已發布快照，最終收據／交接只補本機，不再prepare覆蓋。
+
+真iPhone16Plus／iPad Safari、Android、VoiceOver及實體安全區未驗；本地Chromium模擬不是實機／公開互動證據。存檔沿完成局恢復，沒有新增待確認揭曉快照；刷新後依原保存政策，不重算或再派彩。下一最安全任務：使用者在新版本手機橫向各玩大小／輪盤一局，確認結果停留及手動派彩；回退前端父94da即可保留存檔、D1、音樂與Analytics。
+
 ## 最新 · 0.15.1大小／輪盤結果手動確認本機完成，準備發布
 
 使用者要求動畫顯示結果後手動確認才開派彩。MobileRoundReveal現按round保留confirmed，跨viewport亦不丟；1400ms只控制抬盅位置，不再auto-dismiss。app在待確認時不自動開派彩／finish；手機按「確認結果・查看派彩」，桌面／平板同名按鈕。時間到／破產也先結果→確認→派彩→挑戰結果，不能再開局。Game模型／派彩／完成局保存界線不改，確認不會改錢包、局數或保存；其他三桌保持。

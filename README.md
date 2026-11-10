@@ -1,3 +1,5 @@
+> 0.15.2已加入Vercel無損圖片壓縮及長效媒體快取；原音樂和遊戲玩法保持。正式遊戲：[5mins-gamber.vercel.app](https://5mins-gamber.vercel.app/?v=0.15.2)。量度結果見[傳輸量優化](docs/TRANSFER_0152.md)。
+
 > 正式Vercel遊戲：[5mins-gamber.vercel.app](https://5mins-gamber.vercel.app/)（0.15.0）。原GitHub Pages保留；原倉庫main已連接Vercel。部署及本機存檔轉移見[VERCEL.md](docs/VERCEL.md)。
 
 > 0.15.0：加入使用者提供的Brass Command循環背景音樂（設定可獨立調音量），手機／平板橫向遊玩；直向提示並保留暫停狀態。見[實作與驗證](docs/MUSIC_LANDSCAPE_0150.md)。

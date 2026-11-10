@@ -78,3 +78,7 @@ Vercel可將production回到已驗證的部署；不刪專案／資料庫。Work
 ## Web Analytics
 
 使用者指定安裝@vercel/analytics，2.0.1已接官方inject()，僅正式Vercel origin初始化，沒有遊戲自訂事件。見[ANALYTICS.md](ANALYTICS.md)及ANALYTICS_RELEASE.json；本次由64變66輸出檔。
+
+## 傳輸量優化0.15.2
+
+Vercel-only無損WebP、內容SHA快取版本及一年immutable媒體快取，舊PNG路徑靜態重寫；原GitHub及單檔素材保持。輸出57檔，音樂原byte，建置需sharp devDependency，以npm ci --include=dev安裝。詳TRANSFER_0152.md及TRANSFER_RELEASE.json；HTML／JS／CSS不設immutable。

@@ -64,3 +64,9 @@ Priority
 P1 實機確認結果按鈕與轉向／暫停焦點。
 
 P2 VoiceOver及短手機局部捲動。
+
+## 發布結果
+
+0.15.1已發布main 0f1fa5d6628156e5b8f9807f8e3a9178933de951，tree3705b817d12a1f93a6d916ea4c5b39db0ac8507e；327檔Git blob SHA全符、65變更（包含全模組cache版本）。48個原圖及2個MP3副本保持byte，Game／金額／保存模型等去掉cache版本差異後與原版SHA相同。Vercel commit status success、正式站66檔SHA全符；Pages run42630326447 completed/success、39個GitHub入口／runtime檔案核對，合計105個公網檔案HTTP200及SHA吻合。
+
+正式 https://5mins-gamber.vercel.app/?v=0.15.1 。568×299兩桌另驗Shift+Tab可聚焦結果捲動區、Tab回確認及Enter開派彩。最終收據及交接只補本機，dist/github-upload與manifest保留327檔精確已上傳快照，不重新prepare覆蓋。

@@ -1,0 +1,311 @@
+{
+  "version": "0.15.2",
+  "date": "2026-11-10",
+  "status": "local_verified_release_prepared",
+  "published": false,
+  "parent_commit": "0f1fa5d6628156e5b8f9807f8e3a9178933de951",
+  "output_files": 57,
+  "output_bytes_before": 39992466,
+  "output_bytes_after": 21077970,
+  "optimization": {
+    "map": {
+      "/art/home-b/background.png": "./play/public/art/home-b/background.webp?v=7f180722c9eeda4e",
+      "/art/home-b/logo.png": "./play/public/art/home-b/logo.webp?v=45129b35aef82a32",
+      "/art/leaderboard-b/dragon-tiger-v1.webp": "./play/public/art/leaderboard-b/dragon-tiger-v1.webp?v=9751c3c1dde423fd",
+      "/art/styles/b/lobby-populated-v4.png": "./play/public/art/styles/b/lobby-populated-v4.webp?v=4dd01f88a353b20c",
+      "/art/prototype-b/table.png": "./play/public/art/prototype-b/table.webp?v=9145cbcf902bf4ae",
+      "/art/prototype-b/dice.png": "./play/public/art/prototype-b/dice.webp?v=be19a51e6975355a",
+      "/art/prototype-b/props.png": "./play/public/art/prototype-b/props.webp?v=e2984f26fbaea454",
+      "/art/prototype-b/dome.png": "./play/public/art/prototype-b/dome.webp?v=e0167f02f5a1a135",
+      "/art/sicbo-board-b/felt.png": "./play/public/art/sicbo-board-b/felt.webp?v=64f2e2da43fc5a8f",
+      "/art/sicbo-board-b/dice.png": "./play/public/art/sicbo-board-b/dice.webp?v=21a1c9326561ac1b",
+      "/art/sicbo-board-b/chip.png": "./play/public/art/sicbo-board-b/chip.webp?v=905d9f76a304c74d",
+      "/art/sicbo-board-b/chips-five.png": "./play/public/art/sicbo-board-b/chips-five.webp?v=fb8a200ae2f707aa",
+      "/art/baccarat-b/cards.png": "./play/public/art/baccarat-b/cards.webp?v=b2b862939bf65d76",
+      "/audio/brass-command-v1.mp3": "./play/public/audio/brass-command-v1.mp3?v=f38d31eb81154191"
+    },
+    "assets": [
+      {
+        "source": "public/art/home-b/background.png",
+        "path": "play/public/art/home-b/background.webp",
+        "sourceBytes": 2287430,
+        "bytes": 1723640,
+        "sha256": "7f180722c9eeda4eb6613a5b6d66aa95a91870af3d9218f3f48af8b0993c2cad",
+        "sourceSha256": "3ad9454da6e52227a59e80633929961e6592f01ad16ba8b2a369d304df7d88c5",
+        "width": 1672,
+        "height": 941,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/home-b/logo.png",
+        "path": "play/public/art/home-b/logo.webp",
+        "sourceBytes": 2358990,
+        "bytes": 1724280,
+        "sha256": "45129b35aef82a32ee2c8b9993672f868555f878cbef858dbdb9c4f3d919193d",
+        "sourceSha256": "a991d694ecce65384f580c8aeb527b8ca92a87dd977465bd663ae32750222c1e",
+        "width": 2172,
+        "height": 724,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "path": "play/public/art/leaderboard-b/dragon-tiger-v1.webp",
+        "sourceBytes": 98012,
+        "bytes": 98012,
+        "sha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
+        "sourceSha256": "9751c3c1dde423fdcc7ce693896ffea63ee479770b6fd47aade0e4df0b9a59f3",
+        "width": 1200,
+        "height": 400,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/styles/b/lobby-populated-v4.png",
+        "path": "play/public/art/styles/b/lobby-populated-v4.webp",
+        "sourceBytes": 2429310,
+        "bytes": 1998998,
+        "sha256": "4dd01f88a353b20c62fe7fa382ffe45814f710eda5434ed3448bbfcd04cec03e",
+        "sourceSha256": "6f1fb6d1539033285667c45ec3bf59ba589ad0127ccb2e7e8801e6d71f37ea7f",
+        "width": 1672,
+        "height": 941,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/prototype-b/table.png",
+        "path": "play/public/art/prototype-b/table.webp",
+        "sourceBytes": 2237982,
+        "bytes": 1605784,
+        "sha256": "9145cbcf902bf4ae454d759f4f170ec50ebbb538b8aace8fc7ca21d2073bbf2c",
+        "sourceSha256": "482304cdd5eac34c9b5bd95e4266b357baf7a26a082051cf8b9acf28bd46daf0",
+        "width": 1672,
+        "height": 941,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/prototype-b/dice.png",
+        "path": "play/public/art/prototype-b/dice.webp",
+        "sourceBytes": 1587909,
+        "bytes": 711268,
+        "sha256": "be19a51e6975355af32552365650ae2c0962970dbadd215f7a485344934ebff7",
+        "sourceSha256": "023d02c8ed3c7bd4c5e6e99f8858d3782d5a119fa18f6961902773a170c1667b",
+        "width": 1024,
+        "height": 1536,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/prototype-b/props.png",
+        "path": "play/public/art/prototype-b/props.webp",
+        "sourceBytes": 1492795,
+        "bytes": 1075560,
+        "sha256": "e2984f26fbaea45416b690078756b50206b3378b430476508e2beeacf72065bc",
+        "sourceSha256": "1837f4f7663cf8a5e57cc1950053722e0d24189ad3593e91510d7b9bcd8535bf",
+        "width": 1254,
+        "height": 1254,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/prototype-b/dome.png",
+        "path": "play/public/art/prototype-b/dome.webp",
+        "sourceBytes": 1291799,
+        "bytes": 837588,
+        "sha256": "e0167f02f5a1a135a0630ca5d5128a9d618648c66897e40aa6c5d61af17c47a7",
+        "sourceSha256": "12ea8d8414dbca8688913d298737649de42dbc67d9a4b8745260c1f0508fb5ca",
+        "width": 1254,
+        "height": 1254,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/sicbo-board-b/felt.png",
+        "path": "play/public/art/sicbo-board-b/felt.webp",
+        "sourceBytes": 2196918,
+        "bytes": 1578936,
+        "sha256": "64f2e2da43fc5a8fe92f29210d933890fbd9fe9d73c90bd3a7c063bd2c82db15",
+        "sourceSha256": "2dd76f69d50047a2f9e2ef27c2f7db3634273bf99c2c3c811d7900997410dec9",
+        "width": 1672,
+        "height": 941,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/sicbo-board-b/dice.png",
+        "path": "play/public/art/sicbo-board-b/dice.webp",
+        "sourceBytes": 1310364,
+        "bytes": 365644,
+        "sha256": "21a1c9326561ac1b8a48abc9cc07b2fa86b0a48c95b713e28e8edf1f6477453d",
+        "sourceSha256": "d2a8af37b07f256c91019a0dc18c6bc2f00bbf554976bbc837c8c7a31664b48d",
+        "width": 1024,
+        "height": 1536,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/sicbo-board-b/chip.png",
+        "path": "play/public/art/sicbo-board-b/chip.webp",
+        "sourceBytes": 1786628,
+        "bytes": 1135816,
+        "sha256": "905d9f76a304c74d24b78a729fc5afed6b8bce1b897dcf7a344da760c2781904",
+        "sourceSha256": "a88ce624d9782d4eaedf151fa22fc92ff67553983a0effd6349d1e5f6da591c0",
+        "width": 1254,
+        "height": 1254,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/sicbo-board-b/chips-five.png",
+        "path": "play/public/art/sicbo-board-b/chips-five.webp",
+        "sourceBytes": 929177,
+        "bytes": 645542,
+        "sha256": "fb8a200ae2f707aa84eefb521c4a03f511966a4b23a69c50ad6e8ae17284c505",
+        "sourceSha256": "3a62123de23d541cad6fa91e64646abba4a98735a710e4792cbe4df0aa60a5d0",
+        "width": 2172,
+        "height": 724,
+        "visiblePixelsUnchanged": true
+      },
+      {
+        "source": "public/art/baccarat-b/cards.png",
+        "path": "play/public/art/baccarat-b/cards.webp",
+        "sourceBytes": 2187989,
+        "bytes": 1447500,
+        "sha256": "b2b862939bf65d76cc2393ae5e41d7f27e8a3c136600d54ef20d508ca6873e29",
+        "sourceSha256": "ca65131551bd511d3e994b5ea6477b5b1e8cb7271d944f64a87fdf5063a03efd",
+        "width": 1499,
+        "height": 1049,
+        "visiblePixelsUnchanged": true
+      }
+    ],
+    "imageBytesBefore": 22195303,
+    "imageBytesAfter": 14948568,
+    "musicBytes": 3312369
+  },
+  "network_comparison": {
+    "music_disabled_in_browser_measurement": true,
+    "before": {
+      "home": {
+        "total_bytes": 5192208,
+        "image_bytes": 4662245,
+        "network_images": 3,
+        "requests": 37
+      },
+      "tour": {
+        "total_bytes": 17127367,
+        "image_bytes": 16597404,
+        "network_images": 10,
+        "requests": 44
+      },
+      "repeat": {
+        "total_bytes": 5772,
+        "image_bytes": 468,
+        "network_images": 3,
+        "requests": 37
+      }
+    },
+    "after": {
+      "home": {
+        "total_bytes": 3995476,
+        "image_bytes": 3463750,
+        "network_images": 3,
+        "requests": 37
+      },
+      "tour": {
+        "total_bytes": 11582656,
+        "image_bytes": 11050930,
+        "network_images": 10,
+        "requests": 44
+      },
+      "repeat": {
+        "total_bytes": 5304,
+        "image_bytes": 0,
+        "network_images": 0,
+        "requests": 37
+      }
+    },
+    "cold_home_reduction_percent": 23.05,
+    "tour_reduction_percent": 32.37,
+    "estimated_with_full_music": {
+      "before": 20439736,
+      "after": 14895025,
+      "reduction_percent": 27.13
+    },
+    "screenshots": [
+      {
+        "scene": "roulette-result",
+        "max_rgb_difference": 0,
+        "mean_absolute_difference": 0.0,
+        "pixels_different": 0,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "lobby",
+        "max_rgb_difference": 0,
+        "mean_absolute_difference": 0.0,
+        "pixels_different": 0,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "baccarat",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.036325,
+        "pixels_different": 26968,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "home",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.012421,
+        "pixels_different": 8784,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "baccarat-result",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.026827,
+        "pixels_different": 19975,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "blackjack",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.014071,
+        "pixels_different": 10482,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "sicbo-result",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.003777,
+        "pixels_different": 2488,
+        "dynamic_status_masked": true
+      },
+      {
+        "scene": "sicbo",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.017093,
+        "pixels_different": 15850,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "poker",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.008645,
+        "pixels_different": 6414,
+        "dynamic_status_masked": false
+      },
+      {
+        "scene": "roulette",
+        "max_rgb_difference": 1,
+        "mean_absolute_difference": 0.002452,
+        "pixels_different": 1878,
+        "dynamic_status_masked": false
+      }
+    ]
+  },
+  "tests": {
+    "unit_component": 421,
+    "standalone": 7,
+    "pages": 11,
+    "vercel": 8,
+    "total": 447
+  },
+  "original_assets_changed": false,
+  "music_changed": false,
+  "gameplay_changed": false,
+  "cloudflare_changed": false,
+  "d1_changed": false,
+  "actual_vercel_billing_verified": false
+}

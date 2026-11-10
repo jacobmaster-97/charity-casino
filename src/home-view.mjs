@@ -1,4 +1,4 @@
-import {settingsDialogView} from './settings-view.mjs?v=0.15.1';
+import {settingsDialogView} from './settings-view.mjs?v=0.15.2';
 // Approved home artwork remains separate from real, accessible DOM controls.
 export const SUPPORT_URL='https://buymeacoffee.com/studios_16';
 export const HOME_ART={background:'/art/home-b/background.png',logo:'/art/home-b/logo.png'};

@@ -93,3 +93,5 @@
 - 使用者指定npm i @vercel/analytics：已安裝2.0.1及lock，Vercel正式origin以官方inject()非同步接網站瀏覽統計，專案基本Web Analytics已啟用，不升付費。不新增姓名／賭本／牌局等自訂事件，不放進GitHub Pages或離線版，原遊戲及Cloudflare／D1不改。詳ANALYTICS.md／ANALYTICS_RELEASE.json。
 
 - 0.15.1使用者要求大小／輪盤顯示結果後手動確認才開派彩，取代舊1400ms自動關揭曉；1400ms只作抬盅動畫位置。手機揭曉視窗、平板／桌面結果區均需確認，時間到／破產亦保留結果後確認到派彩／最終結算。僅呈現，不能延後真正派彩或再保存／再派一次；其他三桌／倍率／計時／存檔不改。詳MANUAL_REVEAL_0151.md及MANUAL_REVEAL_RELEASE.json，沿原main→Vercel／Pages流程發布，不改Cloudflare或D1。
+
+- 0.15.2依使用者降低Vercel Fast Data Transfer：僅Vercel輸出無損WebP／圖片音樂SHA query版本／媒體一年immutable快取，原圖、音樂、GitHub Pages及單檔不變。HTML／JS／CSS不得長期immutable；舊PNG兩種路徑須相容靜態重寫，不用付費Image Optimization／新後端。sharp只建置用，npm ci --include=dev，詳TRANSFER_0152.md／TRANSFER_RELEASE.json。以實際路線位元組量度，不把移除未引用檔案的部署縮減直接當帳單減幅。

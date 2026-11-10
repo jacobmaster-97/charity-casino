@@ -13,12 +13,12 @@ test('Vercel metadata uses a validated explicit or actual platform URL without g
  for(const value of ['http://game.example','https://user:pass@game.example','https://game.example/path','https://game.example/?token=x','https://game.example/#x'])assert.throws(()=>vercelSiteURL({SITE_URL:value}));
  assert.throws(()=>vercelSiteURL({}));
 });
-test('Vercel exports only game runtime with unchanged assets and keeps the GitHub entry intact',async()=>{
+test('Vercel exports only game runtime and optimized art while keeping GitHub intact',async()=>{
  const source=await readFile(path.join(root,'index.html'));
  report=await buildVercel({SITE_URL:url});assert.equal(report.siteURL,url);assert.equal(report.files.filter(f=>f.path.startsWith('play/src/')).length,32);
  assert.deepEqual(await readFile(path.join(root,'index.html')),source);
  assert.ok(!report.files.some(f=>/cloudflare|wrangler|AGENTS|HANDOFF|tests|previews|\.env|server\.mjs|vercel\.json/.test(f.path)));
- for(const f of report.files){const bytes=await readFile(path.join(root,'dist/vercel',f.path));assert.equal(createHash('sha256').update(bytes).digest('hex'),f.sha256);if(f.path.startsWith('play/'))assert.deepEqual(bytes,await readFile(path.join(root,'docs',f.path)));}
+ for(const f of report.files){const bytes=await readFile(path.join(root,'dist/vercel',f.path));assert.equal(createHash('sha256').update(bytes).digest('hex'),f.sha256);if(f.path.startsWith('play/')&&f.path!=='play/src/styles.css'&&!report.optimization.assets.some(a=>a.path===f.path))assert.deepEqual(bytes,await readFile(path.join(root,'docs',f.path)));}
 });
 test('Vercel root manifest, game images and social URLs resolve at the deployed origin',async()=>{
  const html=await readFile(path.join(root,'dist/vercel/index.html'),'utf8');
@@ -31,10 +31,10 @@ test('Vercel root manifest, game images and social URLs resolve at the deployed 
  for(const icon of manifest.icons)assert.ok(report.files.some(f=>f.path===icon.src.slice(2)));
  const app=await readFile(path.join(root,'dist/vercel/play/src/app.mjs'),'utf8'),expression=app.match(/^const art=path=>(.*);$/m)[1];
  const resolve=new Function('path','moduleURL',`return (${expression.replaceAll('import.meta.url','moduleURL')});`);
- assert.equal(resolve('/art/home-b/logo.png',url+'play/src/app.mjs'),url+'play/public/art/home-b/logo.png');
+ const map=report.optimization.map;assert.ok(map['/art/home-b/logo.png'].includes('/home-b/logo.webp?v='));assert.ok(html.includes('globalThis.__CASINO_ART='));assert.ok(resolve('/art/home-b/logo.png',url+'play/src/app.mjs').endsWith('/play/public/art/home-b/logo.png'));
 });
 test('Vercel configuration serves the isolated output without adding a backend or paid add-on',async()=>{
- const config=JSON.parse(await readFile(path.join(root,'vercel.json'),'utf8'));assert.equal(config.framework,null);assert.equal(config.outputDirectory,'dist/vercel');assert.equal(config.buildCommand,'npm run build:vercel');assert.ok(!config.functions&&!config.rewrites&&!config.crons);
+ const config=JSON.parse(await readFile(path.join(root,'vercel.json'),'utf8'));assert.equal(config.framework,null);assert.equal(config.outputDirectory,'dist/vercel');assert.equal(config.buildCommand,'npm run build:vercel');assert.ok(!config.functions&&!config.crons);assert.equal(config.rewrites.length,2);assert.ok(config.rewrites.every(r=>r.destination==='/play/public/art/:asset.webp'));
  assert.ok((await readFile(path.join(root,'.gitignore'),'utf8')).includes('.vercel/'));
  assert.ok((await readFile(path.join(root,'.vercelignore'),'utf8')).includes('cloudflare/'));
  const worker=await readFile(path.join(root,'cloudflare/worker.mjs'),'utf8');assert.ok(worker.includes('allowed.includes(origin)'));assert.ok(!worker.includes('*.vercel.app'));
@@ -58,4 +58,19 @@ test('analytics dependency is locked and never injected into GitHub Pages or the
  const pkg=JSON.parse(await readFile(path.join(root,'package.json'))),lock=JSON.parse(await readFile(path.join(root,'package-lock.json')));assert.equal(pkg.dependencies['@vercel/analytics'],'^2.0.1');assert.equal(lock.packages['node_modules/@vercel/analytics'].version,'2.0.1');
  for(const file of ['index.html','docs/index.html','src/app.mjs']){const text=await readFile(path.join(root,file),'utf8');assert.ok(!text.includes('analytics.mjs'));assert.ok(!text.includes('/_vercel/insights'));}
  const prep=await readFile(path.join(root,'scripts/prepare-github.mjs'),'utf8');assert.ok(prep.includes("'package-lock.json'"));
+});
+
+test('all original sprites map to lossless same-size WebP with shared CSS URLs and content-hash cache versions',async()=>{
+ const {optimization:o}=report,css=await readFile(path.join(root,'dist/vercel/play/src/styles.css'),'utf8');
+ assert.ok(o.imageBytesAfter<o.imageBytesBefore*.75);assert.equal(o.assets.length,13);
+ for(const asset of o.assets){const bytes=await readFile(path.join(root,'dist/vercel',asset.path)),source=await readFile(path.join(root,asset.source));assert.equal(bytes.length,asset.bytes);assert.equal(createHash('sha256').update(source).digest('hex'),asset.sourceSha256);assert.equal(createHash('sha256').update(bytes).digest('hex'),asset.sha256);assert.ok(asset.width>0&&asset.height>0);const ref=asset.source.slice('public'.length),href=o.map[ref];assert.equal(new URL(href,url).search,'?v='+asset.sha256.slice(0,16));if(css.includes(asset.path.replace('play/','../')))assert.ok(css.includes(asset.path.replace('play/','../')+'?v='+asset.sha256.slice(0,16)));assert.ok(!report.files.some(f=>f.path==='play/'+asset.source&&asset.source.endsWith('.png')));}
+ assert.ok(!css.includes('.png'));assert.ok(!report.files.some(f=>f.path.startsWith('play/art/')||f.path.endsWith('/source.png')||f.path.endsWith('/assets.json')));
+ const html=await readFile(path.join(root,'dist/vercel/index.html'),'utf8'),context={};const {default:vm}=await import('node:vm');vm.runInNewContext(html.match(/<script data-casino-assets>(.*?)<\/script>/s)[1],context);assert.equal(JSON.stringify(context.__CASINO_ART),JSON.stringify(o.map));
+});
+
+test('cache rules retain fresh HTML and JavaScript and old PNG routes remain compatible',async()=>{
+ const c=JSON.parse(await readFile(path.join(root,'vercel.json'))),immutable=c.headers.filter(r=>r.headers.some(h=>h.key==='Cache-Control'&&h.value.includes('immutable'))),matches=(pattern,p)=>new RegExp('^'+pattern.replace(':asset(.*)','.*')+'$').test(p);
+ for(const p of ['/','/index.html','/play/src/app.mjs','/play/src/styles.css','/analytics.mjs'])assert.ok(!immutable.some(r=>matches(r.source,p)),p);
+ for(const p of ['/play/public/art/home-b/logo.webp','/play/public/audio/brass-command-v1.mp3','/play/public/icons/a-gold-seal-v1/install-512.png','/play/public/social/thumbnail-v4.png'])assert.ok(immutable.some(r=>matches(r.source,p)),p);
+ for(const p of ['/play/public/art/home-b/logo.png','/play/art/prototype-b/dice.png'])assert.ok(c.rewrites.some(r=>matches(r.source,p)),p);
 });
